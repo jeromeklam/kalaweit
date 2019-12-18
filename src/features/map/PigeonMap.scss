@@ -1,0 +1,58 @@
+@import '../../styles/mixins';
+
+$map-list-width: 350px;
+
+.map-pigeon-map {
+  width: 100%;
+
+  .map-content {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: $map-list-width;
+    bottom: 0px;
+  }
+
+  .map-list-header {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: $map-list-width;
+    height: 80px;
+    padding: 10px;
+  }
+
+  .map-list-scroll {
+    position: absolute;
+    right: 0px;
+    top: 80px;;
+    bottom: 0px;
+    width: $map-list-width;
+    overflow-y: auto;
+  }
+
+  .map-content-mobile {
+    position: fixed;
+    top: $mobile-header-height;
+    left: 0px;
+    right: 0px;
+    bottom: $mobile-footer-height + 200px;
+  }
+  .map-list-header-mobile {
+    display: none;
+  }
+  .map-list-scroll-mobile {
+    position: fixed;
+    height: 200px;;
+    left: 0px;
+    right: 0px;
+    bottom: $mobile-footer-height;
+    overflow: auto;
+  }
+}
+
+.map-selector {
+  width: 29px; 
+  height: 34px;
+}

@@ -1,0 +1,5 @@
+@import '../../styles/mixins';
+
+.display-mobile .responsive-list {
+  margin-top: $mobile-header-height;
+}

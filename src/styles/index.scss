@@ -1,0 +1,29 @@
+// index is the entry for all styles.
+
+@import './variables';
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+@import './global';
+@import './form';
+
+@import '../features/home/style';
+@import '../features/common/style';
+@import '../features/site/style';
+@import '../features/auth/style';
+@import '../features/icons/style';
+@import '../features/cause/style';
+@import '../features/data/style';
+@import '../features/about/style';
+@import '../features/layout/style';
+@import '../features/site-type/style';
+@import '../features/cause-type/style';
+@import '../features/config/style';
+@import '../features/cause-main-type/style';
+@import '../features/email/style';
+@import '../features/lang/style';
+@import '../features/client/style';
+@import '../features/client-type/style';
+@import '../features/client-category/style';
+@import '../features/map/style';
+@import '../features/dashboard/style';
