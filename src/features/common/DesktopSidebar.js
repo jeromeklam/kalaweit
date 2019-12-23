@@ -64,13 +64,13 @@ export class DesktopSidebar extends Component {
               <li>
                 <NavLink strict className="nav-link" to="/client">
                   <PersonIcon />
-                  <span>Personnes</span>
+                  <span>Membres</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink strict className="nav-link" to="/cause">
                   <CauseIcon />
-                  <span>Animaux</span>
+                  <span>Causes</span>
                 </NavLink>
               </li>
               <li className="header">

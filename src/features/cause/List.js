@@ -66,8 +66,7 @@ export class List extends Component {
     }
     const cols = [
       { name: 'name',  label: 'Identification', col: 'cau_name',                             size: '5', mob_size: '',   title: true },
-      { name: 'maint', label: 'Espèce',         col: 'cause_type.cause_main_type.camt_name', size: '4', mob_size: '18', title: false },
-      { name: 'type',  label: 'Race',           col: 'cause_type.caut_name',                 size: '4', mob_size: '18', title: false },
+      { name: 'type',  label: 'Type',           col: 'cause_type.caut_name',                 size: '4', mob_size: '18', title: false },
       { name: 'sex',   label: 'M/F',            col: 'cau_sex',                              size: '4', mob_size: '18', title: false },
       { name: 'color', label: 'Couleur',        col: 'cau_string_1',                         size: '4', mob_size: '18', title: false },
       { name: 'site',  label: 'Site',           col: 'site.site_name',                       size: '9', mob_size: '',   title: false },
@@ -75,7 +74,7 @@ export class List extends Component {
     // L'affichage, items, loading, loadMoreError
     return (
       <ResponsiveList
-        title="Animaux"
+        title="Causes"
         titleSearch="Recherche nom"
         cols={cols}
         items={items}

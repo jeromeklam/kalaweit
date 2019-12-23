@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Icon from '@mdi/react';
 import {
-  mdiSheep
+  mdiHandHeart
 } from '@mdi/js';
 
 export default class Cause extends Component {
@@ -12,7 +12,7 @@ export default class Cause extends Component {
   render() {
     return (
       <Icon 
-        path={mdiSheep}
+        path={mdiHandHeart}
         size={1}
         {...this.props}
       />

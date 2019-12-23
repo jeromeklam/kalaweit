@@ -7,7 +7,7 @@ import { StatCard } from '../layout';
 import { 
   Site as SiteIcon, 
   Cause as CauseIcon,
-  Area as AreaIcon,
+  Person as PersonIcon,
   Fence as FenceIcon
 } from '../icons';
 
@@ -35,13 +35,14 @@ export class Stats extends Component {
               url="/site"
             />
             <StatCard
-              title="Surface"
-              count={this.props.dashboard.stats.area_site}
-              icon={<AreaIcon />}
+              title="Amis"
+              count={this.props.dashboard.stats.friends}
+              icon={<PersonIcon />}
+              url="/client"
             />
             <StatCard
-              title="Clôture"
-              count={this.props.dashboard.stats.clot_site}
+              title="Dons"
+              count={this.props.dashboard.stats.donations}
               icon={<FenceIcon />}
             />
           </div>
