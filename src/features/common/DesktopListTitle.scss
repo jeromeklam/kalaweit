@@ -1,7 +1,9 @@
 @import '../../styles/mixins';
 
 .common-desktop-list-title {
-
+  .sortable:hover {
+    cursor: pointer;
+  }
 }
 .col-vertical-align {
   margin-top: auto;

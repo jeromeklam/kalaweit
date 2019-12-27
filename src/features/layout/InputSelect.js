@@ -5,7 +5,7 @@ export default class InputSelect extends Component {
 
   constructor(props) {
     super(props);
-    const {options, addEmpty} = {...props};
+    const { options, addEmpty } = { ...props };
     let value = '';
     if (props.value && props.value !== null) {
       value = props.value;
@@ -20,7 +20,7 @@ export default class InputSelect extends Component {
       name: props.name,
       value: value,
       id: id,
-    }
+    };
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -28,7 +28,7 @@ export default class InputSelect extends Component {
       return {
         value: props.value,
         options: props.options,
-      }
+      };
     }
     return null;
   }
@@ -43,10 +43,12 @@ export default class InputSelect extends Component {
       }
     });
     if (!found) {
-      const event= {target : {
-        name: prevProps.name,
-        value: def,
-      }};
+      const event = {
+        target: {
+          name: prevProps.name,
+          value: def,
+        },
+      };
       this.props.onChange(event);
     }
   }
@@ -59,31 +61,54 @@ export default class InputSelect extends Component {
       name: this.state.name,
       value: this.state.value,
     };
-    return (
-      <div className="form-group row">
-        <label forname={this.state.id} className="col-sm-6 col-form-label">
-          {this.props.label}
-          {this.props.required && 
-           <span>&nbsp;*</span>
-          }
-        </label>
-        <div className="col-sm-30">
+    if (this.props.labelTop) {
+      return (
+        <div className="form-group">
+          <label forname={this.state.id} className="">
+            {this.props.label}
+            {this.props.required && <span>&nbsp;*</span>}
+          </label>
           <select type="text" id={this.state.id} className="form-control" {...props}>
-            {this.state.addEmpty &&
+            {this.state.addEmpty && (
               <option key="000" value="">
                 Aucune sélection
               </option>
-            }
+            )}
             {this.state.options.map(oneOption => {
               return (
                 <option key={oneOption.value} value={oneOption.value}>
                   {oneOption.label}
                 </option>
-              )
+              );
             })}
           </select>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="form-group row">
+          <label forname={this.state.id} className="col-sm-6 col-form-label">
+            {this.props.label}
+            {this.props.required && <span>&nbsp;*</span>}
+          </label>
+          <div className="col-sm-30">
+            <select type="text" id={this.state.id} className="form-control" {...props}>
+              {this.state.addEmpty && (
+                <option key="000" value="">
+                  Aucune sélection
+                </option>
+              )}
+              {this.state.options.map(oneOption => {
+                return (
+                  <option key={oneOption.value} value={oneOption.value}>
+                    {oneOption.label}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+      );
+    }
   }
 }

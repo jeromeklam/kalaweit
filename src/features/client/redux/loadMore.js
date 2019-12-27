@@ -43,6 +43,21 @@ export function loadMore(args = {}, reload = false) {
             }
           };
         }
+        let sort = '';
+        getState().client.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
+        }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/client' + addUrl, {});
         doRequest.then(

@@ -10,6 +10,7 @@ const initialState = {
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: [],
+  sort: [],
   loadMorePending: false,
   loadMoreError: null,
   loadMoreFinish: false,

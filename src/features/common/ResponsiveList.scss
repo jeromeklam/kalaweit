@@ -1,5 +1,32 @@
 @import '../../styles/mixins';
 
+.responsive-list {
+  overflow: hidden;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+}
+
+.display-desktop .responsive-list {
+  top: $desktop-header-height;
+  bottom: $desktop-footer-height;
+  left: 0px;
+  transition: left 0.5s ease 0.5s;
+  animation-iteration-count: 1;
+}
+
 .display-mobile .responsive-list {
-  margin-top: $mobile-header-height;
+  top: 2 * $mobile-header-height;
+  bottom: $mobile-footer-height;
+}
+
+.display-desktop .responsive-list.responsive-list-open {
+  left: $left-menu-width;
+  transition: left 0.5s ease 0.5s;
+  animation-iteration-count: 1;
+}
+
+.responsive-list-data {
+  overflow-y: auto;
+  height: 100%;
 }

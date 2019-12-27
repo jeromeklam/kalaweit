@@ -29,3 +29,7 @@ export { default as Calendar } from './Calendar';
 export { default as Area } from './Area';
 export { default as Fence } from './Fence';
 export { default as Close } from './Close';
+export { default as Clear } from './Clear';
+export { default as Sort } from './Sort';
+export { default as SortUp } from './SortUp';
+export { default as SortDown } from './SortDown';

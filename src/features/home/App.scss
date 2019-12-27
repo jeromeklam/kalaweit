@@ -1,6 +1,5 @@
 @import '../../styles/mixins';
 
-
 .full-page {
   position: fixed;
   top: 0px;
@@ -30,9 +29,13 @@
     overflow-y: auto;
     left: 0px;
     right: 0px;
+    transition: left 0.5s ease 0.5s;
+    animation-iteration-count: 1;
   }
   #page-content-wrapper.page-content-wrapper-menu {
     left: $left-menu-width;
+    transition: left 0.5s ease 0.5s;
+    animation-iteration-count: 1;
     right: 0px;
   }
 }

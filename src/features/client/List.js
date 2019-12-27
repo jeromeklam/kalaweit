@@ -4,9 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
-import {
-  ResponsiveList
-} from '../common';
+import { ResponsiveList } from '../common';
 
 export class List extends Component {
   static propTypes = {
@@ -16,12 +14,16 @@ export class List extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      timer: null,
+    };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
+    this.onSort = this.onSort.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +60,18 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
+  onSort(col, way) {
+    this.props.actions.setSort(col.col, way);
+    let timer = this.state.timer;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      this.props.actions.loadMore({}, true);
+    }, 2000);
+    this.setState({ timer: timer });
+  }
+
   render() {
     // Les des items à afficher avec remplissage progressif
     let items = [];
@@ -66,19 +80,48 @@ export class List extends Component {
     }
     const cols = [
       {
+        name: 'id',
+        label: 'Identifiant',
+        col: 'id',
+        size: '4',
+        mob_size: '',
+        sortable: true,
+        title: true,
+      },
+      {
         name: 'lastname',
         label: 'Nom',
         col: 'cli_lastname',
-        size: '18',
+        size: '6',
         mob_size: '',
+        sortable: true,
         title: true,
       },
       {
         name: 'firstname',
         label: 'Prénom',
         col: 'cli_firstname',
-        size: '12',
+        size: '6',
         mob_size: '36',
+        sortable: true,
+        title: false,
+      },
+      {
+        name: 'town',
+        label: 'Ville',
+        col: 'cli_town',
+        size: '6',
+        mob_size: '36',
+        sortable: true,
+        title: false,
+      },
+      {
+        name: 'email',
+        label: 'Email',
+        col: 'cli_email',
+        size: '7',
+        mob_size: '36',
+        sortable: true,
         title: false,
       },
     ];
@@ -86,10 +129,12 @@ export class List extends Component {
     return (
       <ResponsiveList
         title="Membres"
-        titleSearch="Recherche nom"
+        titleSearch="Recherche nom, prénom"
         cols={cols}
         items={items}
+        sort={this.props.client.sort}
         onSearch={this.onQuickSearch}
+        onSort={this.onSort}
         onReload={this.onReload}
         onCreate={this.onCreate}
         onGetOne={this.onGetOne}

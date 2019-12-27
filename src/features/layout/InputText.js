@@ -15,25 +15,36 @@ export default class InputText extends Component {
     let props = {
       ...this.props,
       value: value,
-      id: id
+      id: id,
     };
-    return (
-      <div className="form-group row">
-        <label htmlFor={this.props.id} className="col-sm-6 col-form-label">
-          {this.props.label}
-          {this.props.required && 
-           <span>&nbsp;*</span>
-          }
-        </label>
-        <div className="col-sm-30">
-          <input
-            type="text"
-            id={props.id}
-            className="form-control" 
-            {...props}
-          />
+    let displayLabel = true;
+    if (this.props.label === '') {
+      displayLabel = false;
+    }
+    if (this.props.labelTop) {
+      return (
+        <div className="form-group">
+          {displayLabel && (
+            <label htmlFor={this.props.id} className="">
+              {this.props.label}
+              {this.props.required && <span>&nbsp;*</span>}
+            </label>
+          )}
+          <input type="text" id={props.id} className="form-control" {...props} />
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="form-group row">
+          <label htmlFor={this.props.id} className="col-sm-6 col-form-label">
+            {this.props.label}
+            {this.props.required && <span>&nbsp;*</span>}
+          </label>
+          <div className="col-sm-30">
+            <input type="text" id={props.id} className="form-control" {...props} />
+          </div>
+        </div>
+      );
+    }
   }
 }

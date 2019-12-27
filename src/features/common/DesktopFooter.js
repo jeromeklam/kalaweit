@@ -21,7 +21,7 @@ export class DesktopFooter extends Component {
               <Link to="/about"><span className="text-muted">{process.env.REACT_APP_APP_NAME}, qui sommes-nous ?</span></Link>
             </div>
             <div className="col-16 text-right">
-              <SocialIcon url="https://www.facebook.com/Les-%C3%A9co-pattes-140387953308320/" />
+              <SocialIcon url="https://facebook.com/KalaweitFrance/" />
             </div>
           </div>
         </div>

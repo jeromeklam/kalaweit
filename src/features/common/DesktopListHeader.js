@@ -23,11 +23,17 @@ constructor(props) {
   }
 
   onQuickSearch(event) {    
+    if (event) {
+      event.preventDefault();
+    }
     this.props.onQuickSearch(this.state.quickSearch);
   }
 
   onChangeSearch(event) {
     this.setState({[event.target.name]: event.target.value});
+    if (event.clear) {
+      this.props.onQuickSearch('');
+    }
   }
 
   render() {
@@ -42,7 +48,7 @@ constructor(props) {
               name="quickSearch"
               label={this.props.labelSearch}
               quickSearch={this.state.quickSearch}  
-              onClick={this.onQuickSearch}
+              onSubmit={this.onQuickSearch}
               onChange={this.onChangeSearch}
             />
           }            

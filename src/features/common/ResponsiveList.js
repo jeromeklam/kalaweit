@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from './redux/actions';
 import {
   ResponsiveListHeader,
   ResponsiveListLines,
@@ -11,12 +15,14 @@ import {
   Mobile,
 } from '../common';
 
-export default class ResponsiveList extends Component {
+export class ResponsiveList extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     mainCol: PropTypes.string.isRequired,
     cols: PropTypes.array.isRequired,
     items: PropTypes.array.isRequired,
+    sort: PropTypes.array,
+    onSort: PropTypes.func,
     onGetOne: PropTypes.func.isRequired,
     onDelOne: PropTypes.func.isRequired,
     onReload: PropTypes.func.isRequired,
@@ -28,7 +34,12 @@ export default class ResponsiveList extends Component {
 
   render() {
     return (
-      <div className="responsive-list">
+      <div
+        className={classnames(
+          'responsive-list',
+          this.props.common.sidebar && 'responsive-list-open',
+        )}
+      >
         <ResponsiveListHeader
           title={this.props.title}
           labelSearch={this.props.titleSearch}
@@ -37,10 +48,14 @@ export default class ResponsiveList extends Component {
           onCreate={this.props.onCreate}
         />
         <Desktop>
-          <DesktopListTitle cols={this.props.cols} />
+          <DesktopListTitle
+            cols={this.props.cols}
+            sort={this.props.sort}
+            onSort={this.props.onSort}
+          />
         </Desktop>
         {this.props.items && (
-          <div>
+          <div className="responsive-list-data">
             {this.props.items.length > 0 ? (
               <ResponsiveListLines>
                 {this.props.items.map(item => {
@@ -70,21 +85,31 @@ export default class ResponsiveList extends Component {
                 })}
               </ResponsiveListLines>
             ) : (
-              <div>
-                {!this.props.loadMorePending &&
-                  <p>Liste Vide</p>
-                }
-              </div>
+              <div>{!this.props.loadMorePending && <p>Liste Vide</p>}</div>
             )}
+            <ResponsiveListFooter
+              loadMorePending={this.props.loadMorePending}
+              loadMoreFinish={this.props.loadMoreFinish}
+              loadMoreError={this.props.loadMoreError}
+              onLoadMore={this.props.onLoadMore}
+            />
           </div>
         )}
-        <ResponsiveListFooter
-          loadMorePending={this.props.loadMorePending}
-          loadMoreFinish={this.props.loadMoreFinish}
-          loadMoreError={this.props.loadMoreError}
-          onLoadMore={this.props.onLoadMore}
-        />
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    common: state.common,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ ...actions }, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveList);
