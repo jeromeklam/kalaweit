@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
 export default class MobileListLineCol extends Component {
   static propTypes = {};
@@ -13,10 +14,17 @@ export default class MobileListLineCol extends Component {
             content = pos.label;
           }
           break;
+        default:
+          break;
       }
     }
     return (
-      <div className="mobile-list-line-col"
+      <div
+        className={classnames(
+          'mobile-list-line-col',
+          this.props.first && 'col-first',
+          this.props.last && 'col-last',
+        )}
         onClick={() => {
           this.props.onGetOne(this.props.id);
         }}

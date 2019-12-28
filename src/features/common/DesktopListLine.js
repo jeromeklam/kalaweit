@@ -53,20 +53,24 @@ export default class DesktopListLine extends Component {
       <div>
         <HoverObserver onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
           <div className="row">
-            {this.props.cols.map(oneCol => {
+            {this.props.cols.map((oneCol, i) => {
               const line = { ...oneCol, id: this.props.id };
               const content = getObjectmemberValue(item, oneCol.col);
+              const first = (i === 0);
+              const last = (i === this.props.cols.length-1);
               return (
                 <DesktopListLineCol
                   key={line.name}
                   content={content}
                   {...line}
+                  first={first}
+                  last={last}
                   onGetOne={this.props.onGetOne}
                 />
               );
             })}
             {this.state.flipped && (
-              <div className="col-6 col-vertical-align">
+              <div className="col-navbar col-vertical-align">
                 <ul className="nav justify-content-end">
                   <li className="nav-item">
                     <ButtonGetOne

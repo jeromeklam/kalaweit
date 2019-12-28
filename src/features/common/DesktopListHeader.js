@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { ButtonAddOne, ButtonReload, InputQuickSearch } from '../layout';
+import { ButtonAddOne, ButtonReload, ButtonFilter, InputQuickSearch } from '../layout';
 
 export class DesktopListHeader extends Component {
   static propTypes = {
@@ -17,6 +17,7 @@ constructor(props) {
     super(props);
     this.state = {
       quickSearch: "",
+      filter: false
     };
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onChangeSearch = this.onChangeSearch.bind(this);
@@ -60,6 +61,9 @@ constructor(props) {
             </li>
             <li className="nav-item">
               <ButtonAddOne color="white" onClick={this.props.onCreate} />
+            </li>
+            <li className="nav-item">
+              <ButtonFilter color="white" icon={true} onClick={this.props.onToggleFilter} />
             </li>
           </ul>
         </div>

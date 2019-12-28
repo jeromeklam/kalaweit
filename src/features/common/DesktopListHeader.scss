@@ -1,14 +1,10 @@
 @import '../../styles/mixins';
 
 .common-desktop-list-header {
+  top: 0px;
   left: 0px;
-  position: fixed;
+  position: absolute;
   right: 0px;
-  top: $desktop-navbar-height;
   z-index: 700;
   height: $desktop-listheader-height;
-}
-
-.common-desktop-list-header.common-desktop-list-header-menu {
-  left: $left-menu-width;
 }

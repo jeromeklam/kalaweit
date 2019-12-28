@@ -8,6 +8,7 @@ import {
   ResponsiveListHeader,
   ResponsiveListLines,
   ResponsiveListFooter,
+  ResponsiveListPanels,
   DesktopListTitle,
   DesktopListLine,
   MobileListLine,
@@ -23,6 +24,7 @@ export class ResponsiveList extends Component {
     items: PropTypes.array.isRequired,
     sort: PropTypes.array,
     onSort: PropTypes.func,
+    setSort: PropTypes.func,
     onGetOne: PropTypes.func.isRequired,
     onDelOne: PropTypes.func.isRequired,
     onReload: PropTypes.func.isRequired,
@@ -32,6 +34,22 @@ export class ResponsiveList extends Component {
     onSearch: PropTypes.func,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      filters: false
+    }
+    this.toggleFilter = this.toggleFilter.bind(this);
+  }
+
+  toggleFilter(filters=false, sort=false) {
+    console.log(filters, sort);
+    if (sort) {
+      this.props.setSort(sort);
+    }
+    this.setState({filters: !this.state.filters});
+  }
+
   render() {
     return (
       <div
@@ -40,12 +58,20 @@ export class ResponsiveList extends Component {
           this.props.common.sidebar && 'responsive-list-open',
         )}
       >
+        <div className={classnames("responsive-list-panels", this.state.filters && "responsive-list-panels-open")}>
+          <ResponsiveListPanels onToggleFilter={this.toggleFilter}
+            cols={this.props.cols}
+            sort={this.props.sort || []}
+            onSort={this.props.setSort}
+          />
+        </div>
         <ResponsiveListHeader
           title={this.props.title}
           labelSearch={this.props.titleSearch}
           onQuickSearch={this.props.onSearch}
           onReload={this.props.onReload}
           onCreate={this.props.onCreate}
+          onToggleFilter={this.toggleFilter}
         />
         <Desktop>
           <DesktopListTitle

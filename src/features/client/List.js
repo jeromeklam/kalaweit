@@ -23,7 +23,8 @@ export class List extends Component {
     this.onReload = this.onReload.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
-    this.onSort = this.onSort.bind(this);
+    this.onSetSort = this.onSetSort.bind(this);
+    this.onUpdateSort = this.onUpdateSort.bind(this);
   }
 
   componentDidMount() {
@@ -60,8 +61,20 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onSort(col, way) {
-    this.props.actions.setSort(col.col, way);
+  onUpdateSort(col, way, pos = 99) {
+    this.props.actions.updateSort(col.col, way, pos);
+    let timer = this.state.timer;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      this.props.actions.loadMore({}, true);
+    }, 2000);
+    this.setState({ timer: timer });
+  }
+
+  onSetSort(sort) {
+    this.props.actions.setSort(sort);
     let timer = this.state.timer;
     if (timer) {
       clearTimeout(timer);
@@ -101,7 +114,7 @@ export class List extends Component {
         name: 'firstname',
         label: 'Prénom',
         col: 'cli_firstname',
-        size: '6',
+        size: '7',
         mob_size: '36',
         sortable: true,
         title: false,
@@ -110,7 +123,7 @@ export class List extends Component {
         name: 'town',
         label: 'Ville',
         col: 'cli_town',
-        size: '6',
+        size: '7',
         mob_size: '36',
         sortable: true,
         title: false,
@@ -119,7 +132,7 @@ export class List extends Component {
         name: 'email',
         label: 'Email',
         col: 'cli_email',
-        size: '7',
+        size: '10',
         mob_size: '36',
         sortable: true,
         title: false,
@@ -133,17 +146,18 @@ export class List extends Component {
         cols={cols}
         items={items}
         sort={this.props.client.sort}
+        onSort={this.onUpdateSort}
+        setSort={this.onSetSort}
         onSearch={this.onQuickSearch}
-        onSort={this.onSort}
         onReload={this.onReload}
         onCreate={this.onCreate}
         onGetOne={this.onGetOne}
         onDelOne={this.onDelOne}
+        onLoadMore={this.onLoadMore}
         mainCol="cli_firstname"
         loadMorePending={this.props.client.loadMorePending}
         loadMoreFinish={this.props.client.loadMoreFinish}
         loadMoreError={this.props.client.loadMoreError}
-        onLoadMore={this.onLoadMore}
       />
     );
   }

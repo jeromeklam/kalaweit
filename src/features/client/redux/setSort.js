@@ -6,34 +6,19 @@ import {
   CLIENT_SET_SORT,
 } from './constants';
 
-export function setSort(col, way) {
+export function setSort(sort) {
   return {
     type: CLIENT_SET_SORT,
-    col: col,
-    way: way
+    sort: sort,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
     case CLIENT_SET_SORT:
-      let sort = state.sort;
-      let nSort = [];
-      sort.forEach(elt => {
-        if (elt.col !== action.col) {
-          nSort.push(elt);
-        }
-      });
-      if (action.way === 'up' || action.way === 'down') {
-        const elt = {
-          col: action.col,
-          way: action.way,
-        };
-        nSort.push(elt);
-      }
       return {
         ...state,
-        sort: nSort,
+        sort: action.sort,
       };
 
     default:

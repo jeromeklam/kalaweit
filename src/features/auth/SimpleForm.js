@@ -57,7 +57,7 @@ export class SimpleForm extends Component {
             />
             <InputText
               label="Email"
-              name="user_last_name"
+              name="user_email"
               disabled={true}
               value={this.props.auth.user.user_email}
               size={{ desktop: [12, 24] }}

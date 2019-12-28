@@ -2,31 +2,40 @@
 
 .responsive-list {
   overflow: hidden;
-  position: fixed;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
   left: 0px;
   right: 0px;
 }
 
-.display-desktop .responsive-list {
-  top: $desktop-header-height;
-  bottom: $desktop-footer-height;
-  left: 0px;
-  transition: left 0.5s ease 0.5s;
-  animation-iteration-count: 1;
-}
-
-.display-mobile .responsive-list {
-  top: 2 * $mobile-header-height;
-  bottom: $mobile-footer-height;
-}
-
-.display-desktop .responsive-list.responsive-list-open {
-  left: $left-menu-width;
-  transition: left 0.5s ease 0.5s;
-  animation-iteration-count: 1;
-}
-
 .responsive-list-data {
+  position: relative;
   overflow-y: auto;
-  height: 100%;
+  overflow-x: hidden;
+  left: 0px;
+  right: 0px;
+  height: calc(100% - 80px);
+  top: 80px;
+}
+.responsive-list-panels {
+  position: absolute;
+  right: -1 * $desktop-right-panels-width;
+  width: $desktop-right-panels-width;
+  top: 0px;
+  bottom: 0px;
+  background-color: theme-color('secondary');
+  color: white;
+  z-index: 877;
+  transition: right 0.5s ease 0.5s;
+  animation-iteration-count: 1;
+}
+.responsive-list-panels.responsive-list-panels-open {
+  right: 0px;
+  transition: right 0.5s ease 0.5s;
+  animation-iteration-count: 1;
+}
+.display-mobile .responsive-list-data {
+  top: $mobile-header-height;
+  height: calc(100% - #{$mobile-header-height});
 }

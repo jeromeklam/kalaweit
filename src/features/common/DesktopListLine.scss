@@ -1,9 +1,11 @@
 @import '../../styles/mixins';
 
-.common-desktop-list-line {
-
-}
 .col-vertical-align {
   margin-top: auto;
   margin-bottom: auto;
+}
+.col-navbar {
+  position: absolute;
+  right: 5px;
+  padding-top: 6px;
 }

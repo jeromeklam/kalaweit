@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Icon from '@mdi/react';
 import {
-  mdiSort
+  mdiCheck
 } from '@mdi/js';
 
-export default class Sort extends Component {
+export default class SimpleValid extends Component {
   static propTypes = {
 
   };
@@ -12,10 +12,9 @@ export default class Sort extends Component {
   render() {
     return (
       <Icon 
-        path={mdiSort}
+        path={mdiCheck}
         size={1}
         color={this.props.color}
-        className={this.props.className || ''}
       />
     );
   }

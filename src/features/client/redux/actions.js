@@ -4,4 +4,5 @@ export { updateOne, dismissUpdateOneError } from './updateOne';
 export { delOne, dismissDelOneError } from './delOne';
 export { createOne, dismissCreateOneError } from './createOne';
 export { clearItems } from './clearItems';
+export { updateSort } from './updateSort';
 export { setSort } from './setSort';

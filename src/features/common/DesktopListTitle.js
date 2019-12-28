@@ -18,7 +18,9 @@ export class DesktopListTitle extends Component {
           'row data-list row-list-titles',
         )}
       >
-        {this.props.cols.map(oneCol => {
+        {this.props.cols.map((oneCol, i) => {
+          const first = i === 0;
+          const last = i === this.props.cols.length - 1;
           const found = sort && sort.find(element => element.col === oneCol.col);
           let crt = 'none';
           let way = 'up';
@@ -43,6 +45,8 @@ export class DesktopListTitle extends Component {
                 'col-' + oneCol.size,
                 'col-vertical-align',
                 oneCol.sortable && 'sortable',
+                first && 'col-first',
+                last && 'col-last',
               )}
               onClick={() => {
                 this.props.onSort(oneCol, way);
@@ -51,10 +55,10 @@ export class DesktopListTitle extends Component {
               <span>{oneCol.label}</span>
               {
                 {
-                  down: <SortDown color="black" />,
-                  up: <SortUp color="black" />,
-                  none: <Sort color="black" />,
-                  default: <Sort color="black" />,
+                  down: <SortDown color="black" className="list-sort-icon" />,
+                  up: <SortUp color="black" className="list-sort-icon" />,
+                  none: <Sort color="black" className="list-sort-icon" />,
+                  default: <Sort color="black" className="list-sort-icon" />,
                 }[crt]
               }
             </div>

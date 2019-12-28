@@ -33,3 +33,5 @@ export { default as Clear } from './Clear';
 export { default as Sort } from './Sort';
 export { default as SortUp } from './SortUp';
 export { default as SortDown } from './SortDown';
+export { default as SimpleValid } from './SimpleValid';
+export { default as SimpleCancel } from './SimpleCancel';

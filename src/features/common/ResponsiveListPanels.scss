@@ -1,0 +1,29 @@
+@import '../../styles/mixins';
+
+.common-responsive-list-panels-close {
+  position: absolute;
+  right: 5px;
+  top: 2px;
+}
+.common-responsive-list-panels {
+  .nav-item.active {
+    color: theme-color('primary');
+  }
+  .list-group-item:hover {
+    cursor: pointer;
+  }
+}
+.common-responsive-list-panels-inner {
+  padding: 5px;
+
+  .list-group-item {
+    background-color: theme-color('secondary');
+    color: white;
+  }
+}
+
+.sort-icon {
+  display: inline-block;
+  right: 10px;
+  position: absolute;
+}

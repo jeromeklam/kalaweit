@@ -15,6 +15,7 @@ export default class SortUp extends Component {
         path={mdiSortAscending}
         size={1}
         color={this.props.color}
+        className={this.props.className || ''}
       />
     );
   }

@@ -13,6 +13,7 @@ import { reducer as updateOneReducer } from './updateOne';
 import { reducer as delOneReducer } from './delOne';
 import { reducer as createOneReducer } from './createOne';
 import { reducer as clearItemsReducer } from './clearItems';
+import { reducer as updateSortReducer } from './updateSort';
 import { reducer as setSortReducer } from './setSort';
 
 const reducers = [
@@ -22,6 +23,7 @@ const reducers = [
   delOneReducer,
   createOneReducer,
   clearItemsReducer,
+  updateSortReducer,
   setSortReducer,
 ];
 

@@ -4,6 +4,11 @@
   .sortable:hover {
     cursor: pointer;
   }
+  .list-sort-icon {
+    position: absolute;
+    top: 6px;
+    margin-left: 5px;
+  }
 }
 .col-vertical-align {
   margin-top: auto;
@@ -20,13 +25,15 @@
 
 .row-list-titles {
   left: 0px;
-  position: fixed;
+  position: absolute;
   right: 0px;
-  top: $desktop-navbar-height +  $desktop-listheader-height;;
+  top: $desktop-listheader-height;
   z-index: 700;
   height: $desktop-listheader-height;
 }
-
-.common-desktop-list-header-menu.row-list-titles {
-  left: $left-menu-width;
+.col-first {
+  padding-left: 15px;
+}
+.col-last {
+  padding-right: 15px;
 }

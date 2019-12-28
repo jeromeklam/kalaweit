@@ -15,6 +15,7 @@ export default class SortDown extends Component {
         path={mdiSortDescending}
         size={1}
         color={this.props.color}
+        className={this.props.className || ''}
       />
     );
   }
