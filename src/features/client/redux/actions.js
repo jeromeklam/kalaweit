@@ -6,3 +6,5 @@ export { createOne, dismissCreateOneError } from './createOne';
 export { clearItems } from './clearItems';
 export { updateSort } from './updateSort';
 export { setSort } from './setSort';
+export { updateQuickSearch } from './updateQuickSearch';
+export { setFilters } from './setFilters';

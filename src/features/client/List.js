@@ -22,8 +22,9 @@ export class List extends Component {
     this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
-    this.onSetSort = this.onSetSort.bind(this);
+    this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
   }
 
@@ -53,8 +54,12 @@ export class List extends Component {
     this.props.actions.loadMore({}, true);
   }
 
+  onSearchChange(event) {
+    this.props.actions.updateQuickSearch(event.target.value);
+  }
+
   onQuickSearch(quickSearch) {
-    this.props.actions.loadMore(quickSearch, true);
+    this.props.actions.loadMore({}, true);
   }
 
   onLoadMore(event) {
@@ -73,7 +78,9 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
-  onSetSort(sort) {
+  onSetFiltersAndSort(filters, sort) {
+    console.log(filters, sort);
+    this.props.actions.setFilters(filters);
     this.props.actions.setSort(sort);
     let timer = this.state.timer;
     if (timer) {
@@ -99,6 +106,7 @@ export class List extends Component {
         size: '4',
         mob_size: '',
         sortable: true,
+        filterable: { type: 'Text' },
         title: true,
       },
       {
@@ -108,6 +116,7 @@ export class List extends Component {
         size: '6',
         mob_size: '',
         sortable: true,
+        filterable: { type: 'Text' },
         title: true,
       },
       {
@@ -117,6 +126,7 @@ export class List extends Component {
         size: '7',
         mob_size: '36',
         sortable: true,
+        filterable: { type: 'Text' },
         title: false,
       },
       {
@@ -126,6 +136,7 @@ export class List extends Component {
         size: '7',
         mob_size: '36',
         sortable: true,
+        filterable: { type: 'Text' },
         title: false,
       },
       {
@@ -135,20 +146,29 @@ export class List extends Component {
         size: '10',
         mob_size: '36',
         sortable: true,
+        filterable: { type: 'Text' },
         title: false,
       },
     ];
     // L'affichage, items, loading, loadMoreError
+    let search = '';
+    const crit = this.props.client.filters.findFirst('cli_firstname');
+    if (crit) {
+      search = crit.getFilterCrit();
+    }
     return (
       <ResponsiveList
         title="Membres"
-        titleSearch="Recherche nom, prénom"
         cols={cols}
         items={items}
-        sort={this.props.client.sort}
-        onSort={this.onUpdateSort}
-        setSort={this.onSetSort}
+        titleSearch="Recherche nom, prénom"
+        search={search}
         onSearch={this.onQuickSearch}
+        onSearchChange={this.onSearchChange}
+        sort={this.props.client.sort}
+        filters={this.props.client.filters}
+        onSort={this.onUpdateSort}
+        onSetFiltersAndSort={this.onSetFiltersAndSort}
         onReload={this.onReload}
         onCreate={this.onCreate}
         onGetOne={this.onGetOne}

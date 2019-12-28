@@ -41,68 +41,25 @@ export function queryStringToObject(search = '') {
   return {};
 }
 
-export function objectToQueryString(obj) {
-  let params = '';
-  const keys = Object.keys(obj);
-  keys.forEach(key => {
-    let vals = obj[key];
-    if (Array.isArray(vals)) {
-      for (let key2 in vals) {
-        let val2 = vals[key2];
-        if (typeof val2 == 'object') {
-          const keys21 = Object.keys(val2);
-          keys21.forEach(key21 => {
-            let val21 = val2[key21];
-            if (params == '') {
-              params = key + '[' + key2 + '][' + key21 + ']=' + val21;
-            } else {
-              params = params + '&' + key + '[' + key2 + '][' + key21 + ']=' + val21;
-            }
-          });
-        } else {
-          if (params == '') {
-            params = key + '[' + key2 + ']=' + val2;
-          } else {
-            params = params + '&' + key + '[' + key2 + ']=' + val2;
-          }
-        }
-      }
+export function objectToQueryString (queryObj, nesting_start = "", level = 0) {
+  let l_nesting_start = nesting_start;
+  let l_nesting_end = "";
+  if (level > 0) {
+    l_nesting_start += '[';
+    l_nesting_end += ']';
+  }
+  const pairs = Object.entries(queryObj).map(([key, val]) => {
+    if (typeof val === "object") {
+      return objectToQueryString(val, l_nesting_start + `${key}` + l_nesting_end, level+1);
     } else {
-      if (typeof vals == 'object') {
-        const keys2 = Object.keys(vals);
-        keys2.forEach(key3 => {
-          let val3 = vals[key3];
-          if (typeof val3 == 'object') {
-            const keys31 = Object.keys(val3);
-            keys31.forEach(key31 => {
-              let val31 = val3[key31];
-              if (params == '') {
-                params = key + '[' + key3 + '][' + key31 + ']=' + val31;
-              } else {
-                params = params + '&' + key + '[' + key3 + '][' + key31 + ']=' + val31;
-              }
-            });
-          } else {
-            if (params == '') {
-              params = key + '[' + key3 + ']=' + val3;
-            } else {
-              params = params + '&' + key + '[' + key3 + ']=' + val3;
-            }
-          }
-        });
-      } else {
-        if (params == '') {
-          params = key + '=' + vals;
-        } else {
-          params = params + '&' + key + '=' + vals;
-        }
-      }
+      return [l_nesting_start + key + l_nesting_end, val].join("=");
     }
   });
-  if (params !== '') {
-    params = '?' + params;
+  let queryString = pairs.join("&");
+  if (level === 0 && queryString !== '') {
+    queryString = '?' + queryString;
   }
-  return params;
+  return queryString
 }
 
 export function getObjectmemberValue(obj, member) {

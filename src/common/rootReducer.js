@@ -20,6 +20,8 @@ import clientTypeReducer from '../features/client-type/redux/reducer';
 import clientCategoryReducer from '../features/client-category/redux/reducer';
 import mapReducer from '../features/map/redux/reducer';
 import dashboardReducer from '../features/dashboard/redux/reducer';
+import filterReducer from '../features/filter/redux/reducer';
+import sortReducer from '../features/sort/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -48,6 +50,8 @@ const reducerMap = {
   clientCategory: clientCategoryReducer,
   map: mapReducer,
   dashboard: dashboardReducer,
+  filter: filterReducer,
+  sort: sortReducer,
 };
 
 export default combineReducers(reducerMap);

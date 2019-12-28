@@ -48,9 +48,9 @@ constructor(props) {
             <InputQuickSearch 
               name="quickSearch"
               label={this.props.labelSearch}
-              quickSearch={this.state.quickSearch}  
+              quickSearch={this.props.search}  
               onSubmit={this.onQuickSearch}
-              onChange={this.onChangeSearch}
+              onChange={this.props.onSearchChange}
             />
           }            
         </div>    

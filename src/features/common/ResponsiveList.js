@@ -23,6 +23,7 @@ export class ResponsiveList extends Component {
     cols: PropTypes.array.isRequired,
     items: PropTypes.array.isRequired,
     sort: PropTypes.array,
+    filters: PropTypes.object,
     onSort: PropTypes.func,
     setSort: PropTypes.func,
     onGetOne: PropTypes.func.isRequired,
@@ -32,22 +33,22 @@ export class ResponsiveList extends Component {
     onLoadMore: PropTypes.func.isRequired,
     titleSearch: PropTypes.string,
     onSearch: PropTypes.func,
+    onSearchChange: PropTypes.func,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      filters: false
+      panelOpen: false
     }
-    this.toggleFilter = this.toggleFilter.bind(this);
+    this.togglePanel = this.togglePanel.bind(this);
   }
 
-  toggleFilter(filters=false, sort=false) {
-    console.log(filters, sort);
-    if (sort) {
-      this.props.setSort(sort);
+  togglePanel(filters=false, sort=false) {
+    if (filters !== false && sort !== false) {
+      this.props.onSetFiltersAndSort(filters, sort);
     }
-    this.setState({filters: !this.state.filters});
+    this.setState({panelOpen: !this.state.panelOpen});
   }
 
   render() {
@@ -58,20 +59,22 @@ export class ResponsiveList extends Component {
           this.props.common.sidebar && 'responsive-list-open',
         )}
       >
-        <div className={classnames("responsive-list-panels", this.state.filters && "responsive-list-panels-open")}>
-          <ResponsiveListPanels onToggleFilter={this.toggleFilter}
+        <div className={classnames("responsive-list-panels", this.state.panelOpen && "responsive-list-panels-open")}>
+          <ResponsiveListPanels onToggleFilter={this.togglePanel}
             cols={this.props.cols}
             sort={this.props.sort || []}
-            onSort={this.props.setSort}
+            filters={this.props.filters}
           />
         </div>
         <ResponsiveListHeader
           title={this.props.title}
           labelSearch={this.props.titleSearch}
+          search={this.props.search}
+          onSearchChange={this.props.onSearchChange}
           onQuickSearch={this.props.onSearch}
           onReload={this.props.onReload}
           onCreate={this.props.onCreate}
-          onToggleFilter={this.toggleFilter}
+          onToggleFilter={this.togglePanel}
         />
         <Desktop>
           <DesktopListTitle

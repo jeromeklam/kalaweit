@@ -7,28 +7,8 @@
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da.
 
 import initialState from './initialState';
-import { reducer as loadMoreReducer } from './loadMore';
-import { reducer as loadOneReducer } from './loadOne';
-import { reducer as updateOneReducer } from './updateOne';
-import { reducer as delOneReducer } from './delOne';
-import { reducer as createOneReducer } from './createOne';
-import { reducer as clearItemsReducer } from './clearItems';
-import { reducer as updateSortReducer } from './updateSort';
-import { reducer as setSortReducer } from './setSort';
-import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
-import { reducer as setFiltersReducer } from './setFilters';
 
 const reducers = [
-  loadMoreReducer,
-  loadOneReducer,
-  updateOneReducer,
-  delOneReducer,
-  createOneReducer,
-  clearItemsReducer,
-  updateSortReducer,
-  setSortReducer,
-  updateQuickSearchReducer,
-  setFiltersReducer,
 ];
 
 export default function reducer(state = initialState, action) {
