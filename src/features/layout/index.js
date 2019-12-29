@@ -33,3 +33,4 @@ export { default as ButtonTab } from './ButtonTab';
 export { default as ButtonResponsive } from './ButtonResponsive';
 export { default as InputPassword } from './InputPassword';
 export { default as ButtonFilter } from './ButtonFilter';
+export { default as InputRadio } from './InputRadio';

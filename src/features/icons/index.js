@@ -36,3 +36,4 @@ export { default as SortDown } from './SortDown';
 export { default as SimpleValid } from './SimpleValid';
 export { default as SimpleCancel } from './SimpleCancel';
 export { default as FilterFull } from './FilterFull';
+export { default as FilterClear } from './FilterClear';

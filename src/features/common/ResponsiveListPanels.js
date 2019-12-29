@@ -62,6 +62,7 @@ export default class ResponsiveListPanels extends Component {
       panel: 'filter',
       sort: sortLocal(props.cols, props.sort),
       filter: filters,
+      currentFilter: filters,
     };
     this.changePanel = this.changePanel.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
@@ -73,11 +74,12 @@ export default class ResponsiveListPanels extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (state.current !== props.sort || state.filter !== props.filters) {
+    if (state.current !== props.sort || state.currentFilter !== props.filters) {
       return {
         current: props.sort,
         sort: sortLocal(props.cols, props.sort),
         filter: props.filters.clone(),
+        currentFilter: props.filters,
       };
     }
     return null;

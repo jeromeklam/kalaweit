@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FILTER_MODE_OR, FILTER_MODE_AND, FILTER_OPER_LIKE, FILTER_OPER_EQUAL } from './';
+import { InputRadio } from '../layout';
 
 export default class FilterBuilder extends Component {
   static propTypes = {
@@ -14,30 +15,18 @@ export default class FilterBuilder extends Component {
     return (
       <div className="filter-filter-builder">
         <div className="row">
-          <div className="col-8">
-            <span>Options</span>
+          <div className="col-4">
           </div>
-          <div className="col-12">
-            <input
+          <div className="col-16">
+            <InputRadio
               className="ml-3 mr-1"
               id="or"
               type="radio"
               name="mode"
-              value={FILTER_MODE_OR}
+              value={mode}
               onChange={this.props.onMode}
-              checked={mode === FILTER_MODE_OR ? true : false}
+              options={[{label: 'et', value: FILTER_MODE_AND}, {label: 'ou', value: FILTER_MODE_OR}]}
             />
-            <label htmlFor="or"> ou</label>
-            <input
-              className="ml-3 mr-1"
-              id="and"
-              type="radio"
-              name="mode"
-              value={FILTER_MODE_AND}
-              onChange={this.props.onMode}
-              checked={mode === FILTER_MODE_AND ? true : false}
-            />
-            <label htmlFor="and"> et</label>
           </div>
           <div className="col-16">
             <select className="form-control" onChange={this.props.onOperator} value={oper}>

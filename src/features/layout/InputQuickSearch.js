@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Desktop, Mobile } from '../common';
-import {Search as SearchIcon, Clear as ClearIcon } from '../icons';
+import { Search as SearchIcon, FilterClear as FilterClearIcon } from '../icons';
 
 export default class InputQuickSearch extends Component {
   static propTypes = {};
@@ -16,10 +16,10 @@ export default class InputQuickSearch extends Component {
       const ev = {
         target: {
           name: this.props.name,
-          value: ''
+          value: '',
         },
-        clear: true
-      }
+        clear: true,
+      };
       this.props.onChange(ev);
     }
   }
@@ -54,9 +54,11 @@ export default class InputQuickSearch extends Component {
               <button type="submit" className="btn">
                 <SearchIcon color="white" />
               </button>
-              <button type="button" className="btn" onClick={this.clear}>
-                <ClearIcon color="white" />
-              </button>
+              {this.props.quickSearch != '' && (
+                <button type="button" className="btn" onClick={this.clear}>
+                  <FilterClearIcon color="white" />
+                </button>
+              )}
             </div>
           </div>
         </form>

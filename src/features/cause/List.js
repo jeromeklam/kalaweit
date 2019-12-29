@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
 import { ResponsiveList } from '../common';
+import { causeTypeAsOptions } from '../cause-type/functions';
+import { siteAsOptions } from '../site/functions';
 
 export class List extends Component {
   static propTypes = {
@@ -102,7 +104,7 @@ export class List extends Component {
         name: 'id',
         label: 'Identifiant',
         col: 'id',
-        size: '5',
+        size: '4',
         mob_size: '',
         title: true,
         sortable: true,
@@ -122,22 +124,53 @@ export class List extends Component {
         name: 'type',
         label: 'Type',
         col: 'cause_type.caut_name',
-        size: '4',
+        size: '10',
         mob_size: '18',
         title: false,
+        sortable: true,
       },
-      { name: 'sex', label: 'M/F', col: 'cau_sex', size: '4', mob_size: '18', title: false },
       {
-        name: 'color',
-        label: 'Couleur',
-        col: 'cau_string_1',
+        name: 'sex',
+        label: 'M/F',
+        col: 'cau_sex',
         size: '4',
         mob_size: '18',
         title: false,
         sortable: true,
-        filterable: { type: 'text' },
       },
-      { name: 'site', label: 'Site', col: 'site.site_name', size: '9', mob_size: '', title: false },
+      {
+        name: 'site',
+        label: 'Site',
+        col: 'site.site_name',
+        size: '9',
+        mob_size: '',
+        title: false,
+        sortable: true,
+      },
+      {
+        name: 'type',
+        label: 'Type',
+        col: 'cause_type.caut_id',
+        size: '0',
+        mob_size: '0',
+        hidden: true,
+        filterable: {
+          type: 'select',
+          options: causeTypeAsOptions(this.props.causeType.items),
+        },
+      },
+      {
+        name: 'site',
+        label: 'Site',
+        col: 'site.site_id',
+        size: '0',
+        mob_size: '0',
+        hidden: true,
+        filterable: {
+          type: 'select',
+          options: siteAsOptions(this.props.site.items),
+        },
+      },
     ];
     // L'affichage, items, loading, loadMoreError
     let search = '';
@@ -175,6 +208,8 @@ export class List extends Component {
 function mapStateToProps(state) {
   return {
     cause: state.cause,
+    site: state.site,
+    causeType: state.causeType,
     causeMainType: state.causeMainType,
   };
 }

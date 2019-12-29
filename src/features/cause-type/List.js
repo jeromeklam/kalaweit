@@ -109,14 +109,6 @@ export class List extends Component {
         sortable: true,
         filterable: { type: 'text' },
       },
-      {
-        name: 'famille',
-        label: 'Famille',
-        col: 'cause_main_type.camt_name',
-        size: '10',
-        mob_size: '',
-        sortable: true,
-      },
     ];
     let search = '';
     const crit = this.props.causeType.filters.findFirst('caut_name');

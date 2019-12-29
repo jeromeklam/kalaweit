@@ -89,11 +89,6 @@ export class DesktopSidebar extends Component {
                 </NavLink>
               </li>
               <li>
-                <NavLink strict className="nav-link" to="/cause-main-type">
-                  <span>Familles de cause</span>
-                </NavLink>
-              </li>
-              <li>
                 <NavLink strict className="nav-link" to="/cause-type">
                   <span>Types de cause</span>
                 </NavLink>
