@@ -11,7 +11,7 @@ const initialState = {
     { key: '3', name: 'divers', label: 'Divers', shortcut: 'D', icon: 'misc' },
   ],
   filters: new Filter(),
-  sort: [],
+  sort: [{col:"site_name",way:"up"}],
   properties: [
     'number_1',
     'string_1',

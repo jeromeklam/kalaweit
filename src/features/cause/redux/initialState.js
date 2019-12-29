@@ -11,7 +11,7 @@ const initialState = {
     {key:"3", name:"divers", label:"Divers", shortcut:"D", icon:"misc"}
   ], 
   filters: new Filter(),
-  sort: [],
+  sort: [{col:"cau_name",way:"up"}],
   loadMorePending: false,
   loadMoreFinish: false,
   loadMoreError: null,

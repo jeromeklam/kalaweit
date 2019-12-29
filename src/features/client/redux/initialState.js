@@ -5,7 +5,7 @@ const initialState = {
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: new Filter(),
-  sort: [],
+  sort: [{col:"cli_lastname",way:"up"}, {col:"cli_firstname",way:"up"}],
   loadMorePending: false,
   loadMoreError: null,
   loadMoreFinish: false,

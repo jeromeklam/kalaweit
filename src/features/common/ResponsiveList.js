@@ -33,7 +33,7 @@ export class ResponsiveList extends Component {
     onLoadMore: PropTypes.func.isRequired,
     titleSearch: PropTypes.string,
     onSearch: PropTypes.func,
-    onSearchChange: PropTypes.func,
+    onClearFilters: PropTypes.func,
   };
 
   constructor(props) {
@@ -70,11 +70,11 @@ export class ResponsiveList extends Component {
           title={this.props.title}
           labelSearch={this.props.titleSearch}
           search={this.props.search}
-          onSearchChange={this.props.onSearchChange}
           onQuickSearch={this.props.onSearch}
           onReload={this.props.onReload}
           onCreate={this.props.onCreate}
           onToggleFilter={this.togglePanel}
+          onClearFilters={this.props.onClearFilters || (() => {})}
           filterEmpty={this.props.filters && this.props.filters.isEmpty()}
         />
         <Desktop>

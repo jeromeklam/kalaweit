@@ -4,35 +4,39 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { ButtonAddOne, ButtonReload, ButtonFilter, InputQuickSearch } from '../layout';
+import {
+  ButtonAddOne,
+  ButtonReload,
+  ButtonFilter,
+  ButtonFilterClear,
+  InputQuickSearch,
+} from '../layout';
 
 export class DesktopListHeader extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     onReload: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
-    filterEmpty: PropTypes.bool.isRequired
+    filterEmpty: PropTypes.bool.isRequired,
+    onClearFilters: PropTypes.func.isRequired,
   };
 
-constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
-      quickSearch: "",
-      filter: false
+      quickSearch: '',
+      filter: false,
     };
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onChangeSearch = this.onChangeSearch.bind(this);
   }
 
-  onQuickSearch(event) {    
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.onQuickSearch(this.state.quickSearch);
+  onQuickSearch(value) {
+    this.props.onQuickSearch(value);
   }
 
   onChangeSearch(event) {
-    this.setState({[event.target.name]: event.target.value});
+    this.setState({ [event.target.name]: event.target.value });
     if (event.clear) {
       this.props.onQuickSearch('');
     }
@@ -40,31 +44,49 @@ constructor(props) {
 
   render() {
     return (
-      <div className={classnames(this.props.common.sidebar && "common-desktop-list-header-menu", "common-desktop-list-header row row-list-title")}>
-        <div className="col-16">
+      <div
+        className={classnames(
+          this.props.common.sidebar && 'common-desktop-list-header-menu',
+          'common-desktop-list-header row row-list-title',
+        )}
+      >
+        <div className="col-10">
           <span>{this.props.title}</span>
         </div>
-        <div className="col-14">   
-          {this.props.onQuickSearch &&         
-            <InputQuickSearch 
+        <div className="col-14">
+          {this.props.onQuickSearch && (
+            <InputQuickSearch
               name="quickSearch"
               label={this.props.labelSearch}
-              quickSearch={this.props.search}  
+              quickSearch={this.props.search}
               onSubmit={this.onQuickSearch}
               onChange={this.props.onSearchChange}
             />
-          }            
-        </div>    
-        <div className="col-6 text-right">
+          )}
+        </div>
+        <div className="col-12 text-right">
           <ul className="nav justify-content-end">
             <li className="nav-item">
-              <ButtonReload color="white" onClick={this.props.onReload} />
+              <ButtonFilterClear
+                color="white"
+                onClick={this.props.onClearFilters}
+                icon={true}
+                disabled={this.props.search === ''}
+              />
             </li>
             <li className="nav-item">
-              <ButtonAddOne color="white" onClick={this.props.onCreate} />
+              <ButtonFilter
+                color="white"
+                filterEmpty={this.props.filterEmpty}
+                icon={true}
+                onClick={this.props.onToggleFilter}
+              />
             </li>
             <li className="nav-item">
-              <ButtonFilter color="white" filterEmpty={this.props.filterEmpty} icon={true} onClick={this.props.onToggleFilter} />
+              <ButtonReload color="white" onClick={this.props.onReload} icon={true} />
+            </li>
+            <li className="nav-item">
+              <ButtonAddOne color="white" onClick={this.props.onCreate} icon={true} />
             </li>
           </ul>
         </div>
@@ -72,7 +94,6 @@ constructor(props) {
     );
   }
 }
-
 
 function mapStateToProps(state) {
   return {
@@ -82,11 +103,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DesktopListHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(DesktopListHeader);

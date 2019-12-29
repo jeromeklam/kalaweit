@@ -6,7 +6,7 @@ const initialState = {
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: new Filter(),
-  sort: [],
+  sort: [{col:"email_subject",way:"up"}],
   loadMorePending: false,
   loadMoreFinish: false,
   loadMoreError: null,

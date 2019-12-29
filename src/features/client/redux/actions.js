@@ -8,3 +8,5 @@ export { updateSort } from './updateSort';
 export { setSort } from './setSort';
 export { updateQuickSearch } from './updateQuickSearch';
 export { setFilters } from './setFilters';
+export { initFilters } from './initFilters';
+export { initSort } from './initSort';

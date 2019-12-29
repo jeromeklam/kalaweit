@@ -1,33 +1,45 @@
 import React, { Component } from 'react';
 import { Desktop, Mobile } from '../common';
-import { Search as SearchIcon, FilterClear as FilterClearIcon } from '../icons';
+import { Search as SearchIcon } from '../icons';
 
 export default class InputQuickSearch extends Component {
   static propTypes = {};
 
   constructor(props) {
     super(props);
-    this.clear = this.clear.bind(this);
+    this.state = {
+      current: this.props.quickSearch,
+      search: this.props.quickSearch,
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  clear(event) {
+  static getDerivedStateFromProps(props, state) {
+    if (props.quickSearch !== state.current) {
+      return { current: props.quickSearch, search: props.quickSearch };
+    }
+    return null;
+  }
+
+  onChange(event) {
     if (event) {
       event.preventDefault();
-      const ev = {
-        target: {
-          name: this.props.name,
-          value: '',
-        },
-        clear: true,
-      };
-      this.props.onChange(ev);
     }
+    this.setState({ search: event.target.value });
+  }
+
+  onSubmit(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.onSubmit(this.state.search);
   }
 
   render() {
     return (
       <div className="input-quick_search">
-        <form onSubmit={this.props.onSubmit}>
+        <form onSubmit={this.onSubmit}>
           <div className="input-group">
             <Desktop>
               <input
@@ -35,8 +47,8 @@ export default class InputQuickSearch extends Component {
                 className="form-control"
                 name={this.props.name}
                 placeholder={this.props.label}
-                value={this.props.quickSearch}
-                onChange={this.props.onChange}
+                value={this.state.search}
+                onChange={this.onChange}
               />
             </Desktop>
             {this.props.mobileQuickSearch && (
@@ -45,20 +57,19 @@ export default class InputQuickSearch extends Component {
                   type="text"
                   className="form-control"
                   name={this.props.name}
-                  value={this.props.quickSearch}
-                  onChange={this.props.onChange}
+                  value={this.search}
+                  onChange={this.onChange}
                 />
               </Mobile>
             )}
             <div className="input-group-append">
-              <button type="submit" className="btn">
+              <button
+                type="button"
+                className="btn"
+                onClick={this.onSubmit}
+              >
                 <SearchIcon color="white" />
               </button>
-              {this.props.quickSearch != '' && (
-                <button type="button" className="btn" onClick={this.clear}>
-                  <FilterClearIcon color="white" />
-                </button>
-              )}
             </div>
           </div>
         </form>

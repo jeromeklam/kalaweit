@@ -29,7 +29,7 @@ export class List extends Component {
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
-    this.onSearchChange = this.onSearchChange.bind(this);
+    this.onClearFilters = this.onClearFilters.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
   }
@@ -60,12 +60,16 @@ export class List extends Component {
     this.props.actions.loadMore({}, true);
   }
 
-  onSearchChange(event) {
-    this.props.actions.updateQuickSearch(event.target.value);
-  }
-
   onQuickSearch(quickSearch) {
-    this.props.actions.loadMore({}, true);
+    this.props.actions.updateQuickSearch(quickSearch);
+    let timer = this.state.timer;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      this.props.actions.loadMore({}, true);
+    }, 2000);
+    this.setState({ timer: timer });
   }
 
   onUpdateSort(col, way, pos = 99) {
@@ -83,6 +87,19 @@ export class List extends Component {
   onSetFiltersAndSort(filters, sort) {
     this.props.actions.setFilters(filters);
     this.props.actions.setSort(sort);
+    let timer = this.state.timer;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      this.props.actions.loadMore({}, true);
+    }, 2000);
+    this.setState({ timer: timer });
+  }
+
+  onClearFilters() {
+    this.props.actions.initFilters();
+    this.props.actions.initSort();
     let timer = this.state.timer;
     if (timer) {
       clearTimeout(timer);
@@ -157,14 +174,14 @@ export class List extends Component {
     return (
       <ResponsiveList
         title="Sites"
-                cols={cols}
+        cols={cols}
         items={items || []}
         titleSearch="Recherche nom du site"
         search={search}
         sort={this.props.site.sort}
         filters={this.props.site.filters}
         onSearch={this.onQuickSearch}
-        onSearchChange={this.onSearchChange}
+        onClearFilters={this.onClearFilters}
         onSort={this.onUpdateSort}
         onSetFiltersAndSort={this.onSetFiltersAndSort}
         onReload={this.onReload}
