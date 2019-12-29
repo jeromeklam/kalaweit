@@ -22,9 +22,9 @@ export class List extends Component {
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
+    this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-    this.onLoadMore = this.onLoadMore.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
   }

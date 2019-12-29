@@ -4,3 +4,7 @@ export { createOne, dismissCreateOneError } from './createOne';
 export { updateOne, dismissUpdateOneError } from './updateOne';
 export { delOne, dismissDelOneError } from './delOne';
 export { clearItems } from './clearItems';
+export { setSort } from './setSort';
+export { setFilters } from './setFilters';
+export { updateQuickSearch } from './updateQuickSearch';
+export { updateSort } from './updateSort';

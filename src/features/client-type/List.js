@@ -4,9 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
-import {
-  ResponsiveList
-} from '../common';
+import { ResponsiveList } from '../common';
 
 export class List extends Component {
   static propTypes = {
@@ -16,12 +14,18 @@ export class List extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      timer: null,
+    };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
-    this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
+    this.onQuickSearch = this.onQuickSearch.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
+    this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
   }
 
   componentDidMount() {
@@ -50,8 +54,37 @@ export class List extends Component {
     this.props.actions.loadMore({}, true);
   }
 
+  onSearchChange(event) {
+    this.props.actions.updateQuickSearch(event.target.value);
+  }
+
   onQuickSearch(quickSearch) {
-    this.props.actions.loadMore(quickSearch, true);
+    this.props.actions.loadMore({}, true);
+  }
+
+  onUpdateSort(col, way, pos = 99) {
+    this.props.actions.updateSort(col.col, way, pos);
+    let timer = this.state.timer;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      this.props.actions.loadMore({}, true);
+    }, 2000);
+    this.setState({ timer: timer });
+  }
+
+  onSetFiltersAndSort(filters, sort) {
+    this.props.actions.setFilters(filters);
+    this.props.actions.setSort(sort);
+    let timer = this.state.timer;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      this.props.actions.loadMore({}, true);
+    }, 2000);
+    this.setState({ timer: timer });
   }
 
   onLoadMore(event) {
@@ -72,25 +105,38 @@ export class List extends Component {
         size: '30',
         mob_size: '36',
         title: false,
-      }
+        sortable: true,
+        filterable: { type: 'text' },
+      },
     ];
     // L'affichage, items, loading, loadMoreError
+    let search = '';
+    const crit = this.props.clientType.filters.findFirst('clit_name');
+    if (crit) {
+      search = crit.getFilterCrit();
+    }
     return (
       <ResponsiveList
         title="Types de client"
-        titleSearch="Recherche nom"
         cols={cols}
         items={items}
+        titleSearch="Recherche nom"
+        search={search}
+        sort={this.props.clientType.sort}
+        filters={this.props.clientType.filters}
         onSearch={this.onQuickSearch}
+        onSearchChange={this.onSearchChange}
+        onSort={this.onUpdateSort}
+        onSetFiltersAndSort={this.onSetFiltersAndSort}
         onReload={this.onReload}
         onCreate={this.onCreate}
         onGetOne={this.onGetOne}
         onDelOne={this.onDelOne}
+        onLoadMore={this.onLoadMore}
         mainCol="clit_name"
         loadMorePending={this.props.clientType.loadMorePending}
         loadMoreFinish={this.props.clientType.loadMoreFinish}
         loadMoreError={this.props.clientType.loadMoreError}
-        onLoadMore={this.onLoadMore}
       />
     );
   }
@@ -106,11 +152,8 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(List);

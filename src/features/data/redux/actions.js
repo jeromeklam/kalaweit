@@ -6,3 +6,4 @@ export { clearItems } from './clearItems';
 export { updateSort } from './updateSort';
 export { setSort } from './setSort';
 export { setFilters } from './setFilters';
+export { updateQuickSearch } from './updateQuickSearch';

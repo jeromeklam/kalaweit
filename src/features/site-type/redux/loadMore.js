@@ -10,9 +10,10 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadMore(args = {}, reload = false) {
-  return (dispatch, getState) => { // optionally you can have getState as the second argument
-    const loaded =  getState().siteType.loadMoreFinish;
-    const loading =  getState().siteType.loadMorePending;
+  return (dispatch, getState) => {
+    // optionally you can have getState as the second argument
+    const loaded = getState().siteType.loadMoreFinish;
+    const loading = getState().siteType.loadMorePending;
     if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
@@ -29,16 +30,30 @@ export function loadMore(args = {}, reload = false) {
       // It's hard to use state to manage it, but returning a promise allows you to easily achieve it.
       // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
       const promise = new Promise((resolve, reject) => {
-        // doRequest is a placeholder Promise. You should replace it with your own logic.
-        // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
-        // args.error here is only for test coverage purpose.
-        const params = {
+        let filters = getState().siteType.filters.asJsonApiObject();
+        let params = {
           page: { number: getState().siteType.page_number, size: getState().siteType.page_size },
+          ...filters,
         };
+        let sort = '';
+        getState().siteType.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
+        }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/site_type' + addUrl, {});
         doRequest.then(
-          (res) => {
+          res => {
             dispatch({
               type: SITE_TYPE_LOAD_MORE_SUCCESS,
               data: res,
@@ -46,7 +61,7 @@ export function loadMore(args = {}, reload = false) {
             resolve(res);
           },
           // Use rejectHandler as the second argument so that render errors won't be caught.
-          (err) => {
+          err => {
             dispatch({
               type: SITE_TYPE_LOAD_MORE_FAILURE,
               data: { error: err },
@@ -57,7 +72,7 @@ export function loadMore(args = {}, reload = false) {
       });
 
       return promise;
-    }      
+    }
   };
 }
 
@@ -81,7 +96,6 @@ export function reducer(state, action) {
         items: [],
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
-        filters: [],
       };
 
     case SITE_TYPE_LOAD_MORE_BEGIN:
@@ -116,9 +130,9 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
-        loadMoreFinish: (nbre < state.page_size),
+        loadMoreFinish: nbre < state.page_size,
         items: list,
-        page_number: state.page_number+1
+        page_number: state.page_number + 1,
       };
 
     case SITE_TYPE_LOAD_MORE_FAILURE:

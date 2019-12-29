@@ -49,12 +49,6 @@ export class DesktopSidebar extends Component {
           {this.props.auth.authenticated ? (
             <div>
               <li>
-                <NavLink strict className="nav-link" to="/site">
-                  <SiteIcon />
-                  <span>Sites</span>
-                </NavLink>
-              </li>
-              <li>
                 <NavLink strict className="nav-link" to="/client">
                   <PersonIcon />
                   <span>Membres</span>
@@ -90,15 +84,21 @@ export class DesktopSidebar extends Component {
                 </NavLink>
               </li>
               <li>
-                <NavLink strict className="nav-link" to="/cause-type">
-                  <span>Races d'animaux</span>
+                <NavLink strict className="nav-link" to="/site">
+                  <span>Sites</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink strict className="nav-link" to="/cause-main-type">
-                  <span>Espèces d'animaux</span>
+                  <span>Familles de cause</span>
                 </NavLink>
               </li>
+              <li>
+                <NavLink strict className="nav-link" to="/cause-type">
+                  <span>Types de cause</span>
+                </NavLink>
+              </li>
+
               <li className="header">
                 <hr />
               </li>

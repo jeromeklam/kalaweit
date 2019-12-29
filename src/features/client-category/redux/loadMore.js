@@ -25,18 +25,28 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
+        let filters = getState().clientCategory.filters.asJsonApiObject();
         let params = {
           page: {
             number: getState().clientCategory.page_number,
             size: getState().clientCategory.page_size,
           },
+          ...filters,
         };
-        if (args && Object.keys(args).length > 0 && args !== '') {
-          params.filter = {
-            and: {
-              clic_name: args,
-            },
-          };
+        let sort = '';
+        getState().clientCategory.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
         }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/client_category' + addUrl, {});
@@ -117,9 +127,9 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
-        loadMoreFinish: (nbre < state.page_size),
+        loadMoreFinish: nbre < state.page_size,
         items: list,
-        page_number: state.page_number+1
+        page_number: state.page_number + 1,
       };
 
     case CLIENT_CATEGORY_LOAD_MORE_FAILURE:

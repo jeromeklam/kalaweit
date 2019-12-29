@@ -2,16 +2,14 @@
 // putting related actions and reducers in one file. See more at:
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da
 
-import {
-  CLIENT_UPDATE_SORT,
-} from './constants';
+import { CLIENT_UPDATE_SORT } from './constants';
 
 export function updateSort(col, way, pos = 99) {
   return {
     type: CLIENT_UPDATE_SORT,
     col: col,
     way: way,
-    pos: pos
+    pos: pos,
   };
 }
 
@@ -33,7 +31,7 @@ export function reducer(state, action) {
         if (action.pos >= nSort.length) {
           nSort.push(elt);
         } else {
-          nSort = nSort.splice(action.pos-1, 0, elt);
+          nSort = nSort.splice(action.pos - 1, 0, elt);
         }
       }
       return {

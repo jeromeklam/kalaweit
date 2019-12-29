@@ -29,12 +29,26 @@ export function loadMore(args = {}, reload = false) {
       // It's hard to use state to manage it, but returning a promise allows you to easily achieve it.
       // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
       const promise = new Promise((resolve, reject) => {
-        // doRequest is a placeholder Promise. You should replace it with your own logic.
-        // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
-        // args.error here is only for test coverage purpose.
-        const params = {
+        let filters = getState().email.filters.asJsonApiObject();
+        let params = {
           page: { number: getState().email.page_number, size: getState().email.page_size },
+          ...filters,
         };
+        let sort = '';
+        getState().email.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
+        }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/core/email' + addUrl, {});
         doRequest.then(
@@ -81,7 +95,6 @@ export function reducer(state, action) {
         items: [],
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
-        filters: [],
       };
 
     case EMAIL_LOAD_MORE_BEGIN:
