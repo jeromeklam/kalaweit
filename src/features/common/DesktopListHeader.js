@@ -11,6 +11,7 @@ export class DesktopListHeader extends Component {
     title: PropTypes.string.isRequired,
     onReload: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
+    filterEmpty: PropTypes.bool.isRequired
   };
 
 constructor(props) {
@@ -63,7 +64,7 @@ constructor(props) {
               <ButtonAddOne color="white" onClick={this.props.onCreate} />
             </li>
             <li className="nav-item">
-              <ButtonFilter color="white" icon={true} onClick={this.props.onToggleFilter} />
+              <ButtonFilter color="white" filterEmpty={this.props.filterEmpty} icon={true} onClick={this.props.onToggleFilter} />
             </li>
           </ul>
         </div>

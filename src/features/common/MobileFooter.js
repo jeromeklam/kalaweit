@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { Link } from 'react-router-dom';
 import {
   Home as HomeIcon,
-  Map as MapIcon,
+  Person as PersonIcon,
   Site as SiteIcon,
   Cause as CauseIcon,
   Data as DataIcon,
@@ -30,8 +30,8 @@ export class MobileFooter extends Component {
               </Link>
             </div>
             <div className="col-7 text-center">
-              <Link className="nav-link" to="/pigeon-map">
-                <MapIcon color="white" />
+              <Link className="nav-link" to="/client">
+                <PersonIcon color="white" />
               </Link>
             </div>
             <div className="col-7 text-center">
@@ -45,7 +45,7 @@ export class MobileFooter extends Component {
               </Link>
             </div>
             <div className="col-7 text-center">
-              <a className="nav-link" href="#" onClick={this.props.onToggle}>
+              <a className="nav-link" onClick={this.props.onToggle}>
                 <DataIcon color="white" />
               </a>
             </div>

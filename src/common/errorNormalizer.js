@@ -1,9 +1,3 @@
-import camelCase from 'lodash/camelCase';
-import isArray from 'lodash/isArray';
-import isNull from 'lodash/isNull';
-import keys from 'lodash/keys';
-import merge from 'lodash/merge';
-
 export default function getFieldErrorMessage(errors, fieldName, messdef='') {
   let ret = messdef;
   if (errors && errors.errors) {

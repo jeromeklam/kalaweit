@@ -4,9 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
-import {
-  ResponsiveList,
-} from '../common';
+import { ResponsiveList } from '../common';
 import { dataTypes } from './functions';
 
 /**
@@ -20,9 +18,18 @@ export class List extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      timer: null,
+    };
     this.onCreate = this.onCreate.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
+    this.onDelOne = this.onDelOne.bind(this);
+    this.onLoadMore = this.onLoadMore.bind(this);
+    this.onQuickSearch = this.onQuickSearch.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
+    this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +51,14 @@ export class List extends Component {
     this.props.history.push('/data/modify/' + id);
   }
 
+  onDelOne(id) {
+    console.log('@TODO');
+  }
+
+  onLoadMore() {
+    this.props.actions.loadMore({}, true);
+  }
+
   onReload(event) {
     if (event) {
       event.preventDefault();
@@ -51,33 +66,92 @@ export class List extends Component {
     this.props.actions.loadMore({}, true);
   }
 
+  onSearchChange(event) {
+    this.props.actions.updateQuickSearch(event.target.value);
+  }
+
+  onQuickSearch(quickSearch) {
+    this.props.actions.loadMore({}, true);
+  }
+
+  onUpdateSort(col, way, pos = 99) {
+    this.props.actions.updateSort(col.col, way, pos);
+    let timer = this.state.timer;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      this.props.actions.loadMore({}, true);
+    }, 2000);
+    this.setState({ timer: timer });
+  }
+
+  onSetFiltersAndSort(filters, sort) {
+    this.props.actions.setFilters(filters);
+    this.props.actions.setSort(sort);
+    let timer = this.state.timer;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      this.props.actions.loadMore({}, true);
+    }, 2000);
+    this.setState({ timer: timer });
+  }
+
   render() {
     // Les des items à afficher avec remplissage progressif
-    let items = false;
+    let items = [];
     if (this.props.data.items.FreeAsso_Data) {
       items = buildModel(this.props.data.items, 'FreeAsso_Data');
     }
     const cols = [
-      { name: 'name', label: 'Nom', size: "20", col: 'data_name', title: true },
-      { name: 'type', label: 'Type', size: "10", col: 'data_type', type: "switch", values: dataTypes() },
+      {
+        name: 'name',
+        label: 'Nom',
+        size: '20',
+        col: 'data_name',
+        title: true,
+        sortable: true,
+        filterable: { type: 'text' },
+      },
+      {
+        name: 'type',
+        label: 'Type',
+        size: '10',
+        col: 'data_type',
+        type: 'switch',
+        values: dataTypes(),
+      },
     ];
     // L'affichage, items, loading, loadMoreError
+    let search = '';
+    const crit = this.props.data.filters.findFirst('data_name');
+    if (crit) {
+      search = crit.getFilterCrit();
+    }
     return (
       <ResponsiveList
         title="Variables"
-        titleSearch="Recherche nom"
         cols={cols}
         items={items}
+        titleSearch="Recherche nom"
+        search={search}
+        sort={this.props.data.sort}
+        filters={this.props.data.filters}
         onSearch={this.onQuickSearch}
+        onSearchChange={this.onSearchChange}
+        onSort={this.onUpdateSort}
+        onSetFiltersAndSort={this.onSetFiltersAndSort}
         onReload={this.onReload}
         onCreate={this.onCreate}
         onGetOne={this.onGetOne}
         onDelOne={this.onDelOne}
+        onLoadMore={this.onLoadMore}
         mainCol="data_name"
         loadMorePending={this.props.data.loadMorePending}
         loadMoreFinish={this.props.data.loadMoreFinish}
         loadMoreError={this.props.data.loadMoreError}
-        onLoadMore={this.onLoadMore}
       />
     );
   }

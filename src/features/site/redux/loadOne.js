@@ -79,7 +79,7 @@ export function reducer(state, action) {
         ...state,
         loadOnePending: false,
         loadOneItem: item,
-        loadOneRaw: item,
+        loadOneRaw: raw,
         loadOneError: null,
       };
 

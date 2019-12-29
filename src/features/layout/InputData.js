@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { buildModel } from '../../common';
-import { 
-  InputText, 
-  InputTextArea, 
-  InputSelect, 
-  InputCheckbox 
-} from '../layout';
+import { InputText, InputTextArea, InputSelect, InputCheckbox } from '../layout';
 
 function getFieldData(field_name, tab_config, tab_data) {
   const myDatas = buildModel(tab_data, 'FreeAsso_Data');
@@ -14,7 +9,7 @@ function getFieldData(field_name, tab_config, tab_data) {
     //console.log(key);
     //console.log(tab_config.FreeAsso_Config[key]);
     if (
-      tab_config.FreeAsso_Config[key].attributes.acfg_code ==
+      tab_config.FreeAsso_Config[key].attributes.acfg_code ===
       'DATA_ID@' + field_name.toUpperCase()
     ) {
       const data_id = tab_config.FreeAsso_Config[key].attributes.acfg_value;

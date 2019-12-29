@@ -19,50 +19,54 @@ export class DesktopListTitle extends Component {
         )}
       >
         {this.props.cols.map((oneCol, i) => {
-          const first = i === 0;
-          const last = i === this.props.cols.length - 1;
-          const found = sort && sort.find(element => element.col === oneCol.col);
-          let crt = 'none';
-          let way = 'up';
-          let title = 'Aucun tri';
-          if (found) {
-            crt = found.way;
-            if (found.way === 'up') {
-              title = 'Tri croissant';
-              way = 'down';
-            } else {
-              title = 'Tri décroissant';
-              way = 'none';
-            }
-          } else {
-            way = 'up';
-          }
-          return (
-            <div
-              key={oneCol.name}
-              title={title}
-              className={classnames(
-                'col-' + oneCol.size,
-                'col-vertical-align',
-                oneCol.sortable && 'sortable',
-                first && 'col-first',
-                last && 'col-last',
-              )}
-              onClick={() => {
-                this.props.onSort(oneCol, way);
-              }}
-            >
-              <span>{oneCol.label}</span>
-              {
-                {
-                  down: <SortDown color="black" className="list-sort-icon" />,
-                  up: <SortUp color="black" className="list-sort-icon" />,
-                  none: <Sort color="black" className="list-sort-icon" />,
-                  default: <Sort color="black" className="list-sort-icon" />,
-                }[crt]
+          if (!oneCol.hidden) {
+            const first = i === 0;
+            const last = i === this.props.cols.length - 1;
+            const found = sort && sort.find(element => element.col === oneCol.col);
+            let crt = 'none';
+            let way = 'up';
+            let title = 'Aucun tri';
+            if (found) {
+              crt = found.way;
+              if (found.way === 'up') {
+                title = 'Tri croissant';
+                way = 'down';
+              } else {
+                title = 'Tri décroissant';
+                way = 'none';
               }
-            </div>
-          );
+            } else {
+              way = 'up';
+            }
+            return (
+              <div
+                key={oneCol.name}
+                title={title}
+                className={classnames(
+                  'col-' + oneCol.size,
+                  'col-vertical-align',
+                  oneCol.sortable && 'sortable',
+                  first && 'col-first',
+                  last && 'col-last',
+                )}
+                onClick={() => {
+                  this.props.onSort(oneCol, way);
+                }}
+              >
+                <span>{oneCol.label}</span>
+                {oneCol.sortable &&
+                  {
+                    down: <SortDown color="black" className="list-sort-icon" />,
+                    up: <SortUp color="black" className="list-sort-icon" />,
+                    none: <Sort color="black" className="list-sort-icon" />,
+                    default: <Sort color="black" className="list-sort-icon" />,
+                  }[crt]
+                }
+              </div>
+            );
+          } else {
+            return null;
+          }
         })}
       </div>
     );

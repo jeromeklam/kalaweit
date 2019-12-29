@@ -114,7 +114,7 @@ export class ListGroup extends Component {
                       <div
                         className={classnames(
                           'card w-100',
-                          this.state.selected == item.id && 'active',
+                          this.state.selected === item.id && 'active',
                         )}
                       >
                         <div className="card-header">

@@ -1,15 +1,9 @@
 import {
   FILTER_MODE_OR,
-  FILTER_MODE_AND,
   FILTER_OPER_LIKE,
-  FILTER_OPER_EQUAL,
-  FILTER_OPER_EMPTY,
-  FILTER_OPER_NOT_EMPTY,
   FILTER_TYPE_GROUP,
   FILTER_TYPE_ELEM,
   FILTER_SEARCH_NONE,
-  FILTER_SEARCH_QUICK,
-  FILTER_SEARCH_SIMPLE
 } from './';
 
 /**
@@ -153,5 +147,9 @@ export default class Filter {
     const datas = this.data;
     newFilter.data = { ...datas };
     return newFilter;
+  }
+
+  isEmpty() {
+    return this.data.filters.length <= 0;
   }
 }

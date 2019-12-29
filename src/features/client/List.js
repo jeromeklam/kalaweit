@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
 import { ResponsiveList } from '../common';
+import { clientCategoryAsOptions } from '../client-category';
 
 export class List extends Component {
   static propTypes = {
@@ -54,16 +55,16 @@ export class List extends Component {
     this.props.actions.loadMore({}, true);
   }
 
+  onLoadMore(event) {
+    this.props.actions.loadMore();
+  }
+
   onSearchChange(event) {
     this.props.actions.updateQuickSearch(event.target.value);
   }
 
   onQuickSearch(quickSearch) {
     this.props.actions.loadMore({}, true);
-  }
-
-  onLoadMore(event) {
-    this.props.actions.loadMore();
   }
 
   onUpdateSort(col, way, pos = 99) {
@@ -79,7 +80,6 @@ export class List extends Component {
   }
 
   onSetFiltersAndSort(filters, sort) {
-    console.log(filters, sort);
     this.props.actions.setFilters(filters);
     this.props.actions.setSort(sort);
     let timer = this.state.timer;
@@ -106,7 +106,7 @@ export class List extends Component {
         size: '4',
         mob_size: '',
         sortable: true,
-        filterable: { type: 'Text' },
+        filterable: { type: 'text' },
         title: true,
       },
       {
@@ -116,7 +116,7 @@ export class List extends Component {
         size: '6',
         mob_size: '',
         sortable: true,
-        filterable: { type: 'Text' },
+        filterable: { type: 'text' },
         title: true,
       },
       {
@@ -126,7 +126,7 @@ export class List extends Component {
         size: '7',
         mob_size: '36',
         sortable: true,
-        filterable: { type: 'Text' },
+        filterable: { type: 'text' },
         title: false,
       },
       {
@@ -136,7 +136,7 @@ export class List extends Component {
         size: '7',
         mob_size: '36',
         sortable: true,
-        filterable: { type: 'Text' },
+        filterable: { type: 'text' },
         title: false,
       },
       {
@@ -146,8 +146,22 @@ export class List extends Component {
         size: '10',
         mob_size: '36',
         sortable: true,
-        filterable: { type: 'Text' },
+        filterable: { type: 'text' },
         title: false,
+      },
+      {
+        name: 'category',
+        label: 'Category',
+        col: 'clic_id',
+        size: '0',
+        mob_size: 'à',
+        sortable: false,
+        filterable: {
+          type: 'select',
+          options: clientCategoryAsOptions(this.props.clientCategory.items),
+        },
+        title: false,
+        hidden: true,
       },
     ];
     // L'affichage, items, loading, loadMoreError
@@ -163,10 +177,10 @@ export class List extends Component {
         items={items}
         titleSearch="Recherche nom, prénom"
         search={search}
-        onSearch={this.onQuickSearch}
-        onSearchChange={this.onSearchChange}
         sort={this.props.client.sort}
         filters={this.props.client.filters}
+        onSearch={this.onQuickSearch}
+        onSearchChange={this.onSearchChange}
         onSort={this.onUpdateSort}
         onSetFiltersAndSort={this.onSetFiltersAndSort}
         onReload={this.onReload}
@@ -187,6 +201,7 @@ export class List extends Component {
 function mapStateToProps(state) {
   return {
     client: state.client,
+    clientCategory: state.clientCategory,
   };
 }
 

@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ResponsiveModal } from '../common';
 import { LoadingData } from './';
-import FilterIcon from '../icons/Filter';
-import DeleteIcon from '../icons/DelOne';
-import CloseIcon from '../icons/Close';
 
 export default class SearchModal extends Component {
   static propTypes = {
@@ -23,7 +20,7 @@ export default class SearchModal extends Component {
   constructor(props) {
     super(props);
     let filters = this.props.filters;
-    filters.map(item => {
+    filters.forEach(item => {
       item.value = '';
     });
     this.state = {
@@ -37,7 +34,7 @@ export default class SearchModal extends Component {
 
   onChange(event) {
     let filters = this.state.fields;
-    filters.map(item => {
+    filters.forEach(item => {
       if (item.name === event.target.name) {
         item.value = event.target.value;
       }
@@ -47,7 +44,7 @@ export default class SearchModal extends Component {
 
   onClear(event) {
     let filters = this.state.fields;
-    filters.map(item => {
+    filters.forEaach(item => {
       item.value = '';
     });
     this.setState({ fields: filters });
@@ -56,7 +53,7 @@ export default class SearchModal extends Component {
 
   onSearch(event) {
     let params = false;
-    this.state.fields.map(item => {
+    this.state.fields.forEach(item => {
         if (item.value !== '') {
           if (params === false) {
             params = { filter: { [this.state.condition]: {} }};

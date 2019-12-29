@@ -54,20 +54,24 @@ export default class DesktopListLine extends Component {
         <HoverObserver onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
           <div className="row">
             {this.props.cols.map((oneCol, i) => {
-              const line = { ...oneCol, id: this.props.id };
-              const content = getObjectmemberValue(item, oneCol.col);
-              const first = (i === 0);
-              const last = (i === this.props.cols.length-1);
-              return (
-                <DesktopListLineCol
-                  key={line.name}
-                  content={content}
-                  {...line}
-                  first={first}
-                  last={last}
-                  onGetOne={this.props.onGetOne}
-                />
-              );
+              if (!oneCol.hidden) {
+                const line = { ...oneCol, id: this.props.id };
+                const content = getObjectmemberValue(item, oneCol.col);
+                const first = (i === 0);
+                const last = (i === this.props.cols.length-1);
+                return (
+                  <DesktopListLineCol
+                    key={line.name}
+                    content={content}
+                    {...line}
+                    first={first}
+                    last={last}
+                    onGetOne={this.props.onGetOne}
+                  />
+                );
+              } else {
+                return null;
+              }
             })}
             {this.state.flipped && (
               <div className="col-navbar col-vertical-align">

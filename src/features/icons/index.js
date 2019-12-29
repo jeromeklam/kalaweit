@@ -35,3 +35,4 @@ export { default as SortUp } from './SortUp';
 export { default as SortDown } from './SortDown';
 export { default as SimpleValid } from './SimpleValid';
 export { default as SimpleCancel } from './SimpleCancel';
+export { default as FilterFull } from './FilterFull';

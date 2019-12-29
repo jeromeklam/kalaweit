@@ -75,6 +75,7 @@ export class ResponsiveList extends Component {
           onReload={this.props.onReload}
           onCreate={this.props.onCreate}
           onToggleFilter={this.togglePanel}
+          filterEmpty={this.props.filters && this.props.filters.isEmpty()}
         />
         <Desktop>
           <DesktopListTitle

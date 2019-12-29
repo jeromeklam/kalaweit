@@ -72,7 +72,6 @@ export class App extends Component {
     if (position && position.coords) {
       this.props.actions.setCoords({ lat: position.coords.latitude, lon: position.coords.longitude})
     }
-    console.log(position);
   }
 
   onToggle() {

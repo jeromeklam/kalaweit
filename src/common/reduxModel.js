@@ -1,5 +1,3 @@
-import cloneDeep from 'lodash/cloneDeep';
-
 /**
  * get unqId
  * 
@@ -55,7 +53,7 @@ export function buildModel(reducer, objectName, id = null, providedOpts = {}, ca
     return null;
   }
   if (id === null || Array.isArray(id)) {
-    if (reducer['MAINELEM'] == objectName) {
+    if (reducer['MAINELEM'] === objectName) {
       const idList = reducer['SORTEDELEMS'];
       return idList.map(e => buildModel(reducer, objectName, e, options, cache));
     } else {

@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  FILTER_MODE_OR,
-  FILTER_MODE_AND,
-  FILTER_OPER_LIKE,
-  FILTER_OPER_EQUAL,
-  FILTER_OPER_EMPTY,
-  FILTER_OPER_NOT_EMPTY,
-  Filter,
-} from './';
+import { FILTER_MODE_OR, FILTER_MODE_AND, FILTER_OPER_LIKE, FILTER_OPER_EQUAL } from './';
 
 export default class FilterBuilder extends Component {
   static propTypes = {
@@ -64,6 +56,28 @@ export default class FilterBuilder extends Component {
               value = elem.getFilterCrit();
             }
             switch (col.filterable.type) {
+              case 'select':
+                return (
+                  <div key={col.col}>
+                    <div className="form-group">
+                      <label htmlFor={col.col} className="">
+                        {col.label}
+                      </label>
+                      <select
+                        id={col.col}
+                        name={col.col}
+                        value={value}
+                        className="form-control"
+                        onChange={this.props.onChange}
+                      >
+                        <option key="0" value=""></option>
+                        {col.filterable.options.map(elt => (
+                          <option key={elt.value} value={elt.value}>{elt.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                );
               default:
                 return (
                   <div key={col.col}>

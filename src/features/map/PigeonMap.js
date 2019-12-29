@@ -195,12 +195,14 @@ export class PigeonMap extends Component {
                         anchor={coord}
                         payload={item.id}
                         onClick={this.onMarkerClick}
-                        hover={this.state.selected == item.id}
+                        hover={this.state.selected === item.id}
                       />
                     );
+                  } else {
+                    return null;
                   }
                 })}
-              {this.state.moved && this.state.moved.id == this.state.selected && (
+              {this.state.moved && this.state.moved.id === this.state.selected && (
                 <Draggable
                   anchor={this.state.center}
                   offset={[14, 30]}
@@ -209,7 +211,7 @@ export class PigeonMap extends Component {
                     this.onDragEnd(anchor, this.state.moved);
                   }}
                 >
-                  <img className="map-selector" src={mapselect} />
+                  <img className="map-selector" src={mapselect} alt="selector" />
                 </Draggable>
               )}
             </Map>
@@ -257,12 +259,14 @@ export class PigeonMap extends Component {
                         anchor={coord}
                         payload={item.id}
                         onClick={this.onMarkerClick}
-                        hover={this.state.selected == item.id}
+                        hover={this.state.selected === item.id}
                       />
                     );
+                  } else {
+                    return null;
                   }
                 })}
-              {this.state.moved && this.state.moved.id == this.state.selected && (
+              {this.state.moved && this.state.moved.id === this.state.selected && (
                 <Draggable
                   anchor={this.state.center}
                   offset={[14, 30]}
@@ -271,7 +275,7 @@ export class PigeonMap extends Component {
                     this.onDragEnd(anchor, this.state.moved);
                   }}
                 >
-                  <img className="map-selector" src={mapselect} />
+                  <img className="map-selector" src={mapselect} alt="selector"/>
                 </Draggable>
               )}
             </Map>

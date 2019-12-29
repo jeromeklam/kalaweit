@@ -8,7 +8,6 @@ import * as actions from './redux/actions';
 import AboutIcon from '../icons/About';
 import LoginIcon from '../icons/Login';
 import HomeIcon from '../icons/Home';
-import MapIcon from '../icons/Map';
 import SiteIcon from '../icons/Site';
 import CauseIcon from '../icons/Cause';
 import PersonIcon from '../icons/Person';
@@ -49,12 +48,6 @@ export class DesktopSidebar extends Component {
           </li>
           {this.props.auth.authenticated ? (
             <div>
-              <li>
-                <NavLink strict className="nav-link" to="/pigeon-map">
-                  <MapIcon />
-                  <span>Carte</span>
-                </NavLink>
-              </li>
               <li>
                 <NavLink strict className="nav-link" to="/site">
                   <SiteIcon />

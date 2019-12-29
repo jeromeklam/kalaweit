@@ -41,7 +41,7 @@ function extractRelationships(relationships, { camelizeKeys }) {
 
 function extractErrors(json, { camelizeKeys }) {
   let ret = [];
-  json.map((elem) => {
+  json.forEach((elem) => {
     elem['isFlash'] = true;
     if (elem.meta && elem.meta.field) {
       elem['isFlash'] = false;
@@ -291,14 +291,15 @@ export function getJsonApiWithRelationships(name, id_field, attributes, relation
  */
 export function getFieldError(errors, field) {
   let error = false;
-  errors.some(function(val, i) {
-    if (val.source && val.source.parameter && val.source.parameter == field) {
+  errors.some((val, i) => {
+    if (val.source && val.source.parameter && val.source.parameter === field) {
       error = {
         code: val.code,
         label: val.title
       };
       return true;
     }
+    return false;
   });
   return error;
 }

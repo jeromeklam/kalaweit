@@ -26,17 +26,19 @@ const sortLocal = (cols, sort) => {
     local.push(newElt);
   });
   cols.forEach(elt => {
-    const found = local.find(elt2 => {
-      return elt2.col === elt.col;
-    });
-    if (!found) {
-      let newElt = {
-        col: elt.col,
-        way: 'none',
-        label: elt.label,
-        full: elt,
-      };
-      local.push(newElt);
+    if (elt.sortable) {
+      const found = local.find(elt2 => {
+        return elt2.col === elt.col;
+      });
+      if (!found) {
+        let newElt = {
+          col: elt.col,
+          way: 'none',
+          label: elt.label,
+          full: elt,
+        };
+        local.push(newElt);
+      }
     }
   });
   return local;

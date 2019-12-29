@@ -24,7 +24,7 @@ export default class FormResponsive extends Component {
                         }}
                       >
                         {oneTab.icon && <TabIcon name={oneTab.icon} color="white" />}
-                        {oneTab.icon == '' && oneTab.shortcut}
+                        {oneTab.icon === '' && oneTab.shortcut}
                       </ButtonTab>
                     </li>
                   );
