@@ -1,7 +1,5 @@
-import {Filter} from '../../filter';
-import {
-  DATA_INIT_FILTERS,
-} from './constants';
+import { Filter } from '../../filter';
+import { DATA_INIT_FILTERS } from './constants';
 
 export function initFilters() {
   return {

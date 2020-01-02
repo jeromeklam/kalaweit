@@ -81,7 +81,7 @@ export class App extends Component {
   render() {
     if (this.props.home.loadAllError) {
       return (
-        <div class="text-danger">
+        <div className="text-danger">
           <span>Erreur d'accès au service</span>
         </div>
       );

@@ -22,6 +22,7 @@ import mapReducer from '../features/map/redux/reducer';
 import dashboardReducer from '../features/dashboard/redux/reducer';
 import filterReducer from '../features/filter/redux/reducer';
 import sortReducer from '../features/sort/redux/reducer';
+import countryReducer from '../features/country/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -52,6 +53,7 @@ const reducerMap = {
   dashboard: dashboardReducer,
   filter: filterReducer,
   sort: sortReducer,
+  country: countryReducer,
 };
 
 export default combineReducers(reducerMap);

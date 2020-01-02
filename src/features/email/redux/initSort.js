@@ -1,10 +1,4 @@
-// Rekit uses a new approach to organizing actions and reducers. That is
-// putting related actions and reducers in one file. See more at:
-// https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da
-
-import {
-  EMAIL_INIT_SORT,
-} from './constants';
+import { EMAIL_INIT_SORT } from './constants';
 
 export function initSort() {
   return {
@@ -17,7 +11,7 @@ export function reducer(state, action) {
     case EMAIL_INIT_SORT:
       return {
         ...state,
-        sort: [{col:"email_subject",way:"up"}],
+        sort: [{ col: 'email_subject', way: 'up' }],
       };
 
     default:

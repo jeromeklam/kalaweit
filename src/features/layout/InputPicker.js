@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { More, DelOne } from '../icons';
 
@@ -20,11 +21,11 @@ export default class InputPicker extends Component {
   render() {
     return (
       <div className="client-input-picker">
-        <div className="form-group row layout-input-picker">
-          <label className="col-sm-6 col-form-label">
+        <div className={classnames("form-group layout-input-picker", !this.props.label && "row")}>
+          <label className={classnames(!this.props.label && "col-sm-6 col-form-label")}>
             {this.props.label}
           </label>
-          <div className="col-sm-30">
+          <div className={classnames(!this.props.label && "col-sm-30")}>
             <div className="row">
               <div className="col-36 input-group">
                 <input type="hidden" name={'autocomplete-field-@'} value={this.props.value} />

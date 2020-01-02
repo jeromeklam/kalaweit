@@ -30,7 +30,15 @@ export default class InputText extends Component {
               {this.props.required && <span>&nbsp;*</span>}
             </label>
           )}
-          <input type="text" id={props.id} className="form-control" {...props} />
+          <input
+            type="text"
+            className="form-control"
+            id={props.id}
+            name={props.name}
+            value={props.value || ''}
+            required={props.required || false}
+            onChange={this.props.onChange}
+          />
         </div>
       );
     } else {
@@ -41,7 +49,15 @@ export default class InputText extends Component {
             {this.props.required && <span>&nbsp;*</span>}
           </label>
           <div className="col-sm-30">
-            <input type="text" id={props.id} className="form-control" {...props} />
+            <input
+              type="text"
+              className="form-control"
+              id={props.id}
+              name={props.name}
+              value={props.value || ''}
+              required={props.required || false}
+              onChange={this.props.onChange}
+            />
           </div>
         </div>
       );

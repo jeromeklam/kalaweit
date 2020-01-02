@@ -4,9 +4,8 @@ import {
   AUTH_CHECK_IS_AUTHENTICATED_FAILURE,
   AUTH_CHECK_IS_AUTHENTICATED_DISMISS_ERROR,
 } from './constants';
+import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import {
-  jsonApiNormalizer,
-  buildModel,
   initAxios,
   freeAssoApi
 } from '../../../common';

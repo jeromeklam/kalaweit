@@ -1,4 +1,5 @@
-import { freeAssoApi, jsonApiNormalizer, objectToQueryString } from '../../../common';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   CAUSE_MAIN_TYPE_LOAD_MORE_INIT,
   CAUSE_MAIN_TYPE_LOAD_MORE_BEGIN,

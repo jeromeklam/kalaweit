@@ -11,6 +11,7 @@ import { loadMore as loadMoreSite } from '../../site/redux/loadMore';
 import { loadMore as loadMoreSiteType } from '../../site-type/redux/loadMore';
 import { loadMore as loadMoreCauseType } from '../../cause-type/redux/loadMore';
 import { loadMore as loadMoreCauseMainType } from '../../cause-main-type/redux/loadMore';
+import { loadMore as loadMoreCountry } from '../../country/redux/loadMore';
 import { loadMore as loadMoreClientType } from '../../client-type/redux/loadMore';
 import { loadMore as loadMoreClientCategory } from '../../client-category/redux/loadMore';
 import { loadMore as loadMoreDashboard } from '../../dashboard/redux/loadMore';
@@ -27,6 +28,7 @@ export function loadAll(args = {}) {
       dispatch(loadMoreLang()),
       dispatch(loadMoreData()),
       dispatch(loadMoreConfig()),
+      dispatch(loadMoreCountry()),
       dispatch(loadMoreSite()),
       dispatch(loadMoreSiteType()),
       dispatch(loadMoreCauseType()),

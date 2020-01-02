@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel } from '../../common';
+import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from '../common';
 import { clientCategoryAsOptions } from '../client-category';
 

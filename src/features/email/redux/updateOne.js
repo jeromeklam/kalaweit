@@ -1,20 +1,18 @@
-import {
-  freeAssoApi,
-  jsonApiNormalizer,
-  jsonApiUpdate
-} from '../../../common';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
 import {
   EMAIL_UPDATE_ONE_BEGIN,
   EMAIL_UPDATE_ONE_SUCCESS,
   EMAIL_UPDATE_ONE_FAILURE,
   EMAIL_UPDATE_ONE_DISMISS_ERROR,
-  EMAIL_UPDATE_ONE_UPDATE
+  EMAIL_UPDATE_ONE_UPDATE,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function updateOne(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: EMAIL_UPDATE_ONE_BEGIN,
     });
@@ -30,7 +28,7 @@ export function updateOne(args = {}) {
       const id = args.id;
       const doRequest = freeAssoApi.put('/v1/core/email/' + id, args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: EMAIL_UPDATE_ONE_SUCCESS,
             data: res,
@@ -39,7 +37,7 @@ export function updateOne(args = {}) {
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: EMAIL_UPDATE_ONE_FAILURE,
             data: { error: err },
@@ -95,14 +93,14 @@ export function reducer(state, action) {
       };
 
     case EMAIL_UPDATE_ONE_UPDATE:
-      let object  = jsonApiNormalizer(action.data.data);
+      let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
       let news = jsonApiUpdate(myItems, 'FreeFW_Email', object);
       return {
         ...state,
         updateOneError: null,
-        items: news
-      };     
+        items: news,
+      };
 
     default:
       return state;

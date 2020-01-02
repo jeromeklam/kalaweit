@@ -1,7 +1,5 @@
 import { Filter } from '../../filter';
-import {
-  EMAIL_INIT_FILTERS,
-} from './constants';
+import { EMAIL_INIT_FILTERS } from './constants';
 
 export function initFilters() {
   return {

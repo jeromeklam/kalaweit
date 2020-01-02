@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { getJsonApi, propagateModel } from '../../common';
+import { getJsonApi } from 'freejsonapi';
+import { propagateModel } from '../../common';
 import { LoadingData } from '../layout';
 import Form from './Form';
 
@@ -78,9 +79,13 @@ export class Modify extends Component {
           <div>
             {item && (
               <Form
+                tabs={this.props.client.tabs}
+                tab={this.props.client.tab}
                 item={item}
                 client_types={this.props.clientType.items}
                 client_categories={this.props.clientCategory.items}
+                countries={this.props.country.items}
+                languages={this.props.lang.items}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
               />
@@ -97,6 +102,8 @@ function mapStateToProps(state) {
     client: state.client,
     clientType: state.clientType,
     clientCategory: state.clientCategory,
+    country: state.country,
+    lang: state.lang,
   };
 }
 

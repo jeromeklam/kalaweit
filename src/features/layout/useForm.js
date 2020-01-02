@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { freeAssoApi, jsonApiNormalizer, buildModel } from '../../common';
+import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { freeAssoApi } from '../../common';
 
 const explodeReduxModel = obj => {
   let ret = { ...obj };
@@ -27,7 +28,7 @@ const _loadClient = id => {
   return freeAssoApi.get('/v1/asso/client/' + id, {});
 };
 
-const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab) => {
+const useForm = (initialState, initialTab, onSubmit, onCancel) => {
   const [values, setValues] = useState({
     ...initialState,
     currentTab: initialTab,

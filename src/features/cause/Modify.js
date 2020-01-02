@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi, propagateModel } from '../../common';
+import { getJsonApi } from 'freejsonapi';
+import { propagateModel } from '../../common';
 import { LoadingData } from '../layout';
 import Form from './Form';
 
@@ -83,7 +84,6 @@ export class Modify extends Component {
               <Form
                 item={item}
                 cause_types={this.props.causeType.items}
-                cause_main_types={this.props.causeMainType.items}
                 tab_datas={this.props.data.items}
                 tab_configs={this.props.config.items}
                 tab={this.props.cause.tab}
@@ -105,7 +105,6 @@ function mapStateToProps(state) {
     config: state.config,
     cause: state.cause,
     causeType: state.causeType,
-    causeMainType: state.causeMainType,
   };
 }
 

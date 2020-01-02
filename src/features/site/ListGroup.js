@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { HoverObserver } from '../layout';
-import { buildModel, isInViewPort } from '../../common';
+import { isInViewPort } from '../../common';
+import { buildModel } from 'freejsonapi';
 import { InlineList as InlineListCause } from '../cause';
 import {
   MapCenter as MapCenterIcon,

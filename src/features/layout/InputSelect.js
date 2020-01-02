@@ -68,7 +68,7 @@ export default class InputSelect extends Component {
             {this.props.label}
             {this.props.required && <span>&nbsp;*</span>}
           </label>
-          <select type="text" id={this.state.id} className="form-control" {...props}>
+          <select type="text" className="form-control" name={props.name} id={props.value} required={props.required || false} value={props.value || ""} onChange={this.props.onChange}>
             {this.state.addEmpty && (
               <option key="000" value="">
                 Aucune sélection
@@ -92,7 +92,7 @@ export default class InputSelect extends Component {
             {this.props.required && <span>&nbsp;*</span>}
           </label>
           <div className="col-sm-30">
-            <select type="text" id={this.state.id} className="form-control" {...props}>
+            <select type="text" className="form-control" name={props.name} id={props.value} required={props.required || false} value={props.value || ""} onChange={this.props.onChange}>
               {this.state.addEmpty && (
                 <option key="000" value="">
                   Aucune sélection

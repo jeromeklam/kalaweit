@@ -7,8 +7,7 @@ const initialState = {
   tab: "1",
   tabs: [
     {key:"1", name:"identification", label:"Identification", shortcut:"A", icon:"cause"},
-    {key:"2", name:"mouvements", label:"Mouvements", shortcut:"M", icon:"move"},
-    {key:"3", name:"divers", label:"Divers", shortcut:"D", icon:"misc"}
+    {key:"2", name:"divers", label:"Divers", shortcut:"D", icon:"misc"}
   ], 
   filters: new Filter(),
   sort: [{col:"cau_name",way:"up"}],

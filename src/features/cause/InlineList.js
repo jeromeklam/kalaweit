@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { freeAssoApi, jsonApiNormalizer, objectToQueryString, buildModel } from '../../common';
+import { freeAssoApi } from '../../common';
+import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
 import { InlineLoader } from '../layout';
 import { SimpleLabel as DataSimpleLabel } from '../data';
 

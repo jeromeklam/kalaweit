@@ -1,8 +1,5 @@
-import {
-  freeAssoApi,
-  jsonApiNormalizer,
-  jsonApiUpdate
-} from '../../../common';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
 import {
   SITE_UPDATE_ONE_BEGIN,
   SITE_UPDATE_ONE_SUCCESS,
@@ -14,7 +11,8 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function updateOne(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: SITE_UPDATE_ONE_BEGIN,
     });
@@ -30,7 +28,7 @@ export function updateOne(args = {}) {
       const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/asso/site/' + id, args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: SITE_UPDATE_ONE_SUCCESS,
             data: res,
@@ -38,7 +36,7 @@ export function updateOne(args = {}) {
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: SITE_UPDATE_ONE_FAILURE,
             data: { error: err },
@@ -94,14 +92,14 @@ export function reducer(state, action) {
       };
 
     case SITE_UPDATE_ONE_UPDATE:
-      let object  = jsonApiNormalizer(action.data.data);
+      let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
       let news = jsonApiUpdate(myItems, 'FreeAsso_Site', object);
       return {
         ...state,
         updateOneError: null,
-        items: news
-      };            
+        items: news,
+      };
 
     default:
       return state;

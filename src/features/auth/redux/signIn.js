@@ -1,6 +1,5 @@
+import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import {
-  jsonApiNormalizer,
-  buildModel,
   freeAssoApi,
   initAxios
 } from '../../../common';

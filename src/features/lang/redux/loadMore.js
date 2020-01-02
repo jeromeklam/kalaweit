@@ -1,4 +1,5 @@
-import { freeAssoApi, jsonApiNormalizer } from '../../../common';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer } from 'freejsonapi';
 import {
   LANG_LOAD_MORE_BEGIN,
   LANG_LOAD_MORE_SUCCESS,
@@ -9,10 +10,11 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadMore(args = {}) {
-  return (dispatch, getState) => { // optionally you can have getState as the second argument
+  return (dispatch, getState) => {
+    // optionally you can have getState as the second argument
     const loaded = getState().lang.LoadMoreFinish;
     const loading = getState().lang.LoadMorePending;
-    if (!loading && (!loaded)) {
+    if (!loading && !loaded) {
       dispatch({
         type: LANG_LOAD_MORE_BEGIN,
       });
@@ -27,7 +29,7 @@ export function loadMore(args = {}) {
         // args.error here is only for test coverage purpose.
         const doRequest = freeAssoApi.get('/v1/core/lang', {});
         doRequest.then(
-          (res) => {
+          res => {
             dispatch({
               type: LANG_LOAD_MORE_SUCCESS,
               data: res,
@@ -35,7 +37,7 @@ export function loadMore(args = {}) {
             resolve(res);
           },
           // Use rejectHandler as the second argument so that render errors won't be caught.
-          (err) => {
+          err => {
             dispatch({
               type: LANG_LOAD_MORE_FAILURE,
               data: { error: err },

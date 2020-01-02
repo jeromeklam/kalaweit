@@ -1,4 +1,5 @@
-import { freeAssoApi, jsonApiNormalizer, objectToQueryString } from '../../../common';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   EMAIL_LOAD_MORE_INIT,
   EMAIL_LOAD_MORE_BEGIN,
@@ -10,9 +11,10 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadMore(args = {}, reload = false) {
-  return (dispatch, getState) => { // optionally you can have getState as the second argument
-    const loaded =  getState().email.loadMoreFinish;
-    const loading =  getState().email.loadMorePending;
+  return (dispatch, getState) => {
+    // optionally you can have getState as the second argument
+    const loaded = getState().email.loadMoreFinish;
+    const loading = getState().email.loadMorePending;
     if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
@@ -52,7 +54,7 @@ export function loadMore(args = {}, reload = false) {
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/core/email' + addUrl, {});
         doRequest.then(
-          (res) => {
+          res => {
             dispatch({
               type: EMAIL_LOAD_MORE_SUCCESS,
               data: res,
@@ -60,7 +62,7 @@ export function loadMore(args = {}, reload = false) {
             resolve(res);
           },
           // Use rejectHandler as the second argument so that render errors won't be caught.
-          (err) => {
+          err => {
             dispatch({
               type: EMAIL_LOAD_MORE_FAILURE,
               data: { error: err },
@@ -129,9 +131,9 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
-        loadMoreFinish: (nbre < state.page_size),
+        loadMoreFinish: nbre < state.page_size,
         items: list,
-        page_number: state.page_number+1
+        page_number: state.page_number + 1,
       };
 
     case EMAIL_LOAD_MORE_FAILURE:

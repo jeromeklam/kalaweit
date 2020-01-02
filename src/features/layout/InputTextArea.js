@@ -16,17 +16,16 @@ export default class InputTextArea extends Component {
 
   constructor(props) {
     super(props);
-    let content = "";
+    let content = '';
     if (this.props.value) {
       content = this.props.value;
     } else {
-      content = "<p/>"
+      content = '<p/>';
     }
     this.state = {
       editorState: EditorState.createWithContent(convertFromHTML(content)),
     };
 
-    
     this.focus = this.focus.bind(this);
     this.onChange = this.onChange.bind(this);
   }
@@ -50,13 +49,13 @@ export default class InputTextArea extends Component {
   };
 
   render() {
-    return (
-      <div className="form-group row">
-        <label className="col-sm-6 col-form-label">
-          {this.props.label}
-          {this.props.required && <span>&nbsp;*</span>}
-        </label>
-        <div className="col-sm-30">
+    if (this.props.labelTop) {
+      return (
+        <div className="form-group">
+          <label className="">
+            {this.props.label}
+            {this.props.required && <span>&nbsp;*</span>}
+          </label>
           <div className="editor" onClick={this.focus}>
             <Editor
               editorState={this.state.editorState}
@@ -69,7 +68,29 @@ export default class InputTextArea extends Component {
             <InlineToolbar />
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="form-group row">
+          <label className="col-sm-6 col-form-label">
+            {this.props.label}
+            {this.props.required && <span>&nbsp;*</span>}
+          </label>
+          <div className="col-sm-30">
+            <div className="editor" onClick={this.focus}>
+              <Editor
+                editorState={this.state.editorState}
+                onChange={this.onChange}
+                plugins={plugins}
+                ref={element => {
+                  this.editor = element;
+                }}
+              />
+              <InlineToolbar />
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 }

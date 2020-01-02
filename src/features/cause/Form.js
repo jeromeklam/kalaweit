@@ -5,6 +5,7 @@ import {
   InputSelect,
   InputData,
   InputDate,
+  InputCheckbox,
   InputTextArea,
   FormResponsive,
 } from '../layout';
@@ -14,7 +15,6 @@ import { causeMainTypeAsOptions } from '../cause-main-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker } from './';
-
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, handleNavTab } = useForm(
@@ -26,7 +26,7 @@ export default function Form(props) {
   );
   return (
     <FormResponsive
-      title="Animaux"
+      title="Cause"
       tab={values.currentTab}
       tabs={props.tabs}
       onSubmit={handleSubmit}
@@ -34,38 +34,32 @@ export default function Form(props) {
       onNavTab={handleNavTab}
     >
       <InputHidden name="id" id="id" value={values.id} />
-      <div className="row"> 
-        <div className="col-12">
-          <InputText
-            label="N° boucle"
-            name="cau_name"
-            id="cau_name"
-            value={values.cau_name}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="col-12">
+      <div className="row">
+        <div className="col-md-12">
           <InputSelect
-            label="Espèce"
-            name="cause_type.cause_main_type.camt_id"
-            value={values.cause_type.cause_main_type ? values.cause_type.cause_main_type.id : null}
-            onChange={handleChange}
-            options={causeMainTypeAsOptions(props.cause_main_types)}
-          />  
-        </div>
-        <div className="col-12">
-          <InputSelect
-            label="Race"
+            label="Type"
             name="cause_type.id"
+            labelTop={true}
             value={values.cause_type ? values.cause_type.id : null}
             addempty={true}
             onChange={handleChange}
             options={causeTypeAsOptions(props.cause_types)}
           />
         </div>
-        <div className="col-36">
+        <div className="col-md-12">
+          <InputText
+            label="Nom"
+            name="cau_name"
+            id="cau_name"
+            labelTop={true}
+            value={values.cau_name}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="col-md-12">
           <SiteInputPicker
             label="Site"
+            labelTop={true}
             key="site"
             name="site"
             item={values.site || null}
@@ -77,105 +71,132 @@ export default function Form(props) {
       {values.currentTab === '1' && (
         <div>
           <div className="row">
-            <div className="col-18">
+            <div className="col-9">
+              <InputSelect
+                label="Sexe"
+                labelTop={true}
+                name="cau_sex"
+                id="cau_sex"
+                value={values.cau_sex}
+                onChange={handleChange}
+                options={[
+                  { label: 'Male', value: 'M' },
+                  { label: 'Femelle', value: 'F' },
+                ]}
+              />
+            </div>
+            <div className="col-md-9">
               <InputData
-                key="cau_string_1"
-                name="cau_string_1"
-                value={values.cau_string_1}
+                key="cau_number_1"
+                name="cau_number_1"
+                labelTop={true}
+                value={values.cau_number_1}
                 datas={props.tab_datas}
                 config={props.tab_configs}
                 onChange={handleChange}
               />
             </div>
-            <div className="col-18">
-              <InputText
-                label="M/F"
-                name="cau_sex"
-                id="cau_sex"
-                value={values.cau_sex}
+            <div className="col-9">
+              <InputCheckbox
+                label="Visible sur le site"
+                name="cau_public"
+                labelTop={true}
+                checked={values.cau_public === true}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-9">
+              <InputCheckbox
+                label="Disponible à l'adoption"
+                name="cau_available"
+                labelTop={true}
+                checked={values.cau_available === true}
                 onChange={handleChange}
               />
             </div>
           </div>
-          <div className="col-36">
-            <InputData
-              key="cau_number_1"
-              name="cau_number_1"
-              value={values.cau_number_1}
-              datas={props.tab_datas}
-              config={props.tab_configs}
-              onChange={handleChange}
-            />
+          <div className="row">
+            <div className="col-md-9">
+              <InputDate
+                label="Entrée"
+                labelTop={true}
+                name="cau_from"
+                id="cau_from"
+                value={values.cau_from}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-9">
+              <InputDate
+                label="Sortie"
+                labelTop={true}
+                name="cau_to"
+                id="cau_to"
+                value={values.cau_to}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-9">
+              <InputData
+                key="cau_string_3"
+                name="cau_string_3"
+                labelTop={true}
+                value={values.cau_string_3}
+                datas={props.tab_datas}
+                config={props.tab_configs}
+                onChange={handleChange}
+              />
+            </div>
           </div>
           <div className="row">
             <div className="col-18">
-              <CauseInputPicker 
+              <CauseInputPicker
                 label="Père"
+                labelTop={true}
                 key="parent1"
                 name="parent1"
                 item={values.parent1 || null}
                 onChange={handleChange}
-              />  
+              />
             </div>
             <div className="col-18">
-              <CauseInputPicker 
-                label="Mère"                
+              <CauseInputPicker
+                label="Mère"
+                labelTop={true}
                 key="parent2"
                 name="parent2"
                 item={values.parent2 || null}
                 onChange={handleChange}
-              />  
+              />
             </div>
           </div>
         </div>
       )}
       {values.currentTab === '2' && (
         <div>
-          <div className="col-36">
-            <InputDate
-              label="Entrée"
-              name="cau_from"
-              id="cau_from"
-              value={values.cau_from}
-              onChange={handleChange}
-            />
+          <div className="row">
+            <div className="col-md-12">
+              <ClientInputPicker
+                label="Soigneur"
+                key="proprietary"
+                name="proprietary"
+                labelTop={true}
+                item={values.proprietary || null}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-          <div className="col-36">
-            <InputData
-              key="cau_string_2"
-              name="cau_string_2"
-              value={values.cau_string_2}
-              datas={props.tab_datas}
-              config={props.tab_configs}
-              onChange={handleChange}
-            />
+          <div className="row">
+            <div className="col-md-36">
+              <InputTextArea
+                label="Observations"
+                labelTop={true}
+                name="cau_desc"
+                value={values.cau_desc}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-          <div className="col-36">
-            <InputDate
-              label="Sortie"
-              name="cau_from"
-              id="cau_from"
-              value={values.cau_from}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-      )}
-      {values.currentTab === '3' && (
-        <div>
-         <ClientInputPicker 
-            label="Eleveur"
-            key="proprietary"
-            name="proprietary"
-            item={values.proprietary || null}
-            onChange={handleChange}
-          />     
-          <InputTextArea
-            label="Observations"
-            name="cau_desc"
-            value={values.cau_desc}
-            onChange={handleChange}
-          />
         </div>
       )}
     </FormResponsive>

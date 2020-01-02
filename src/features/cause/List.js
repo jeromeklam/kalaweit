@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel } from '../../common';
+import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from '../common';
 import { causeTypeAsOptions } from '../cause-type/functions';
 import { siteAsOptions } from '../site/functions';
@@ -121,7 +121,7 @@ export class List extends Component {
         name: 'id',
         label: 'Identifiant',
         col: 'id',
-        size: '4',
+        size: '6',
         mob_size: '',
         title: true,
         sortable: true,
@@ -131,7 +131,7 @@ export class List extends Component {
         name: 'name',
         label: 'Nom',
         col: 'cau_name',
-        size: '5',
+        size: '6',
         mob_size: '',
         title: true,
         sortable: true,
@@ -141,16 +141,7 @@ export class List extends Component {
         name: 'type',
         label: 'Type',
         col: 'cause_type.caut_name',
-        size: '10',
-        mob_size: '18',
-        title: false,
-        sortable: true,
-      },
-      {
-        name: 'sex',
-        label: 'M/F',
-        col: 'cau_sex',
-        size: '4',
+        size: '12',
         mob_size: '18',
         title: false,
         sortable: true,
@@ -159,7 +150,7 @@ export class List extends Component {
         name: 'site',
         label: 'Site',
         col: 'site.site_name',
-        size: '9',
+        size: '10',
         mob_size: '',
         title: false,
         sortable: true,

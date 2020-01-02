@@ -100,6 +100,7 @@ export default class InputPicker extends Component {
         <LayoutInputPicker 
           name={this.props.name}
           label={this.props.label}
+          labelTop={this.props.labelTop || false}
           value={this.state.value}
           list={this.state.list}
           display={this.state.display}

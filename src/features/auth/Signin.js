@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import logo from '../../images/logo-timbre.png';
 import { InputEmailUpDown, InputPasswordUpDown, InputCheckbox } from '../layout';
-import { getJsonApi, getFieldErrorMessage } from '../../common';
+import { getJsonApi, getFieldErrorMessage } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
 import { Copyright } from '../common';
 
