@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ResponsiveModal } from '../common';
-import { LoadingData } from './';
+import { ResponsiveModal, Loading9x9 } from 'freeassofront';
 
 export default class SearchModal extends Component {
   static propTypes = {
@@ -99,7 +98,7 @@ export default class SearchModal extends Component {
           </div>
           <div className="search-results">
             {this.props.loading ? (
-              <LoadingData />
+              <Loading9x9 />
             ) : (
               <ul className="list-group">
                 {this.props.list &&

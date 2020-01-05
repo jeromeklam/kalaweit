@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import Form from './Form';
-import { LoadingData } from '../layout';
+import { Loading9x9 } from 'freeassofront';
 
 /**
  * Création d'un type de site
@@ -72,7 +72,7 @@ export class Create extends Component {
     return (
       <div className="site-type-create global-card">
         {this.props.siteType.loadOnePending ? (
-          <LoadingData />
+          <Loading9x9 />
         ) : (
           <div>
             {item && 

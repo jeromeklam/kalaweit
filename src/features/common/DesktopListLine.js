@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { HoverObserver, ButtonGetOne, ButtonDelOne, ConfirmResponsive } from '../layout';
 import { DesktopListLineCol } from './';
@@ -7,8 +8,6 @@ import { getObjectmemberValue } from '../../common';
 export default class DesktopListLine extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    onGetOne: PropTypes.func.isRequired,
-    onDelOne: PropTypes.func,
     cols: PropTypes.array.isRequired,
   };
 
@@ -57,8 +56,8 @@ export default class DesktopListLine extends Component {
               if (!oneCol.hidden) {
                 const line = { ...oneCol, id: this.props.id };
                 const content = getObjectmemberValue(item, oneCol.col);
-                const first = (i === 0);
-                const last = (i === this.props.cols.length-1);
+                const first = i === 0;
+                const last = i === this.props.cols.length - 1;
                 return (
                   <DesktopListLineCol
                     key={line.name}
@@ -76,23 +75,31 @@ export default class DesktopListLine extends Component {
             {this.state.flipped && (
               <div className="col-navbar col-vertical-align">
                 <ul className="nav justify-content-end">
-                  <li className="nav-item">
-                    <ButtonGetOne
-                      color="white"
-                      onClick={() => {
-                        this.props.onGetOne(this.props.id);
-                      }}
-                    />
-                  </li>
-                  <li className="nav-item">
-                    <ButtonDelOne color="white" onClick={this.onConfirmDel} />
-                  </li>
+                  {this.props.inlineActions &&
+                    this.props.inlineActions.map(action => (
+                      <li className="nav-item" key={action.name}>
+                        <button
+                          type="button"
+                          title={action.label || ''}
+                          className={classnames('btn', action.theme && 'btn-' + action.theme)}
+                          onClick={() => {
+                            action.onClick(this.props.id);
+                          }}
+                        >
+                          {action.icon}
+                        </button>
+                      </li>
+                    ))}
                 </ul>
               </div>
             )}
           </div>
         </HoverObserver>
-        <ConfirmResponsive show={this.state.confirm} onClose={this.onModalClose} onConfirm={this.onConfirm}/>
+        <ConfirmResponsive
+          show={this.state.confirm}
+          onClose={this.onModalClose}
+          onConfirm={this.onConfirm}
+        />
       </div>
     );
   }

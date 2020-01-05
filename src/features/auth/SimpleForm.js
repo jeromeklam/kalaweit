@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { InputText, InputPassword, ButtonSubmit } from '../layout';
+import { InputText, InputPassword } from 'freeassofront';
 import Avatar from 'react-avatar';
 
 export class SimpleForm extends Component {
@@ -14,15 +14,15 @@ export class SimpleForm extends Component {
 
   constructor(props) {
     super(props);
-    this.state= {
+    this.state = {
       password: '',
       confirm_password: '',
-    }
+    };
     this.onChange = this.onChange.bind(this);
   }
 
   onChange(event) {
-    this.setState({[event.target.name] : event.target.value});
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   render() {
@@ -80,7 +80,9 @@ export class SimpleForm extends Component {
               onChange={this.onChange}
             />
             <div className="text-right">
-              <ButtonSubmit label="Modifier" />
+              <button type="button" className="btn btn-success btn-submit">
+                <span>Modifier</span>
+              </button>
             </div>
           </div>
         </div>

@@ -5,7 +5,6 @@ import classnames from 'classnames';
 export default class DesktopListLineCol extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    onGetOne: PropTypes.func.isRequired,
   };
 
   render() {
@@ -30,9 +29,6 @@ export default class DesktopListLineCol extends Component {
           this.props.first && 'col-first',
           this.props.last && 'col-last',
         )}
-        onClick={() => {
-          this.props.onGetOne(this.props.id);
-        }}
       >
         <span>{content}</span>
       </div>

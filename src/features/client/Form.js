@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  InputHidden,
-  InputText,
-  InputSelect,
-  InputTextArea,
-  InputCheckbox,
-  FormResponsive,
-} from '../layout';
+import { InputHidden, InputSelect, InputTextArea, InputCheckbox, FormResponsive } from '../layout';
+import { InputText } from 'freeassofront';
 import useForm from '../layout/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';

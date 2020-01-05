@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ButtonAddOne, ButtonReload } from '../layout';
+import classnames from 'classnames';
+import { ButtonReload } from '../layout';
 
 export default class MobileListHeader extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     onReload: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired,
   };
 
   render() {
@@ -20,9 +20,21 @@ export default class MobileListHeader extends Component {
             <li className="nav-item">
               <ButtonReload color="white" onClick={this.props.onReload} />
             </li>
-            <li className="nav-item">
-              <ButtonAddOne color="white" onClick={this.props.onCreate} />
-            </li>
+            {this.props.globalActions &&
+              this.props.globalActions.map(action => (
+                <li className="nav-item" key={action.name}>
+                  <button
+                    type="button"
+                    title={action.label || ''}
+                    className={classnames('btn', action.theme && 'btn-' + action.theme)}
+                    onClick={() => {
+                      action.onClick(this.props.id);
+                    }}
+                  >
+                    {action.icon}
+                  </button>
+                </li>
+              ))}
           </ul>
         </div>
       </div>

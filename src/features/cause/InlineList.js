@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { freeAssoApi } from '../../common';
 import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
-import { InlineLoader } from '../layout';
+import { Loading3Dots } from 'freeassofront';
 import { SimpleLabel as DataSimpleLabel } from '../data';
+import { freeAssoApi } from '../../common';
 
 export default class InlineList extends Component {
   static propTypes = {
@@ -41,7 +41,7 @@ export default class InlineList extends Component {
     return (
       <div className="cause-inline-list">
         {this.state.loading ? (
-          <InlineLoader />
+          <Loading3Dots />
         ) : (
           <div>
             {this.state.list &&

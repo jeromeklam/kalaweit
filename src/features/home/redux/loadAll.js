@@ -10,7 +10,6 @@ import { loadMore as loadMoreConfig } from '../../config/redux/loadMore';
 import { loadMore as loadMoreSite } from '../../site/redux/loadMore';
 import { loadMore as loadMoreSiteType } from '../../site-type/redux/loadMore';
 import { loadMore as loadMoreCauseType } from '../../cause-type/redux/loadMore';
-import { loadMore as loadMoreCauseMainType } from '../../cause-main-type/redux/loadMore';
 import { loadMore as loadMoreCountry } from '../../country/redux/loadMore';
 import { loadMore as loadMoreClientType } from '../../client-type/redux/loadMore';
 import { loadMore as loadMoreClientCategory } from '../../client-category/redux/loadMore';
@@ -32,7 +31,6 @@ export function loadAll(args = {}) {
       dispatch(loadMoreSite()),
       dispatch(loadMoreSiteType()),
       dispatch(loadMoreCauseType()),
-      dispatch(loadMoreCauseMainType()),
       dispatch(loadMoreClientType()),
       dispatch(loadMoreClientCategory()),
       dispatch(loadMoreDashboard()),

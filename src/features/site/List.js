@@ -4,7 +4,21 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
-import { ResponsiveList } from '../common';
+import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
+import {
+  AddOne as AddOneIcon,
+  GetOne as GetOneIcon,
+  DelOne as DelOneIcon,
+  Filter as FilterIcon,
+  FilterFull as FilterFullIcon,
+  FilterClear as FilterClearIcon,
+  SimpleCancel as CancelPanelIcon,
+  SimpleValid as ValidPanelIcon,
+  SortDown as SortDownIcon,
+  SortUp as SortUpIcon,
+  Sort as SortNoneIcon,
+  Search as SearchIcon,
+} from '../icons';
 
 /**
  * Liste des sites
@@ -123,6 +137,38 @@ export class List extends Component {
     if (this.props.site.items.FreeAsso_Site) {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
+    const globalActions = [
+      {
+        name: 'clear',
+        label: 'Effacer',
+        onClick: this.onClearFilters,
+        theme: 'secondary',
+        icon: <FilterClearIcon color="white" />,
+      },
+      {
+        name: 'create',
+        label: 'Ajouter',
+        onClick: this.onCreate,
+        theme: 'primary',
+        icon: <AddOneIcon color="white" />,
+      },
+    ];
+    const inlineActions = [
+      {
+        name: 'modify',
+        label: 'Modifier',
+        onClick: this.onGetOne,
+        theme: 'secondary',
+        icon: <GetOneIcon color="white" />,
+      },
+      {
+        name: 'delete',
+        label: 'Supprimer',
+        onClick: this.onDelOne,
+        theme: 'warning',
+        icon: <DelOneIcon color="white" />,
+      },
+    ];
     const cols = [
       {
         name: 'name',
@@ -171,25 +217,42 @@ export class List extends Component {
     if (crit) {
       search = crit.getFilterCrit();
     }
+    const quickSearch = (
+      <ResponsiveQuickSearch
+        name="quickSearch"
+        label="Recherche nom"
+        quickSearch={search}
+        onSubmit={this.onQuickSearch}
+        onChange={this.onSearchChange}
+        icon={<SearchIcon className="text-secondary" />}
+      />
+    );
+    const filterIcon = this.props.site.filters.isEmpty() ? (
+      <FilterIcon color="white" />
+    ) : (
+      <FilterFullIcon color="white" />
+    );
     return (
       <ResponsiveList
         title="Sites"
         cols={cols}
         items={items || []}
-        titleSearch="Recherche nom du site"
-        search={search}
+        mainCol="site_name"
+        filterIcon={filterIcon}
+        cancelPanelIcon={<CancelPanelIcon />}
+        validPanelIcon={<ValidPanelIcon />}
+        sortDownIcon={<SortDownIcon color="secondary" />}
+        sortUpIcon={<SortUpIcon color="secondary" />}
+        sortNoneIcon={<SortNoneIcon color="secondary" />}
+        inlineActions={inlineActions}
+        globalActions={globalActions}
         sort={this.props.site.sort}
         filters={this.props.site.filters}
         onSearch={this.onQuickSearch}
         onClearFilters={this.onClearFilters}
         onSort={this.onUpdateSort}
         onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onReload={this.onReload}
-        onCreate={this.onCreate}
-        onGetOne={this.onGetOne}
-        onDelOne={this.onDelOne}
         onLoadMore={this.onLoadMore}
-        mainCol="site_name"
         loadMorePending={this.props.site.loadMorePending}
         loadMoreFinish={this.props.site.loadMoreFinish}
         loadMoreError={this.props.site.loadMoreError}

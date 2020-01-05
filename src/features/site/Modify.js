@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import Form from './Form';
-import { LoadingData } from '../layout';
+import { Loading9x9 } from 'freeassofront';
 import cogoToast from 'cogo-toast';
 
 /**
@@ -80,7 +80,7 @@ export class Modify extends Component {
     return (
       <div className="site-modify global-card">
         {this.props.site.loadOnePending ? (
-          <LoadingData />
+          <Loading9x9 />
         ) : (
           <div>
             {item && 

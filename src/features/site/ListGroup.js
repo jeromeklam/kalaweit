@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { HoverObserver } from '../layout';
+import { HoverObserver } from 'freeassofront';
 import { isInViewPort } from '../../common';
 import { buildModel } from 'freejsonapi';
 import { InlineList as InlineListCause } from '../cause';

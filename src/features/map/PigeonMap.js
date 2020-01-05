@@ -10,7 +10,7 @@ import { buildModel, getJsonApi, propagateModel } from 'freejsonapi';
 import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/redux/actions';
 import Draggable from 'pigeon-draggable';
 import Icon from '@mdi/react';
-import { Mobile, Desktop } from '../common';
+import { Mobile, Default } from 'freeassofront';
 import { mdiMagnifyMinus, mdiMagnifyPlus } from '@mdi/js';
 import mapselect from '../../images/mapselect.png';
 import { ListGroup } from '../site';
@@ -175,7 +175,7 @@ export class PigeonMap extends Component {
     }
     return (
       <div className="map-pigeon-map">
-        <Desktop>
+        <Default>
           <div className={classnames('map-content')}>
             <Map
               provider={providers[this.state.provider]}
@@ -238,7 +238,7 @@ export class PigeonMap extends Component {
               onSiteMove={this.onSiteMove}
             />
           </div>
-        </Desktop>
+        </Default>
         <Mobile>
           <div className={classnames('map-content-mobile')}>
             <Map

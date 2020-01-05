@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { StatCard } from '../layout';
+import { StatCard } from './';
 import { 
   Site as SiteIcon, 
   Cause as CauseIcon,

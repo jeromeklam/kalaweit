@@ -21,14 +21,6 @@ export class MobileMenu extends Component {
             <NavLink strict className="nav-link" to="/cause-type" onClick={this.props.onToggle}>
               Races d'animaux
             </NavLink>
-            <NavLink
-              strict
-              className="nav-link"
-              to="/cause-main-type"
-              onClick={this.props.onToggle}
-            >
-              Espèces d'animaux
-            </NavLink>
           </div>
         ) : (
           <div></div>

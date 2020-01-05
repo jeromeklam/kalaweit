@@ -26,10 +26,7 @@ export class ResponsiveList extends Component {
     filters: PropTypes.object,
     onSort: PropTypes.func,
     setSort: PropTypes.func,
-    onGetOne: PropTypes.func.isRequired,
-    onDelOne: PropTypes.func.isRequired,
     onReload: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired,
     onLoadMore: PropTypes.func.isRequired,
     titleSearch: PropTypes.string,
     onSearch: PropTypes.func,
@@ -72,7 +69,7 @@ export class ResponsiveList extends Component {
           search={this.props.search}
           onQuickSearch={this.props.onSearch}
           onReload={this.props.onReload}
-          onCreate={this.props.onCreate}
+          globalActions={this.props.globalActions}
           onToggleFilter={this.togglePanel}
           onClearFilters={this.props.onClearFilters || (() => {})}
           filterEmpty={this.props.filters && this.props.filters.isEmpty()}
@@ -98,6 +95,7 @@ export class ResponsiveList extends Component {
                           title={item[this.props.mainCol]}
                           onGetOne={this.props.onGetOne}
                           onDelOne={this.props.onDelOne}
+                          inlineActions={this.props.inlineActions}
                           lines={this.props.cols}
                         />
                       </Mobile>
@@ -107,6 +105,7 @@ export class ResponsiveList extends Component {
                           item={item}
                           onGetOne={this.props.onGetOne}
                           onDelOne={this.props.onDelOne}
+                          inlineActions={this.props.inlineActions}
                           cols={this.props.cols}
                         />
                       </Desktop>

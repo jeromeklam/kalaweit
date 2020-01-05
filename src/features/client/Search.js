@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { SearchModal } from '../layout';
+import { SearchModal } from '../ui';
 import { jsonApiNormalizer, buildModel, objectToQueryString } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 

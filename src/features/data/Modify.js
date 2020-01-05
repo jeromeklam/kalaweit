@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import { withRouter } from 'react-router-dom';
-import { LoadingData } from '../layout';
+import { Loading9x9 } from 'freeassofront';
 import Form from './Form';
 
 /**
@@ -77,7 +77,7 @@ export class Modify extends Component {
     return (
       <div className="data-modify global-card">
         {this.props.data.loadOnePending ? (
-          <LoadingData />
+          <Loading9x9 />
         ) : (
           <div>
             {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Copyright } from '../common';
+import { Copyright } from '../ui';
 import logo from '../../images/logo-timbre.png';
 
 export default class About extends Component {

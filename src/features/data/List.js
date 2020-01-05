@@ -4,8 +4,22 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
-import { ResponsiveList } from '../common';
+import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { dataTypes } from './functions';
+import {
+  AddOne as AddOneIcon,
+  GetOne as GetOneIcon,
+  DelOne as DelOneIcon,
+  Filter as FilterIcon,
+  FilterFull as FilterFullIcon,
+  FilterClear as FilterClearIcon,
+  SimpleCancel as CancelPanelIcon,
+  SimpleValid as ValidPanelIcon,
+  SortDown as SortDownIcon,
+  SortUp as SortUpIcon,
+  Sort as SortNoneIcon,
+  Search as SearchIcon,
+} from '../icons';
 
 /**
  * Liste des données
@@ -122,6 +136,38 @@ export class List extends Component {
     if (this.props.data.items.FreeAsso_Data) {
       items = buildModel(this.props.data.items, 'FreeAsso_Data');
     }
+    const globalActions = [
+      {
+        name: 'clear',
+        label: 'Effacer',
+        onClick: this.onClearFilters,
+        theme: 'secondary',
+        icon: <FilterClearIcon color="white" />,
+      },
+      {
+        name: 'create',
+        label: 'Ajouter',
+        onClick: this.onCreate,
+        theme: 'primary',
+        icon: <AddOneIcon color="white" />,
+      },
+    ];
+    const inlineActions = [
+      {
+        name: 'modify',
+        label: 'Modifier',
+        onClick: this.onGetOne,
+        theme: 'secondary',
+        icon: <GetOneIcon color="white" />,
+      },
+      {
+        name: 'delete',
+        label: 'Supprimer',
+        onClick: this.onDelOne,
+        theme: 'warning',
+        icon: <DelOneIcon color="white" />,
+      },
+    ];
     const cols = [
       {
         name: 'name',
@@ -147,25 +193,44 @@ export class List extends Component {
     if (crit) {
       search = crit.getFilterCrit();
     }
+    const quickSearch = (
+      <ResponsiveQuickSearch
+        name="quickSearch"
+        label="Recherche nom"
+        quickSearch={search}
+        onSubmit={this.onQuickSearch}
+        onChange={this.onSearchChange}
+        icon={<SearchIcon className="text-secondary"/>}
+      />
+    );
+    const filterIcon = this.props.data.filters.isEmpty() ? (
+      <FilterIcon color="white" />
+    ) : (
+      <FilterFullIcon color="white" />
+    );
     return (
       <ResponsiveList
         title="Variables"
         cols={cols}
         items={items}
-        titleSearch="Recherche nom"
-        search={search}
+        quickSearch={quickSearch}
+        mainCol="data_name"
+        filterIcon={filterIcon}
+        cancelPanelIcon={<CancelPanelIcon />}
+        validPanelIcon={<ValidPanelIcon />}
+        sortDownIcon={<SortDownIcon color="secondary" />}
+        sortUpIcon={<SortUpIcon color="secondary" />}
+        sortNoneIcon={<SortNoneIcon color="secondary" />}
+        inlineActions={inlineActions}
+        globalActions={globalActions}
         sort={this.props.data.sort}
         filters={this.props.data.filters}
         onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
         onSort={this.onUpdateSort}
         onSetFiltersAndSort={this.onSetFiltersAndSort}
+        onClearFilters={this.onClearFilters}
         onReload={this.onReload}
-        onCreate={this.onCreate}
-        onGetOne={this.onGetOne}
-        onDelOne={this.onDelOne}
         onLoadMore={this.onLoadMore}
-        mainCol="data_name"
         loadMorePending={this.props.data.loadMorePending}
         loadMoreFinish={this.props.data.loadMoreFinish}
         loadMoreError={this.props.data.loadMoreError}

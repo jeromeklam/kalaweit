@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Desktop, Mobile } from '../common'
+import { Desktop, Mobile } from 'freeassofront'
 import fond from '../../images/fond.jpg';
 import logo from '../../images/logo-timbre.png';
 import {Stats} from '../dashboard';

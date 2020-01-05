@@ -1,0 +1,37 @@
+@import '../../styles/mixins';
+
+svg.text-danger {
+  path {
+    fill: theme-color('danger');
+  }
+}
+svg.text-warning {
+  path {
+    fill: theme-color('warning');
+  }
+}
+svg.text-success {
+  path {
+    fill: theme-color('success');
+  }
+}
+svg.text-dark {
+  path {
+    fill: theme-color('dark');
+  }
+}
+svg.text-light {
+  path {
+    fill: theme-color('light');
+  }
+}
+svg.text-secondary {
+  path {
+    fill: theme-color('secondary');
+  }
+}
+svg.text-primary {
+  path {
+    fill: theme-color('primary');
+  }
+}

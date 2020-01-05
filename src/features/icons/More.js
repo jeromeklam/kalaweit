@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
+import { Icon } from './';
 import {
   mdiDotsHorizontal
 } from '@mdi/js';
@@ -12,7 +12,7 @@ export default class Plus extends Component {
       <Icon 
         path={mdiDotsHorizontal}
         size={1}
-        color={this.props.color}
+        {...this.props}
       />
     );
   }

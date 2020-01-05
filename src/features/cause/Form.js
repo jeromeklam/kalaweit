@@ -1,17 +1,8 @@
 import React from 'react';
-import {
-  InputHidden,
-  InputText,
-  InputSelect,
-  InputData,
-  InputDate,
-  InputCheckbox,
-  InputTextArea,
-  FormResponsive,
-} from '../layout';
+import { InputCheckbox, InputHidden, InputSelect, InputText, InputTextArea, ResponsiveForm } from 'freeassofront';
+import { InputDate, InputData } from '../ui';
 import useForm from '../layout/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
-import { causeMainTypeAsOptions } from '../cause-main-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker } from './';
@@ -25,7 +16,7 @@ export default function Form(props) {
     props.onNavTab,
   );
   return (
-    <FormResponsive
+    <ResponsiveForm
       title="Cause"
       tab={values.currentTab}
       tabs={props.tabs}
@@ -199,6 +190,6 @@ export default function Form(props) {
           </div>
         </div>
       )}
-    </FormResponsive>
+    </ResponsiveForm>
   );
 }

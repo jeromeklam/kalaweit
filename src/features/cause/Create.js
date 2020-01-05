@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { LoadingData } from '../layout';
+import { Loading9x9 } from 'freeassofront';
 import Form from './Form';
 
 export class Create extends Component {
@@ -72,7 +72,7 @@ export class Create extends Component {
     return (
       <div className="cause-create global-card">
         {this.props.cause.loadOnePending ? (
-          <LoadingData />
+          <Loading9x9 />
         ) : (
           <div>
             {item && 

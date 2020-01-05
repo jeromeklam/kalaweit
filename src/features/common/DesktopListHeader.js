@@ -4,19 +4,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import {
-  ButtonAddOne,
-  ButtonReload,
-  ButtonFilter,
-  ButtonFilterClear,
-  InputQuickSearch,
-} from '../layout';
+import { ButtonReload, ButtonFilter, ButtonFilterClear, InputQuickSearch } from '../layout';
 
 export class DesktopListHeader extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     onReload: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired,
     filterEmpty: PropTypes.bool.isRequired,
     onClearFilters: PropTypes.func.isRequired,
   };
@@ -85,9 +78,21 @@ export class DesktopListHeader extends Component {
             <li className="nav-item">
               <ButtonReload color="white" onClick={this.props.onReload} icon={true} />
             </li>
-            <li className="nav-item">
-              <ButtonAddOne color="white" onClick={this.props.onCreate} icon={true} />
-            </li>
+            {this.props.globalActions &&
+              this.props.globalActions.map(action => (
+                <li className="nav-item" key={action.name}>
+                  <button
+                    type="button"
+                    title={action.label || ''}
+                    className={classnames('btn', action.theme && 'btn-' + action.theme)}
+                    onClick={() => {
+                      action.onClick(this.props.id);
+                    }}
+                  >
+                    {action.icon}
+                  </button>
+                </li>
+              ))}
           </ul>
         </div>
       </div>

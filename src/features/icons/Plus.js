@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiPlus
-} from '@mdi/js';
+import { Icon } from './';
+import { mdiPlus } from '@mdi/js';
 
 export default class Plus extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiPlus}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={mdiPlus} size={1} {...this.props} />;
   }
 }

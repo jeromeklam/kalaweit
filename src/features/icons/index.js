@@ -37,3 +37,5 @@ export { default as SimpleValid } from './SimpleValid';
 export { default as SimpleCancel } from './SimpleCancel';
 export { default as FilterFull } from './FilterFull';
 export { default as FilterClear } from './FilterClear';
+export { default as GetPhoto } from './GetPhoto';
+export { default as Icon } from './Icon';

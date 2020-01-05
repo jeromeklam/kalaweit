@@ -3,21 +3,19 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { SocialIcon } from 'react-social-icons';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
 import * as commonActions from '../common/redux/actions';
+import { Default, Mobile, Loading9x9, DefaultStickyFooter } from 'freeassofront';
 import {
-  Desktop,
-  Tablet,
-  Mobile,
   DesktopHeader,
-  DesktopFooter,
   DesktopSidebar,
   MobileHeader,
   MobileFooter,
   MobileMenu,
 } from '../common';
-import { LoadingData } from '../layout';
 import { initAxios } from '../../common';
 
 /*
@@ -70,7 +68,10 @@ export class App extends Component {
 
   onGeo(position) {
     if (position && position.coords) {
-      this.props.actions.setCoords({ lat: position.coords.latitude, lon: position.coords.longitude})
+      this.props.actions.setCoords({
+        lat: position.coords.latitude,
+        lon: position.coords.longitude,
+      });
     }
   }
 
@@ -89,9 +90,6 @@ export class App extends Component {
       if (!this.props.auth.authenticated || this.props.home.loadAllFinish) {
         return (
           <div className="full-page">
-            <Tablet>
-              <div className="display-tablet">Tablet @TODO</div>
-            </Tablet>
             <Mobile>
               <div className="display-mobile">
                 <MobileHeader />
@@ -102,7 +100,7 @@ export class App extends Component {
                 <MobileFooter onToggle={this.onToggle} />
               </div>
             </Mobile>
-            <Desktop>
+            <Default>
               <div className="display-desktop">
                 <DesktopHeader />
                 <DesktopSidebar />
@@ -112,16 +110,19 @@ export class App extends Component {
                 >
                   {this.props.children}
                 </div>
-                <DesktopFooter />
+                <DefaultStickyFooter 
+                  left={<Link to="/about"><span className="text-muted">{process.env.REACT_APP_APP_NAME}, qui sommes-nous ?</span></Link>}
+                  right={<SocialIcon url="https://facebook.com/KalaweitFrance/" />}
+                />
               </div>
-            </Desktop>
+            </Default>
           </div>
         );
       } else {
         return (
           <div className="main-loader">
             <p>... Chargement ...</p>
-            <LoadingData />
+            <Loading9x9 />
           </div>
         );
       }
