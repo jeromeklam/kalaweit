@@ -20,26 +20,6 @@
   }
 }
 
-.display-desktop {
-  #page-content-wrapper {
-    top: $desktop-header-height;
-    position: fixed;
-    bottom: $desktop-footer-height;
-    overflow-x: hidden;
-    overflow-y: auto;
-    left: 0px;
-    right: 0px;
-    transition: left 0.5s ease 0.5s;
-    animation-iteration-count: 1;
-  }
-  #page-content-wrapper.page-content-wrapper-menu {
-    left: $left-menu-width;
-    transition: left 0.5s ease 0.5s;
-    animation-iteration-count: 1;
-    right: 0px;
-  }
-}
-
 .main-loader {
   position: fixed;
   left: 0px;

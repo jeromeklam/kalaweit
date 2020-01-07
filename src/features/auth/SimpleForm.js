@@ -27,7 +27,7 @@ export class SimpleForm extends Component {
 
   render() {
     return (
-      <form className="auth-simple-form">
+      <form className="auth-simple-form" style={this.props.style}>
         <div className="row">
           <div className="col-6 text-center">
             <Avatar

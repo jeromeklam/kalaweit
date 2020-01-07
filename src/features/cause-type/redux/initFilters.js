@@ -1,4 +1,4 @@
-import {Filter} from '../../filter';
+import {Filter} from 'freeassofront';
 import {
   CAUSE_TYPE_INIT_FILTERS,
 } from './constants';

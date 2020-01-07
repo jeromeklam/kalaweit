@@ -1,22 +1,140 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { SocialIcon } from 'react-social-icons';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
 import * as commonActions from '../common/redux/actions';
-import { Default, Mobile, Loading9x9, DefaultStickyFooter } from 'freeassofront';
-import {
-  DesktopHeader,
-  DesktopSidebar,
-  MobileHeader,
-  MobileFooter,
-  MobileMenu,
-} from '../common';
+import { ResponsivePage, Loading9x9 } from 'freeassofront';
 import { initAxios } from '../../common';
+import { SimpleForm } from '../auth';
+import {
+  Home as HomeIcon,
+  About as AboutIcon,
+  Login as LoginIcon,
+  Logout as LogoutIcon,
+  Cause as CauseIcon,
+  Person as PersonIcon,
+  Menu as MenuIcon,
+} from '../icons';
+
+const options = [
+  {
+    icon: <HomeIcon />,
+    label: 'Accueil',
+    url: '/',
+    role: 'HOME',
+    public: true,
+  },
+  {
+    icon: <LoginIcon />,
+    label: 'Connexion',
+    url: '/auth/signin',
+    role: 'SIGNIN',
+    public: true,
+  },
+  {
+    icon: <LogoutIcon />,
+    label: 'Déconnexion',
+    url: '/auth/signout',
+    role: 'SIGNOUT',
+    public: false,
+  },
+  {
+    icon: <SocialIcon url="https://facebook.com/KalaweitFrance/" />,
+    label: 'Facebook',
+    url: null,
+    role: 'SOCIAL',
+    position: 1,
+    public: true,
+  },
+  {
+    icon: <PersonIcon />,
+    label: 'Membres',
+    url: '/client',
+    role: 'NAV',
+    position: 1,
+    public: false,
+  },
+  {
+    icon: <CauseIcon />,
+    label: 'Causes',
+    url: '/cause',
+    role: 'NAV',
+    position: 2,
+    public: false,
+  },
+  {
+    icon: null,
+    label: 'Répertoires',
+    url: null,
+    role: 'MENU',
+    position: 3,
+    public: false,
+    options: [
+      {
+        icon: null,
+        label: 'Sites',
+        url: '/site',
+        role: 'NAV',
+        position: 1,
+      },
+      {
+        icon: null,
+        label: 'Types de site',
+        url: '/site-type',
+        role: 'NAV',
+        position: 2,
+      },
+      {
+        icon: null,
+        label: 'Types de cause',
+        url: '/cause-type',
+        role: 'NAV',
+        position: 3,
+      },
+      {
+        icon: null,
+        label: 'Catégories de personne',
+        url: '/client-category',
+        role: 'NAV',
+        position: 4,
+      },
+      {
+        icon: null,
+        label: 'Types de personne',
+        url: '/client-type',
+        role: 'NAV',
+        position: 5,
+      },
+    ],
+  },
+  {
+    icon: null,
+    label: 'Paramétrage',
+    url: null,
+    role: 'MENU',
+    position: 4,
+    public: false,
+    options: [
+      {
+        icon: null,
+        label: 'Emails',
+        url: '/email',
+        role: 'NAV',
+        position: 1,
+      },
+    ],
+  },
+  {
+    icon: <AboutIcon />,
+    label: 'Qui sommes nous ?',
+    url: '/about',
+    role: 'ABOUT',
+    public: true,
+  },
+];
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -34,10 +152,7 @@ export class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      menuDataOpen: false,
-    };
-    this.onToggle = this.onToggle.bind(this);
+    this.onNavigate = this.onNavigate.bind(this);
     this.onGeo = this.onGeo.bind(this);
   }
 
@@ -75,8 +190,8 @@ export class App extends Component {
     }
   }
 
-  onToggle() {
-    this.setState({ menuDataOpen: !this.state.menuDataOpen });
+  onNavigate(url) {
+    this.props.history.push(url);
   }
 
   render() {
@@ -89,34 +204,18 @@ export class App extends Component {
     } else {
       if (!this.props.auth.authenticated || this.props.home.loadAllFinish) {
         return (
-          <div className="full-page">
-            <Mobile>
-              <div className="display-mobile">
-                <MobileHeader />
-                <div id="page-content-wrapper" className="">
-                  {this.props.children}
-                </div>
-                {this.state.menuDataOpen && <MobileMenu onToggle={this.onToggle} />}
-                <MobileFooter onToggle={this.onToggle} />
-              </div>
-            </Mobile>
-            <Default>
-              <div className="display-desktop">
-                <DesktopHeader />
-                <DesktopSidebar />
-                <div
-                  id="page-content-wrapper"
-                  className={classnames(this.props.common.sidebar && 'page-content-wrapper-menu')}
-                >
-                  {this.props.children}
-                </div>
-                <DefaultStickyFooter 
-                  left={<Link to="/about"><span className="text-muted">{process.env.REACT_APP_APP_NAME}, qui sommes-nous ?</span></Link>}
-                  right={<SocialIcon url="https://facebook.com/KalaweitFrance/" />}
-                />
-              </div>
-            </Default>
-          </div>
+          <ResponsivePage
+            menuIcon={<MenuIcon className="light" />}
+            title={process.env.REACT_APP_APP_NAME}
+            options={options}
+            authenticated={this.props.auth.authenticated}
+            location={this.props.location}
+            onNavigate={this.onNavigate}
+            userForm={<SimpleForm />}
+            userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
+          >
+            {this.props.children}
+          </ResponsivePage>
         );
       } else {
         return (

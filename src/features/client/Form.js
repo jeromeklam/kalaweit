@@ -1,7 +1,7 @@
 import React from 'react';
-import { InputHidden, InputSelect, InputTextArea, InputCheckbox, FormResponsive } from '../layout';
+import { InputHidden, InputSelect, InputTextArea, InputCheckbox, ResponsiveForm } from 'freeassofront';
 import { InputText } from 'freeassofront';
-import useForm from '../layout/useForm';
+import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';
 import { countryAsOptions } from '../country/functions.js';
@@ -15,7 +15,7 @@ export default function Form(props) {
     props.onCancel,
   );
   return (
-    <FormResponsive
+    <ResponsiveForm
       title="Membre"
       tab={values.currentTab}
       tabs={props.tabs}
@@ -218,6 +218,6 @@ export default function Form(props) {
           </div>
         )}
       </div>
-    </FormResponsive>
+    </ResponsiveForm>
   );
 }

@@ -8,7 +8,6 @@ import iconsReducer from '../features/icons/redux/reducer';
 import causeReducer from '../features/cause/redux/reducer';
 import dataReducer from '../features/data/redux/reducer';
 import aboutReducer from '../features/about/redux/reducer';
-import layoutReducer from '../features/layout/redux/reducer';
 import siteTypeReducer from '../features/site-type/redux/reducer';
 import causeTypeReducer from '../features/cause-type/redux/reducer';
 import configReducer from '../features/config/redux/reducer';
@@ -19,8 +18,6 @@ import clientTypeReducer from '../features/client-type/redux/reducer';
 import clientCategoryReducer from '../features/client-category/redux/reducer';
 import mapReducer from '../features/map/redux/reducer';
 import dashboardReducer from '../features/dashboard/redux/reducer';
-import filterReducer from '../features/filter/redux/reducer';
-import sortReducer from '../features/sort/redux/reducer';
 import countryReducer from '../features/country/redux/reducer';
 import uiReducer from '../features/ui/redux/reducer';
 
@@ -39,7 +36,6 @@ const reducerMap = {
   cause: causeReducer,
   data: dataReducer,
   about: aboutReducer,
-  layout: layoutReducer,
   siteType: siteTypeReducer,
   causeType: causeTypeReducer,
   config: configReducer,
@@ -50,8 +46,6 @@ const reducerMap = {
   clientCategory: clientCategoryReducer,
   map: mapReducer,
   dashboard: dashboardReducer,
-  filter: filterReducer,
-  sort: sortReducer,
   country: countryReducer,
   ui: uiReducer,
 };

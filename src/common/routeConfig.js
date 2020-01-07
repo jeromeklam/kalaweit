@@ -9,7 +9,6 @@ import iconsRoute from '../features/icons/route';
 import causeRoute from '../features/cause/route';
 import dataRoute from '../features/data/route';
 import aboutRoute from '../features/about/route';
-import layoutRoute from '../features/layout/route';
 import siteTypeRoute from '../features/site-type/route';
 import causeTypeRoute from '../features/cause-type/route';
 import configRoute from '../features/config/route';
@@ -20,8 +19,6 @@ import clientTypeRoute from '../features/client-type/route';
 import clientCategoryRoute from '../features/client-category/route';
 import mapRoute from '../features/map/route';
 import dashboardRoute from '../features/dashboard/route';
-import filterRoute from '../features/filter/route';
-import sortRoute from '../features/sort/route';
 import countryRoute from '../features/country/route';
 import uiRoute from '../features/ui/route';
 
@@ -36,7 +33,6 @@ const childRoutes = [
   causeRoute,
   dataRoute,
   aboutRoute,
-  layoutRoute,
   siteTypeRoute,
   causeTypeRoute,
   configRoute,
@@ -47,8 +43,6 @@ const childRoutes = [
   clientCategoryRoute,
   mapRoute,
   dashboardRoute,
-  filterRoute,
-  sortRoute,
   countryRoute,
   uiRoute,
 ];

@@ -1,4 +1,4 @@
-import {Filter} from '../../filter';
+import {Filter} from 'freeassofront';
 import {
   CLIENT_CATEGORY_INIT_FILTERS,
 } from './constants';

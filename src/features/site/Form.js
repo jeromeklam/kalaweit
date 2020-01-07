@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputHidden, InputText, InputSelect, InputTextArea, ResponsiveForm } from 'freeassofront';
 import { InputData } from '../ui';
-import useForm from '../layout/useForm';
+import useForm from '../ui/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 

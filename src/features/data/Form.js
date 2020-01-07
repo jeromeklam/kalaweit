@@ -2,7 +2,7 @@ import React from 'react';
 import { InputHidden, InputText, InputSelect, ResponsiveForm } from 'freeassofront';
 import { InputStringarray } from '../ui';
 import { dataTypes } from './functions';
-import useForm from '../layout/useForm';
+import useForm from '../ui/useForm';
 
 /**
  * Functionnal Component

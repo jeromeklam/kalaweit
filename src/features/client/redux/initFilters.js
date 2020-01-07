@@ -1,7 +1,7 @@
 import {
   CLIENT_INIT_FILTERS,
 } from './constants';
-import {Filter} from '../../filter';
+import {Filter} from 'freeassofront';
 
 export function initFilters() {
   return {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { InputHidden, InputText, InputSelect, InputTextArea, ResponsiveForm } from 'freeassofront';
-import useForm from '../layout/useForm';
+import useForm from '../ui/useForm';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel } = useForm(

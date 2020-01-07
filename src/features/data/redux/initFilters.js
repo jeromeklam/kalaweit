@@ -1,4 +1,4 @@
-import { Filter } from '../../filter';
+import { Filter } from 'freeassofront';
 import { DATA_INIT_FILTERS } from './constants';
 
 export function initFilters() {

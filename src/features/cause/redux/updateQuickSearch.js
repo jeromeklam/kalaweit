@@ -5,7 +5,7 @@ import {
   FILTER_MODE_OR,
   FILTER_OPER_LIKE,
   FILTER_SEARCH_QUICK
-} from '../../filter';
+} from 'freeassofront';
 
 export function updateQuickSearch(value) {
   return {

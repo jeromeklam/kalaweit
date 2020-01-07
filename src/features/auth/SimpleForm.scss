@@ -1,5 +1,7 @@
 @import '../../styles/mixins';
 
 .auth-simple-form {
-
+  background-color: theme-color('secondary');
+  color: theme-color('light');
+  height: 100%;
 }
