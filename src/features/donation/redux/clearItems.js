@@ -1,19 +1,16 @@
-import { EMAIL_CLEAR_ITEMS } from './constants';
+import { DONATION_CLEAR_ITEMS } from './constants';
 
 export function clearItems() {
   return {
-    type: EMAIL_CLEAR_ITEMS,
+    type: DONATION_CLEAR_ITEMS,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case EMAIL_CLEAR_ITEMS:
+    case DONATION_CLEAR_ITEMS:
       return {
         ...state,
-        loadMorePending: false,
-        loadMoreError: null,
-        loadMoreFinish: false,
         items: [],
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,

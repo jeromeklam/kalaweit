@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Icon } from './';
 import {
-  mdiFilter
+  mdiCash
 } from '@mdi/js';
 
-export default class FilterFull extends Component {
+export default class Donation extends Component {
   static propTypes = {
 
   };
@@ -12,7 +12,7 @@ export default class FilterFull extends Component {
   render() {
     return (
       <Icon 
-        path={mdiFilter}
+        path={mdiCash}
         size={1}
         {...this.props}
       />

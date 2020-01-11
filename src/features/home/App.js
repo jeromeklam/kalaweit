@@ -17,6 +17,7 @@ import {
   Cause as CauseIcon,
   Person as PersonIcon,
   Menu as MenuIcon,
+  Donation as DonationIcon,
 } from '../icons';
 
 const options = [
@@ -66,11 +67,19 @@ const options = [
     public: false,
   },
   {
+    icon: <DonationIcon />,
+    label: 'Dons',
+    url: '/donation',
+    role: 'NAV',
+    position: 3,
+    public: false,
+  },
+  {
     icon: null,
     label: 'Répertoires',
     url: null,
     role: 'MENU',
-    position: 3,
+    position: 4,
     public: false,
     options: [
       {

@@ -39,3 +39,4 @@ export { default as FilterFull } from './FilterFull';
 export { default as FilterClear } from './FilterClear';
 export { default as GetPhoto } from './GetPhoto';
 export { default as Icon } from './Icon';
+export { default as Donation } from './Donation';

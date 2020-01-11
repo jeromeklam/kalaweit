@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
+import { Icon }  from './';
 import {
   mdiPencil
 } from '@mdi/js';
@@ -14,7 +14,7 @@ export default class GetOne extends Component {
       <Icon 
         path={mdiPencil}
         size={1}
-        color={this.props.color}
+        {...this.props}
       />
     );
   }

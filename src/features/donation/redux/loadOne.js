@@ -1,33 +1,31 @@
 import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import {
-  EMAIL_LOAD_ONE_BEGIN,
-  EMAIL_LOAD_ONE_SUCCESS,
-  EMAIL_LOAD_ONE_FAILURE,
-  EMAIL_LOAD_ONE_DISMISS_ERROR,
+  DONATION_LOAD_ONE_BEGIN,
+  DONATION_LOAD_ONE_SUCCESS,
+  DONATION_LOAD_ONE_FAILURE,
+  DONATION_LOAD_ONE_DISMISS_ERROR,
 } from './constants';
 
-
 export function loadOne(args = {}) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: EMAIL_LOAD_ONE_BEGIN,
+      type: DONATION_LOAD_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const doRequest = freeAssoApi.get('/v1/core/email/' + args);
+      const doRequest = freeAssoApi.get('/v1/asso/donation/' + args);
       doRequest.then(
-        res => {
+        (res) => {
           dispatch({
-            type: EMAIL_LOAD_ONE_SUCCESS,
+            type: DONATION_LOAD_ONE_SUCCESS,
             data: res,
             id: args,
           });
           resolve(res);
         },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
-        err => {
+        (err) => {
           dispatch({
-            type: EMAIL_LOAD_ONE_FAILURE,
+            type: DONATION_LOAD_ONE_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -43,13 +41,13 @@ export function loadOne(args = {}) {
 // If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadOneError() {
   return {
-    type: EMAIL_LOAD_ONE_DISMISS_ERROR,
+    type: DONATION_LOAD_ONE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case EMAIL_LOAD_ONE_BEGIN:
+    case DONATION_LOAD_ONE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
@@ -57,11 +55,11 @@ export function reducer(state, action) {
         loadOneError: null,
       };
 
-    case EMAIL_LOAD_ONE_SUCCESS:
+    case DONATION_LOAD_ONE_SUCCESS:
       // The request is success
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(object, 'FreeFW_Email', action.id, { eager: true });
+      item = buildModel(object, 'FreeAsso_Donation', action.id, { eager: true });
       return {
         ...state,
         loadOnePending: false,
@@ -69,7 +67,7 @@ export function reducer(state, action) {
         loadOneError: null,
       };
 
-    case EMAIL_LOAD_ONE_FAILURE:
+    case DONATION_LOAD_ONE_FAILURE:
       // The request is failed
       return {
         ...state,
@@ -77,7 +75,7 @@ export function reducer(state, action) {
         loadOneError: action.data.error,
       };
 
-    case EMAIL_LOAD_ONE_DISMISS_ERROR:
+    case DONATION_LOAD_ONE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,

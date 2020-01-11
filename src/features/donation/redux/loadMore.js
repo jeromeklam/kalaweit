@@ -1,35 +1,36 @@
 import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
-  EMAIL_LOAD_MORE_INIT,
-  EMAIL_LOAD_MORE_BEGIN,
-  EMAIL_LOAD_MORE_SUCCESS,
-  EMAIL_LOAD_MORE_FAILURE,
-  EMAIL_LOAD_MORE_DISMISS_ERROR,
+  DONATION_LOAD_MORE_INIT,
+  DONATION_LOAD_MORE_BEGIN,
+  DONATION_LOAD_MORE_SUCCESS,
+  DONATION_LOAD_MORE_FAILURE,
+  DONATION_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
+
 
 export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => {
-    const loaded = getState().email.loadMoreFinish;
-    const loading = getState().email.loadMorePending;
+    const loaded = getState().donation.loadMoreFinish;
+    const loading = getState().donation.loadMorePending;
     if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
-          type: EMAIL_LOAD_MORE_INIT,
+          type: DONATION_LOAD_MORE_INIT,
         });
       } else {
         dispatch({
-          type: EMAIL_LOAD_MORE_BEGIN,
+          type: DONATION_LOAD_MORE_BEGIN,
         });
       }
       const promise = new Promise((resolve, reject) => {
-        let filters = getState().email.filters.asJsonApiObject();
+        let filters = getState().donation.filters.asJsonApiObject();
         let params = {
-          page: { number: getState().email.page_number, size: getState().email.page_size },
+          page: { number: getState().donation.page_number, size: getState().donation.page_size },
           ...filters,
         };
         let sort = '';
-        getState().email.sort.forEach(elt => {
+        getState().donation.sort.forEach(elt => {
           let add = elt.col;
           if (elt.way === 'down') {
             add = '-' + add;
@@ -44,25 +45,24 @@ export function loadMore(args = {}, reload = false) {
           params.sort = sort;
         }
         const addUrl = objectToQueryString(params);
-        const doRequest = freeAssoApi.get('/v1/core/email' + addUrl, {});
+        const doRequest = freeAssoApi.get('/v1/asso/donation' + addUrl, {});
         doRequest.then(
-          res => {
+          (res) => {
             dispatch({
-              type: EMAIL_LOAD_MORE_SUCCESS,
+              type: DONATION_LOAD_MORE_SUCCESS,
               data: res,
             });
             resolve(res);
           },
-          err => {
+          (err) => {
             dispatch({
-              type: EMAIL_LOAD_MORE_FAILURE,
+              type: DONATION_LOAD_MORE_FAILURE,
               data: { error: err },
             });
             reject(err);
           },
         );
       });
-
       return promise;
     }
   };
@@ -72,13 +72,13 @@ export function loadMore(args = {}, reload = false) {
 // If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadMoreError() {
   return {
-    type: EMAIL_LOAD_MORE_DISMISS_ERROR,
+    type: DONATION_LOAD_MORE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case EMAIL_LOAD_MORE_INIT:
+    case DONATION_LOAD_MORE_INIT:
       // Just after a request is sent
       return {
         ...state,
@@ -90,7 +90,7 @@ export function reducer(state, action) {
         page_size: process.env.REACT_APP_PAGE_SIZE,
       };
 
-    case EMAIL_LOAD_MORE_BEGIN:
+    case DONATION_LOAD_MORE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
@@ -98,7 +98,7 @@ export function reducer(state, action) {
         loadMoreError: null,
       };
 
-    case EMAIL_LOAD_MORE_SUCCESS:
+    case DONATION_LOAD_MORE_SUCCESS:
       // The request is success
       let list = {};
       let nbre = 0;
@@ -127,7 +127,7 @@ export function reducer(state, action) {
         page_number: state.page_number + 1,
       };
 
-    case EMAIL_LOAD_MORE_FAILURE:
+    case DONATION_LOAD_MORE_FAILURE:
       // The request is failed
       return {
         ...state,
@@ -135,7 +135,7 @@ export function reducer(state, action) {
         loadMoreError: action.data.error,
       };
 
-    case EMAIL_LOAD_MORE_DISMISS_ERROR:
+    case DONATION_LOAD_MORE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,

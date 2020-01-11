@@ -1,29 +1,30 @@
 import { freeAssoApi } from '../../../common';
 import {
-  CAUSE_CREATE_ONE_BEGIN,
-  CAUSE_CREATE_ONE_SUCCESS,
-  CAUSE_CREATE_ONE_FAILURE,
-  CAUSE_CREATE_ONE_DISMISS_ERROR,
+  DONATION_DEL_ONE_BEGIN,
+  DONATION_DEL_ONE_SUCCESS,
+  DONATION_DEL_ONE_FAILURE,
+  DONATION_DEL_ONE_DISMISS_ERROR,
 } from './constants';
 
-export function createOne(args = {}) {
+export function delOne(args = {}) {
   return (dispatch) => {
     dispatch({
-      type: CAUSE_CREATE_ONE_BEGIN,
+      type: DONATION_DEL_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const doRequest = freeAssoApi.post('/v1/asso/cause', args);
+      const id = args;
+      const doRequest = freeAssoApi.delete('/v1/asso/donation/' + id);
       doRequest.then(
         (res) => {
           dispatch({
-            type: CAUSE_CREATE_ONE_SUCCESS,
+            type: DONATION_DEL_ONE_SUCCESS,
             data: res,
           });
           resolve(res);
         },
         (err) => {
           dispatch({
-            type: CAUSE_CREATE_ONE_FAILURE,
+            type: DONATION_DEL_ONE_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -37,43 +38,43 @@ export function createOne(args = {}) {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissCreateOneError() {
+export function dismissDelOneError() {
   return {
-    type: CAUSE_CREATE_ONE_DISMISS_ERROR,
+    type: DONATION_DEL_ONE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case CAUSE_CREATE_ONE_BEGIN:
+    case DONATION_DEL_ONE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        createOnePending: true,
-        createOneError: null,
+        delOnePending: true,
+        delOneError: null,
       };
 
-    case CAUSE_CREATE_ONE_SUCCESS:
+    case DONATION_DEL_ONE_SUCCESS:
       // The request is success
       return {
         ...state,
-        createOnePending: false,
-        createOneError: null,
+        delOnePending: false,
+        delOneError: null,
       };
 
-    case CAUSE_CREATE_ONE_FAILURE:
+    case DONATION_DEL_ONE_FAILURE:
       // The request is failed
       return {
         ...state,
-        createOnePending: false,
-        createOneError: action.data.error,
+        delOnePending: false,
+        delOneError: action.data.error,
       };
 
-    case CAUSE_CREATE_ONE_DISMISS_ERROR:
+    case DONATION_DEL_ONE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        createOneError: null,
+        delOneError: null,
       };
 
     default:
