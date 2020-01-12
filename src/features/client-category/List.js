@@ -198,6 +198,7 @@ export class List extends Component {
         title="Catégories de client"
         cols={cols}
         items={items}
+        quickSearch={quickSearch}
         mainCol="clic_name"
         filterIcon={filterIcon}
         cancelPanelIcon={<CancelPanelIcon />}

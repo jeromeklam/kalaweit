@@ -22,6 +22,7 @@ import dashboardRoute from '../features/dashboard/route';
 import countryRoute from '../features/country/route';
 import uiRoute from '../features/ui/route';
 import donationRoute from '../features/donation/route';
+import causeMainTypeRoute from '../features/cause-main-type/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -47,6 +48,7 @@ const childRoutes = [
   countryRoute,
   uiRoute,
   donationRoute,
+  causeMainTypeRoute,
 ];
 
 const routes = [{

@@ -7,8 +7,7 @@ const initialState = {
   tab: '1',
   tabs: [
     { key: '1', name: 'identification', label: 'Identification', shortcut: 'L', icon: 'location' },
-    { key: '2', name: 'equipement', label: 'Equipement', shortcut: 'E', icon: 'settings' },
-    { key: '3', name: 'divers', label: 'Divers', shortcut: 'D', icon: 'misc' },
+    { key: '2', name: 'divers', label: 'Divers', shortcut: 'D', icon: 'misc' },
   ],
   filters: new Filter(),
   sort: [{col:"site_name",way:"up"}],

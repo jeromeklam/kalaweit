@@ -4,20 +4,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
-import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
+import { ResponsiveList } from 'freeassofront';
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
-  Filter as FilterIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
-  Search as SearchIcon,
 } from '../icons';
 
 export class List extends Component {
@@ -130,13 +126,6 @@ export class List extends Component {
     }
     const globalActions = [
       {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
         name: 'create',
         label: 'Ajouter',
         onClick: this.onCreate,
@@ -174,32 +163,12 @@ export class List extends Component {
     ];
     // L'affichage, items, loading, loadMoreError
     let search = '';
-    const crit = this.props.clientType.filters.findFirst('clit_name');
-    if (crit) {
-      search = crit.getFilterCrit();
-    }
-    const quickSearch = (
-      <ResponsiveQuickSearch
-        name="quickSearch"
-        label="Recherche nom"
-        quickSearch={search}
-        onSubmit={this.onQuickSearch}
-        onChange={this.onSearchChange}
-        icon={<SearchIcon className="text-secondary" />}
-      />
-    );
-    const filterIcon = this.props.clientType.filters.isEmpty() ? (
-      <FilterIcon color="white" />
-    ) : (
-      <FilterFullIcon color="white" />
-    );
     return (
       <ResponsiveList
         title="Types de client"
         cols={cols}
         items={items}
         mainCol="clit_name"
-        filterIcon={filterIcon}
         cancelPanelIcon={<CancelPanelIcon />}
         validPanelIcon={<ValidPanelIcon />}
         sortDownIcon={<SortDownIcon color="secondary" />}

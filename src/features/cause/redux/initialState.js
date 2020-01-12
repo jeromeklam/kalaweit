@@ -2,6 +2,8 @@ import { Filter } from 'freeassofront';
 
 const initialState = {
   items: [],
+  photos: [],
+  photosItem: null,
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   tab: "1",
@@ -22,7 +24,11 @@ const initialState = {
   updateOnePending: false,
   updateOneError: null,
   delOnePending: false,
-  delOneError: null
+  delOneError: null,
+  loadPhotosPending: false,
+  loadPhotosError: null,
+  uploadPhotoPending: false,
+  uploadPhotoError: null
 };
 
 export default initialState;

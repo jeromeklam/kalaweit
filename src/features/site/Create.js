@@ -6,6 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import Form from './Form';
+import { Loading9x9 } from 'freeassofront';
 
 export class Create extends Component {
   static propTypes = {
@@ -70,18 +71,26 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="site-type-create global-card">
-        {item && (
-          <Form
-            item={item}
-            datas={this.props.data.items}
-            config={this.props.config.items}
-            site_types={this.props.siteType.items}
-            properties={this.props.site.properties}
-            tab={this.props.site.tab}
-            tabs={this.props.site.tabs}
-            onSubmit={this.onSubmit}
-            onCancel={this.onCancel}
-          />
+       {this.props.site.loadOnePending ? (
+          <div className="text-center mt-2">
+            <Loading9x9 />
+          </div>
+        ) : (
+          <div>
+            {item && 
+              <Form 
+                item={item} 
+                datas={this.props.data.items}
+                config={this.props.config.items}
+                site_types={this.props.siteType.items} 
+                properties={this.props.site.properties}
+                tab={this.props.site.tab}
+                tabs={this.props.site.tabs}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+              />
+            }
+          </div>
         )}
       </div>
     );

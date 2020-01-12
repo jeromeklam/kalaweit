@@ -72,7 +72,9 @@ export class Create extends Component {
     return (
       <div className="client-category-create global-card">
         {this.props.clientCategory.loadOnePending ? (
-          <Loading9x9 />
+          <div className="text-center mt-2">
+            <Loading9x9 />
+          </div>
         ) : (
           <div>
             {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}

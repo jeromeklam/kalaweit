@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputTextArea, ResponsiveForm } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } from 'freeassofront';
 import { InputData } from '../ui';
 import useForm from '../ui/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
@@ -15,6 +15,7 @@ export default function Form(props) {
   );
   return (
     <ResponsiveForm
+      className="m-5"
       title="Sites"
       tab={values.currentTab}
       tabs={props.tabs}
@@ -24,7 +25,7 @@ export default function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-sm-28">
+        <div className="col-sm-12">
           <InputText
             label="Nom"
             required={true}
@@ -33,8 +34,19 @@ export default function Form(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-sm-8">
-          <InputText label="N°" name="site_code" value={values.site_code} onChange={handleChange} />
+        <div className="col-sm-12">
+          <InputSelect
+            label="Type"
+            name="site_type.id"
+            required={true}
+            value={values.site_type ? values.site_type.id : null}
+            onChange={handleChange}
+            options={siteTypeAsOptions(props.site_types)}
+            addempty={true}
+          />
+        </div>
+        <div className="col-sm-12">
+          <InputText label="Code" name="site_code" value={values.site_code} onChange={handleChange} />
         </div>
       </div>
       <hr />
@@ -71,15 +83,6 @@ export default function Form(props) {
             value={values.site_plots}
             onChange={handleChange}
           />
-          <InputSelect
-            label="Type"
-            name="site_type.id"
-            required={true}
-            value={values.site_type ? values.site_type.id : null}
-            onChange={handleChange}
-            options={siteTypeAsOptions(props.site_types)}
-            addempty={true}
-          />
           <ClientInputPicker
             label="Propriétaire"
             key="owner"
@@ -91,30 +94,6 @@ export default function Form(props) {
       )}
       {values.currentTab === '2' && (
         <div>
-          {props.properties.map(oneProp => {
-            let nameProp = 'site_' + oneProp;
-            return (
-              <InputData
-                key={nameProp}
-                name={nameProp}
-                value={values[nameProp]}
-                datas={props.datas}
-                config={props.config}
-                addempty={false}
-                onChange={handleChange}
-              />
-            );
-          })}
-        </div>
-      )}
-      {values.currentTab === '3' && (
-        <div>
-          <InputText
-            label="N° élevage EDE"
-            name="site_code_ex"
-            value={values.site_code_ex}
-            onChange={handleChange}
-          />
           <ClientInputPicker
             label="Vétérinaire"
             key="sanitary"
@@ -122,7 +101,7 @@ export default function Form(props) {
             item={values.sanitary || null}
             onChange={handleChange}
           />
-          <InputTextArea
+          <InputTextarea
             label="Observations"
             name="site_desc"
             value={values.site_desc}

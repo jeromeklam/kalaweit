@@ -237,6 +237,7 @@ export class List extends Component {
         title="Sites"
         cols={cols}
         items={items || []}
+        quickSearch={quickSearch}
         mainCol="site_name"
         filterIcon={filterIcon}
         cancelPanelIcon={<CancelPanelIcon />}

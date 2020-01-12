@@ -18,6 +18,8 @@ import {
   Person as PersonIcon,
   Menu as MenuIcon,
   Donation as DonationIcon,
+  System as SystemIcon,
+  Datas as DatasIcon,
 } from '../icons';
 
 const options = [
@@ -75,7 +77,7 @@ const options = [
     public: false,
   },
   {
-    icon: null,
+    icon: <DatasIcon />,
     label: 'Répertoires',
     url: null,
     role: 'MENU',
@@ -105,26 +107,40 @@ const options = [
       },
       {
         icon: null,
+        label: 'Grandes cause',
+        url: '/cause-main-type',
+        role: 'NAV',
+        position: 4,
+      },
+      {
+        icon: null,
         label: 'Catégories de personne',
         url: '/client-category',
         role: 'NAV',
-        position: 4,
+        position: 5,
       },
       {
         icon: null,
         label: 'Types de personne',
         url: '/client-type',
         role: 'NAV',
-        position: 5,
+        position: 6,
+      },
+      {
+        icon: null,
+        label: 'Variables',
+        url: '/data',
+        role: 'NAV',
+        position: 7,
       },
     ],
   },
   {
-    icon: null,
+    icon: <SystemIcon />,
     label: 'Paramétrage',
     url: null,
     role: 'MENU',
-    position: 4,
+    position: 5,
     public: false,
     options: [
       {

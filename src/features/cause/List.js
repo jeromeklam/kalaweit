@@ -22,6 +22,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { InlinePhotos } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -33,6 +34,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      photos: 0,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -44,6 +46,7 @@ export class List extends Component {
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onOpenPhoto = this.onOpenPhoto.bind(this);
+    this.onClosePhoto = this.onClosePhoto.bind(this);
   }
 
   componentDidMount() {
@@ -62,7 +65,17 @@ export class List extends Component {
   }
 
   onOpenPhoto(id) {
-    this.props.history.push('/cause/modify/' + id);
+    const { photos } = this.state;
+    if (photos === id) {
+      this.setState({photos: 0});
+    } else {
+      this.props.actions.loadPhotos(id, true).then(result => {});
+      this.setState({photos: id});
+    }
+  }
+
+  onClosePhoto() {
+    this.setState({photos: 0});
   }
 
   onDelOne(id) {
@@ -260,6 +273,7 @@ export class List extends Component {
     ) : (
       <FilterFullIcon color="white" />
     );
+    const inlinePhotos = <InlinePhotos />
     return (
       <ResponsiveList
         title="Causes"
@@ -274,6 +288,8 @@ export class List extends Component {
         sortUpIcon={<SortUpIcon color="secondary" />}
         sortNoneIcon={<SortNoneIcon color="secondary" />}
         inlineActions={inlineActions}
+        inlineOpenedId={this.state.photos}
+        inlineComponent={inlinePhotos}
         globalActions={globalActions}
         sort={this.props.cause.sort}
         filters={this.props.cause.filters}

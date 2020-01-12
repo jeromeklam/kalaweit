@@ -16,7 +16,7 @@ export default function Form(props) {
   );
   const optionsType = dataTypes();
   return (
-    <ResponsiveForm title="Variable" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <ResponsiveForm className="m-5" title="Variable" onSubmit={handleSubmit} onCancel={handleCancel}>
       <InputHidden name="id" id="id" value={values.id} />
       <InputText
         label="Nom"
