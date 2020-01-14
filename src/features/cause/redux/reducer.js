@@ -21,6 +21,7 @@ import { reducer as initFiltersReducer } from './initFilters';
 import { reducer as initSortReducer } from './initSort';
 import { reducer as loadPhotosReducer } from './loadPhotos';
 import { reducer as uploadPhotoReducer } from './uploadPhoto';
+import { reducer as delCauseMediaReducer } from './delCauseMedia';
 
 const reducers = [
   loadMoreReducer,
@@ -37,6 +38,7 @@ const reducers = [
   initSortReducer,
   loadPhotosReducer,
   uploadPhotoReducer,
+  delCauseMediaReducer,
 ];
 
 export default function reducer(state = initialState, action) {

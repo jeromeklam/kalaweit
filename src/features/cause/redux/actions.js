@@ -12,3 +12,4 @@ export { initFilters } from './initFilters';
 export { initSort } from './initSort';
 export { loadPhotos, dismissLoadPhotosError } from './loadPhotos';
 export { uploadPhoto, dismissUploadPhotoError } from './uploadPhoto';
+export { delCauseMedia, dismissDelCauseMediaError } from './delCauseMedia';

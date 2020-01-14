@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputCheckbox, InputHidden, InputSelect, InputText, InputTextArea, ResponsiveForm } from 'freeassofront';
+import { InputCheckbox, InputHidden, InputSelect, InputText, InputTextarea, ResponsiveForm } from 'freeassofront';
 import { InputDate, InputData } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
@@ -18,6 +18,7 @@ export default function Form(props) {
   return (
     <ResponsiveForm
       title="Cause"
+      className="m-5"
       tab={values.currentTab}
       tabs={props.tabs}
       onSubmit={handleSubmit}
@@ -179,7 +180,7 @@ export default function Form(props) {
           </div>
           <div className="row">
             <div className="col-md-36">
-              <InputTextArea
+              <InputTextarea
                 label="Observations"
                 labelTop={true}
                 name="cau_desc"

@@ -72,7 +72,9 @@ export class Create extends Component {
     return (
       <div className="cause-create global-card">
         {this.props.cause.loadOnePending ? (
-          <Loading9x9 />
+          <div className="text-center mt-2">
+            <Loading9x9 />
+          </div>
         ) : (
           <div>
             {item && 

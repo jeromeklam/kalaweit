@@ -71,7 +71,9 @@ export class Create extends Component {
     return (
       <div className="client-create global-card">
         {this.props.client.loadOnePending ? (
-          <Loading9x9 />
+          <div className="text-center mt-2">
+            <Loading9x9 />
+          </div>
         ) : (
           <div>
             {item && 

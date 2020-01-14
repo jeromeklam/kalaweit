@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import * as sponsorshipActions from '../sponsorship/redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { causeTypeAsOptions } from '../cause-type/functions';
@@ -21,8 +22,10 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
+  Sponsorship as SponsorshipIcon,
 } from '../icons';
 import { InlinePhotos } from './';
+import { InlineSponsorships } from '../sponsorship';
 
 export class List extends Component {
   static propTypes = {
@@ -35,6 +38,7 @@ export class List extends Component {
     this.state = {
       timer: null,
       photos: 0,
+      sponsorship: 0,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -47,6 +51,8 @@ export class List extends Component {
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onOpenPhoto = this.onOpenPhoto.bind(this);
     this.onClosePhoto = this.onClosePhoto.bind(this);
+    this.onOpenSponsorship = this.onOpenSponsorship.bind(this);
+    this.onCloseSponsorship = this.onCloseSponsorship.bind(this);
   }
 
   componentDidMount() {
@@ -67,10 +73,10 @@ export class List extends Component {
   onOpenPhoto(id) {
     const { photos } = this.state;
     if (photos === id) {
-      this.setState({photos: 0});
+      this.setState({photos: 0, sponsorship: 0});
     } else {
       this.props.actions.loadPhotos(id, true).then(result => {});
-      this.setState({photos: id});
+      this.setState({photos: id, sponsorship: 0});
     }
   }
 
@@ -143,6 +149,20 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
+  onOpenSponsorship(id) {
+    const { sponsorship } = this.state;
+    if (sponsorship === id) {
+      this.setState({photos: 0, sponsorship: 0});
+    } else {
+      this.props.actions.loadSponsorships({cau_id: id}, true).then(result => {});
+      this.setState({photos: 0, sponsorship: id});
+    }
+  }
+
+  onCloseSponsorship() {
+    this.setState({sponsorship: 0});
+  }
+
   render() {
     // Les des items à afficher avec remplissage progressif
     let items = [];
@@ -156,6 +176,7 @@ export class List extends Component {
         onClick: this.onClearFilters,
         theme: 'secondary',
         icon: <FilterClearIcon color="white" />,
+        role: 'OTHER',
       },
       {
         name: 'create',
@@ -163,15 +184,24 @@ export class List extends Component {
         onClick: this.onCreate,
         theme: 'primary',
         icon: <AddOneIcon color="white" />,
+        role: 'CREATE',
       },
     ];
     const inlineActions = [
+      {
+        name: 'sponsorship',
+        label: 'Dons réguliers',
+        onClick: this.onOpenSponsorship,
+        theme: 'secondary',
+        icon: <SponsorshipIcon color="white" />,
+      },
       {
         name: 'images',
         label: 'Photos',
         onClick: this.onOpenPhoto,
         theme: 'secondary',
         icon: <GetPhotoIcon color="white" />,
+        role: 'OTHER',
       },
       {
         name: 'modify',
@@ -179,6 +209,7 @@ export class List extends Component {
         onClick: this.onGetOne,
         theme: 'secondary',
         icon: <GetOneIcon color="white" />,
+        role: 'MODIFY',
       },
       {
         name: 'delete',
@@ -186,6 +217,7 @@ export class List extends Component {
         onClick: this.onDelOne,
         theme: 'warning',
         icon: <DelOneIcon color="white" />,
+        role: 'DELETE',
       },
     ];
     const cols = [
@@ -273,7 +305,17 @@ export class List extends Component {
     ) : (
       <FilterFullIcon color="white" />
     );
-    const inlinePhotos = <InlinePhotos />
+    let inlineComponent = null;
+    let id = null;
+    if (this.state.photos > 0) {
+      inlineComponent = <InlinePhotos />
+      id = this.state.photos;
+    } else {
+      if (this.state.sponsorship > 0 ) {
+        inlineComponent = <InlineSponsorships />
+        id = this.state.sponsorship;
+      }
+    }
     return (
       <ResponsiveList
         title="Causes"
@@ -288,8 +330,8 @@ export class List extends Component {
         sortUpIcon={<SortUpIcon color="secondary" />}
         sortNoneIcon={<SortNoneIcon color="secondary" />}
         inlineActions={inlineActions}
-        inlineOpenedId={this.state.photos}
-        inlineComponent={inlinePhotos}
+        inlineOpenedId={id}
+        inlineComponent={inlineComponent}
         globalActions={globalActions}
         sort={this.props.cause.sort}
         filters={this.props.cause.filters}
@@ -312,12 +354,13 @@ function mapStateToProps(state) {
     site: state.site,
     causeType: state.causeType,
     causeMainType: state.causeMainType,
+    sponsorship: state.sponsorship,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, ...sponsorshipActions }, dispatch),
   };
 }
 

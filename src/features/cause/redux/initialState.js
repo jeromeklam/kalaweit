@@ -28,7 +28,9 @@ const initialState = {
   loadPhotosPending: false,
   loadPhotosError: null,
   uploadPhotoPending: false,
-  uploadPhotoError: null
+  uploadPhotoError: null,
+  delCauseMediaPending: false,
+  delCauseMediaError: null
 };
 
 export default initialState;

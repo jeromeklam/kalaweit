@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputSelect, InputTextArea, InputCheckbox, ResponsiveForm } from 'freeassofront';
+import { InputHidden, InputSelect, InputTextarea, InputCheckbox, ResponsiveForm } from 'freeassofront';
 import { InputText } from 'freeassofront';
 import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
@@ -17,6 +17,7 @@ export default function Form(props) {
   return (
     <ResponsiveForm
       title="Membre"
+      className="m-5"
       tab={values.currentTab}
       tabs={props.tabs}
       onNavTab={handleNavTab}
@@ -205,7 +206,7 @@ export default function Form(props) {
             </div>
             <div className="row">
               <div className="col-sm-36">
-                <InputTextArea
+                <InputTextarea
                   label="Commentaires"
                   labelTop={true}
                   name="cli_desc"

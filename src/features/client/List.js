@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import * as sponsorshipActions from '../sponsorship/redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { clientCategoryAsOptions } from '../client-category';
@@ -19,7 +20,9 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
+  Sponsorship as SponsorshipIcon,
 } from '../icons';
+import { InlineSponsorships } from '../sponsorship';
 
 export class List extends Component {
   static propTypes = {
@@ -31,6 +34,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      sponsorship: 0,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -41,6 +45,8 @@ export class List extends Component {
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.onOpenSponsorship = this.onOpenSponsorship.bind(this);
+    this.onCloseSponsorship = this.onCloseSponsorship.bind(this);
   }
 
   componentDidMount() {
@@ -123,6 +129,20 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
+  onOpenSponsorship(id) {
+    const { sponsorship } = this.state;
+    if (sponsorship === id) {
+      this.setState({sponsorship: 0});
+    } else {
+      this.props.actions.loadSponsorships({cli_id: id}, true).then(result => {});
+      this.setState({sponsorship: id});
+    }
+  }
+
+  onCloseSponsorship() {
+    this.setState({sponsorship: 0});
+  }
+
   render() {
     // Les des items à afficher avec remplissage progressif
     let items = [];
@@ -143,15 +163,24 @@ export class List extends Component {
         onClick: this.onCreate,
         theme: 'primary',
         icon: <AddOneIcon color="white" />,
+        role: 'CREATE',
       },
     ];
     const inlineActions = [
+      {
+        name: 'sponsorship',
+        label: 'Dons réguliers',
+        onClick: this.onOpenSponsorship,
+        theme: 'secondary',
+        icon: <SponsorshipIcon color="white" />,
+      },
       {
         name: 'modify',
         label: 'Modifier',
         onClick: this.onGetOne,
         theme: 'secondary',
         icon: <GetOneIcon color="white" />,
+        role: 'MODIFY',
       },
       {
         name: 'delete',
@@ -159,6 +188,7 @@ export class List extends Component {
         onClick: this.onDelOne,
         theme: 'warning',
         icon: <DelOneIcon color="white" />,
+        role: 'DELETE',
       },
     ];
     const cols = [
@@ -248,6 +278,7 @@ export class List extends Component {
     ) : (
       <FilterFullIcon color="white" />
     );
+    const inlineSponsorships = <InlineSponsorships />
     return (
       <ResponsiveList
         title="Membres"
@@ -262,6 +293,8 @@ export class List extends Component {
         sortUpIcon={<SortUpIcon color="secondary" />}
         sortNoneIcon={<SortNoneIcon color="secondary" />}
         inlineActions={inlineActions}
+        inlineOpenedId={this.state.sponsorship}
+        inlineComponent={inlineSponsorships}
         globalActions={globalActions}
         sort={this.props.client.sort}
         filters={this.props.client.filters}
@@ -283,13 +316,14 @@ function mapStateToProps(state) {
   return {
     client: state.client,
     clientCategory: state.clientCategory,
+    sponsorship: state.sponsorship,
   };
 }
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, ...sponsorshipActions }, dispatch),
   };
 }
 
