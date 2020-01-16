@@ -14,7 +14,7 @@ export default class SimpleCancel extends Component {
       <Icon 
         path={mdiCancel}
         size={1}
-        color={this.props.color}
+        {...this.props}
       />
     );
   }

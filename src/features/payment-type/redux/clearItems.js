@@ -1,14 +1,14 @@
-import { SITE_CLEAR_ITEMS } from './constants';
+import { PAYMENT_TYPE_CLEAR_ITEMS } from './constants';
 
 export function clearItems() {
   return {
-    type: SITE_CLEAR_ITEMS,
+    type: PAYMENT_TYPE_CLEAR_ITEMS,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case SITE_CLEAR_ITEMS:
+    case PAYMENT_TYPE_CLEAR_ITEMS:
       return {
         ...state,
         loadMorePending: false,

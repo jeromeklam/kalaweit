@@ -14,7 +14,7 @@ export default class SimpleValid extends Component {
       <Icon 
         path={mdiCheck}
         size={1}
-        color={this.props.color}
+        {...this.props}
       />
     );
   }

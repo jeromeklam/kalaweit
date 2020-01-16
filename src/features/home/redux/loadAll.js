@@ -14,6 +14,7 @@ import { loadMore as loadMoreCauseMainType } from '../../cause-main-type/redux/l
 import { loadMore as loadMoreCountry } from '../../country/redux/loadMore';
 import { loadMore as loadMoreClientType } from '../../client-type/redux/loadMore';
 import { loadMore as loadMoreClientCategory } from '../../client-category/redux/loadMore';
+import { loadMore as loadMorePaymentType } from '../../payment-type/redux/loadMore';
 import { loadMore as loadMoreDashboard } from '../../dashboard/redux/loadMore';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
@@ -33,6 +34,7 @@ export function loadAll(args = {}) {
       dispatch(loadMoreSiteType()),
       dispatch(loadMoreCauseType()),
       dispatch(loadMoreCauseMainType()),
+      dispatch(loadMorePaymentType()),
       dispatch(loadMoreClientType()),
       dispatch(loadMoreClientCategory()),
       dispatch(loadMoreDashboard()),

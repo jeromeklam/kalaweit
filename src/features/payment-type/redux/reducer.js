@@ -7,12 +7,12 @@
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da.
 
 import initialState from './initialState';
-import { reducer as loadSponsorshipsReducer } from './loadSponsorships';
-import { reducer as loadOneReducer } from './loadOne';
+import { reducer as loadMoreReducer } from './loadMore';
+import { reducer as clearItemsReducer } from './clearItems';
 
 const reducers = [
-  loadSponsorshipsReducer,
-  loadOneReducer,
+  loadMoreReducer,
+  clearItemsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

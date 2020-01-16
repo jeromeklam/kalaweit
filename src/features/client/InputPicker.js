@@ -16,13 +16,13 @@ export default class InputPicker extends Component {
     super(props);
     let value = '';
     let display = '';
-    if (this.props.item) {
-      value = this.props.item.id;
-      display = this.props.item.cli_lastname || '';
+    if (props.item && props.item.id) {
+      value = props.item.id;
+      display = props.item.cli_lastname + ' ' + props.item.cli_firstname;
     }
     this.state = {
       search: false,
-      item: this.props.item || null,
+      item: props.item || null,
       list: [],
       value: value,
       display: display,
@@ -40,9 +40,9 @@ export default class InputPicker extends Component {
     if (props.item !== state.item) {
       let value = null;
       let display = '';
-      if (props.item) {
+      if (props.item && props.item.id) {
         value = props.item.id;
-        display = props.item.cli_lastname;
+        display = props.item.cli_lastname + ' ' + props.item.cli_firstname;
       }
       return { item: props.item, value: value, display: display };
     }
@@ -112,10 +112,13 @@ export default class InputPicker extends Component {
           onClear={this.onClear}
           onMore={this.onMore}
           onSelect={this.onSelect}
+          size={this.props.size}
+          labelSize={this.props.labelSize || 6}
+          inputSize={this.props.inputSize || 30}
           pickerId="cli_id"
           pickerDisplay="cli_lastname"
-          clearIcon={<DelOne className="text-warning" />}
-          moreIcon={<More className="text-primary" />}
+          clearIcon={<DelOne size={this.props.size === 'sm' ? 0.7 : 1} className="text-warning" />}
+          moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 1} className="text-primary" />}
         />
         <Search
           title={this.props.label}

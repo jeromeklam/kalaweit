@@ -1,51 +1,51 @@
 import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
-  SITE_LOAD_MORE_INIT,
-  SITE_LOAD_MORE_BEGIN,
-  SITE_LOAD_MORE_SUCCESS,
-  SITE_LOAD_MORE_FAILURE,
-  SITE_LOAD_MORE_DISMISS_ERROR,
+  PAYMENT_TYPE_LOAD_MORE_INIT,
+  PAYMENT_TYPE_LOAD_MORE_BEGIN,
+  PAYMENT_TYPE_LOAD_MORE_SUCCESS,
+  PAYMENT_TYPE_LOAD_MORE_FAILURE,
+  PAYMENT_TYPE_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
 export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => {
-    const loaded = getState().site.loadMoreFinish;
-    const loading = getState().site.loadMorePending;
+    const loaded = getState().paymentType.loadMoreFinish;
+    const loading = getState().paymentType.loadMorePending;
     if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
-          type: SITE_LOAD_MORE_INIT,
+          type: PAYMENT_TYPE_LOAD_MORE_INIT,
         });
       } else {
         dispatch({
-          type: SITE_LOAD_MORE_BEGIN,
+          type: PAYMENT_TYPE_LOAD_MORE_BEGIN,
         });
       }
       const promise = new Promise((resolve, reject) => {
         let params = {
-          page: { number: getState().site.page_number, size: getState().site.page_size },
+          page: { number: getState().paymentType.page_number, size: getState().paymentType.page_size },
         };
         if (args && Object.keys(args).length > 0 && args !== '') {
           params.filter = { 
             and: {
-              site_name: args
+              ptyp_name: args
             }
           };
         }
         const addUrl = objectToQueryString(params);
-        const doRequest = freeAssoApi.get('/v1/asso/site' + addUrl, {});
+        const doRequest = freeAssoApi.get('/v1/asso/payment_type' + addUrl, {});
         doRequest.then(
-          res => {
+          (res) => {
             dispatch({
-              type: SITE_LOAD_MORE_SUCCESS,
+              type: PAYMENT_TYPE_LOAD_MORE_SUCCESS,
               data: res,
             });
             resolve(res);
           },
-          err => {
+          (err) => {
             dispatch({
-              type: SITE_LOAD_MORE_FAILURE,
+              type: PAYMENT_TYPE_LOAD_MORE_FAILURE,
               data: { error: err },
             });
             reject(err);
@@ -61,13 +61,13 @@ export function loadMore(args = {}, reload = false) {
 // If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadMoreError() {
   return {
-    type: SITE_LOAD_MORE_DISMISS_ERROR,
+    type: PAYMENT_TYPE_LOAD_MORE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case SITE_LOAD_MORE_INIT:
+    case PAYMENT_TYPE_LOAD_MORE_INIT:
       // Just after a request is sent
       return {
         ...state,
@@ -79,7 +79,7 @@ export function reducer(state, action) {
         page_size: process.env.REACT_APP_PAGE_SIZE,
       };
 
-    case SITE_LOAD_MORE_BEGIN:
+    case PAYMENT_TYPE_LOAD_MORE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
@@ -87,7 +87,7 @@ export function reducer(state, action) {
         loadMoreError: null,
       };
 
-    case SITE_LOAD_MORE_SUCCESS:
+    case PAYMENT_TYPE_LOAD_MORE_SUCCESS:
       // The request is success
       let list = {};
       let nbre = 0;
@@ -116,7 +116,7 @@ export function reducer(state, action) {
         page_number: state.page_number+1
       };
 
-    case SITE_LOAD_MORE_FAILURE:
+    case PAYMENT_TYPE_LOAD_MORE_FAILURE:
       // The request is failed
       return {
         ...state,
@@ -124,7 +124,7 @@ export function reducer(state, action) {
         loadMoreError: action.data.error,
       };
 
-    case SITE_LOAD_MORE_DISMISS_ERROR:
+    case PAYMENT_TYPE_LOAD_MORE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,

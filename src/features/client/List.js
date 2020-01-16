@@ -278,7 +278,7 @@ export class List extends Component {
     ) : (
       <FilterFullIcon color="white" />
     );
-    const inlineSponsorships = <InlineSponsorships />
+    const inlineSponsorships = <InlineSponsorships mode="client" />
     return (
       <ResponsiveList
         title="Membres"

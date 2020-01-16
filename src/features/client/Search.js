@@ -33,14 +33,19 @@ export default class Search extends Component {
       const addUrl = objectToQueryString(filters);
       const doRequest = freeAssoApi.get('/v1/asso/client' + addUrl, {});
       this.setState({ loading: true, finish: false, list: [] });
-      doRequest.then(result => {
-        let items = [];
-        if (result && result.data) {
-          const lines = jsonApiNormalizer(result.data);
-          items = buildModel(lines, 'FreeAsso_Client');
-        }
-        this.setState({ loading: false, finish: true, list: items });
-      });
+      doRequest.then(
+        result => {
+          let items = [];
+          if (result && result.data) {
+            const lines = jsonApiNormalizer(result.data);
+            items = buildModel(lines, 'FreeAsso_Client');
+          }
+          this.setState({ loading: false, finish: true, list: items });
+        },
+        err => {
+          this.setState({ loading: false, finish: true, list: [] });
+        },
+      );
     }
   }
 
@@ -50,11 +55,11 @@ export default class Search extends Component {
 
   render() {
     const filters = [
-      {name: 'cli_firstname', label:"Prénom", type:'text'},
-      {name: 'cli_lastname', label:"Nom", type:'text'}
-    ]
+      { name: 'cli_firstname', label: 'Prénom', type: 'text' },
+      { name: 'cli_lastname', label: 'Nom', type: 'text' },
+    ];
     return (
-      <SearchModal 
+      <SearchModal
         title={this.props.title}
         show={this.props.show}
         loading={this.state.loading}

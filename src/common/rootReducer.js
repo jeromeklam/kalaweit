@@ -23,6 +23,7 @@ import uiReducer from '../features/ui/redux/reducer';
 import donationReducer from '../features/donation/redux/reducer';
 import causeMainTypeReducer from '../features/cause-main-type/redux/reducer';
 import sponsorshipReducer from '../features/sponsorship/redux/reducer';
+import paymentTypeReducer from '../features/payment-type/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -54,6 +55,7 @@ const reducerMap = {
   donation: donationReducer,
   causeMainType: causeMainTypeReducer,
   sponsorship: sponsorshipReducer,
+  paymentType: paymentTypeReducer,
 };
 
 export default combineReducers(reducerMap);

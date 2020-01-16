@@ -70,6 +70,7 @@ export function reducer(state, action) {
         sponsorships: [],
         cli_id: null,
         cau_id: null,
+        emptyItem: null,
       };
 
     case SPONSORSHIP_LOAD_SPONSORSHIPS_BEGIN:

@@ -32,13 +32,6 @@ $map-list-width: 350px;
     overflow-y: auto;
   }
 
-  .map-content-mobile {
-    position: fixed;
-    top: $mobile-header-height;
-    left: 0px;
-    right: 0px;
-    bottom: $mobile-footer-height + 200px;
-  }
   .map-list-header-mobile {
     display: none;
   }
@@ -47,7 +40,6 @@ $map-list-width: 350px;
     height: 200px;;
     left: 0px;
     right: 0px;
-    bottom: $mobile-footer-height;
     overflow: auto;
   }
 }

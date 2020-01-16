@@ -22,39 +22,3 @@ $container-max-widths: (
 ) !default;
 $grid-columns:                36;
 $grid-gutter-width:           20px;
-
-// Menu gauche
-$left-menu-width: 250px;
-$left-menu-item-height: 70px;
-
-$mobile-header-height: 40px;
-$mobile-footer-height: 50px;
-
-$desktop-header-height : 60px;
-$desktop-footer-height : 60px;
-
-// Menu gauche
-$header-login-height : 500px;
-$header-logged-height: 120px;
-
-$footer-max-height : 120px;
-$footer-link-height: 120px;
-
-// Header
-$header-background-color: #5a4e4e;
-$header-color: #ffffff;
-
-//
-$desktop-right-panels-width : 400px;
-
-// Footer
-$footer-background-color: #5a4e4e;
-$footer-color: #ffffff;
-
-$desktop-navbar-height: 60px;
-$desktop-listheader-height: 43px;
-
-// Cards
-$card-cap-bg: lighten(#5a4e4e, 30%);
-$card-cap-color: #ffffff;
-$nav-tabs-link-active-color: #7ab255;

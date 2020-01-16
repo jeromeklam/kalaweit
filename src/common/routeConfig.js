@@ -24,6 +24,7 @@ import uiRoute from '../features/ui/route';
 import donationRoute from '../features/donation/route';
 import causeMainTypeRoute from '../features/cause-main-type/route';
 import sponsorshipRoute from '../features/sponsorship/route';
+import paymentTypeRoute from '../features/payment-type/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -51,6 +52,7 @@ const childRoutes = [
   donationRoute,
   causeMainTypeRoute,
   sponsorshipRoute,
+  paymentTypeRoute,
 ];
 
 const routes = [{

@@ -109,10 +109,13 @@ export default class InputPicker extends Component {
           onClear={this.onClear}
           onMore={this.onMore}
           onSelect={this.onSelect}
+          size={this.props.size}
+          labelSize={this.props.labelSize || 6}
+          inputSize={this.props.inputSize || 30}
           pickerId="cau_id"
           pickerDisplay="cau_name"
-          clearIcon={<DelOne className="text-warning" />}
-          moreIcon={<More className="text-primary" />}
+          clearIcon={<DelOne size={this.props.size === 'sm' ? 0.7 : 1} className="text-warning" />}
+          moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 1} className="text-primary" />}
         />
         <Search
           title={this.props.label}
