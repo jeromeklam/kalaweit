@@ -182,7 +182,7 @@ export class InlinePhotos extends Component {
                                 <div className="ml-2">
                                   <DelOneIcon
                                     onClick={() => this.onConfirmPhoto(photo.id)}
-                                    className="text-secondary inline-action"
+                                    className="text-warning inline-action"
                                   />
                                 </div>
                               </div>
@@ -191,7 +191,7 @@ export class InlinePhotos extends Component {
                         </div>
                       </div>
                       <div className="card-body text-center">
-                        {img && <img src={img} className="rounded" />}
+                        {img && <img src={img} className="rounded" alt="" />}
                       </div>
                     </div>
                   </div>
@@ -221,7 +221,7 @@ export class InlinePhotos extends Component {
                           <section>
                             <div {...getRootProps()}>
                               <input {...getInputProps()} />
-                              <UploadIcon className="text-secondary inline-action" size={4} />
+                              <UploadIcon className="text-primary inline-action" size={4} />
                             </div>
                           </section>
                         )}

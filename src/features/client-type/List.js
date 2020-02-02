@@ -162,7 +162,6 @@ export class List extends Component {
       },
     ];
     // L'affichage, items, loading, loadMoreError
-    let search = '';
     return (
       <ResponsiveList
         title="Types de client"

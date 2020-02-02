@@ -7,3 +7,5 @@ export { default as Copyright } from './Copyright';
 export { default as StatCard } from './StatCard';
 export { default as ImageModal } from './ImageModal';
 export { default as PageNotFound } from './PageNotFound';
+export { default as ColLink } from './ColLink';
+export { default as CenteredLoading9X9 } from './CenteredLoading9X9';

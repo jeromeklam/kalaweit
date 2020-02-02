@@ -24,7 +24,7 @@ export default class InputPicker extends Component {
       search: false,
       item: this.props.item || null,
       list: [],
-      value: value,
+      value: value || '',
       display: display,
       autocomplete: false,
       source: false,
@@ -110,12 +110,13 @@ export default class InputPicker extends Component {
           onMore={this.onMore}
           onSelect={this.onSelect}
           size={this.props.size}
+          inline={this.props.inline}
           labelSize={this.props.labelSize || 6}
           inputSize={this.props.inputSize || 30}
           pickerId="cau_id"
           pickerDisplay="cau_name"
           clearIcon={<DelOne size={this.props.size === 'sm' ? 0.7 : 1} className="text-warning" />}
-          moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 1} className="text-primary" />}
+          moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 1} className="text-secondary" />}
         />
         <Search
           title={this.props.label}

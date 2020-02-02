@@ -8,7 +8,6 @@ import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
-  GetPhoto as GetPhotoIcon,
   DelOne as DelOneIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,

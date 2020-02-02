@@ -115,7 +115,7 @@ export default class InputPicker extends Component {
           pickerId="site_id"
           pickerDisplay="site_name"
           clearIcon={<DelOne className="text-warning" />}
-          moreIcon={<More className="text-primary" />}
+          moreIcon={<More className="text-secondary" />}
         />
         <Search
           title={this.props.label}

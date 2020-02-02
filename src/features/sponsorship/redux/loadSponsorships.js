@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   SPONSORSHIP_LOAD_SPONSORSHIPS_INIT,
   SPONSORSHIP_LOAD_SPONSORSHIPS_BEGIN,
@@ -23,7 +23,8 @@ export function loadSponsorships(args = {}, reload = false) {
       }
       const promise = new Promise((resolve, reject) => {
         let filter = {
-          filter: args
+          filter: args,
+          sort: '-spo_to,-spo_from',
         };
         const addUrl = objectToQueryString(filter);
         const doRequest = freeAssoApi.get('/v1/asso/sponsorship' + addUrl, {});

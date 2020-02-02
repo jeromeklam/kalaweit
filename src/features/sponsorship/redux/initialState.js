@@ -8,6 +8,8 @@ const initialState = {
   loadOnePending: false,
   loadOneError: null,
   loadOneItem: null,
+  createOnePending: false,
+  createOneError: null,
 };
 
 export default initialState;

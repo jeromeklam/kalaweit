@@ -6,9 +6,10 @@ import { SocialIcon } from 'react-social-icons';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
 import * as commonActions from '../common/redux/actions';
-import { ResponsivePage, Loading9x9 } from 'freeassofront';
+import { ResponsivePage } from 'freeassofront';
 import { initAxios } from '../../common';
 import { SimpleForm } from '../auth';
+import { CenteredLoading9X9 } from '../ui';
 import {
   Home as HomeIcon,
   About as AboutIcon,
@@ -250,9 +251,9 @@ export class App extends Component {
           {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
             <div>{this.props.children}</div>
           ) : (
-            <div className="main-loader">
-              <p>... Chargement ...</p>
-              <Loading9x9 />
+            <div className="text-center mt-5 text-secondary">
+              <h3>... Chargement ...</h3>
+              <CenteredLoading9X9 />
             </div>
           )}
         </ResponsivePage>

@@ -177,8 +177,6 @@ export class List extends Component {
       },
     ];
     // L'affichage, items, loading, loadMoreError
-    let search = '';
-    const crit = this.props.data.filters.findFirst('data_name');
     return (
       <ResponsiveList
         title="Variables"

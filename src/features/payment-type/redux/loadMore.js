@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
 import {
   PAYMENT_TYPE_LOAD_MORE_INIT,
   PAYMENT_TYPE_LOAD_MORE_BEGIN,
@@ -24,26 +24,29 @@ export function loadMore(args = {}, reload = false) {
       }
       const promise = new Promise((resolve, reject) => {
         let params = {
-          page: { number: getState().paymentType.page_number, size: getState().paymentType.page_size },
+          page: {
+            number: getState().paymentType.page_number,
+            size: getState().paymentType.page_size,
+          },
         };
         if (args && Object.keys(args).length > 0 && args !== '') {
-          params.filter = { 
+          params.filter = {
             and: {
-              ptyp_name: args
-            }
+              ptyp_name: args,
+            },
           };
         }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/payment_type' + addUrl, {});
         doRequest.then(
-          (res) => {
+          res => {
             dispatch({
               type: PAYMENT_TYPE_LOAD_MORE_SUCCESS,
               data: res,
             });
             resolve(res);
           },
-          (err) => {
+          err => {
             dispatch({
               type: PAYMENT_TYPE_LOAD_MORE_FAILURE,
               data: { error: err },
@@ -89,7 +92,8 @@ export function reducer(state, action) {
 
     case PAYMENT_TYPE_LOAD_MORE_SUCCESS:
       // The request is success
-      let list = {};
+      let list = [];
+      let raw = [];
       let nbre = 0;
       let result = false;
       if (action.data && action.data.data) {
@@ -101,6 +105,7 @@ export function reducer(state, action) {
       if (nbre > 0) {
         if (state.items) {
           list = jsonApiNormalizer(result, state.items);
+          raw = buildModel(list, 'FreeAsso_PaymentType');
         } else {
           list = jsonApiNormalizer(result);
         }
@@ -111,9 +116,10 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
-        loadMoreFinish: (nbre < state.page_size),
+        loadMoreFinish: nbre < state.page_size,
         items: list,
-        page_number: state.page_number+1
+        raw: raw,
+        page_number: state.page_number + 1,
       };
 
     case PAYMENT_TYPE_LOAD_MORE_FAILURE:

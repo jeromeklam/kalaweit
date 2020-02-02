@@ -5,6 +5,7 @@ $theme-colors: (
   "secondary": #5a4e4e,
   "secondary-light": lighten(#5a4e4e,50%),
   "danger": #ff4136,
+  "warning" : #ff9900,
   "light": lighten(#5a4e4e, 60%)
 );
 $grid-breakpoints: (

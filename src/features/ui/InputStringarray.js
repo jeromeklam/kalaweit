@@ -7,7 +7,7 @@ export default class InputStringarray extends Component {
     return (
       <FAInputStringarray
         minusIcon={<Minus className="text-warning" />}
-        plusIcon={<Plus className="text-primary" />}
+        plusIcon={<Plus className="text-secondary" />}
         {...this.props}
       />
     );

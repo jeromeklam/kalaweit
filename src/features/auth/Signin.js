@@ -88,7 +88,7 @@ export class Signin extends Component {
         password: this.state.password,
         remember: this.state.remember,
       };
-      let obj = getJsonApi(datas);
+      let obj = getJsonApi(datas, 'FreeSSO_Signin');
       this.props.actions.signIn(obj).then(result => {
         this.props.history.push('/');
       });

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
+import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 
 const explodeReduxModel = obj => {
   let ret = { ...obj };
@@ -28,13 +28,14 @@ const _loadClient = id => {
   return freeAssoApi.get('/v1/asso/client/' + id, {});
 };
 
-const useForm = (initialState, initialTab, onSubmit, onCancel) => {
+const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors) => {
   const [values, setValues] = useState({
     ...initialState,
     currentTab: initialTab,
     loadClient: false,
     loadCause: false,
     loadSite: false,
+    errors: errors,
   });
 
   const handleSubmit = event => {
@@ -214,12 +215,30 @@ const useForm = (initialState, initialTab, onSubmit, onCancel) => {
     setValues({ ...values, currentTab: keyTab });
   };
 
+  const getErrorMessage = field => {
+    let message = false;
+    if (errors && errors.errors) {
+      errors.errors.forEach(error => {
+        if (error.source && error.source.parameter === field) {
+          if (error.code === 666001) {
+            message = 'Le champ est obligatoire !';
+          } else {
+            message = error.title;
+          }
+          return true;
+        }
+      })
+    }
+    return message;
+  }
+
   return {
     values,
     handleChange,
     handleSubmit,
     handleCancel,
     handleNavTab,
+    getErrorMessage,
   };
 };
 

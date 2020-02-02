@@ -312,7 +312,7 @@ export class List extends Component {
       id = this.state.photos;
     } else {
       if (this.state.sponsorship > 0 ) {
-        inlineComponent = <InlineSponsorships mode="cause" />
+        inlineComponent = <InlineSponsorships mode="cause" id={this.state.sponsorship}/>
         id = this.state.sponsorship;
       }
     }

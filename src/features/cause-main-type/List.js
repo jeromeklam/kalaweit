@@ -162,7 +162,6 @@ export class List extends Component {
         filterable: { type: 'text' },
       },
     ];
-    let search = '';
     return (
       <ResponsiveList
         title="Grandes cause"
