@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { StatCard } from '../../../src/features/dashboard';
+import { StatCard } from '../../../src/features/ui';
 
 it('renders node with correct class name', () => {
   const renderedComponent = shallow(<StatCard />);
-  expect(renderedComponent.find('.dashboard-stat-card').length).toBe(1);
+  expect(renderedComponent.find('.ui-stat-card').length).toBe(1);
 });

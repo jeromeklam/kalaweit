@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Desktop, Mobile } from 'freeassofront'
 import fond from '../../images/fond.jpg';
 import logo from '../../images/logo-timbre.png';
-import {Stats} from '../dashboard';
 
 export class Home extends Component {
   static propTypes = {
@@ -17,29 +15,13 @@ export class Home extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <Mobile>
-          {this.props.auth.authenticated ? (
-            <Stats />
-          ) : (
-          <div className="text-center">
-            <br />
-            <h5>Kalaweit</h5>
-            <br />
-            <img src={logo} alt="logo"/>
-            <br />
-            <br />
-          </div>
-          )}
-        </Mobile>
-        <Desktop>
-            <div className="text-center">
-              <img className="fond-site" src={fond} alt="fond"/>
-              <br />
-              <br />
-              <br />
-              <Stats />
-            </div>
-        </Desktop>
+        <div className="text-right">
+          <img className="fond-site d-none d-sm-block" src={fond} alt="" />
+          <br />
+          <img style={{position: 'relative', opacity: '0.8'}}src={logo} alt="logo" />
+          <br />
+          <br />
+        </div>
       </div>
     );
   }

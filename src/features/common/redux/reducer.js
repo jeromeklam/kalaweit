@@ -7,11 +7,9 @@
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da.
 
 import initialState from './initialState';
-import { reducer as toggleSidebarReducer } from './toggleSidebar';
 import { reducer as setCoordsReducer } from './setCoords';
 
 const reducers = [
-  toggleSidebarReducer,
   setCoordsReducer,
 ];
 

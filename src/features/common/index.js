@@ -17,5 +17,3 @@ export const Default = ({ children }) => {
   return isNotMobile ? children : null;
 };
 
-export { default as PageNotFound } from './PageNotFound';
-export { default as Copyright } from './Copyright';

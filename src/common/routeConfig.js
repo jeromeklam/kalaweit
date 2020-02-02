@@ -1,5 +1,5 @@
 import { App } from '../features/home';
-import { PageNotFound } from '../features/common';
+import { PageNotFound } from '../features/ui';
 import _ from 'lodash';
 import homeRoute from '../features/home/route';
 import commonRoute from '../features/common/route';

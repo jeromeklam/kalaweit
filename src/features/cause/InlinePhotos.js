@@ -14,6 +14,8 @@ import {
   Checked as CheckedIcon,
   Unchecked as UncheckedIcon,
 } from '../icons';
+import { downloadCauseMediaBlob } from './';
+import { downloadBlob, ImageModal } from '../ui';
 
 export class InlinePhotos extends Component {
   static propTypes = {
@@ -26,12 +28,18 @@ export class InlinePhotos extends Component {
     this.state = {
       confirm: false,
       caum_id: 0,
+      view: false,
+      blob: false,
+      item: null,
     };
     this.onCheck = this.onCheck.bind(this);
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
     this.onConfirmPhoto = this.onConfirmPhoto.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
+    this.onDownload = this.onDownload.bind(this);
+    this.onView = this.onView.bind(this);
+    this.onCloseView = this.onCloseView.bind(this);
   }
 
   onCheck(item, caum_id) {
@@ -87,6 +95,28 @@ export class InlinePhotos extends Component {
     });
   }
 
+  onDownload(item) {
+    downloadCauseMediaBlob(item.id, true).then(result => {
+      const type = result.headers['content-type'] || 'application/octet-stream';
+      const blob = result.data;
+      downloadBlob(blob, type, item.sitm_title);
+    });
+  }
+
+  onView(item) {
+    downloadCauseMediaBlob(item.id, true).then(result => {
+      const type = result.headers['content-type'] || 'application/octet-stream';
+      const bytes = new Uint8Array(result.data); 
+      const blob = new Blob([bytes], {type: type});
+      const url = window.URL.createObjectURL(blob);
+      this.setState({blob: url, view: true, item: item});
+    });
+  }
+
+  onCloseView() {
+    this.setState({blob: null, view: false, item: null});
+  }
+
   render() {
     let photos = [];
     if (this.props.cause.photos.FreeAsso_CauseMedia) {
@@ -135,10 +165,16 @@ export class InlinePhotos extends Component {
                             <div className="btn-group btn-group-sm" role="group" aria-label="...">
                               <div className="btn-group" role="group" aria-label="First group">
                                 <div className="ml-2">
-                                  <ViewIcon className="text-secondary inline-action" />
+                                  <ViewIcon 
+                                    className="text-secondary inline-action" 
+                                    onClick={() => this.onView(photo)}
+                                  />
                                 </div>
                                 <div className="ml-2">
-                                  <DownloadIcon className="text-secondary inline-action" />
+                                  <DownloadIcon
+                                    className="text-secondary inline-action"
+                                    onClick={() => this.onDownload(photo)}
+                                  />
                                 </div>
                                 <div className="ml-2">
                                   <UploadIcon className="text-secondary inline-action" />
@@ -197,6 +233,14 @@ export class InlinePhotos extends Component {
             </div>
           )}
         </div>
+        {this.state.view && (
+          <ImageModal
+            show={this.state.view}
+            onClose={this.onCloseView}
+            title={Image}
+            image={this.state.blob}
+          />
+        )}
         <ResponsiveConfirm
           show={this.state.confirm}
           onClose={this.onConfirmClose}

@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 import { Icon } from './';
-import {
-  mdiDownload
-} from '@mdi/js';
+import { mdiDownload } from '@mdi/js';
 
 export default class Download extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiDownload}
-        size={1}
-        {...this.props}
-      />
-    );
+    return <Icon path={mdiDownload} size={1} {...this.props} />;
   }
 }

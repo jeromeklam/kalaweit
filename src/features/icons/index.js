@@ -48,3 +48,4 @@ export { default as Datas } from './Datas';
 export { default as Checked } from './Checked';
 export { default as Unchecked } from './Unchecked';
 export { default as Sponsorship } from './Sponsorship';
+export { default as Dashboard } from './Dashboard';
