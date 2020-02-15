@@ -10,3 +10,4 @@ export { setSort } from './setSort';
 export { updateSort } from './updateSort';
 export { updateOne, dismissUpdateOneError } from './updateOne';
 export { updateQuickSearch } from './updateQuickSearch';
+export { loadDonations, dismissLoadDonationsError } from './loadDonations';

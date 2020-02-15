@@ -8,7 +8,7 @@ import { SimpleEdit as SimpleEditIcon, DelOne as DelOneIcon } from '../icons';
 
 export default class InlineLine extends Component {
   static propTypes = {
-    sponsorship: PropTypes.object.isRequired,
+    donation: PropTypes.object.isRequired,
     onEdit: PropTypes.func.isRequired,
   };
 
@@ -30,26 +30,23 @@ export default class InlineLine extends Component {
   }
 
   render() {
-    const { sponsorship, paymentTypes } = this.props;
+    const { donation, paymentTypes } = this.props;
     return (
-      <div className="row row-line" key={sponsorship.id}>
+      <div className="row row-line" key={donation.id}>
         <div className="col-5">
-          <span>{sponsorship.spo_mnt}</span>
+          <span>{donation.don_mnt}</span>
         </div>
         <div className="col-5">
-          <span>{getPaymentTypeLabel(paymentTypes, sponsorship.payment_type.id)}</span>
+          <span>{getPaymentTypeLabel(paymentTypes, donation.payment_type.id)}</span>
         </div>
         <div className="col-6">
-          <span>{intlDate(sponsorship.spo_from)}</span>
-        </div>
-        <div className="col-6">
-          <span>{intlDate(sponsorship.spo_to)}</span>
+          <span>{intlDate(donation.don_ask_ts)}</span>
         </div>
         <div className="col-8">
           {this.props.mode === 'cause' ? (
-            <span>{getFullName(sponsorship.client)}</span>
+            <span>{getFullName(donation.client)}</span>
           ) : (
-            <span>{sponsorship.cause.cau_name}</span>
+            <span>{donation.cause.cau_name}</span>
           )}
         </div>
         <div className="col-6 text-right">
@@ -57,11 +54,11 @@ export default class InlineLine extends Component {
             <div className="btn-group" role="group" aria-label="First group">
               <div className="ml-2">
                 <SimpleEditIcon
-                  onClick={() => this.props.onEdit(sponsorship.id)}
+                  onClick={() => this.props.onEdit(donation.id)}
                   className="text-secondary inline-action"
                 />
                 <DelOneIcon
-                  onClick={() => this.onConfirmRemove(sponsorship.id)}
+                  onClick={() => this.onConfirmRemove(donation.id)}
                   className="text-warning inline-action"
                 />
               </div>
@@ -73,7 +70,7 @@ export default class InlineLine extends Component {
           onClose={this.onConfirmClose}
           onConfirm={() => {
             this.onConfirmClose();
-            this.props.onDelete(sponsorship.id);
+            this.props.onDelete(donation.id);
           }}
         />
       </div>

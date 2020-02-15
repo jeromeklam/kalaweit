@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { ColLink } from '../ui';
+import PropTypes from 'prop-types';
+import { ColLink } from './';
 
 export default class InlineCloseMore extends Component {
-  static propTypes = {};
+  static propTypes = {
+    label: PropTypes.string.isRequired,
+  };
 
   render() {
     return (
       <div className="row row-line">
         <ColLink
-          label="Cacher les dons et parrainages terminés"
-          className="text-primary"
+          label={this.props.label}
+          className="text-secondary"
           {...this.props}
         />
       </div>

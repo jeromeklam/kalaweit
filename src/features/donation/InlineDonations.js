@@ -18,11 +18,11 @@ import {
   InlineMore,
 } from '../ui';
 import { inTheFuture, propagateModel } from '../../common';
-import { InlineHeader, InlineLine, InlineSponsorship } from './';
+import { InlineHeader, InlineLine, InlineDonation } from './';
 
-export class InlineSponsorships extends Component {
+export class InlineDonations extends Component {
   static propTypes = {
-    sponsorship: PropTypes.object.isRequired,
+    donation: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -43,7 +43,7 @@ export class InlineSponsorships extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.sponsorship.emptyItem) {
+    if (!this.props.donation.emptyItem) {
       this.props.actions.loadOne(0);
     }
   }
@@ -62,12 +62,12 @@ export class InlineSponsorships extends Component {
     } else {
       datas.client.id = this.props.id;
     }
-    const obj = getJsonApi(datas, 'FreeAsso_Sponsorship', true);
+    const obj = getJsonApi(datas, 'FreeAsso_Donation', true);
     this.props.actions
       .createOne(obj)
       .then(result => {
         createSuccess();
-        this.props.actions.propagateModel('FreeAsso_Sponsorship', result);
+        this.props.actions.propagateModel('FreeAsso_Donation', result);
         let filters = {};
         if (this.props.mode === 'cause') {
           filters = { cau_id: this.props.id };
@@ -75,7 +75,7 @@ export class InlineSponsorships extends Component {
           filters = { cli_id: this.props.id };
         }
         this.setState({ add: false, modify: 0 });
-        this.props.actions.loadSponsorships(filters);
+        this.props.actions.loadDonations(filters);
       })
       .catch(errors => {
         console.log(errors);
@@ -90,12 +90,12 @@ export class InlineSponsorships extends Component {
     } else {
       datas.client.id = this.props.id;
     }
-    const obj = getJsonApi(datas, 'FreeAsso_Sponsorship', true);
+    const obj = getJsonApi(datas, 'FreeAsso_Donation', true);
     this.props.actions
       .updateOne(obj)
       .then(result => {
         modifySuccess();
-        this.props.actions.propagateModel('FreeAsso_Sponsorship', result);
+        this.props.actions.propagateModel('FreeAsso_Donation', result);
         let filters = {};
         if (this.props.mode === 'cause') {
           filters = { cau_id: this.props.id };
@@ -103,7 +103,7 @@ export class InlineSponsorships extends Component {
           filters = { cli_id: this.props.id };
         }
         this.setState({ add: false, modify: 0 });
-        this.props.actions.loadSponsorships(filters);
+        this.props.actions.loadDonations(filters);
       })
       .catch(errors => {
         console.log(errors);
@@ -128,7 +128,7 @@ export class InlineSponsorships extends Component {
           filters = { cli_id: this.props.id };
         }
         this.setState({ add: false, modify: 0 });
-        this.props.actions.loadSponsorships(filters);
+        this.props.actions.loadDonations(filters);
       })
       .catch(errors => {
         console.log(errors);
@@ -142,42 +142,37 @@ export class InlineSponsorships extends Component {
   }
 
   render() {
-    let sponsorships = [];
-    if (this.props.sponsorship.sponsorships.FreeAsso_Sponsorship) {
-      sponsorships = buildModel(this.props.sponsorship.sponsorships, 'FreeAsso_Sponsorship', null, {
-        eager: true,
-      });
-    }
+    const donations = this.props.donation.donationsModels;
     let others = false;
     return (
       <div>
-        <div className="sponsorship-inline-sponsorships">
-          {this.props.sponsorship.loadSponsorshipsPending ? (
+        <div className="donation-inline-donations">
+          {this.props.donation.loadDonationsPending ? (
             <div className="text-center">
               <Loading3Dots className="text-light" />
             </div>
           ) : (
             <div className="cause-inline-sponsorships">
               <div className="inline-list">
-                {sponsorships.length > 0 && <InlineHeader {...this.props} />}
-                {sponsorships.length > 0 &&
-                  sponsorships.map(sponsorship => {
-                    if (sponsorship.id !== this.state.modify && inTheFuture(sponsorship.spo_to)) {
+                {donations.length > 0 && <InlineHeader {...this.props} />}
+                {donations.length > 0 &&
+                  donations.map(donation => {
+                    if (donation.id !== this.state.modify) {
                       return (
                         <InlineLine
                           {...this.props}
-                          key={sponsorship.id}
-                          sponsorship={sponsorship}
+                          key={donation.id}
+                          donation={donation}
                           paymentTypes={this.props.paymentType.items}
                           onEdit={this.onModify}
                           onDelete={this.onDelete}
                         />
                       );
                     } else {
-                      if (sponsorship.id === this.state.modify) {
+                      if (donation.id === this.state.modify) {
                         return (
-                          <InlineSponsorship
-                            item={sponsorship}
+                          <InlineDonation
+                            item={donation}
                             paymentTypes={this.props.paymentType.items}
                             mode={this.props.mode}
                             onSubmit={this.onSubmitModify}
@@ -192,30 +187,30 @@ export class InlineSponsorships extends Component {
                   })}
                 {others &&
                   (this.state.more ? (
-                    sponsorships.map(sponsorship => {
+                    donations.map(donation => {
                       if (
-                        sponsorship.id !== this.state.modify &&
-                        !inTheFuture(sponsorship.spo_to)
+                        donation.id !== this.state.modify &&
+                        !inTheFuture(donation.don_ts)
                       ) {
                         return (
                           <InlineLine
                             {...this.props}
-                            key={sponsorship.id}
-                            sponsorship={sponsorship}
+                            key={donation.id}
+                            sponsorship={donation}
                             paymentTypes={this.props.paymentType.items}
                             onEdit={this.onModify}
                             onDelete={this.onDelete}
                           />
                         );
-                      } else if (sponsorship.id === this.state.modify) {
+                      } else if (donation.id === this.state.modify) {
                         return (
-                          <InlineSponsorship
-                            item={sponsorship}
+                          <InlineDonation
+                            item={donation}
                             paymentTypes={this.props.paymentType.items}
                             mode={this.props.mode}
                             onSubmit={this.onSubmitModify}
                             onCancel={this.onCloseForm}
-                            errors={this.props.sponsorship.updateOneError}
+                            errors={this.props.donation.updateOneError}
                           />
                         );
                       }
@@ -223,21 +218,21 @@ export class InlineSponsorships extends Component {
                     })
                   ) : (
                     <InlineMore
-                      label="Afficher tous les dons et parrainages"
+                      label="Afficher tous les dons"
                       onClick={this.onMore}
                     />
                   ))}
                 {others && this.state.more && (
                   <InlineCloseMore
-                    label="Cacher les dons et parrainages terminés"
+                    label="Cacher les dons terminés"
                     onClick={this.onMore}
                   />
                 )}
-                {!this.state.add && sponsorships.length <= 0 && (
-                  <InlineEmpty label="Aucun don ou parrainage régulier" />
+                {!this.state.add && donations.length <= 0 && (
+                  <InlineEmpty label="Aucun don" />
                 )}
                 {this.state.add ? (
-                  <InlineSponsorship
+                  <InlineDonation
                     item={this.props.sponsorship.emptyItem}
                     paymentTypes={this.props.paymentType.items}
                     mode={this.props.mode}
@@ -247,7 +242,7 @@ export class InlineSponsorships extends Component {
                   />
                 ) : (
                   <InlineAddOne
-                    label="Ajouter un don ou parrainage régulier"
+                    label="Ajouter un don"
                     onClick={this.onAdd}
                   />
                 )}
@@ -263,7 +258,7 @@ export class InlineSponsorships extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    sponsorship: state.sponsorship,
+    donation: state.donation,
     paymentType: state.paymentType,
   };
 }
@@ -275,4 +270,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlineSponsorships);
+export default connect(mapStateToProps, mapDispatchToProps)(InlineDonations);

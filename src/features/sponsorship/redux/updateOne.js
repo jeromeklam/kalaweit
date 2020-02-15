@@ -1,32 +1,32 @@
-import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
-  SITE_UPDATE_ONE_BEGIN,
-  SITE_UPDATE_ONE_SUCCESS,
-  SITE_UPDATE_ONE_FAILURE,
-  SITE_UPDATE_ONE_DISMISS_ERROR,
-  SITE_UPDATE_ONE_UPDATE,
+  SPONSORSHIP_UPDATE_ONE_BEGIN,
+  SPONSORSHIP_UPDATE_ONE_SUCCESS,
+  SPONSORSHIP_UPDATE_ONE_FAILURE,
+  SPONSORSHIP_UPDATE_ONE_DISMISS_ERROR,
+  SPONSORSHIP_UPDATE_ONE_UPDATE,
 } from './constants';
 
 export function updateOne(args = {}) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: SITE_UPDATE_ONE_BEGIN,
+      type: SPONSORSHIP_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
       const id = args.data.id;
-      const doRequest = freeAssoApi.put('/v1/asso/site/' + id, args);
+      const doRequest = freeAssoApi.put('/v1/asso/sponsorship/' + id, args);
       doRequest.then(
-        res => {
+        (res) => {
           dispatch({
-            type: SITE_UPDATE_ONE_SUCCESS,
+            type: SPONSORSHIP_UPDATE_ONE_SUCCESS,
             data: res,
           });
           resolve(res);
         },
-        err => {
+        (err) => {
           dispatch({
-            type: SITE_UPDATE_ONE_FAILURE,
+            type: SPONSORSHIP_UPDATE_ONE_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -39,13 +39,13 @@ export function updateOne(args = {}) {
 
 export function dismissUpdateOneError() {
   return {
-    type: SITE_UPDATE_ONE_DISMISS_ERROR,
+    type: SPONSORSHIP_UPDATE_ONE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case SITE_UPDATE_ONE_BEGIN:
+    case SPONSORSHIP_UPDATE_ONE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
@@ -53,7 +53,7 @@ export function reducer(state, action) {
         updateOneError: null,
       };
 
-    case SITE_UPDATE_ONE_SUCCESS:
+    case SPONSORSHIP_UPDATE_ONE_SUCCESS:
       // The request is success
       return {
         ...state,
@@ -61,7 +61,7 @@ export function reducer(state, action) {
         updateOneError: null,
       };
 
-    case SITE_UPDATE_ONE_FAILURE:
+    case SPONSORSHIP_UPDATE_ONE_FAILURE:
       // The request is failed
       let error = null;
       if (action.data.error && action.data.error.response) {
@@ -73,17 +73,17 @@ export function reducer(state, action) {
         updateOneError: error,
       };
 
-    case SITE_UPDATE_ONE_DISMISS_ERROR:
+    case SPONSORSHIP_UPDATE_ONE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
         updateOneError: null,
       };
 
-    case SITE_UPDATE_ONE_UPDATE:
+    case SPONSORSHIP_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
-      let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeAsso_Site', object);
+      let myItems = state.items || [];
+      let news = jsonApiUpdate(myItems, 'FreeAsso_Sponsorship', object);
       return {
         ...state,
         updateOneError: null,

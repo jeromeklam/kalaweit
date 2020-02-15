@@ -9,3 +9,7 @@ export { default as ImageModal } from './ImageModal';
 export { default as PageNotFound } from './PageNotFound';
 export { default as ColLink } from './ColLink';
 export { default as CenteredLoading9X9 } from './CenteredLoading9X9';
+export { default as InlineAddOne } from './InlineAddOne';
+export { default as InlineMore } from './InlineMore';
+export { default as InlineEmpty } from './InlineEmpty';
+export { default as InlineCloseMore } from './InlineCloseMore';

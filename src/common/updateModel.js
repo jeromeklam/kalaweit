@@ -4,8 +4,10 @@ import { CAUSE_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-type/redux/const
 import { SITE_UPDATE_ONE_UPDATE } from '../features/site/redux/constants';
 import { EMAIL_UPDATE_ONE_UPDATE } from '../features/email/redux/constants';
 import { CAUSE_UPDATE_ONE_UPDATE } from '../features/cause/redux/constants';
+import { CLIENT_UPDATE_ONE_UPDATE } from '../features/client/redux/constants';
 import { CLIENT_TYPE_UPDATE_ONE_UPDATE } from '../features/client-type/redux/constants';
 import { CLIENT_CATEGORY_UPDATE_ONE_UPDATE } from '../features/client-category/redux/constants';
+import { SPONSORSHIP_UPDATE_ONE_UPDATE } from '../features/sponsorship/redux/constants';
 
 export function propagateModel(type, model) {
   return dispatch => {
@@ -19,6 +21,12 @@ export function propagateModel(type, model) {
       case 'FreeAsso_Cause':
         dispatch({
           type: CAUSE_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Client':
+        dispatch({
+          type: CLIENT_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;
@@ -49,6 +57,12 @@ export function propagateModel(type, model) {
       case 'FreeAsso_ClientCategory':
         dispatch({
           type: CLIENT_CATEGORY_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Sponsorship':
+        dispatch({
+          type: SPONSORSHIP_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;

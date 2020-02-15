@@ -252,7 +252,7 @@ export class App extends Component {
             <div>{this.props.children}</div>
           ) : (
             <div className="text-center mt-5 text-secondary">
-              <h3>... Chargement ...</h3>
+              <h4>... Chargement ...</h4>
               <CenteredLoading9X9 />
             </div>
           )}

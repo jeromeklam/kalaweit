@@ -19,6 +19,7 @@ import { reducer as setSortReducer } from './setSort';
 import { reducer as updateSortReducer } from './updateSort';
 import { reducer as updateOneReducer } from './updateOne';
 import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
+import { reducer as loadDonationsReducer } from './loadDonations';
 
 const reducers = [
   loadMoreReducer,
@@ -33,6 +34,7 @@ const reducers = [
   updateSortReducer,
   updateOneReducer,
   updateQuickSearchReducer,
+  loadDonationsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

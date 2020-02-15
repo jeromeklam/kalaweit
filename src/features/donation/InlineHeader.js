@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
 export default class InlineHeader extends Component {
-  static propTypes = {};
+  static propTypes = {
+
+  };
 
   render() {
     return (
@@ -14,6 +16,9 @@ export default class InlineHeader extends Component {
         </div>
         <div className="col-6">
           <span>Du</span>
+        </div>
+        <div className="col-6">
+          <span>Au</span>
         </div>
         <div className="col-8">
           {this.props.mode === 'cause' ? (

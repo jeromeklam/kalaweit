@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { ColLink } from '../ui';
+import PropTypes from 'prop-types';
+import { ColLink } from './';
 
 export default class InlineAddOne extends Component {
-  static propTypes = {};
+  static propTypes = {
+    label: PropTypes.string.isRequired
+  };
 
   render() {
     return (
       <div className="row row-line">
         <ColLink
-          label="Ajouter un don ou parrainage régulier"
+          label={this.props.label}
           className="text-primary"
           {...this.props}
         />

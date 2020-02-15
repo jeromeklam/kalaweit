@@ -10,11 +10,15 @@ import initialState from './initialState';
 import { reducer as loadSponsorshipsReducer } from './loadSponsorships';
 import { reducer as loadOneReducer } from './loadOne';
 import { reducer as createOneReducer } from './createOne';
+import { reducer as delOneReducer } from './delOne';
+import { reducer as updateOneReducer } from './updateOne';
 
 const reducers = [
   loadSponsorshipsReducer,
   loadOneReducer,
   createOneReducer,
+  delOneReducer,
+  updateOneReducer,
 ];
 
 export default function reducer(state = initialState, action) {

@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 import { Icon } from './';
-import {
-  mdiCash
-} from '@mdi/js';
+import { mdiCashRegister as myIcon } from '@mdi/js';
 
 export default class Donation extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiCash}
-        size={1}
-        {...this.props}
-      />
-    );
+    return <Icon path={myIcon} {...this.props} />;
   }
 }

@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { ColLink } from '../ui';
+import PropTypes from 'prop-types';
+import { ColLink } from './';
 
 export default class InlineMore extends Component {
-  static propTypes = {};
+  static propTypes = {
+    label: PropTypes.string.isRequired,
+  };
 
   render() {
     return (
       <div className="row row-line">
         <ColLink
-          label="Afficher tous les dons et parrainages"
-          className="text-secondary"
+          label={this.props.label}
+          className={"text-secondary"}
           onClick={this.props.onClick}
         />
       </div>
