@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
 export default class InlineDonation extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
     return (

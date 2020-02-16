@@ -17,11 +17,8 @@ import { loadMore as loadMoreClientCategory } from '../../client-category/redux/
 import { loadMore as loadMorePaymentType } from '../../payment-type/redux/loadMore';
 import { loadMore as loadMoreDashboard } from '../../dashboard/redux/loadMore';
 
-// Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
-// If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadAll(args = {}) {
   return dispatch => {
-    // optionally you can have getState as the second argument
     dispatch({
       type: HOME_LOAD_ALL_BEGIN,
     });
@@ -46,7 +43,6 @@ export function loadAll(args = {}) {
           data: res,
         });
       },
-      // Use rejectHandler as the second argument so that render errors won't be caught.
       err => {
         dispatch({
           type: HOME_LOAD_ALL_FAILURE,
@@ -57,8 +53,6 @@ export function loadAll(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadAllError() {
   return {
     type: HOME_LOAD_ALL_DISMISS_ERROR,

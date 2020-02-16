@@ -5,23 +5,25 @@ import { InputText, InputTextArea, InputSelect, InputCheckbox } from 'freeassofr
 function getFieldData(field_name, tab_config, tab_data) {
   const myDatas = buildModel(tab_data, 'FreeAsso_Data');
   let data = false;
-  Object.keys(tab_config.FreeAsso_Config).forEach(key => {
-    //console.log(key);
-    //console.log(tab_config.FreeAsso_Config[key]);
-    if (
-      tab_config.FreeAsso_Config[key].attributes.acfg_code ===
-      'DATA_ID@' + field_name.toUpperCase()
-    ) {
-      const data_id = tab_config.FreeAsso_Config[key].attributes.acfg_value;
-      myDatas.forEach(oneData => {
-        if (oneData.id === data_id) {
-          data = oneData;
-          return data;
-        }
-      });
-      return false; // pour quitter la boucle
-    }
-  });
+  if (tab_config && tab_config.FreeAsso_Config) {
+    Object.keys(tab_config.FreeAsso_Config).forEach(key => {
+      //console.log(key);
+      //console.log(tab_config.FreeAsso_Config[key]);
+      if (
+        tab_config.FreeAsso_Config[key].attributes.acfg_code ===
+        'DATA_ID@' + field_name.toUpperCase()
+      ) {
+        const data_id = tab_config.FreeAsso_Config[key].attributes.acfg_value;
+        myDatas.forEach(oneData => {
+          if (oneData.id === data_id) {
+            data = oneData;
+            return data;
+          }
+        });
+        return false; // pour quitter la boucle
+      }
+    })
+  };
   return data;
 }
 

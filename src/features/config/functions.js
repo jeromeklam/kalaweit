@@ -10,7 +10,7 @@ import { buildModel } from 'freejsonapi';
 export function configAsOptions(object) {
   let arr = [];
   let items = buildModel(object, 'FreeAsso_Config');
-  console.log('configAsOptions', items);x
+  console.log('configAsOptions', items);
   console.log('configAsOptions2', object);
   return arr;
 }

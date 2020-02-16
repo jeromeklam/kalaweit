@@ -6,10 +6,9 @@ import { SocialIcon } from 'react-social-icons';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
 import * as commonActions from '../common/redux/actions';
-import { ResponsivePage } from 'freeassofront';
+import { ResponsivePage, Loading9x9 } from 'freeassofront';
 import { initAxios } from '../../common';
 import { SimpleForm } from '../auth';
-import { CenteredLoading9X9 } from '../ui';
 import {
   Home as HomeIcon,
   About as AboutIcon,
@@ -21,7 +20,6 @@ import {
   Donation as DonationIcon,
   System as SystemIcon,
   Datas as DatasIcon,
-  Dashboard as DashboardIcon,
 } from '../icons';
 
 const options = [
@@ -55,19 +53,11 @@ const options = [
     public: true,
   },
   {
-    icon: <DashboardIcon />,
-    label: 'Tableau de bord',
-    url: '/dashboard',
-    role: 'NAV',
-    position: 1,
-    public: false,
-  },
-  {
     icon: <PersonIcon />,
     label: 'Membres',
     url: '/client',
     role: 'NAV',
-    position: 2,
+    position: 1,
     public: false,
   },
   {
@@ -75,7 +65,7 @@ const options = [
     label: 'Causes',
     url: '/cause',
     role: 'NAV',
-    position: 3,
+    position: 2,
     public: false,
   },
   {
@@ -83,7 +73,7 @@ const options = [
     label: 'Dons',
     url: '/donation',
     role: 'NAV',
-    position: 4,
+    position: 3,
     public: false,
   },
   {
@@ -91,7 +81,7 @@ const options = [
     label: 'Répertoires',
     url: null,
     role: 'MENU',
-    position: 5,
+    position: 4,
     public: false,
     options: [
       {
@@ -150,7 +140,7 @@ const options = [
     label: 'Paramétrage',
     url: null,
     role: 'MENU',
-    position: 6,
+    position: 5,
     public: false,
     options: [
       {
@@ -171,7 +161,12 @@ const options = [
   },
 ];
 
-export class App extends Component {
+/*
+  This is the root component of your app. Here you define the overall layout
+  and the container of the react router.
+  You should adjust it according to the requirement of your app.
+*/
+export class Page extends Component {
   static propTypes = {
     children: PropTypes.node,
   };
@@ -232,27 +227,29 @@ export class App extends Component {
         </div>
       );
     } else {
-      return (
-        <ResponsivePage
-          menuIcon={<MenuIcon className="light" />}
-          title={process.env.REACT_APP_APP_NAME}
-          options={options}
-          authenticated={this.props.auth.authenticated}
-          location={this.props.location}
-          onNavigate={this.onNavigate}
-          userForm={<SimpleForm />}
-          userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
-        >
-          {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
-            <div>{this.props.children}</div>
-          ) : (
-            <div className="text-center mt-5 text-secondary">
-              <h4>... Chargement ...</h4>
-              <CenteredLoading9X9 />
-            </div>
-          )}
-        </ResponsivePage>
-      );
+      if (!this.props.auth.authenticated || this.props.home.loadAllFinish) {
+        return (
+          <ResponsivePage
+            menuIcon={<MenuIcon className="light" />}
+            title={process.env.REACT_APP_APP_NAME}
+            options={options}
+            authenticated={this.props.auth.authenticated}
+            location={this.props.location}
+            onNavigate={this.onNavigate}
+            userForm={<SimpleForm />}
+            userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
+          >
+            {this.props.children}
+          </ResponsivePage>
+        );
+      } else {
+        return (
+          <div className="main-loader">
+            <p>... Chargement ...</p>
+            <Loading9x9 />
+          </div>
+        );
+      }
     }
   }
 }
@@ -271,4 +268,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Page);
