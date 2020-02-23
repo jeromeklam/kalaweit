@@ -6,6 +6,6 @@ export default class DelOne extends Component {
   static propTypes = {};
 
   render() {
-    return <Icon path={mdiDelete} size={1} {...this.props} />;
+    return <Icon path={mdiDelete} {...this.props} />;
   }
 }

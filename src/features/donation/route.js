@@ -6,6 +6,6 @@ export default {
   childRoutes: [
     { path: 'donation', name: 'List', component: List, auth: 'PRIVATE' },
     { path: 'donation/create', name: 'Create', component: Create, auth: 'PRIVATE' },
-    { path: 'donation/modify/:id', name: 'Modify', component: Modify, auth: 'PRIVATE' },
+    { path: 'donation/modify/:donationId', name: 'Modify', component: Modify, auth: 'PRIVATE' },
   ],
 };

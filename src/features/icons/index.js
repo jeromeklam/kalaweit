@@ -50,3 +50,4 @@ export { default as Unchecked } from './Unchecked';
 export { default as Sponsorship } from './Sponsorship';
 export { default as Dashboard } from './Dashboard';
 export { default as SimpleEdit } from './SimpleEdit';
+export { default as Friend } from './Friend';

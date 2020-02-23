@@ -7,8 +7,8 @@ import { StatCard } from '../ui';
 import { 
   Site as SiteIcon, 
   Cause as CauseIcon,
-  Person as PersonIcon,
-  Fence as FenceIcon
+  Friend as FriendIcon,
+  Donation as DonationIcon
 } from '../icons';
 
 export class Stats extends Component {
@@ -37,13 +37,13 @@ export class Stats extends Component {
             <StatCard
               title="Amis"
               count={this.props.dashboard.stats.friends}
-              icon={<PersonIcon />}
+              icon={<FriendIcon />}
               url="/client"
             />
             <StatCard
               title="Dons"
               count={this.props.dashboard.stats.donations}
-              icon={<FenceIcon />}
+              icon={<DonationIcon />}
             />
           </div>
         ) : (
