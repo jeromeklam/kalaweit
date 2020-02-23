@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading9X9, createSuccess, createError } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -45,7 +45,7 @@ export class Create extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause')
+    this.props.onClose();
   }
 
   /**
@@ -58,12 +58,13 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.clearItems();
-        this.props.history.push('/cause');
+        createSuccess();
+        this.props.actions.propagateModel('FreeAsso_Cause', result);
+        this.props.onClose();
       })
       .catch(errors => {
         // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
@@ -72,9 +73,7 @@ export class Create extends Component {
     return (
       <div className="cause-create global-card">
         {this.props.cause.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && 
@@ -85,8 +84,10 @@ export class Create extends Component {
                 tab_configs={this.props.config.items}
                 tab={this.props.cause.tab}
                 tabs={this.props.cause.tabs}
+                errors={this.props.cause.createOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
             }
           </div>

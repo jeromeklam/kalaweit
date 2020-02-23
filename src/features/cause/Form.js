@@ -1,6 +1,6 @@
 import React from 'react';
-import { InputCheckbox, InputHidden, InputSelect, InputText, InputTextarea, ResponsiveForm } from 'freeassofront';
-import { InputDate, InputData } from '../ui';
+import { InputCheckbox, InputHidden, InputSelect, InputText, InputTextarea } from 'freeassofront';
+import { InputDate, InputData, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
@@ -16,7 +16,7 @@ export default function Form(props) {
     props.onNavTab,
   );
   return (
-    <ResponsiveForm
+    <ResponsiveModalOrForm
       title="Cause"
       className="m-5"
       tab={values.currentTab}
@@ -24,6 +24,8 @@ export default function Form(props) {
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
+      onClose={props.onClose}
+      modal={true}
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
@@ -191,6 +193,6 @@ export default function Form(props) {
           </div>
         </div>
       )}
-    </ResponsiveForm>
+    </ResponsiveModalOrForm>
   );
 }

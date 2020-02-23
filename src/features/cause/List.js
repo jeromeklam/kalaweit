@@ -24,7 +24,7 @@ import {
   Search as SearchIcon,
   Sponsorship as SponsorshipIcon,
 } from '../icons';
-import { InlinePhotos } from './';
+import { InlinePhotos, Create, Modify } from './';
 import { InlineSponsorships } from '../sponsorship';
 
 export class List extends Component {
@@ -39,11 +39,13 @@ export class List extends Component {
       timer: null,
       photos: 0,
       sponsorship: 0,
+      cauId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
@@ -60,28 +62,29 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/cause/create');
+    this.setState({ cauId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/cause/modify/' + id);
+    this.setState({ cauId: id });
+  }
+
+  onClose() {
+    this.setState({ cauId: -1 });
   }
 
   onOpenPhoto(id) {
     const { photos } = this.state;
     if (photos === id) {
-      this.setState({photos: 0, sponsorship: 0});
+      this.setState({ photos: 0, sponsorship: 0 });
     } else {
       this.props.actions.loadPhotos(id, true).then(result => {});
-      this.setState({photos: id, sponsorship: 0});
+      this.setState({ photos: id, sponsorship: 0 });
     }
   }
 
   onClosePhoto() {
-    this.setState({photos: 0});
+    this.setState({ photos: 0 });
   }
 
   onDelOne(id) {
@@ -152,15 +155,15 @@ export class List extends Component {
   onOpenSponsorship(id) {
     const { sponsorship } = this.state;
     if (sponsorship === id) {
-      this.setState({photos: 0, sponsorship: 0});
+      this.setState({ photos: 0, sponsorship: 0 });
     } else {
-      this.props.actions.loadSponsorships({cau_id: id}, true).then(result => {});
-      this.setState({photos: 0, sponsorship: id});
+      this.props.actions.loadSponsorships({ cau_id: id }, true).then(result => {});
+      this.setState({ photos: 0, sponsorship: id });
     }
   }
 
   onCloseSponsorship() {
-    this.setState({sponsorship: 0});
+    this.setState({ sponsorship: 0 });
   }
 
   render() {
@@ -297,7 +300,7 @@ export class List extends Component {
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
-        icon={<SearchIcon className="text-secondary"/>}
+        icon={<SearchIcon className="text-secondary" />}
       />
     );
     const filterIcon = this.props.cause.filters.isEmpty() ? (
@@ -308,42 +311,48 @@ export class List extends Component {
     let inlineComponent = null;
     let id = null;
     if (this.state.photos > 0) {
-      inlineComponent = <InlinePhotos />
+      inlineComponent = <InlinePhotos />;
       id = this.state.photos;
     } else {
-      if (this.state.sponsorship > 0 ) {
-        inlineComponent = <InlineSponsorships mode="cause" id={this.state.sponsorship}/>
+      if (this.state.sponsorship > 0) {
+        inlineComponent = <InlineSponsorships mode="cause" id={this.state.sponsorship} />;
         id = this.state.sponsorship;
       }
     }
     return (
-      <ResponsiveList
-        title="Causes"
-        cols={cols}
-        items={items}
-        quickSearch={quickSearch}
-        mainCol="cau_name"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        inlineOpenedId={id}
-        inlineComponent={inlineComponent}
-        globalActions={globalActions}
-        sort={this.props.cause.sort}
-        filters={this.props.cause.filters}
-        onSearch={this.onQuickSearch}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onClearFilters={this.onClearFilters}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.cause.loadMorePending}
-        loadMoreFinish={this.props.cause.loadMoreFinish}
-        loadMoreError={this.props.cause.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Causes"
+          cols={cols}
+          items={items}
+          quickSearch={quickSearch}
+          mainCol="cau_name"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          inlineOpenedId={id}
+          inlineComponent={inlineComponent}
+          globalActions={globalActions}
+          sort={this.props.cause.sort}
+          filters={this.props.cause.filters}
+          onSearch={this.onQuickSearch}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onClearFilters={this.onClearFilters}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.cause.loadMorePending}
+          loadMoreFinish={this.props.cause.loadMoreFinish}
+          loadMoreError={this.props.cause.loadMoreError}
+        />
+        {this.state.cauId > 0 && (
+          <Modify modal={true} cauId={this.state.cauId} onClose={this.onClose} />
+        )}
+        {this.state.cauId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }

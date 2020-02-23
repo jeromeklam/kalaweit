@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -21,7 +21,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      causeId: this.props.match.params.causeId || false,
+      causeId: this.props.cauId || this.props.match.params.causeId || false,
       item: false,
     };
     /**
@@ -49,7 +49,7 @@ export class Modify extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause');
+    this.props.onClose();
   }
 
   /**
@@ -63,12 +63,13 @@ export class Modify extends Component {
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Cause', result);
-        this.props.history.push('/cause');
+        this.props.onClose();
       })
       .catch(errors => {
         // @todo display errors to fields
-        console.log(errors);
+        modifyError();
       });
   }
 
@@ -77,9 +78,7 @@ export class Modify extends Component {
     return (
       <div className="cause-modify global-card">
         {this.props.cause.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && (
@@ -90,8 +89,10 @@ export class Modify extends Component {
                 tab_configs={this.props.config.items}
                 tab={this.props.cause.tab}
                 tabs={this.props.cause.tabs}
+                errors={this.props.cause.updateOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
             )}
           </div>

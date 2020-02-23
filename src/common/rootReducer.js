@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
+import { highlightReducer } from 'freeassofront';
 import homeReducer from '../features/home/redux/reducer';
 import commonReducer from '../features/common/redux/reducer';
 import siteReducer from '../features/site/redux/reducer';
@@ -56,6 +57,7 @@ const reducerMap = {
   causeMainType: causeMainTypeReducer,
   sponsorship: sponsorshipReducer,
   paymentType: paymentTypeReducer,
+  tour: highlightReducer,
 };
 
 export default combineReducers(reducerMap);

@@ -13,3 +13,6 @@ export { default as InlineAddOne } from './InlineAddOne';
 export { default as InlineMore } from './InlineMore';
 export { default as InlineEmpty } from './InlineEmpty';
 export { default as InlineCloseMore } from './InlineCloseMore';
+export { default as InputDatetime } from './InputDatetime';
+export { default as ResponsiveModalOrForm } from './ResponsiveModalOrForm';
+export { default as InputYear } from './InputYear';
