@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading9X9, createSuccess, createError } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -44,9 +44,8 @@ export class Create extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/client');
+    this.props.onClose();
   }
-
   /**
    * Sur enregistrement, sauvegarde, update store et retour à la liste
    * Sur erreur faut afficher les messages d'anomalie
@@ -57,12 +56,13 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.clearItems();
-        this.props.history.push('/client');
+        createSuccess();
+        this.props.actions.propagateModel('FreeAsso_Client', result);
+        this.props.onClose();
       })
       .catch(errors => {
         // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
@@ -72,7 +72,7 @@ export class Create extends Component {
       <div className="client-create global-card">
         {this.props.client.loadOnePending ? (
           <div className="text-center mt-2">
-            <Loading9x9 />
+            <CenteredLoading9X9 />
           </div>
         ) : (
           <div>
@@ -87,6 +87,7 @@ export class Create extends Component {
                 languages={this.props.lang.items}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
             }
           </div>

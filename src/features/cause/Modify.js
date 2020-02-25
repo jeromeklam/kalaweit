@@ -21,7 +21,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      causeId: this.props.cauId || this.props.match.params.causeId || false,
+      causeId: this.props.cauId || false,
       item: false,
     };
     /**

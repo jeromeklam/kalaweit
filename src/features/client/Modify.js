@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -20,7 +20,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      clientId: this.props.match.params.clientId || false,
+      clientId: this.props.cliId || false,
       item: false,
     };
     /**
@@ -45,8 +45,11 @@ export class Modify extends Component {
   /**
    * Sur annulation, on retourne à la liste
    */
-  onCancel() {
-    this.props.history.push('/client');
+  onCancel(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.onClose();
   }
 
   /**
@@ -60,12 +63,13 @@ export class Modify extends Component {
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Client', result);
-        this.props.history.push('/client');
+        this.props.onClose();
       })
       .catch(errors => {
         // @todo display errors to fields
-        console.log(errors);
+        modifyError();
       });
   }
 
@@ -75,7 +79,7 @@ export class Modify extends Component {
       <div className="client-modify global-card">
         {this.props.client.loadOnePending ? (
           <div className="text-center mt-2">
-            <Loading9x9 />
+            <CenteredLoading9X9 />
           </div>
         ) : (
           <div>
@@ -90,6 +94,7 @@ export class Modify extends Component {
                 languages={this.props.lang.items}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
             )}
           </div>

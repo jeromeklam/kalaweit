@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -19,7 +19,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      donationId: this.props.match.params.donationId || false,
+      donationId: this.props.donId || false,
       item: false,
     };
     /**
@@ -47,7 +47,7 @@ export class Modify extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/donation');
+    this.props.onClose();
   }
 
    /**
@@ -59,22 +59,22 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(this.state.donationId, obj)
       .then(result => {
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Donation', result);
-        this.props.history.push('/donation');
+        this.props.onClose();
       })
       .catch(errors => {
-        console.log(errors);
+        modifyError();
       });
   }
 
   render() {
     const item = this.state.item;
-    console.log("FK don modif",item);
     return (
       <div className="donation-modify global-card">
         {this.props.donation.loadOnePending ? (
           <div className="text-center mt-2">
-            <Loading9x9 />
+            <CenteredLoading9X9 />
           </div>
         ) : (
           <div>
@@ -84,6 +84,7 @@ export class Modify extends Component {
                 donation={this.props.donation}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
             )}
           </div>
@@ -101,7 +102,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions 
+    }, dispatch)
   };
 }
 

@@ -10,7 +10,7 @@ import {
 
 export function loadSponsorships(args = {}, reload = false) {
   return (dispatch, getState) => {
-    const loaded =  getState().cause.loadPhotosFinish;
+    const loaded =  getState().sponsorship.loadSponsorshipsFinish;
     if (!loaded || reload) {
       if (reload) {
         dispatch({
@@ -51,8 +51,6 @@ export function loadSponsorships(args = {}, reload = false) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadSponsorshipsError() {
   return {
     type: SPONSORSHIP_LOAD_SPONSORSHIPS_DISMISS_ERROR,
@@ -94,6 +92,7 @@ export function reducer(state, action) {
         nbre = result.data.length;
       }
       if (nbre > 0) {
+        
         list = jsonApiNormalizer(result);
       } else {
         list = [];
