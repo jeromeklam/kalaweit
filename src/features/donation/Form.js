@@ -23,7 +23,7 @@ export default function Form(props) {
       onCancel={handleCancel}
       onNavTab={handleNavTab}
       onClose={props.onClose}
-      modal={true}
+      modal={props.modal || false}
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">

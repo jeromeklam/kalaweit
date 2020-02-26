@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
+import { Loading3Dots } from 'freeassofront';
 
 export default class CenteredLoading3Dots extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
     return (
       <div className="ui-centered-loading-3-dots">
-        Component content: ui/CenteredLoading3DotsJs
+        <Loading3Dots />
       </div>
     );
   }

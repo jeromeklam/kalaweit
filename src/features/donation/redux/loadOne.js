@@ -57,12 +57,17 @@ export function reducer(state, action) {
       // The request is success
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
+      let emptyItem = state.emptyItem;
       item = buildModel(object, 'FreeAsso_Donation', action.id, { eager: true });
+      if (action.id <= 0) {
+        emptyItem = {...item};
+      }
       return {
         ...state,
         loadOnePending: false,
         loadOneItem: item,
         loadOneError: null,
+        emptyItem: emptyItem,
       };
 
     case DONATION_LOAD_ONE_FAILURE:

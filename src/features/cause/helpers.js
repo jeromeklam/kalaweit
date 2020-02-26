@@ -7,7 +7,7 @@ import {
   FilterClear as FilterClearIcon,
   Sponsorship as SponsorshipIcon,
 } from '../icons';
-import { causeTypeAsOptions } from '../cause-type/functions';
+import { causeTypeAsOptions } from '../cause-type';
 import { siteAsOptions } from '../site/functions';
 
 export const getGlobalActions = ({ onClearFilters, onCreate}) => {
@@ -116,7 +116,7 @@ export const getCols = ({ props }) => {
       hidden: true,
       filterable: {
         type: 'select',
-        options: causeTypeAsOptions(this.props.causeType.items),
+        options: causeTypeAsOptions(props.causeType.items),
       },
     },
     {
@@ -128,7 +128,7 @@ export const getCols = ({ props }) => {
       hidden: true,
       filterable: {
         type: 'select',
-        options: siteAsOptions(this.props.site.items),
+        options: siteAsOptions(props.site.items),
       },
     },
 

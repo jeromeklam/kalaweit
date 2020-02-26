@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
 import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
-import Form from './Form';
 
 export class Modify extends Component {
   static propTypes = {
-    donation: PropTypes.object.isRequired,
+    sponsorship: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -19,8 +19,8 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      donId: this.props.don_id,
-      donation: this.props.donation,
+      spoId: this.props.spo_id,
+      sponsorship: this.props.sponsorship,
       item: false,
     };
     /**
@@ -35,8 +35,8 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.donId).then(result => {
-      const item = this.props.donation.loadOneItem;
+    this.props.actions.loadOne(this.state.spoId).then(result => {
+      const item = this.props.sponsorship.loadOneItem;
       this.setState({ item: item });
     });
   }
@@ -51,18 +51,19 @@ export class Modify extends Component {
     this.props.onClose();
   }
 
-   /**
+  /**
    * Sur enregistrement, sauvegarde, update store et retour à la liste
+   * Sur erreur faut afficher les messages d'anomalie
    */
-  onSubmit(datas = {}) {
+  onSubmit(datas) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_Donation', this.state.donId);
+    let obj = getJsonApi(datas, 'FreeAsso_Sponsorship', this.state.spoId);
     this.props.actions
-      .updateOne(this.state.donId, obj)
+      .updateOne(obj)
       .then(result => {
         modifySuccess();
-        this.props.actions.propagateModel('FreeAsso_Donation', result);
-        this.props.actions.loadDonations(this.state.donation);
+        this.props.actions.propagateModel('FreeAsso_Sponsoship', result);
+        this.props.actions.loadSponsorships(this.state.sponsorship);
         this.props.onClose();
       })
       .catch(errors => {
@@ -72,20 +73,21 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    console.log("FK dans modify",this.state);
     return (
-      <div className="donation-modify global-card">
-        {this.props.donation.loadOnePending ? (
-          <div className="text-center mt-2">
-            <CenteredLoading9X9 />
-          </div>
+      <div className="sponsorship-modify global-card">
+        {this.props.sponsorship.loadOnePending ? (
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && (
               <Form
                 item={item}
                 modal={true}
-                donation={this.props.donation}
+                datas={this.props.data.items}
+                configs={this.props.config.items}
+                properties={this.props.sponsorship.properties}                
+                errors={this.props.sponsorship.updateOneError}
+                paymentTypes={this.props.paymentTypes}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}
@@ -100,18 +102,16 @@ export class Modify extends Component {
 
 function mapStateToProps(state) {
   return {
-    donation: state.donation,
+    data: state.data,
+    config: state.config,
+    sponsorship: state.sponsorship,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions 
-    }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Modify);
+export default connect(mapStateToProps, mapDispatchToProps)(Modify);
