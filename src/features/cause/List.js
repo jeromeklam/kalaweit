@@ -6,24 +6,17 @@ import * as actions from './redux/actions';
 import * as sponsorshipActions from '../sponsorship/redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
-import { causeTypeAsOptions } from '../cause-type/functions';
-import { siteAsOptions } from '../site/functions';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  GetPhoto as GetPhotoIcon,
-  DelOne as DelOneIcon,
   Filter as FilterIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
+  FilterFull as FilterFullIcon,  
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
-  Sponsorship as SponsorshipIcon,
 } from '../icons';
+import { getGlobalActions, getInlineActions, getCols } from './';
 import { InlinePhotos, Create, Modify } from './';
 import { InlineSponsorships } from '../sponsorship';
 
@@ -172,121 +165,9 @@ export class List extends Component {
     if (this.props.cause.items.FreeAsso_Cause) {
       items = buildModel(this.props.cause.items, 'FreeAsso_Cause');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-        role: 'OTHER',
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-        role: 'CREATE',
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'sponsorship',
-        label: 'Dons réguliers',
-        onClick: this.onOpenSponsorship,
-        theme: 'secondary',
-        icon: <SponsorshipIcon color="white" />,
-      },
-      {
-        name: 'images',
-        label: 'Photos',
-        onClick: this.onOpenPhoto,
-        theme: 'secondary',
-        icon: <GetPhotoIcon color="white" />,
-        role: 'OTHER',
-      },
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-        role: 'MODIFY',
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-        role: 'DELETE',
-      },
-    ];
-    const cols = [
-      {
-        name: 'id',
-        label: 'Identifiant',
-        col: 'id',
-        size: '6',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'name',
-        label: 'Nom',
-        col: 'cau_name',
-        size: '6',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'type',
-        label: 'Type',
-        col: 'cause_type.caut_name',
-        size: '12',
-        mob_size: '18',
-        title: false,
-        sortable: true,
-      },
-      {
-        name: 'site',
-        label: 'Site',
-        col: 'site.site_name',
-        size: '10',
-        mob_size: '',
-        title: false,
-        sortable: true,
-      },
-      {
-        name: 'type',
-        label: 'Type',
-        col: 'cause_type.caut_id',
-        size: '0',
-        mob_size: '0',
-        hidden: true,
-        filterable: {
-          type: 'select',
-          options: causeTypeAsOptions(this.props.causeType.items),
-        },
-      },
-      {
-        name: 'site',
-        label: 'Site',
-        col: 'site.site_id',
-        size: '0',
-        mob_size: '0',
-        hidden: true,
-        filterable: {
-          type: 'select',
-          options: siteAsOptions(this.props.site.items),
-        },
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     let search = '';
     const crit = this.props.cause.filters.findFirst('cau_name');

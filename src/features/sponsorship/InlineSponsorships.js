@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel, getJsonApi } from 'freejsonapi';
-import { Loading3Dots } from 'freeassofront';
+import { CenteredLoading3Dots } from '../ui';
 import {
   createSuccess,
   createError,
@@ -79,7 +79,6 @@ export class InlineSponsorships extends Component {
       })
       .catch(errors => {
         console.log(errors);
-        // @todo display errors to fields
         createError();
       });
   }
@@ -107,7 +106,6 @@ export class InlineSponsorships extends Component {
       })
       .catch(errors => {
         console.log(errors);
-        // @todo display errors to fields
         modifyError();
       });
   }
@@ -132,7 +130,6 @@ export class InlineSponsorships extends Component {
       })
       .catch(errors => {
         console.log(errors);
-        // @todo display errors to fields
         deleteError();
       });
   }
@@ -154,7 +151,7 @@ export class InlineSponsorships extends Component {
         <div className="sponsorship-inline-sponsorships">
           {this.props.sponsorship.loadSponsorshipsPending ? (
             <div className="text-center">
-              <Loading3Dots className="text-light" />
+              <CenteredLoading3Dots className="text-light" />
             </div>
           ) : (
             <div className="cause-inline-sponsorships">
@@ -260,7 +257,6 @@ export class InlineSponsorships extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     sponsorship: state.sponsorship,
@@ -268,7 +264,6 @@ function mapStateToProps(state) {
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions, propagateModel }, dispatch),

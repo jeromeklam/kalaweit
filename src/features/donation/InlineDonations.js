@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel, getJsonApi } from 'freejsonapi';
-import { Loading3Dots } from 'freeassofront';
+import { CenteredLoading3Dots } from '../ui';
 import {
   createSuccess,
   createError,
@@ -78,8 +78,6 @@ export class InlineDonations extends Component {
         this.props.actions.loadDonations(filters);
       })
       .catch(errors => {
-        console.log(errors);
-        // @todo display errors to fields
         createError();
       });
   }
@@ -106,8 +104,6 @@ export class InlineDonations extends Component {
         this.props.actions.loadDonations(filters);
       })
       .catch(errors => {
-        console.log(errors);
-        // @todo display errors to fields
         modifyError();
       });
   }
@@ -131,8 +127,6 @@ export class InlineDonations extends Component {
         this.props.actions.loadDonations(filters);
       })
       .catch(errors => {
-        console.log(errors);
-        // @todo display errors to fields
         deleteError();
       });
   }
@@ -149,7 +143,7 @@ export class InlineDonations extends Component {
         <div className="donation-inline-donations">
           {this.props.donation.loadDonationsPending ? (
             <div className="text-center">
-              <Loading3Dots className="text-light" />
+              <CenteredLoading3Dots className="text-light" />
             </div>
           ) : (
             <div className="cause-inline-sponsorships">

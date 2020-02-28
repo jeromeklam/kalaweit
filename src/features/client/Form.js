@@ -1,5 +1,6 @@
 import React from 'react';
-import { InputHidden, InputSelect, InputTextarea, InputCheckbox, ResponsiveForm } from 'freeassofront';
+import { InputHidden, InputSelect, InputTextarea, InputCheckbox } from 'freeassofront';
+import { InputDate, InputData, ResponsiveModalOrForm } from '../ui';
 import { InputText } from 'freeassofront';
 import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
@@ -15,7 +16,7 @@ export default function Form(props) {
     props.onCancel,
   );
   return (
-    <ResponsiveForm
+    <ResponsiveModalOrForm
       title="Membre"
       className="m-5"
       tab={values.currentTab}
@@ -23,6 +24,8 @@ export default function Form(props) {
       onNavTab={handleNavTab}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
+      onClose={props.onClose}
+      modal={true}
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
@@ -219,6 +222,6 @@ export default function Form(props) {
           </div>
         )}
       </div>
-    </ResponsiveForm>
+    </ResponsiveModalOrForm>
   );
 }

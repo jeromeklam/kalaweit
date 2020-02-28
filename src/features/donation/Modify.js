@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -19,7 +19,8 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      donationId: this.props.match.params.donationId || false,
+      donId: this.props.don_id,
+      donation: this.props.donation,
       item: false,
     };
     /**
@@ -34,7 +35,7 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.donationId).then(result => {
+    this.props.actions.loadOne(this.state.donId).then(result => {
       const item = this.props.donation.loadOneItem;
       this.setState({ item: item });
     });
@@ -47,7 +48,7 @@ export class Modify extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/donation');
+    this.props.onClose();
   }
 
    /**
@@ -55,35 +56,39 @@ export class Modify extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_Donation', this.state.donationId);
+    let obj = getJsonApi(datas, 'FreeAsso_Donation', this.state.donId);
     this.props.actions
-      .updateOne(this.state.donationId, obj)
+      .updateOne(this.state.donId, obj)
       .then(result => {
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Donation', result);
-        this.props.history.push('/donation');
+        this.props.actions.loadDonations(this.state.donation);
+        this.props.onClose();
       })
       .catch(errors => {
-        console.log(errors);
+        modifyError();
       });
   }
 
   render() {
     const item = this.state.item;
-    console.log("FK don modif",item);
+    console.log("FK dans modify",this.state);
     return (
       <div className="donation-modify global-card">
         {this.props.donation.loadOnePending ? (
           <div className="text-center mt-2">
-            <Loading9x9 />
+            <CenteredLoading9X9 />
           </div>
         ) : (
           <div>
             {item && (
               <Form
                 item={item}
+                modal={true}
                 donation={this.props.donation}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
             )}
           </div>
@@ -101,7 +106,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions 
+    }, dispatch)
   };
 }
 

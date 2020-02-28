@@ -15,15 +15,15 @@ export default class InlineHeader extends Component {
         <div className="col-6">
           <span>Du</span>
         </div>
+        <div className="col-6">
+          <span>Au</span>
+        </div>
         <div className="col-8">
           {this.props.mode === 'cause' ? (
             <span>Membre</span>
           ) : (
             <span>Cause</span>
           )}
-        </div>
-        <div className="col-6">
-          <span>Options</span>
         </div>
       </div>
     );

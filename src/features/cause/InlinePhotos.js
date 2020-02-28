@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import { buildModel, getJsonApi } from 'freejsonapi';
-import { Loading3Dots, ResponsiveConfirm } from 'freeassofront';
+import { ResponsiveConfirm } from 'freeassofront';
+import { CenteredLoading3Dots } from '../ui';
 import * as actions from './redux/actions';
 import {
   DelOne as DelOneIcon,
@@ -126,9 +127,7 @@ export class InlinePhotos extends Component {
       <div>
         <div className="cause-inline-photos">
           {this.props.cause.loadPhotosPending ? (
-            <div className="text-center">
-              <Loading3Dots className="text-light" />
-            </div>
+            <CenteredLoading3Dots />
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
               {photos.map(photo => {
@@ -163,29 +162,24 @@ export class InlinePhotos extends Component {
                           </div>
                           <div className="col-24 text-right">
                             <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                              <div className="btn-group" role="group" aria-label="First group">
-                                <div className="ml-2">
-                                  <ViewIcon 
-                                    className="text-secondary inline-action" 
-                                    onClick={() => this.onView(photo)}
-                                  />
-                                </div>
-                                <div className="ml-2">
-                                  <DownloadIcon
-                                    className="text-secondary inline-action"
-                                    onClick={() => this.onDownload(photo)}
-                                  />
-                                </div>
-                                <div className="ml-2">
-                                  <UploadIcon className="text-secondary inline-action" />
-                                </div>
-                                <div className="ml-2">
-                                  <DelOneIcon
-                                    onClick={() => this.onConfirmPhoto(photo.id)}
-                                    className="text-warning inline-action"
-                                  />
-                                </div>
-                              </div>
+                              <button type="button" className="btn btn-inline btn-secondary">
+                                <ViewIcon
+                                  className="text-light inline-action"
+                                  onClick={() => this.onView(photo)}
+                                />
+                              </button>
+                              <button type="button" className="btn btn-inline btn-secondary">
+                                <DownloadIcon
+                                  className="text-light inline-action"
+                                  onClick={() => this.onDownload(photo)}
+                                />
+                              </button>
+                              <button type="button" className="btn btn-inline btn-warning">
+                                <DelOneIcon
+                                  onClick={() => this.onConfirmPhoto(photo.id)}
+                                  className="text-light inline-action"
+                                />
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -209,7 +203,7 @@ export class InlinePhotos extends Component {
                   <div className="card-body text-center">
                     {this.props.cause.uploadPhotoPending ? (
                       <div className="text-center">
-                        <Loading3Dots />
+                        <CenteredLoading3Dots />
                       </div>
                     ) : (
                       <Dropzone

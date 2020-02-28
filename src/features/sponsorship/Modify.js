@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { getJsonApi } from 'freejsonapi';
-import { propagateModel } from '../../common';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
+import { getJsonApi } from 'freejsonapi';
+import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
 
 export class Modify extends Component {
   static propTypes = {
-    client: PropTypes.object.isRequired,
+    sponsorship: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -20,7 +19,8 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      clientId: this.props.cliId || false,
+      spoId: this.props.spo_id,
+      sponsorship: this.props.sponsorship,
       item: false,
     };
     /**
@@ -35,9 +35,8 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    
-    this.props.actions.loadOne(this.state.clientId).then(result => {
-      const item = this.props.client.loadOneItem;
+    this.props.actions.loadOne(this.state.spoId).then(result => {
+      const item = this.props.sponsorship.loadOneItem;
       this.setState({ item: item });
     });
   }
@@ -54,21 +53,20 @@ export class Modify extends Component {
 
   /**
    * Sur enregistrement, sauvegarde, update store et retour à la liste
+   * Sur erreur faut afficher les messages d'anomalie
    */
-  onSubmit(datas = {}) {
+  onSubmit(datas) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_Client', this.state.clientId);
+    let obj = getJsonApi(datas, 'FreeAsso_Sponsorship', this.state.spoId);
     this.props.actions
-      .updateOne(this.state.clientId, obj)
+      .updateOne(obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
-        this.props.actions.propagateModel('FreeAsso_Client', result);
+        this.props.actions.propagateModel('FreeAsso_Sponsoship', result);
+        this.props.actions.loadSponsorships(this.state.sponsorship);
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
         modifyError();
       });
   }
@@ -76,22 +74,20 @@ export class Modify extends Component {
   render() {
     const item = this.state.item;
     return (
-      <div className="client-modify global-card">
-        {this.props.client.loadOnePending ? (
-          <div className="text-center mt-2">
-            <CenteredLoading9X9 />
-          </div>
+      <div className="sponsorship-modify global-card">
+        {this.props.sponsorship.loadOnePending ? (
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && (
               <Form
-                tabs={this.props.client.tabs}
-                tab={this.props.client.tab}
                 item={item}
-                client_types={this.props.clientType.items}
-                client_categories={this.props.clientCategory.items}
-                countries={this.props.country.items}
-                languages={this.props.lang.items}
+                modal={true}
+                datas={this.props.data.items}
+                configs={this.props.config.items}
+                properties={this.props.sponsorship.properties}                
+                errors={this.props.sponsorship.updateOneError}
+                paymentTypes={this.props.paymentTypes}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}
@@ -106,21 +102,16 @@ export class Modify extends Component {
 
 function mapStateToProps(state) {
   return {
-    client: state.client,
-    clientType: state.clientType,
-    clientCategory: state.clientCategory,
-    country: state.country,
-    lang: state.lang,
+    data: state.data,
+    config: state.config,
+    sponsorship: state.sponsorship,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Modify);
+export default connect(mapStateToProps, mapDispatchToProps)(Modify);

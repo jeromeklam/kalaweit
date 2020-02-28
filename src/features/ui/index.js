@@ -16,3 +16,4 @@ export { default as InlineCloseMore } from './InlineCloseMore';
 export { default as InputDatetime } from './InputDatetime';
 export { default as ResponsiveModalOrForm } from './ResponsiveModalOrForm';
 export { default as InputYear } from './InputYear';
+export { default as CenteredLoading3Dots } from './CenteredLoading3Dots';

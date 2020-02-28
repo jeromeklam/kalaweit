@@ -6,12 +6,8 @@ import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -19,6 +15,8 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -30,11 +28,13 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      donId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
@@ -47,14 +47,15 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/donation/create');
+    this.setState({ donId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/donation/modify/' + id);
+    this.setState({ donId: id });
+  }
+
+  onClose() {
+    this.setState({ donId: -1 });
   }
 
   onDelOne(id) {
@@ -123,104 +124,14 @@ export class List extends Component {
   }
 
   render() {
-    // Les des items à afficher avec remplissage progressif
     let items = false;
     if (this.props.donation.items.FreeAsso_Donation) {
       items = buildModel(this.props.donation.items, 'FreeAsso_Donation');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-      },
-    ];
-    const cols = [
-      {
-        name: 'date',
-        label: 'Date',
-        col: 'don_ts',
-        size: '5',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        type: 'date',
-        filterable: { type: 'date' },
-      },
-      {
-        name: 'mnt',
-        label: 'Montant',
-        col: 'don_mnt',
-        size: '5',
-        mob_size: '',
-        sortable: true,
-        type: 'monetary',
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'status',
-        label: 'Status',
-        col: 'don_status',
-        size: '5',
-        mob_size: '',
-        sortable: true,
-        type: 'switch',
-        values: [{value: 'WAIT', label: 'Attente'}, {value: 'OK', label: 'Ok'}, {value: 'NOK', label: 'Annulé'}, {value: 'NEXT', label: 'A venir'}],
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'lastname',
-        label: 'Nom',
-        col: 'client.cli_lastname',
-        size: '6',
-        mob_size: '',
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'firstame',
-        label: 'Prénom',
-        col: 'client.cli_firstname',
-        size: '6',
-        mob_size: '',
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'name',
-        label: 'Cause',
-        col: 'cause.cau_name',
-        size: '6',
-        mob_size: '',
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
+
     let search = '';
     const crit = this.props.donation.filters.findFirst('don_mnt');
     if (crit) {
@@ -242,43 +153,47 @@ export class List extends Component {
       <FilterFullIcon color="white" />
     );
     return (
-      <ResponsiveList
-        title="Dons"
-        cols={cols}
-        items={items}
-        quickSearch={quickSearch}
-        mainCol="don_mnt"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.donation.sort}
-        filters={this.props.donation.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.donation.loadMorePending}
-        loadMoreFinish={this.props.donation.loadMoreFinish}
-        loadMoreError={this.props.donation.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Dons"
+          cols={cols}
+          items={items}
+          quickSearch={quickSearch}
+          mainCol="don_mnt"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.donation.sort}
+          filters={this.props.donation.filters}
+          onSearch={this.onQuickSearch}
+          onClearFilters={this.onClearFilters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.donation.loadMorePending}
+          loadMoreFinish={this.props.donation.loadMoreFinish}
+          loadMoreError={this.props.donation.loadMoreError}
+        />
+        {this.state.donId > 0 && (
+          <Modify modal={true} donId={this.state.donId} onClose={this.onClose} />
+        )}
+        {this.state.donId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     donation: state.donation,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),
