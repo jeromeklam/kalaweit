@@ -20,6 +20,7 @@ export default class InlineLine extends Component {
       confirm: false,
       don_id: -1,
       donation: props.donation,
+      paymentTypes: props.paymentTypes,
     };
     this.mouseLeave = this.mouseLeave.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
@@ -127,6 +128,7 @@ export default class InlineLine extends Component {
             onClose={this.onClose}
             don_id={this.state.don_id}
             donation={this.state.donation}
+            paymentTypes={this.state.paymentTypes}
           />
         )}
       </div>

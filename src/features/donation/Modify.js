@@ -72,7 +72,6 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    console.log("FK dans modify",this.state);
     return (
       <div className="donation-modify global-card">
         {this.props.donation.loadOnePending ? (
@@ -86,6 +85,8 @@ export class Modify extends Component {
                 item={item}
                 modal={true}
                 donation={this.props.donation}
+                errors={this.props.donation.updateOneError}
+                paymentTypes={this.props.paymentTypes}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}

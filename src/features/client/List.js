@@ -32,8 +32,8 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
-      sponsorship: 0,
-      donation: 0,
+      sponsorships: 0,
+      donations: 0,
       cliId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
@@ -46,8 +46,8 @@ export class List extends Component {
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
-    this.onOpenSponsorship = this.onOpenSponsorship.bind(this);
-    this.onOpenDonation = this.onOpenDonation.bind(this);
+    this.onOpenSponsorships = this.onOpenSponsorships.bind(this);
+    this.onOpenDonations = this.onOpenDonations.bind(this);
   }
 
   componentDidMount() {
@@ -131,23 +131,23 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
-  onOpenSponsorship(id) {
-    const { sponsorship } = this.state;
-    if (sponsorship === id) {
-      this.setState({sponsorship: 0, donation: 0});
+  onOpenSponsorships(id) {
+    const { sponsorships } = this.state;
+    if (sponsorships === id) {
+      this.setState({sponsorships: 0, donations: 0});
     } else {
       this.props.actions.loadSponsorships({cli_id: id}, true).then(result => {});
-      this.setState({sponsorship: id, donation: 0});
+      this.setState({sponsorships: id, donations: 0});
     }
   }
 
-  onOpenDonation(id) {
-    const { donation } = this.state;
-    if (donation === id) {
-      this.setState({sponsorship: 0, donation: 0});
+  onOpenDonations(id) {
+    const { donations } = this.state;
+    if (donations === id) {
+      this.setState({sponsorships: 0, donations: 0});
     } else {
       this.props.actions.loadDonations({cli_id: id}, true).then(result => {});
-      this.setState({sponsorship: 0, donation: id});
+      this.setState({sponsorships: 0, donations: id});
     }
   }
 
@@ -183,12 +183,12 @@ export class List extends Component {
     );
     let inlineComponent = null;
     let id = null;
-    if (this.state.sponsorship > 0) {
-      inlineComponent = <InlineSponsorships mode="client" id={this.state.sponsorship} />
-      id = this.state.sponsorship;
+    if (this.state.sponsorships > 0) {
+      inlineComponent = <InlineSponsorships mode="client" id={this.state.sponsorships} />
+      id = this.state.sponsorships;
     } else {
-      inlineComponent = <InlineDonations mode="client" id={this.state.donation} />
-      id = this.state.donation;
+      inlineComponent = <InlineDonations mode="client" id={this.state.donations} />
+      id = this.state.donations;
     }
     return (
       <div>
@@ -232,7 +232,8 @@ function mapStateToProps(state) {
   return {
     client: state.client,
     clientCategory: state.clientCategory,
-    sponsorship: state.sponsorship,
+    sponsorship: state.sponsorships,
+    donation: state.donations,
   };
 }
 
