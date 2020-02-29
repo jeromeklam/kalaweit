@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ResponsiveConfirm } from 'freeassofront';
+import { HoverObserver, ResponsiveConfirm } from 'freeassofront';
 import { intlDate } from '../../common';
 import { getPaymentTypeLabel } from '../payment-type';
 import { getFullName } from '../client';
-import {
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon, 
-} from '../icons';
+import { GetOne as GetOneIcon, DelOne as DelOneIcon } from '../icons';
 import { Modify } from './';
 
 export default class InlineLine extends Component {
@@ -19,11 +16,14 @@ export default class InlineLine extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      flipped: false,
       confirm: false,
-      spo_id: -1,      
+      spo_id: -1,
       sponsorship: props.sponsorship,
       paymentTypes: props.paymentTypes,
     };
+    this.mouseLeave = this.mouseLeave.bind(this);
+    this.mouseEnter = this.mouseEnter.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onConfirmOpen = this.onConfirmOpen.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
@@ -61,47 +61,65 @@ export default class InlineLine extends Component {
     this.setState({ confirm: false });
   }
 
+  mouseLeave() {
+    this.setState({ flipped: false });
+  }
+
+  mouseEnter() {
+    this.setState({ flipped: true });
+  }
+
   render() {
     const { sponsorship, paymentTypes } = this.props;
+    const highlight = this.state.flipped || this.props.inlineOpenedId === this.props.id;
     return (
-      <div className="row row-line" key={sponsorship.id}>
-        <div className="col-5">
-          <span>{sponsorship.spo_mnt}</span>
-        </div>
-        <div className="col-5">
-          <span>{getPaymentTypeLabel(paymentTypes, sponsorship.payment_type.id)}</span>
-        </div>
-        <div className="col-6">
-          <span>{intlDate(sponsorship.spo_from)}</span>
-        </div>
-        <div className="col-6">
-          <span>{intlDate(sponsorship.spo_to)}</span>
-        </div>
-        <div className="col-8">
-          {this.props.mode === 'cause' ? (
-            <span>{getFullName(sponsorship.client)}</span>
-          ) : (
-            <span>{sponsorship.cause.cau_name}</span>
-          )}
-        </div>
-        <div className="col-6 text-right">
-          <div className="btn-group btn-group-xs" role="group" aria-label="...">
-            <button
-              type="button"
-              className="btn btn-inline btn-secondary"
-              onClick={() => {this.onGetOne(sponsorship.id)}}
-            >
-              <GetOneIcon className="inline-action text-light" />
-            </button>
-            <button
-              type="button"
-              className="btn btn-inline btn-warning"
-              onClick={() => this.onConfirmOpen(sponsorship.id)}
-            >
-              <DelOneIcon className="inline-action text-light" />
-            </button>
+      <div>
+        <HoverObserver onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
+          <div className="row row-line" key={sponsorship.id}>
+            <div className="col-5">
+              <span>{sponsorship.spo_mnt}</span>
+            </div>
+            <div className="col-5">
+              <span>{getPaymentTypeLabel(paymentTypes, sponsorship.payment_type.id)}</span>
+            </div>
+            <div className="col-6">
+              <span>{intlDate(sponsorship.spo_from)}</span>
+            </div>
+            <div className="col-6">
+              <span>{intlDate(sponsorship.spo_to)}</span>
+            </div>
+            <div className="col-8">
+              {this.props.mode === 'cause' ? (
+                <span>{getFullName(sponsorship.client)}</span>
+              ) : (
+                <span>{sponsorship.cause.cau_name}</span>
+              )}
+            </div>
+            <div className="col-6 text-right">
+              {highlight && (
+                <div className="btn-group btn-group-xs" role="group" aria-label="...">
+                  <button
+                    type="button"
+                    className="btn btn-inline btn-secondary"
+                    onClick={() => {
+                      this.onGetOne(sponsorship.id);
+                    }}
+                  >
+                    <GetOneIcon className="inline-action text-light" />
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-inline btn-warning"
+                    onClick={() => this.onConfirmOpen(sponsorship.id)}
+                  >
+                    <DelOneIcon className="inline-action text-light" />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </HoverObserver>
+
         <ResponsiveConfirm
           show={this.state.confirm}
           onClose={this.onConfirmClose}
@@ -110,10 +128,10 @@ export default class InlineLine extends Component {
           }}
         />
         {!this.state.confirm && this.state.spo_id > 0 && (
-          <Modify 
-            onClose={this.onClose} 
-            spo_id={this.state.spo_id} 
-            sponsorship={this.state.sponsorship} 
+          <Modify
+            onClose={this.onClose}
+            spo_id={this.state.spo_id}
+            sponsorship={this.state.sponsorship}
             paymentTypes={this.state.paymentTypes}
           />
         )}
