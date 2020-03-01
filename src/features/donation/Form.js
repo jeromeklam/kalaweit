@@ -1,17 +1,18 @@
 import React from 'react';
-import { InputCheckbox, InputHidden, InputSelect, InputText, InputTextarea, ResponsiveForm } from 'freeassofront';
-import { InputDate, InputData, ResponsiveModalOrForm } from '../ui';
+import { InputHidden, InlineInputSelect, InputText } from 'freeassofront';
+import { InputDate, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
+import { paymentTypeAsOptions } from '../payment-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as CauseInputPicker } from '../cause';
 
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel, handleNavTab } = useForm(
+  const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     props.tab,
     props.onSubmit,
     props.onCancel,
-    props.onNavTab,
+    props.errors,
   );
   return (
     <ResponsiveModalOrForm
@@ -21,7 +22,6 @@ export default function Form(props) {
       tabs={props.tabs}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
-      onNavTab={handleNavTab}
       onClose={props.onClose}
       modal={props.modal || false}
     >
@@ -47,7 +47,7 @@ export default function Form(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-12">
+        <div className="col-md-6">
           <InputText
             label="Montant"
             labelTop={true}
@@ -57,6 +57,21 @@ export default function Form(props) {
             onChange={handleChange}
           />
         </div>
+            <div className="col-sm-6">
+            <InlineInputSelect
+              label="Type"
+              name="payment_type.id"
+              labelTop={true}
+              size="sm"
+              inline
+              labelSize={36}
+              inputSize={36}
+              value={values.payment_type.id}
+              onChange={handleChange}
+              options={paymentTypeAsOptions(props.paymentTypes)}
+              error={getErrorMessage('ptyp_id')}
+            />
+          </div>
       </div>
       <div className="row">
         <div className="col-md-18">

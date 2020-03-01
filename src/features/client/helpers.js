@@ -29,21 +29,23 @@ export const getGlobalActions = ({ onClearFilters, onCreate}) => {
   ];
 };
 
-export const getInlineActions = ({onOpenDonation, onOpenSponsorship, onGetOne, onDelOne}) => {
+export const getInlineActions = ({onOpenDonations, onOpenSponsorships, onGetOne, onDelOne, state}) => {
   return [
     {
       name: 'donation',
       label: 'Dons',
-      onClick: onOpenDonation,
+      onClick: onOpenDonations,
       theme: 'secondary',
       icon: <DonationIcon color="white" />,
+      active: state.donations > 0,
     },
     {
       name: 'sponsorship',
       label: 'Dons et parrainages réguliers',
-      onClick: onOpenSponsorship,
+      onClick: onOpenSponsorships,
       theme: 'secondary',
       icon: <SponsorshipIcon color="white" />,
+      active: state.sponsorships > 0,
     },
     {
       name: 'modify',

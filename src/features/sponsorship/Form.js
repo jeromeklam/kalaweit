@@ -18,7 +18,6 @@ export default function Form(props) {
     props.tab,
     props.onSubmit,
     props.onCancel,
-    props.onNavTab,
     props.errors,
   );
   return (
