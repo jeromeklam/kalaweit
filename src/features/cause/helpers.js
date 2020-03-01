@@ -31,19 +31,19 @@ export const getGlobalActions = ({ onClearFilters, onCreate}) => {
   ];
 };
 
-export const getInlineActions = ({ onOpenSponsorship, onOpenPhoto, onGetOne, onDelOne}) => {
+export const getInlineActions = ({ onOpenSponsorships, onOpenPhotos, onGetOne, onDelOne}) => {
   return [
     {
       name: 'sponsorship',
       label: 'Dons réguliers',
-      onClick: onOpenSponsorship,
+      onClick: onOpenSponsorships,
       theme: 'secondary',
       icon: <SponsorshipIcon color="white" />,
     },
     {
       name: 'images',
       label: 'Photos',
-      onClick: onOpenPhoto,
+      onClick: onOpenPhotos,
       theme: 'secondary',
       icon: <GetPhotoIcon color="white" />,
       role: 'OTHER',
