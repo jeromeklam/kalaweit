@@ -19,3 +19,4 @@ export { default as ResponsiveModalOrForm } from './ResponsiveModalOrForm';
 export { default as InputYear } from './InputYear';
 export { default as CenteredLoading3Dots } from './CenteredLoading3Dots';
 export { default as InputTextarea } from './InputTextarea';
+export { default as ResponsiveGridCard } from './ResponsiveGridCard';
