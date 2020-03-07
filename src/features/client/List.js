@@ -136,7 +136,6 @@ export class List extends Component {
     if (sponsorships === id) {
       this.setState({sponsorships: 0, donations: 0});
     } else {
-      this.props.actions.loadSponsorships({cli_id: id}, true).then(result => {});
       this.setState({sponsorships: id, donations: 0});
     }
   }
@@ -146,7 +145,6 @@ export class List extends Component {
     if (donations === id) {
       this.setState({sponsorships: 0, donations: 0});
     } else {
-      this.props.actions.loadDonations({cli_id: id}, true).then(result => {});
       this.setState({sponsorships: 0, donations: id});
     }
   }

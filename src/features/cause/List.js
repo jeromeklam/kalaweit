@@ -150,7 +150,6 @@ export class List extends Component {
     if (sponsorships === id) {
       this.setState({ photos: 0, sponsorships: 0 });
     } else {
-      this.props.actions.loadSponsorships({ cau_id: id }, true).then(result => {});
       this.setState({ photos: 0, sponsorships: id });
     }
   }
@@ -244,7 +243,6 @@ function mapStateToProps(state) {
     site: state.site,
     causeType: state.causeType,
     causeMainType: state.causeMainType,
-    sponsorship: state.sponsorship,
   };
 }
 

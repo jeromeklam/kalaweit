@@ -4,7 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, createSuccess, createError } from '../ui';
+import { loadOne as loadOneCause } from '../cause/redux/actions';
+import { loadOne as loadOneClient } from '../client/redux/actions';
+import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
+import { propagateModel } from '../../common';
 import Form from './Form';
 
 export class Create extends Component {
@@ -33,7 +36,21 @@ export class Create extends Component {
      */
     this.props.actions.loadOne(this.state.donationId).then(result => {
       const item = this.props.donation.loadOneItem;
-      this.setState({ item: item });
+      if (this.props.mode === 'client') {
+        this.props.actions.loadOneClient(this.props.parentId).then(result => {
+          item.client = this.props.client.loadOneItem;
+          this.setState({ item: item });
+        })
+      } else {
+        if (this.props.mode === 'cause') {
+          this.props.actions.loadOneCause(this.props.parentId).then(result => {
+            item.cause = this.props.cause.loadOneItem;
+            this.setState({ item: item });
+          })
+        } else {
+          this.setState({ item: item });
+        }
+      }
     });
   }
 
@@ -71,12 +88,13 @@ export class Create extends Component {
     return (
       <div className="donation-create global-card">
         {this.props.donation.loadOnePending ? (
-          <CenteredLoading9X9 />
+          <CenteredLoading3Dots />
         ) : (
           <div>
             {item && 
               <Form 
                 item={item} 
+                modal={true}
                 errors={this.props.donation.createOneError}
                 paymentTypes={this.props.paymentType.items}
                 onSubmit={this.onSubmit} 
@@ -93,6 +111,8 @@ export class Create extends Component {
 
 function mapStateToProps(state) {
   return {
+    cause: state.cause,
+    client: state.client,
     donation: state.donation,
     paymentType: state.paymentType,
   };
@@ -100,7 +120,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions, loadOneCause, loadOneClient, propagateModel }, dispatch)
   };
 }
 

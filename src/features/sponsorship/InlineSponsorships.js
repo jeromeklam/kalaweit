@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { CenteredLoading3Dots } from '../ui';
+import { ResponsiveConfirm } from 'freeassofront';
 import {
   createSuccess,
   createError,
@@ -34,6 +35,7 @@ export class InlineSponsorships extends Component {
       filters = { cli_id: props.id };
     }
     this.state = {
+      confirm: -1,
       more: false,
       spoId: -1,
       filters: filters,
@@ -43,6 +45,12 @@ export class InlineSponsorships extends Component {
     this.onCloseForm = this.onCloseForm.bind(this);
     this.onModify = this.onModify.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.onConfirm = this.onConfirm.bind(this);
+    this.onConfirmClose = this.onConfirmClose.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.actions.loadSponsorships(this.state.filters, true);
   }
 
   onMore() {
@@ -82,9 +90,17 @@ export class InlineSponsorships extends Component {
     this.props.actions.loadSponsorships(this.state.filters, true);
   }
 
+  onConfirm(id) {
+    this.setState({ confirm: id });
+  }
+
+  onConfirmClose() {
+    this.setState({ confirm: -1 });
+  }
+
   render() {
     let sponsorships = this.props.sponsorship.sponsorshipsModels;
-    let others  = false;
+    let others = false;
     let counter = 0;
     return (
       <div>
@@ -96,7 +112,7 @@ export class InlineSponsorships extends Component {
           ) : (
             <div className="cause-inline-sponsorships">
               <div className="inline-list">
-                {sponsorships.length > 0 && <InlineHeader {...this.props} oddEven={counter++} />}
+                {sponsorships.length > 0 && <InlineHeader {...this.props} onAddOne={this.onAdd} oddEven={counter++} />}
                 {sponsorships.length > 0 &&
                   sponsorships.map(sponsorship => {
                     if (inTheFuture(sponsorship.spo_to)) {
@@ -108,7 +124,7 @@ export class InlineSponsorships extends Component {
                           sponsorship={sponsorship}
                           paymentTypes={this.props.paymentType.items}
                           onGetOne={this.onModify}
-                          onDelOne={this.onDelete}
+                          onDelOne={this.onConfirm}
                         />
                       );
                     } else {
@@ -128,7 +144,7 @@ export class InlineSponsorships extends Component {
                             sponsorship={sponsorship}
                             paymentTypes={this.props.paymentType.items}
                             onGetOne={this.onModify}
-                            onDelOne={this.onDelete}
+                            onDelOne={this.onConfirm}
                           />
                         );
                       }
@@ -176,6 +192,15 @@ export class InlineSponsorships extends Component {
             </div>
           )}
         </div>
+        {this.state.confirm > 0 && (
+          <ResponsiveConfirm
+            show={this.state.confirm}
+            onClose={this.onConfirmClose}
+            onConfirm={() => {
+              this.onDelete(this.state.confirm);
+            }}
+          />
+        )}
       </div>
     );
   }
