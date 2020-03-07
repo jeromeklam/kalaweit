@@ -31,7 +31,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate}) => {
   ];
 };
 
-export const getInlineActions = ({ onOpenSponsorship, onOpenPhoto, onGetOne, onDelOne}) => {
+export const getInlineActions = ({ onOpenSponsorship, onOpenPhoto, onGetOne, onDelOne, state}) => {
   return [
     {
       name: 'sponsorship',
@@ -39,6 +39,7 @@ export const getInlineActions = ({ onOpenSponsorship, onOpenPhoto, onGetOne, onD
       onClick: onOpenSponsorship,
       theme: 'secondary',
       icon: <SponsorshipIcon color="white" />,
+      active: state.sponsorships > 0,
     },
     {
       name: 'images',
@@ -47,6 +48,7 @@ export const getInlineActions = ({ onOpenSponsorship, onOpenPhoto, onGetOne, onD
       theme: 'secondary',
       icon: <GetPhotoIcon color="white" />,
       role: 'OTHER',
+      active: state.photos > 0,
     },
     {
       name: 'modify',

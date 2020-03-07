@@ -118,6 +118,7 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     data: state.data,
+    cause: state.cause,
     client: state.client,
     config: state.config,
     sponsorship: state.sponsorship,

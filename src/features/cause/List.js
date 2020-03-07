@@ -31,7 +31,7 @@ export class List extends Component {
     this.state = {
       timer: null,
       photos: 0,
-      sponsorship: 0,
+      sponsorships: 0,
       cauId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
@@ -69,10 +69,10 @@ export class List extends Component {
   onOpenPhoto(id) {
     const { photos } = this.state;
     if (photos === id) {
-      this.setState({ photos: 0, sponsorship: 0 });
+      this.setState({ photos: 0, sponsorships: 0 });
     } else {
       this.props.actions.loadPhotos(id, true).then(result => {});
-      this.setState({ photos: id, sponsorship: 0 });
+      this.setState({ photos: id, sponsorships: 0 });
     }
   }
 
@@ -146,17 +146,17 @@ export class List extends Component {
   }
 
   onOpenSponsorship(id) {
-    const { sponsorship } = this.state;
-    if (sponsorship === id) {
-      this.setState({ photos: 0, sponsorship: 0 });
+    const { sponsorships } = this.state;
+    if (sponsorships === id) {
+      this.setState({ photos: 0, sponsorships: 0 });
     } else {
       this.props.actions.loadSponsorships({ cau_id: id }, true).then(result => {});
-      this.setState({ photos: 0, sponsorship: id });
+      this.setState({ photos: 0, sponsorships: id });
     }
   }
 
   onCloseSponsorship() {
-    this.setState({ sponsorship: 0 });
+    this.setState({ sponsorships: 0 });
   }
 
   render() {
@@ -195,9 +195,9 @@ export class List extends Component {
       inlineComponent = <InlinePhotos />;
       id = this.state.photos;
     } else {
-      if (this.state.sponsorship > 0) {
-        inlineComponent = <InlineSponsorships mode="cause" id={this.state.sponsorship} />;
-        id = this.state.sponsorship;
+      if (this.state.sponsorships > 0) {
+        inlineComponent = <InlineSponsorships mode="cause" id={this.state.sponsorships} />;
+        id = this.state.sponsorships;
       }
     }
     return (
