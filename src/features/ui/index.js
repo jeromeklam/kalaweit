@@ -1,4 +1,5 @@
 export * from './functions';
+export { default as useForm } from './useForm';
 export { default as InputDate } from './InputDate';
 export { default as SearchModal } from './SearchModal';
 export { default as InputStringarray } from './InputStringarray';
@@ -17,3 +18,4 @@ export { default as InputDatetime } from './InputDatetime';
 export { default as ResponsiveModalOrForm } from './ResponsiveModalOrForm';
 export { default as InputYear } from './InputYear';
 export { default as CenteredLoading3Dots } from './CenteredLoading3Dots';
+export { default as InputTextarea } from './InputTextarea';

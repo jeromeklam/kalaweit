@@ -1,6 +1,6 @@
 import React from 'react';
-import { InputHidden, InputSelect, InputTextarea, InputCheckbox } from 'freeassofront';
-import { InputDate, InputData, ResponsiveModalOrForm } from '../ui';
+import { InputHidden, InputSelect, InputCheckbox } from 'freeassofront';
+import { InputDate, InputData, InputTextarea, ResponsiveModalOrForm } from '../ui';
 import { InputText } from 'freeassofront';
 import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';

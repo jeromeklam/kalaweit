@@ -17,48 +17,9 @@ export default class InlineLine extends Component {
     super(props);
     this.state = {
       flipped: false,
-      confirm: false,
-      spo_id: -1,
-      sponsorship: props.sponsorship,
-      paymentTypes: props.paymentTypes,
     };
     this.mouseLeave = this.mouseLeave.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
-    this.onConfirm = this.onConfirm.bind(this);
-    this.onConfirmOpen = this.onConfirmOpen.bind(this);
-    this.onConfirmClose = this.onConfirmClose.bind(this);
-    this.onClose = this.onClose.bind(this);
-    this.onGetOne = this.onGetOne.bind(this);
-  }
-
-  componentDidMount() {
-    if (!this.props.sponsorship.emptyItem) {
-      this.props.actions.loadOne(0);
-    }
-  }
-
-  onGetOne(id) {
-    this.setState({ spo_id: id });
-  }
-
-  onClose() {
-    this.setState({ spo_id: -1 });
-  }
-
-  onConfirmOpen(id) {
-    this.setState({ confirm: true, spo_id: id });
-  }
-
-  onConfirm(id) {
-    const { spo_id, sponsorship } = this.state;
-    this.setState({ confirm: false, spo_id: -1 });
-    this.props.actions.delOne(spo_id).then(result => {
-      this.props.actions.loadSponsorships(sponsorship);
-    });
-  }
-
-  onConfirmClose() {
-    this.setState({ confirm: false });
   }
 
   mouseLeave() {
@@ -71,7 +32,7 @@ export default class InlineLine extends Component {
 
   render() {
     const { sponsorship, paymentTypes } = this.props;
-    const highlight = this.state.flipped || this.props.inlineOpenedId === this.props.id;
+    const highlight = this.state.flipped;
     return (
       <div>
         <HoverObserver onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
@@ -102,7 +63,7 @@ export default class InlineLine extends Component {
                     type="button"
                     className="btn btn-inline btn-secondary"
                     onClick={() => {
-                      this.onGetOne(sponsorship.id);
+                      this.props.onGetOne(sponsorship.id);
                     }}
                   >
                     <GetOneIcon className="inline-action text-light" />
@@ -110,7 +71,7 @@ export default class InlineLine extends Component {
                   <button
                     type="button"
                     className="btn btn-inline btn-warning"
-                    onClick={() => this.onConfirmOpen(sponsorship.id)}
+                    onClick={() => this.props.onDelOne(sponsorship.id)}
                   >
                     <DelOneIcon className="inline-action text-light" />
                   </button>
@@ -119,22 +80,6 @@ export default class InlineLine extends Component {
             </div>
           </div>
         </HoverObserver>
-
-        <ResponsiveConfirm
-          show={this.state.confirm}
-          onClose={this.onConfirmClose}
-          onConfirm={() => {
-            this.onConfirm();
-          }}
-        />
-        {!this.state.confirm && this.state.spo_id > 0 && (
-          <Modify
-            onClose={this.onClose}
-            spo_id={this.state.spo_id}
-            sponsorship={this.state.sponsorship}
-            paymentTypes={this.state.paymentTypes}
-          />
-        )}
       </div>
     );
   }

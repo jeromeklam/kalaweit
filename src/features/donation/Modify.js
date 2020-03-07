@@ -19,7 +19,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      donId: this.props.don_id,
+      donId: this.props.donId,
       donation: this.props.donation,
       item: false,
     };
@@ -86,7 +86,7 @@ export class Modify extends Component {
                 modal={true}
                 donation={this.props.donation}
                 errors={this.props.donation.updateOneError}
-                paymentTypes={this.props.paymentTypes}
+                paymentTypes={this.props.paymentType.items}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}
@@ -102,6 +102,7 @@ export class Modify extends Component {
 function mapStateToProps(state) {
   return {
     donation: state.donation,
+    paymentType: state.paymentType,
   };
 }
 

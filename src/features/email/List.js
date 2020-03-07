@@ -19,6 +19,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -30,11 +31,13 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      emailId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
@@ -47,18 +50,19 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/email/create');
+   this.setState({ emailId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/email/modify/' + id);
+    this.setState({ emailId: id });
   }
 
   onDelOne(id) {
     this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+  }
+
+  onClose() {
+    this.setState({ emailId: -1 });
   }
 
   onReload(event) {
@@ -202,31 +206,37 @@ export class List extends Component {
       <FilterFullIcon color="white" />
     );
     return (
-      <ResponsiveList
-        title="Email"
-        cols={cols}
-        items={items}
-        quickSearch={quickSearch}
-        mainCol="email_subject"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.email.sort}
-        filters={this.props.email.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.email.loadMorePending}
-        loadMoreFinish={this.props.email.loadMoreFinish}
-        loadMoreError={this.props.email.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Email"
+          cols={cols}
+          items={items}
+          quickSearch={quickSearch}
+          mainCol="email_subject"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.email.sort}
+          filters={this.props.email.filters}
+          onSearch={this.onQuickSearch}
+          onClearFilters={this.onClearFilters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.email.loadMorePending}
+          loadMoreFinish={this.props.email.loadMoreFinish}
+          loadMoreError={this.props.email.loadMoreError}
+        />
+        {this.state.emailId > 0 && (
+          <Modify modal={true} emailId={this.state.emailId} onClose={this.onClose} />
+        )}
+        {this.state.emailId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }

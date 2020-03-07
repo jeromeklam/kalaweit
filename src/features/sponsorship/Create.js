@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import { loadOne as loadOneCause } from '../cause/redux/actions';
+import { loadOne as loadOneClient } from '../client/redux/actions';
 import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading9X9, createSuccess, createError } from '../ui';
 
-export class Modify extends Component {
+export class Create extends Component {
   static propTypes = {
     sponsorship: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -19,8 +21,8 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      spoId: this.props.spoId,
-      sponsorship: this.props.sponsorship,
+      spoId: 0,
+      sponsorship: props.sponsorship,
       item: false,
     };
     /**
@@ -37,7 +39,21 @@ export class Modify extends Component {
      */
     this.props.actions.loadOne(this.state.spoId).then(result => {
       const item = this.props.sponsorship.loadOneItem;
-      this.setState({ item: item });
+      if (this.props.mode === 'client') {
+        this.props.actions.loadOneClient(this.props.parentId).then(result => {
+          item.client = this.props.client.loadOneItem;
+          this.setState({ item: item });
+        })
+      } else {
+        if (this.props.mode === 'cause') {
+          this.props.actions.loadOneCause(this.props.parentId).then(result => {
+            item.cause = this.props.cause.loadOneItem;
+            this.setState({ item: item });
+          })
+        } else {
+          this.setState({ item: item });
+        }
+      }
     });
   }
 
@@ -59,21 +75,21 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_Sponsorship', this.state.spoId);
     this.props.actions
-      .updateOne(obj)
+      .createOne(obj)
       .then(result => {
-        modifySuccess();
+        createSuccess();
         this.props.actions.propagateModel('FreeAsso_Sponsoship', result);
         this.props.onClose();
       })
       .catch(errors => {
-        modifyError();
+        createError();
       });
   }
 
   render() {
     const item = this.state.item;
     return (
-      <div className="sponsorship-modify global-card">
+      <div className="sponsorship-create global-card">
         {this.props.sponsorship.loadOnePending ? (
           <CenteredLoading9X9 />
         ) : (
@@ -102,6 +118,7 @@ export class Modify extends Component {
 function mapStateToProps(state) {
   return {
     data: state.data,
+    client: state.client,
     config: state.config,
     sponsorship: state.sponsorship,
     paymentType: state.paymentType,
@@ -110,8 +127,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, loadOneClient, loadOneCause }, dispatch),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Modify);
+export default connect(mapStateToProps, mapDispatchToProps)(Create);

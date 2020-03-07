@@ -32,41 +32,25 @@ export default function Form(props) {
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-sm-4">
-            {props.mode === 'client' && <InlineLabel label="Cause" />}
-            {props.mode === 'cause' && <InlineLabel label="Membre" />}
-          </div>
           <div className="col-sm-20">
-            {props.mode === 'client' && (
-              <CauseInputPicker
-                label=""
-                key="cause"
-                name="cause"
-                size="sm"
-                inline
-                labelSize={0}
-                inputSize={36}
-                labelTop={false}
-                item={values.cause || null}
-                onChange={handleChange}
-                error={getErrorMessage('cli_id')}
-              />
-            )}
-            {props.mode === 'cause' && (
               <ClientInputPicker
-                label=""
+                label="Membre"
                 key="client"
                 name="client"
-                size="sm"
-                inline
-                labelSize={0}
-                inputSize={36}
-                labelTop={false}
+                labelTop={true}
                 item={values.client || null}
                 onChange={handleChange}
                 error={getErrorMessage('cau_id')}
               />
-            )}
+              <CauseInputPicker
+                label="Cause"
+                key="cause"
+                name="cause"
+                labelTop={true}
+                item={values.cause || null}
+                onChange={handleChange}
+                error={getErrorMessage('cli_id')}
+              />
           </div>
           <div className="col-sm-10">
             <InlineInputCheckbox

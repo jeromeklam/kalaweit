@@ -78,6 +78,7 @@ export class Create extends Component {
               <Form 
                 item={item} 
                 errors={this.props.donation.createOneError}
+                paymentTypes={this.props.paymentType.items}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
                 onClose={this.props.onClose}
@@ -93,6 +94,7 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     donation: state.donation,
+    paymentType: state.paymentType,
   };
 }
 
