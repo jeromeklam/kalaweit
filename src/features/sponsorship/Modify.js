@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 
 export class Modify extends Component {
   static propTypes = {
@@ -62,7 +63,7 @@ export class Modify extends Component {
       .updateOne(obj)
       .then(result => {
         modifySuccess();
-        this.props.actions.propagateModel('FreeAsso_Sponsoship', result);
+        this.props.actions.propagateModel('FreeAsso_Sponsorship', result);
         this.props.onClose();
       })
       .catch(errors => {
@@ -75,7 +76,7 @@ export class Modify extends Component {
     return (
       <div className="sponsorship-modify global-card">
         {this.props.sponsorship.loadOnePending ? (
-          <CenteredLoading9X9 />
+          <CenteredLoading3Dots />
         ) : (
           <div>
             {item && (
@@ -110,7 +111,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

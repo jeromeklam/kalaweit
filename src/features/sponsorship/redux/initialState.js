@@ -1,5 +1,6 @@
 const initialState = {
   sponsorships: [],
+  sponsorshipsModels: [],
   cli_id: null,
   cau_id: null,
   emptyItem: null,

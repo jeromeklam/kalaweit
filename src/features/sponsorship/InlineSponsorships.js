@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel, getJsonApi } from 'freejsonapi';
 import { CenteredLoading3Dots } from '../ui';
 import {
   createSuccess,
@@ -55,7 +54,6 @@ export class InlineSponsorships extends Component {
   }
 
   onModify(id) {
-    console.log(id);
     this.setState({ spoId: id });
   }
 
@@ -85,13 +83,9 @@ export class InlineSponsorships extends Component {
   }
 
   render() {
-    let sponsorships = [];
-    if (this.props.sponsorship.sponsorships.FreeAsso_Sponsorship) {
-      sponsorships = buildModel(this.props.sponsorship.sponsorships, 'FreeAsso_Sponsorship', null, {
-        eager: true,
-      });
-    }
-    let others = false;
+    let sponsorships = this.props.sponsorship.sponsorshipsModels;
+    let others  = false;
+    let counter = 0;
     return (
       <div>
         <div className="sponsorship-inline-sponsorships">
@@ -102,13 +96,14 @@ export class InlineSponsorships extends Component {
           ) : (
             <div className="cause-inline-sponsorships">
               <div className="inline-list">
-                {sponsorships.length > 0 && <InlineHeader {...this.props} />}
+                {sponsorships.length > 0 && <InlineHeader {...this.props} oddEven={counter++} />}
                 {sponsorships.length > 0 &&
                   sponsorships.map(sponsorship => {
                     if (inTheFuture(sponsorship.spo_to)) {
                       return (
                         <InlineLine
                           {...this.props}
+                          oddEven={counter++}
                           key={sponsorship.id}
                           sponsorship={sponsorship}
                           paymentTypes={this.props.paymentType.items}
@@ -128,6 +123,7 @@ export class InlineSponsorships extends Component {
                         return (
                           <InlineLine
                             {...this.props}
+                            oddEven={counter++}
                             key={sponsorship.id}
                             sponsorship={sponsorship}
                             paymentTypes={this.props.paymentType.items}
@@ -140,20 +136,23 @@ export class InlineSponsorships extends Component {
                     })
                   ) : (
                     <InlineMore
-                      label="Afficher tous les dons et parrainages"
+                      oddEven={counter++}
+                      label="Afficher les dons et parrainages terminés"
                       onClick={this.onMore}
                     />
                   ))}
                 {others && this.state.more && (
                   <InlineCloseMore
+                    oddEven={counter++}
                     label="Cacher les dons et parrainages terminés"
                     onClick={this.onMore}
                   />
                 )}
                 {sponsorships.length <= 0 && (
-                  <InlineEmpty label="Aucun don ou parrainage régulier" />
+                  <InlineEmpty oddEven={counter++} label="Aucun don ou parrainage régulier" />
                 )}
                 <InlineAddOne
+                  oddEven={counter++}
                   label="Ajouter un don ou parrainage régulier"
                   onClick={this.onAdd}
                 />

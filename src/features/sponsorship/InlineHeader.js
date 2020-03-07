@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
 export default class InlineHeader extends Component {
   static propTypes = {};
 
   render() {
     return (
-      <div className="row row-line row-title">
+      <div className={classnames('row row-title row-line', (this.props.oddEven % 2 !== 1) ? 'row-odd' : 'row-even')}>
         <div className="col-5">
           <span>Montant</span>
         </div>

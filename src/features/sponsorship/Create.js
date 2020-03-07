@@ -7,7 +7,8 @@ import { loadOne as loadOneCause } from '../cause/redux/actions';
 import { loadOne as loadOneClient } from '../client/redux/actions';
 import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, createSuccess, createError } from '../ui';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
 
 export class Create extends Component {
   static propTypes = {
@@ -91,7 +92,7 @@ export class Create extends Component {
     return (
       <div className="sponsorship-create global-card">
         {this.props.sponsorship.loadOnePending ? (
-          <CenteredLoading9X9 />
+          <CenteredLoading3Dots />
         ) : (
           <div>
             {item && (
@@ -128,7 +129,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, loadOneClient, loadOneCause }, dispatch),
+    actions: bindActionCreators({ ...actions, loadOneClient, loadOneCause, propagateModel }, dispatch),
   };
 }
 
