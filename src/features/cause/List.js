@@ -44,10 +44,10 @@ export class List extends Component {
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
-    this.onOpenPhoto = this.onOpenPhoto.bind(this);
-    this.onClosePhoto = this.onClosePhoto.bind(this);
-    this.onOpenSponsorship = this.onOpenSponsorship.bind(this);
-    this.onCloseSponsorship = this.onCloseSponsorship.bind(this);
+    this.onOpenPhotos = this.onOpenPhotos.bind(this);
+    this.onClosePhotos = this.onClosePhotos.bind(this);
+    this.onOpenSponsorships = this.onOpenSponsorships.bind(this);
+    this.onCloseSponsorships = this.onCloseSponsorships.bind(this);
   }
 
   componentDidMount() {
@@ -66,7 +66,7 @@ export class List extends Component {
     this.setState({ cauId: -1 });
   }
 
-  onOpenPhoto(id) {
+  onOpenPhotos(id) {
     const { photos } = this.state;
     if (photos === id) {
       this.setState({ photos: 0, sponsorships: 0 });
@@ -76,7 +76,7 @@ export class List extends Component {
     }
   }
 
-  onClosePhoto() {
+  onClosePhotos() {
     this.setState({ photos: 0 });
   }
 
@@ -145,16 +145,17 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onOpenSponsorship(id) {
+  onOpenSponsorships(id) {
     const { sponsorships } = this.state;
     if (sponsorships === id) {
       this.setState({ photos: 0, sponsorships: 0 });
     } else {
+      this.props.actions.loadSponsorships({ cau_id: id }, true).then(result => {});
       this.setState({ photos: 0, sponsorships: id });
     }
   }
 
-  onCloseSponsorship() {
+  onCloseSponsorships() {
     this.setState({ sponsorships: 0 });
   }
 
@@ -243,6 +244,7 @@ function mapStateToProps(state) {
     site: state.site,
     causeType: state.causeType,
     causeMainType: state.causeMainType,
+    sponsorship: state.sponsorships,
   };
 }
 

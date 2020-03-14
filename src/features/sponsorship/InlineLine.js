@@ -79,7 +79,25 @@ export default class InlineLine extends Component {
             )}
           </div>
         </div>
-      </HoverObserver>
+        </HoverObserver>
+
+        <ResponsiveConfirm
+          show={this.state.confirm}
+          onClose={this.onConfirmClose}
+          onConfirm={() => {
+            this.onConfirm();
+          }}
+        />
+        {!this.state.confirm && this.state.spo_id > 0 && (
+          <Modify
+            mode={this.props.mode}
+            onClose={this.onClose}
+            spo_id={this.state.spo_id}
+            sponsorship={this.state.sponsorship}
+            paymentTypes={this.state.paymentTypes}
+          />
+        )}
+      </div>
     );
   }
 }

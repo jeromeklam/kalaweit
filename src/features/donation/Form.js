@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InlineInputSelect, InputText } from 'freeassofront';
+import { InputHidden, InputSelect, InputText } from 'freeassofront';
 import { InputDate, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
 import { paymentTypeAsOptions } from '../payment-type/functions.js';
@@ -27,26 +27,31 @@ export default function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
+        <div className="col-md-18">
+          <CauseInputPicker
+            label="Cause"
+            labelTop={true}
+            key="cause"
+            name="cause"
+            item={values.cause || null}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="row">
         <div className="col-md-12">
           <InputDate
             label="Date"
             labelTop={true}
             name="don_ts"
             id="don_ts"
+            inputSize={36}
             value={values.don_ts}
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-12">
-          <ClientInputPicker
-            label="Donateur"
-            labelTop={true}
-            key="client"
-            name="client"
-            item={values.client || null}
-            onChange={handleChange}
-          />
-        </div>
+      </div>
+      <div className="row">
         <div className="col-md-6">
           <InputText
             label="Montant"
@@ -57,31 +62,18 @@ export default function Form(props) {
             onChange={handleChange}
           />
         </div>
-            <div className="col-sm-6">
-            <InlineInputSelect
-              label="Type"
-              name="payment_type.id"
-              labelTop={true}
-              size="sm"
-              inline
-              labelSize={36}
-              inputSize={36}
-              value={values.payment_type.id}
-              onChange={handleChange}
-              options={paymentTypeAsOptions(props.paymentTypes)}
-              error={getErrorMessage('ptyp_id')}
-            />
-          </div>
-      </div>
-      <div className="row">
-        <div className="col-md-18">
-          <CauseInputPicker
-            label="Cause"
+        <div className="col-sm-6">
+          <InputSelect
+            label="Type"
+            name="payment_type.id"
             labelTop={true}
-            key="cause"
-            name="cause"
-            item={values.cause || null}
+            inline
+            labelSize={36}
+            inputSize={36}
+            value={values.payment_type.id}
             onChange={handleChange}
+            options={paymentTypeAsOptions(props.paymentTypes)}
+            error={getErrorMessage('ptyp_id')}
           />
         </div>
       </div>

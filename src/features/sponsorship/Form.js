@@ -32,7 +32,27 @@ export default function Form(props) {
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-sm-20">
+          <div className="col-sm-3">
+            {props.mode === 'client' && <InlineLabel label="Cause" />}
+            {props.mode === 'cause' && <InlineLabel label="Membre" />}
+          </div>
+          <div className="col-sm-19">
+            {props.mode === 'client' && (
+              <CauseInputPicker
+                label=""
+                key="cause"
+                name="cause"
+                size="sm"
+                inline
+                labelSize={0}
+                inputSize={36}
+                labelTop={false}
+                item={values.cause || null}
+                onChange={handleChange}
+                error={getErrorMessage('cli_id')}
+              />
+            )}
+            {props.mode === 'cause' && (
               <ClientInputPicker
                 label="Membre"
                 key="client"
@@ -52,7 +72,9 @@ export default function Form(props) {
                 error={getErrorMessage('cli_id')}
               />
           </div>
-          <div className="col-sm-10">
+          <div className="col-sm-7">
+          </div>
+          <div className="col-sm-7">
             <InlineInputCheckbox
               label="Envoyer les news"
               id="spo_send_news"
@@ -68,7 +90,7 @@ export default function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-4">
+          <div className="col-sm-3">
             <InlineLabel label="Du" />
           </div>
           <div className="col-sm-8">
@@ -85,7 +107,7 @@ export default function Form(props) {
               error={getErrorMessage('spo_from')}
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-3">
             <InlineLabel label="Au" />
           </div>
           <div className="col-sm-8">
@@ -102,7 +124,9 @@ export default function Form(props) {
               error={getErrorMessage('spo_to')}
             />
           </div>
-          <div className="col-sm-10">
+          <div className="col-sm-7">
+          </div>
+          <div className="col-sm-7">
             <InlineInputCheckbox
               label="Afficher sur le site"
               id="spo_display_site"
@@ -118,7 +142,7 @@ export default function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-4">
+          <div className="col-sm-3">
             <InlineLabel label="Montant" />
           </div>
           <div className="col-sm-8">
@@ -136,7 +160,7 @@ export default function Form(props) {
               error={getErrorMessage('spo_mnt')}
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-3">
             <InlineLabel label="Type" />
           </div>
           <div className="col-sm-6">
@@ -153,6 +177,9 @@ export default function Form(props) {
               options={paymentTypeAsOptions(props.paymentTypes)}
               error={getErrorMessage('ptyp_id')}
             />
+          </div>
+          <div className="col-sm-2">
+            <InlineLabel label="Jour" />
           </div>
           <div className="col-sm-2">
             <InlineInputText
