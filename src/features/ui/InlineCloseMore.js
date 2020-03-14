@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { ColLink } from './';
 
@@ -9,7 +10,12 @@ export default class InlineCloseMore extends Component {
 
   render() {
     return (
-      <div className="row row-line">
+      <div
+        className={classnames(
+          'row row-line',
+          this.props.oddEven % 2 !== 1 ? 'row-odd' : 'row-even',
+        )}
+      >
         <ColLink
           label={this.props.label}
           className="text-secondary"

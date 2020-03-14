@@ -23,6 +23,7 @@ import {
   Datas as DatasIcon,
   Dashboard as DashboardIcon,
 } from '../icons';
+import fond from '../../images/fond.jpg';
 
 const options = [
   {
@@ -244,9 +245,13 @@ export class App extends Component {
           userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
         >
           {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
-            <div>{this.props.children}</div>
+            <div>
+              <img className="fond-site2 d-none d-sm-block" src={fond} alt="" />
+              {this.props.children}
+            </div>
           ) : (
             <div className="text-center mt-5 text-secondary">
+              <img className="fond-site2 d-none d-sm-block" src={fond} alt="" />
               <h4>... Chargement ...</h4>
               <CenteredLoading9X9 />
             </div>

@@ -18,7 +18,7 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.match.params.id || false,
+      id: this.props.emailId || this.props.match.params.id || false,
       item: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -34,10 +34,7 @@ export class Modify extends Component {
   }
 
   onCancel(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/email');
+    this.props.onClose();
   }
 
   /**
@@ -52,7 +49,7 @@ export class Modify extends Component {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
         this.props.actions.propagateModel('FreeFW_Email', result);
-        this.props.history.push('/email');
+        this.props.onClose();
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -69,7 +66,15 @@ export class Modify extends Component {
           <Loading9x9 />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} langs={options} />}
+            {item && (
+              <Form
+                item={item}
+                onClose={this.props.onClose}
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
+                langs={options}
+              />
+            )}
           </div>
         )}
       </div>

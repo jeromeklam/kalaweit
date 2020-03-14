@@ -1,5 +1,4 @@
-import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
 import {
   SPONSORSHIP_LOAD_SPONSORSHIPS_INIT,
   SPONSORSHIP_LOAD_SPONSORSHIPS_BEGIN,
@@ -7,10 +6,11 @@ import {
   SPONSORSHIP_LOAD_SPONSORSHIPS_FAILURE,
   SPONSORSHIP_LOAD_SPONSORSHIPS_DISMISS_ERROR,
 } from './constants';
+import { freeAssoApi } from '../../../common';
 
 export function loadSponsorships(args = {}, reload = false) {
   return (dispatch, getState) => {
-    const loaded =  getState().sponsorship.loadSponsorshipsFinish;
+    const loaded = getState().sponsorship.loadSponsorshipsFinish;
     if (!loaded || reload) {
       if (reload) {
         dispatch({
@@ -29,15 +29,15 @@ export function loadSponsorships(args = {}, reload = false) {
         const addUrl = objectToQueryString(filter);
         const doRequest = freeAssoApi.get('/v1/asso/sponsorship' + addUrl, {});
         doRequest.then(
-          (res) => {
+          res => {
             dispatch({
               type: SPONSORSHIP_LOAD_SPONSORSHIPS_SUCCESS,
               data: res,
-              ...args
+              ...args,
             });
             resolve(res);
           },
-          (err) => {
+          err => {
             dispatch({
               type: SPONSORSHIP_LOAD_SPONSORSHIPS_FAILURE,
               data: { error: err },
@@ -67,6 +67,7 @@ export function reducer(state, action) {
         loadSponsorshipsError: null,
         loadSponsorshipsFinish: false,
         sponsorships: [],
+        sponsorshipsModels: [],
         cli_id: null,
         cau_id: null,
         emptyItem: null,
@@ -92,11 +93,13 @@ export function reducer(state, action) {
         nbre = result.data.length;
       }
       if (nbre > 0) {
-        
         list = jsonApiNormalizer(result);
       } else {
         list = [];
       }
+      const models = buildModel(list, 'FreeAsso_Sponsorship', null, {
+        eager: true,
+      }) || [];
       let cli_id = action.cli_id || null;
       let cau_id = action.cau_id || null;
       return {
@@ -105,6 +108,7 @@ export function reducer(state, action) {
         loadSponsorshipsError: null,
         loadSponsorshipsFinish: true,
         sponsorships: list,
+        sponsorshipsModels: models,
         cli_id: cli_id,
         cau_id: cau_id,
       };

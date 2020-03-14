@@ -39,6 +39,7 @@ export const getInlineActions = ({ onOpenSponsorships, onOpenPhotos, onGetOne, o
       onClick: onOpenSponsorships,
       theme: 'secondary',
       icon: <SponsorshipIcon color="white" />,
+      active: state.sponsorships > 0,
     },
     {
       name: 'images',
@@ -47,6 +48,7 @@ export const getInlineActions = ({ onOpenSponsorships, onOpenPhotos, onGetOne, o
       theme: 'secondary',
       icon: <GetPhotoIcon color="white" />,
       role: 'OTHER',
+      active: state.photos > 0,
     },
     {
       name: 'modify',

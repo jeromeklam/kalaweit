@@ -6,7 +6,7 @@ export default class CenteredLoading3Dots extends Component {
 
   render() {
     return (
-      <div className="ui-centered-loading-3-dots">
+      <div className="ui-centered-loading-3-dots text-center mt-2 mb-2">
         <Loading3Dots />
       </div>
     );

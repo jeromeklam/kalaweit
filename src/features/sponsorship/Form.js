@@ -54,19 +54,23 @@ export default function Form(props) {
             )}
             {props.mode === 'cause' && (
               <ClientInputPicker
-                label=""
+                label="Membre"
                 key="client"
                 name="client"
-                size="sm"
-                inline
-                labelSize={0}
-                inputSize={36}
-                labelTop={false}
+                labelTop={true}
                 item={values.client || null}
                 onChange={handleChange}
                 error={getErrorMessage('cau_id')}
               />
-            )}
+              <CauseInputPicker
+                label="Cause"
+                key="cause"
+                name="cause"
+                labelTop={true}
+                item={values.cause || null}
+                onChange={handleChange}
+                error={getErrorMessage('cli_id')}
+              />
           </div>
           <div className="col-sm-7">
           </div>

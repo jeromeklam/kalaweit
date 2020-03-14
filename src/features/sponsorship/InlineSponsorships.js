@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel, getJsonApi } from 'freejsonapi';
 import { CenteredLoading3Dots } from '../ui';
+import { ResponsiveConfirm } from 'freeassofront';
 import {
   createSuccess,
   createError,
@@ -18,7 +18,7 @@ import {
   InlineMore,
 } from '../ui';
 import { inTheFuture, propagateModel } from '../../common';
-import { InlineHeader, InlineLine, InlineSponsorship } from './';
+import { InlineHeader, InlineLine, Create, Modify } from './';
 
 export class InlineSponsorships extends Component {
   static propTypes = {
@@ -28,24 +28,29 @@ export class InlineSponsorships extends Component {
 
   constructor(props) {
     super(props);
+    let filters = {};
+    if (props.mode === 'cause') {
+      filters = { cau_id: props.id };
+    } else {
+      filters = { cli_id: props.id };
+    }
     this.state = {
+      confirm: -1,
       more: false,
-      add: false,
-      modify: 0,
+      spoId: -1,
+      filters: filters,
     };
     this.onMore = this.onMore.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.onCloseForm = this.onCloseForm.bind(this);
     this.onModify = this.onModify.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.onSubmitAdd = this.onSubmitAdd.bind(this);
-    this.onSubmitModify = this.onSubmitModify.bind(this);
+    this.onConfirm = this.onConfirm.bind(this);
+    this.onConfirmClose = this.onConfirmClose.bind(this);
   }
 
   componentDidMount() {
-    if (!this.props.sponsorship.emptyItem) {
-      this.props.actions.loadOne(0);
-    }
+    this.props.actions.loadSponsorships(this.state.filters, true);
   }
 
   onMore() {
@@ -53,65 +58,11 @@ export class InlineSponsorships extends Component {
   }
 
   onAdd() {
-    this.setState({ add: !this.state.add, modify: 0 });
-  }
-
-  onSubmitAdd(datas) {
-    if (this.state.mode === 'cause') {
-      datas.cause.id = this.props.id;
-    } else {
-      datas.client.id = this.props.id;
-    }
-    const obj = getJsonApi(datas, 'FreeAsso_Sponsorship', true);
-    this.props.actions
-      .createOne(obj)
-      .then(result => {
-        createSuccess();
-        this.props.actions.propagateModel('FreeAsso_Sponsorship', result);
-        let filters = {};
-        if (this.props.mode === 'cause') {
-          filters = { cau_id: this.props.id };
-        } else {
-          filters = { cli_id: this.props.id };
-        }
-        this.setState({ add: false, modify: 0 });
-        this.props.actions.loadSponsorships(filters);
-      })
-      .catch(errors => {
-        console.log(errors);
-        createError();
-      });
-  }
-
-  onSubmitModify(datas) {
-    if (this.state.mode === 'cause') {
-      datas.cause.id = this.props.id;
-    } else {
-      datas.client.id = this.props.id;
-    }
-    const obj = getJsonApi(datas, 'FreeAsso_Sponsorship', true);
-    this.props.actions
-      .updateOne(obj)
-      .then(result => {
-        modifySuccess();
-        this.props.actions.propagateModel('FreeAsso_Sponsorship', result);
-        let filters = {};
-        if (this.props.mode === 'cause') {
-          filters = { cau_id: this.props.id };
-        } else {
-          filters = { cli_id: this.props.id };
-        }
-        this.setState({ add: false, modify: 0 });
-        this.props.actions.loadSponsorships(filters);
-      })
-      .catch(errors => {
-        console.log(errors);
-        modifyError();
-      });
+    this.setState({ spoId: 0 });
   }
 
   onModify(id) {
-    this.setState({ modify: id, add: false });
+    this.setState({ spoId: id });
   }
 
   onDelete(id) {
@@ -135,17 +86,22 @@ export class InlineSponsorships extends Component {
   }
 
   onCloseForm() {
-    this.setState({ add: false, modify: 0 });
+    this.setState({ spoId: -1 });
+    this.props.actions.loadSponsorships(this.state.filters, true);
+  }
+
+  onConfirm(id) {
+    this.setState({ confirm: id });
+  }
+
+  onConfirmClose() {
+    this.setState({ confirm: -1 });
   }
 
   render() {
-    let sponsorships = [];
-    if (this.props.sponsorship.sponsorships.FreeAsso_Sponsorship) {
-      sponsorships = buildModel(this.props.sponsorship.sponsorships, 'FreeAsso_Sponsorship', null, {
-        eager: true,
-      });
-    }
+    let sponsorships = this.props.sponsorship.sponsorshipsModels;
     let others = false;
+    let counter = 0;
     return (
       <div>
         <div className="sponsorship-inline-sponsorships">
@@ -156,33 +112,22 @@ export class InlineSponsorships extends Component {
           ) : (
             <div className="cause-inline-sponsorships">
               <div className="inline-list">
-                {sponsorships.length > 0 && <InlineHeader {...this.props} />}
+                {sponsorships.length > 0 && <InlineHeader {...this.props} onAddOne={this.onAdd} oddEven={counter++} />}
                 {sponsorships.length > 0 &&
                   sponsorships.map(sponsorship => {
-                    if (sponsorship.id !== this.state.modify && inTheFuture(sponsorship.spo_to)) {
+                    if (inTheFuture(sponsorship.spo_to)) {
                       return (
                         <InlineLine
                           {...this.props}
+                          oddEven={counter++}
                           key={sponsorship.id}
                           sponsorship={sponsorship}
                           paymentTypes={this.props.paymentType.items}
-                          onEdit={this.onModify}
-                          onDelete={this.onDelete}
+                          onGetOne={this.onModify}
+                          onDelOne={this.onConfirm}
                         />
                       );
                     } else {
-                      if (sponsorship.id === this.state.modify) {
-                        return (
-                          <InlineSponsorship
-                            item={sponsorship}
-                            paymentTypes={this.props.paymentType.items}
-                            mode={this.props.mode}
-                            onSubmit={this.onSubmitModify}
-                            onCancel={this.onCloseForm}
-                            errors={this.props.sponsorship.updateOneError}
-                          />
-                        );
-                      }
                       others = true;
                     }
                     return null;
@@ -190,29 +135,16 @@ export class InlineSponsorships extends Component {
                 {others &&
                   (this.state.more ? (
                     sponsorships.map(sponsorship => {
-                      if (
-                        sponsorship.id !== this.state.modify &&
-                        !inTheFuture(sponsorship.spo_to)
-                      ) {
+                      if (!inTheFuture(sponsorship.spo_to)) {
                         return (
                           <InlineLine
                             {...this.props}
+                            oddEven={counter++}
                             key={sponsorship.id}
                             sponsorship={sponsorship}
                             paymentTypes={this.props.paymentType.items}
-                            onEdit={this.onModify}
-                            onDelete={this.onDelete}
-                          />
-                        );
-                      } else if (sponsorship.id === this.state.modify) {
-                        return (
-                          <InlineSponsorship
-                            item={sponsorship}
-                            paymentTypes={this.props.paymentType.items}
-                            mode={this.props.mode}
-                            onSubmit={this.onSubmitModify}
-                            onCancel={this.onCloseForm}
-                            errors={this.props.sponsorship.updateOneError}
+                            onGetOne={this.onModify}
+                            onDelOne={this.onConfirm}
                           />
                         );
                       }
@@ -220,38 +152,55 @@ export class InlineSponsorships extends Component {
                     })
                   ) : (
                     <InlineMore
-                      label="Afficher tous les dons et parrainages"
+                      oddEven={counter++}
+                      label="Afficher les dons et parrainages terminés"
                       onClick={this.onMore}
                     />
                   ))}
                 {others && this.state.more && (
                   <InlineCloseMore
+                    oddEven={counter++}
                     label="Cacher les dons et parrainages terminés"
                     onClick={this.onMore}
                   />
                 )}
-                {!this.state.add && sponsorships.length <= 0 && (
-                  <InlineEmpty label="Aucun don ou parrainage régulier" />
+                {sponsorships.length <= 0 && (
+                  <InlineEmpty oddEven={counter++} label="Aucun don ou parrainage régulier" />
                 )}
-                {this.state.add ? (
-                  <InlineSponsorship
-                    item={this.props.sponsorship.emptyItem}
-                    paymentTypes={this.props.paymentType.items}
+                <InlineAddOne
+                  oddEven={counter++}
+                  label="Ajouter un don ou parrainage régulier"
+                  onClick={this.onAdd}
+                />
+                {this.state.spoId > 0 && (
+                  <Modify
+                    spoId={this.state.spoId}
                     mode={this.props.mode}
-                    onCancel={this.onCloseForm}
-                    onSubmit={this.onSubmitAdd}
-                    errors={this.props.sponsorship.createOneError}
+                    parentId={this.props.id}
+                    onClose={this.onCloseForm}
                   />
-                ) : (
-                  <InlineAddOne
-                    label="Ajouter un don ou parrainage régulier"
-                    onClick={this.onAdd}
+                )}
+                {this.state.spoId === 0 && (
+                  <Create
+                    spoId={this.state.spoId}
+                    mode={this.props.mode}
+                    parentId={this.props.id}
+                    onClose={this.onCloseForm}
                   />
                 )}
               </div>
             </div>
           )}
         </div>
+        {this.state.confirm > 0 && (
+          <ResponsiveConfirm
+            show={this.state.confirm}
+            onClose={this.onConfirmClose}
+            onConfirm={() => {
+              this.onDelete(this.state.confirm);
+            }}
+          />
+        )}
       </div>
     );
   }

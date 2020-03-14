@@ -35,6 +35,7 @@ export class Create extends Component {
      */
     this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.email.loadOneItem;
+      console.log(item);
       this.setState({ item: item });
     });
   }
@@ -43,10 +44,7 @@ export class Create extends Component {
    * Sur annulation, on retourne à la liste
    */
   onCancel(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/email');
+    this.props.onClose();
   }
 
   /**
@@ -60,7 +58,7 @@ export class Create extends Component {
       .createOne(obj)
       .then(result => {
         this.props.actions.clearItems();
-        this.props.history.push('/email');
+        this.props.onClose();
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -77,7 +75,15 @@ export class Create extends Component {
           <Loading9x9 />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} langs={options} />}
+            {item && (
+              <Form
+                item={item}
+                onClose={this.props.onClose}
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
+                langs={options}
+              />
+            )}
           </div>
         )}
       </div>
@@ -96,11 +102,8 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));

@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
+import { propagateModel } from '../../common';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -19,8 +20,8 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      donId: this.props.don_id,
-      donation: this.props.donation,
+      donId: props.donId,
+      donation: props.donation,
       item: false,
     };
     /**
@@ -51,7 +52,7 @@ export class Modify extends Component {
     this.props.onClose();
   }
 
-   /**
+  /**
    * Sur enregistrement, sauvegarde, update store et retour à la liste
    */
   onSubmit(datas = {}) {
@@ -62,7 +63,6 @@ export class Modify extends Component {
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Donation', result);
-        this.props.actions.loadDonations(this.state.donation);
         this.props.onClose();
       })
       .catch(errors => {
@@ -75,9 +75,7 @@ export class Modify extends Component {
     return (
       <div className="donation-modify global-card">
         {this.props.donation.loadOnePending ? (
-          <div className="text-center mt-2">
-            <CenteredLoading9X9 />
-          </div>
+          <CenteredLoading3Dots />
         ) : (
           <div>
             {item && (
@@ -86,7 +84,7 @@ export class Modify extends Component {
                 modal={true}
                 donation={this.props.donation}
                 errors={this.props.donation.updateOneError}
-                paymentTypes={this.props.paymentTypes}
+                paymentTypes={this.props.paymentType.items}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}
@@ -102,17 +100,14 @@ export class Modify extends Component {
 function mapStateToProps(state) {
   return {
     donation: state.donation,
+    paymentType: state.paymentType,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions 
-    }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Modify);
+export default connect(mapStateToProps, mapDispatchToProps)(Modify);

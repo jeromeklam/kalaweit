@@ -99,7 +99,7 @@ export function reducer(state, action) {
       }
       let cli_id = action.cli_id || null;
       let cau_id = action.cau_id || null;
-      const donations = buildModel(list, 'FreeAsso_Donation');
+      const donations = buildModel(list, 'FreeAsso_Donation') || false;
       return {
         ...state,
         loadDonationsPending: false,

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
+import { AddOne as AddOneIcon } from '../icons';
 
 export default class InlineHeader extends Component {
   static propTypes = {};
 
   render() {
     return (
-      <div className="row row-line row-title">
+      <div className={classnames('row row-title row-line', (this.props.oddEven % 2 !== 1) ? 'row-odd' : 'row-even')}>
         <div className="col-5">
           <span>Montant</span>
         </div>
@@ -24,6 +26,13 @@ export default class InlineHeader extends Component {
           ) : (
             <span>Cause</span>
           )}
+        </div>
+        <div className="col-6 text-right">
+          <div className="btn-group btn-group-xs" role="group" aria-label="...">
+            <button type="button" className="btn btn-inline btn-primary" onClick={this.props.onAddOne}>
+              <AddOneIcon className="inline-action text-light" />
+            </button>
+          </div>
         </div>
       </div>
     );

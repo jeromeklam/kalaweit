@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel, getJsonApi } from 'freejsonapi';
+import { ResponsiveConfirm } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import {
   createSuccess,
@@ -18,7 +18,7 @@ import {
   InlineMore,
 } from '../ui';
 import { inTheFuture, propagateModel } from '../../common';
-import { InlineHeader, InlineLine, InlineDonation } from './';
+import { InlineHeader, InlineLine, InlineDonation, Create, Modify } from './';
 
 export class InlineDonations extends Component {
   static propTypes = {
@@ -28,24 +28,32 @@ export class InlineDonations extends Component {
 
   constructor(props) {
     super(props);
+    let filters = {};
+    if (props.mode === 'cause') {
+      filters = { cau_id: {'eq': props.id }};
+    } else {
+      filters = { cli_id: {'eq': props.id }};
+    }
+    const dStart = new Date(new Date().getFullYear()-1, 0, 1);
+    filters['don_ts'] = {'gte': dStart.toISOString().slice(0, 10)};
+    console.log(filters);
     this.state = {
+      confirm: -1,
+      filters: filters,
       more: false,
-      add: false,
-      modify: 0,
+      donId: -1,
     };
     this.onMore = this.onMore.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.onCloseForm = this.onCloseForm.bind(this);
     this.onModify = this.onModify.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.onSubmitAdd = this.onSubmitAdd.bind(this);
-    this.onSubmitModify = this.onSubmitModify.bind(this);
+    this.onConfirm = this.onConfirm.bind(this);
+    this.onConfirmClose = this.onConfirmClose.bind(this);
   }
 
   componentDidMount() {
-    if (!this.props.donation.emptyItem) {
-      this.props.actions.loadOne(0);
-    }
+    this.props.actions.loadDonations(this.state.filters, true);
   }
 
   onMore() {
@@ -53,63 +61,19 @@ export class InlineDonations extends Component {
   }
 
   onAdd() {
-    this.setState({ add: !this.state.add, modify: 0 });
-  }
-
-  onSubmitAdd(datas) {
-    if (this.state.mode === 'cause') {
-      datas.cause.id = this.props.id;
-    } else {
-      datas.client.id = this.props.id;
-    }
-    const obj = getJsonApi(datas, 'FreeAsso_Donation', true);
-    this.props.actions
-      .createOne(obj)
-      .then(result => {
-        createSuccess();
-        this.props.actions.propagateModel('FreeAsso_Donation', result);
-        let filters = {};
-        if (this.props.mode === 'cause') {
-          filters = { cau_id: this.props.id };
-        } else {
-          filters = { cli_id: this.props.id };
-        }
-        this.setState({ add: false, modify: 0 });
-        this.props.actions.loadDonations(filters);
-      })
-      .catch(errors => {
-        createError();
-      });
-  }
-
-  onSubmitModify(datas) {
-    if (this.state.mode === 'cause') {
-      datas.cause.id = this.props.id;
-    } else {
-      datas.client.id = this.props.id;
-    }
-    const obj = getJsonApi(datas, 'FreeAsso_Donation', true);
-    this.props.actions
-      .updateOne(obj)
-      .then(result => {
-        modifySuccess();
-        this.props.actions.propagateModel('FreeAsso_Donation', result);
-        let filters = {};
-        if (this.props.mode === 'cause') {
-          filters = { cau_id: this.props.id };
-        } else {
-          filters = { cli_id: this.props.id };
-        }
-        this.setState({ add: false, modify: 0 });
-        this.props.actions.loadDonations(filters);
-      })
-      .catch(errors => {
-        modifyError();
-      });
+    this.setState({ donId: 0 });
   }
 
   onModify(id) {
-    this.setState({ modify: id, add: false });
+    this.setState({ donId: id });
+  }
+
+  onConfirm(id) {
+    this.setState({ confirm: id });
+  }
+
+  onConfirmClose() {
+    this.setState({ confirm: -1 });
   }
 
   onDelete(id) {
@@ -132,12 +96,14 @@ export class InlineDonations extends Component {
   }
 
   onCloseForm() {
-    this.setState({ add: false, modify: 0 });
+    this.setState({ donId: -1 });
+    this.props.actions.loadDonations(this.state.filters);
   }
 
   render() {
     const donations = this.props.donation.donationsModels;
     let others = false;
+    let counter = 0;
     return (
       <div>
         <div className="donation-inline-donations">
@@ -148,33 +114,24 @@ export class InlineDonations extends Component {
           ) : (
             <div className="cause-inline-sponsorships">
               <div className="inline-list">
-                {donations.length > 0 && <InlineHeader {...this.props} />}
+                {donations.length > 0 && (
+                  <InlineHeader {...this.props} oddEven={counter++} onAddOne={this.onAdd} />
+                )}
                 {donations.length > 0 &&
                   donations.map(donation => {
                     if (donation.id !== this.state.modify) {
                       return (
                         <InlineLine
                           {...this.props}
+                          oddEven={counter++}
                           key={donation.id}
                           donation={donation}
                           paymentTypes={this.props.paymentType.items}
-                          onEdit={this.onModify}
-                          onDelete={this.onDelete}
+                          onGetOne={this.onModify}
+                          onDelOne={this.onConfirm}
                         />
                       );
                     } else {
-                      if (donation.id === this.state.modify) {
-                        return (
-                          <InlineDonation
-                            item={donation}
-                            paymentTypes={this.props.paymentType.items}
-                            mode={this.props.mode}
-                            onSubmit={this.onSubmitModify}
-                            onCancel={this.onCloseForm}
-                            errors={this.props.sponsorship.updateOneError}
-                          />
-                        );
-                      }
                       others = true;
                     }
                     return null;
@@ -182,29 +139,16 @@ export class InlineDonations extends Component {
                 {others &&
                   (this.state.more ? (
                     donations.map(donation => {
-                      if (
-                        donation.id !== this.state.modify &&
-                        !inTheFuture(donation.don_ts)
-                      ) {
+                      if (donation.id !== this.state.modify && !inTheFuture(donation.don_ts)) {
                         return (
                           <InlineLine
                             {...this.props}
+                            oddEven={counter++}
                             key={donation.id}
                             sponsorship={donation}
                             paymentTypes={this.props.paymentType.items}
-                            onEdit={this.onModify}
-                            onDelete={this.onDelete}
-                          />
-                        );
-                      } else if (donation.id === this.state.modify) {
-                        return (
-                          <InlineDonation
-                            item={donation}
-                            paymentTypes={this.props.paymentType.items}
-                            mode={this.props.mode}
-                            onSubmit={this.onSubmitModify}
-                            onCancel={this.onCloseForm}
-                            errors={this.props.donation.updateOneError}
+                            onGetOne={this.onModify}
+                            onDelOne={this.onConfirm}
                           />
                         );
                       }
@@ -212,38 +156,49 @@ export class InlineDonations extends Component {
                     })
                   ) : (
                     <InlineMore
+                      oddEven={counter++}
                       label="Afficher tous les dons"
                       onClick={this.onMore}
                     />
                   ))}
                 {others && this.state.more && (
                   <InlineCloseMore
+                    oddEven={counter++}
                     label="Cacher les dons terminés"
                     onClick={this.onMore}
                   />
                 )}
-                {!this.state.add && donations.length <= 0 && (
-                  <InlineEmpty label="Aucun don" />
-                )}
-                {this.state.add ? (
-                  <InlineDonation
-                    item={this.props.sponsorship.emptyItem}
-                    paymentTypes={this.props.paymentType.items}
+                {!this.state.add && donations.length <= 0 && <InlineEmpty label="Aucun don" />}
+                <InlineAddOne oddEven={counter++} label="Ajouter un don" onClick={this.onAdd} />
+                {this.state.donId > 0 && (
+                  <Modify
+                    donId={this.state.donId}
                     mode={this.props.mode}
-                    onCancel={this.onCloseForm}
-                    onSubmit={this.onSubmitAdd}
-                    errors={this.props.sponsorship.createOneError}
+                    parentId={this.props.id}
+                    onClose={this.onCloseForm}
                   />
-                ) : (
-                  <InlineAddOne
-                    label="Ajouter un don"
-                    onClick={this.onAdd}
+                )}
+                {this.state.donId === 0 && (
+                  <Create
+                    donId={this.state.donId}
+                    mode={this.props.mode}
+                    parentId={this.props.id}
+                    onClose={this.onCloseForm}
                   />
                 )}
               </div>
             </div>
           )}
         </div>
+        {this.state.confirm > 0 && (
+          <ResponsiveConfirm
+            show={this.state.confirm}
+            onClose={this.onConfirmClose}
+            onConfirm={() => {
+              this.onDelete(this.state.confirm);
+            }}
+          />
+        )}
       </div>
     );
   }
