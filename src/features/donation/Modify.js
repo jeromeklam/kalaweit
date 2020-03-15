@@ -59,7 +59,7 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_Donation', this.state.donId);
     this.props.actions
-      .updateOne(this.state.donId, obj)
+      .updateOne(obj)
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Donation', result);

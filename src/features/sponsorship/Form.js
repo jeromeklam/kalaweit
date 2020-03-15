@@ -1,10 +1,9 @@
 import React from 'react';
 import {
   InputHidden,
-  InlineInputSelect,
-  InlineInputText,
-  InlineInputCheckbox,
-  InlineLabel,
+  InputSelect,
+  InputText,
+  InputCheckbox,
 } from 'freeassofront';
 import { InputDate, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
@@ -32,21 +31,13 @@ export default function Form(props) {
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-sm-3">
-            {props.mode === 'client' && <InlineLabel label="Cause" />}
-            {props.mode === 'cause' && <InlineLabel label="Membre" />}
-          </div>
-          <div className="col-sm-19">
+          <div className="col-sm-16">
             {props.mode === 'client' && (
               <CauseInputPicker
-                label=""
+                label="Cause"
                 key="cause"
                 name="cause"
-                size="sm"
-                inline
-                labelSize={0}
-                inputSize={36}
-                labelTop={false}
+                labelTop={true}
                 item={values.cause || null}
                 onChange={handleChange}
                 error={getErrorMessage('cli_id')}
@@ -64,16 +55,12 @@ export default function Form(props) {
               />
             )}
           </div>
-          <div className="col-sm-7"></div>
-          <div className="col-sm-7">
-            <InlineInputCheckbox
+          <div className="col-sm-4">
+            <InputCheckbox
               label="Envoyer les news"
               id="spo_send_news"
               name="spo_send_news"
-              labelTop={false}
-              size="sm"
-              labelSize={0}
-              inputSize={36}
+              labelTop={true}
               checked={values.spo_send_news}
               onChange={handleChange}
               error={getErrorMessage('spo_send_news')}
@@ -81,50 +68,32 @@ export default function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-3">
-            <InlineLabel label="Du" />
-          </div>
           <div className="col-sm-8">
             <InputDate
-              label=""
+              label="Du"
               name="spo_from"
-              labelTop={false}
-              size="sm"
-              inline
-              labelSize={0}
-              inputSize={36}
+              labelTop={true}
               value={values.spo_from}
               onChange={handleChange}
               error={getErrorMessage('spo_from')}
             />
           </div>
-          <div className="col-sm-3">
-            <InlineLabel label="Au" />
-          </div>
           <div className="col-sm-8">
             <InputDate
-              label=""
+              label="Au"
               name="spo_to"
-              labelTop={false}
-              size="sm"
-              inline
-              labelSize={0}
-              inputSize={36}
+              labelTop={true}
               value={values.spo_to}
               onChange={handleChange}
               error={getErrorMessage('spo_to')}
             />
           </div>
-          <div className="col-sm-7"></div>
-          <div className="col-sm-7">
-            <InlineInputCheckbox
+          <div className="col-sm-4">
+            <InputCheckbox
               label="Afficher sur le site"
               id="spo_display_site"
               name="spo_display_site"
-              labelTop={false}
-              size="sm"
-              labelSize={0}
-              inputSize={36}
+              labelTop={true}
               checked={values.spo_display_site}
               onChange={handleChange}
               error={getErrorMessage('spo_display_site')}
@@ -132,36 +101,22 @@ export default function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-3">
-            <InlineLabel label="Montant" />
-          </div>
           <div className="col-sm-8">
-            <InlineInputText
-              label=""
+            <InputText
+              label="Montant"
               id="spo_mnt"
               name="spo_mnt"
-              labelTop={false}
-              size="sm"
-              inline
-              labelSize={0}
-              inputSize={36}
+              labelTop={true}
               value={values.spo_mnt}
               onChange={handleChange}
               error={getErrorMessage('spo_mnt')}
             />
           </div>
-          <div className="col-sm-3">
-            <InlineLabel label="Type" />
-          </div>
           <div className="col-sm-6">
-            <InlineInputSelect
-              label=""
+            <InputSelect
+              label="Type"
               name="payment_type.id"
-              labelTop={false}
-              size="sm"
-              inline
-              labelSize={0}
-              inputSize={36}
+              labelTop={true}
               value={values.payment_type.id}
               onChange={handleChange}
               options={paymentTypeAsOptions(props.paymentTypes)}
@@ -169,37 +124,27 @@ export default function Form(props) {
             />
           </div>
           <div className="col-sm-2">
-            <InlineLabel label="Jour" />
-          </div>
-          <div className="col-sm-2">
-            <InlineInputText
-              label=""
+            <InputText
+              label="Jour"
               id="spo_freq_when"
               name="spo_freq_when"
-              labelTop={false}
-              size="sm"
-              inline
-              labelSize={0}
-              inputSize={36}
+              labelTop={true}
               value={values.spo_freq_when}
               onChange={handleChange}
               error={getErrorMessage('spo_freq_when')}
             />
           </div>
+        </div>
+        <div className="row">
           <div className="col-sm-12">
-            <InlineInputText
-              label=""
+            <InputText
+              label="Remarques"
               id="spo_freq_detail"
               name="spo_freq_detail"
-              labelTop={false}
-              size="sm"
-              inline
-              labelSize={0}
-              inputSize={36}
+              labelTop={true}
               value={values.spo_freq_detail}
               onChange={handleChange}
               error={getErrorMessage('spo_freq_detail')}
-              placeholder="Remarques"
             />
           </div>
         </div>
