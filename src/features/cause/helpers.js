@@ -31,7 +31,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate}) => {
   ];
 };
 
-export const getInlineActions = ({ onOpenSponsorships, onOpenPhotos, onGetOne, onDelOne}) => {
+export const getInlineActions = ({ onOpenSponsorships, onOpenPhotos, onGetOne, onDelOne, state}) => {
   return [
     {
       name: 'sponsorship',

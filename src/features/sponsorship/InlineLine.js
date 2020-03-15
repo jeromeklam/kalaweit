@@ -36,7 +36,13 @@ export default class InlineLine extends Component {
     const highlight = this.state.flipped;
     return (
       <HoverObserver onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
-        <div className={classnames('row row-line', (this.props.oddEven % 2 !== 1) ? 'row-odd' : 'row-even')} key={sponsorship.id}>
+        <div
+          className={classnames(
+            'row row-line',
+            this.props.oddEven % 2 !== 1 ? 'row-odd' : 'row-even',
+          )}
+          key={sponsorship.id}
+        >
           <div className="col-5">
             <span>{sponsorship.spo_mnt}</span>
           </div>
@@ -79,8 +85,6 @@ export default class InlineLine extends Component {
             )}
           </div>
         </div>
-        </HoverObserver>
-
         <ResponsiveConfirm
           show={this.state.confirm}
           onClose={this.onConfirmClose}
@@ -97,7 +101,7 @@ export default class InlineLine extends Component {
             paymentTypes={this.state.paymentTypes}
           />
         )}
-      </div>
+      </HoverObserver>
     );
   }
 }

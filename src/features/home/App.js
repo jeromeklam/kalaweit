@@ -234,29 +234,28 @@ export class App extends Component {
       );
     } else {
       return (
-        <ResponsivePage
-          menuIcon={<MenuIcon className="light" />}
-          title={process.env.REACT_APP_APP_NAME}
-          options={options}
-          authenticated={this.props.auth.authenticated}
-          location={this.props.location}
-          onNavigate={this.onNavigate}
-          userForm={<SimpleForm />}
-          userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
-        >
-          {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
-            <div>
-              <img className="fond-site2 d-none d-sm-block" src={fond} alt="" />
-              {this.props.children}
-            </div>
-          ) : (
-            <div className="text-center mt-5 text-secondary">
-              <img className="fond-site2 d-none d-sm-block" src={fond} alt="" />
-              <h4>... Chargement ...</h4>
-              <CenteredLoading9X9 />
-            </div>
-          )}
-        </ResponsivePage>
+        <div>
+          <img className="fond-site2 d-none d-sm-block" src={fond} alt="" />
+          <ResponsivePage
+            menuIcon={<MenuIcon className="light" />}
+            title={process.env.REACT_APP_APP_NAME}
+            options={options}
+            authenticated={this.props.auth.authenticated}
+            location={this.props.location}
+            onNavigate={this.onNavigate}
+            userForm={<SimpleForm />}
+            userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
+          >
+            {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
+              <div>{this.props.children}</div>
+            ) : (
+              <div className="text-center mt-5 text-secondary">
+                <h4>... Chargement ...</h4>
+                <CenteredLoading9X9 />
+              </div>
+            )}
+          </ResponsivePage>
+        </div>
       );
     }
   }

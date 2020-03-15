@@ -21,7 +21,7 @@ export default function Form(props) {
     props.errors,
   );
   return (
-    <ResponsiveModalOrForm    
+    <ResponsiveModalOrForm
       className=""
       title="Parrainages"
       onSubmit={handleSubmit}
@@ -62,18 +62,9 @@ export default function Form(props) {
                 onChange={handleChange}
                 error={getErrorMessage('cau_id')}
               />
-              <CauseInputPicker
-                label="Cause"
-                key="cause"
-                name="cause"
-                labelTop={true}
-                item={values.cause || null}
-                onChange={handleChange}
-                error={getErrorMessage('cli_id')}
-              />
+            )}
           </div>
-          <div className="col-sm-7">
-          </div>
+          <div className="col-sm-7"></div>
           <div className="col-sm-7">
             <InlineInputCheckbox
               label="Envoyer les news"
@@ -124,8 +115,7 @@ export default function Form(props) {
               error={getErrorMessage('spo_to')}
             />
           </div>
-          <div className="col-sm-7">
-          </div>
+          <div className="col-sm-7"></div>
           <div className="col-sm-7">
             <InlineInputCheckbox
               label="Afficher sur le site"
