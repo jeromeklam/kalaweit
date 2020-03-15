@@ -21,7 +21,7 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.match.params.id || false,
+      id: this.props.sittId || this.props.match.params.id || false,
       item: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -36,7 +36,7 @@ export class Modify extends Component {
   }
 
   onCancel() {
-    this.props.history.push('/site-type');
+    this.props.onClose();
   }
 
   onSubmit(datas = {}) {
@@ -45,7 +45,7 @@ export class Modify extends Component {
       .updateOne(this.state.id, obj)
       .then(result => {
         this.props.actions.propagateModel('FreeAsso_SiteType', result);
-        this.props.history.push('/site-type');
+        this.props.onClose();
       })
       .catch(errors => {
         console.log(errors);
@@ -67,6 +67,7 @@ export class Modify extends Component {
                 item={item} 
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
             }
           </div>

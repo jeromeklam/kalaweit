@@ -223,6 +223,13 @@ svg.text-warning.inline-action:hover {
   border-radius : .2rem;
 }
 
+.row .col-first {
+  padding-left: 15px;
+}
+.row .col-last {
+  padding-right: 15px;
+}
+
 .inline-list {
   svg.inline-action:hover {
     cursor: pointer;
@@ -240,16 +247,16 @@ svg.text-warning.inline-action:hover {
     line-height: 30px;
   }
   .row-line.row-even {
-    background: lighten(theme-color('secondary-light'), 12%);
+    background: lighten(theme-color('secondary-light'), 6%);
   }
   .row-line.row-even:not(.row-title):hover {
-    background: lighten(theme-color('secondary-light'), 14%);
+    background: lighten(theme-color('secondary-light'), 8%);
   }
   .row-line.row-odd {
-    background: lighten(theme-color('secondary-light'), 16%);
+    background: lighten(theme-color('secondary-light'), 10%);
   }
   .row-line.row-odd:not(.row-title):hover {
-    background: lighten(theme-color('secondary-light'), 18%);
+    background: lighten(theme-color('secondary-light'), 12%);
   }
   svg.inline-action:hover {
     cursor: pointer;
@@ -259,4 +266,11 @@ svg.text-warning.inline-action:hover {
       fill: theme-color('light') !important;
     }
   }
+}
+.list-group-item {
+  background-color: transparent;
+}
+
+.scrollarea .scrollbar-container.vertical .scrollbar {
+  background-color: theme-color('primary') !important;
 }

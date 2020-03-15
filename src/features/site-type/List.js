@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import * as actions from './redux/actions';
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
@@ -15,6 +16,7 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
 } from '../icons';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -26,14 +28,14 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      sittId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
-    this.onQuickSearch = this.onQuickSearch.bind(this);
-    this.onClearFilters = this.onClearFilters.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
   }
@@ -46,19 +48,20 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/site-type/create');
+  onCreate() {
+    this.setState({ sittId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/site-type/modify/' + id);
+    this.setState({ sittId: id });
   }
 
   onDelOne(id) {
     this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+  }
+
+  onClose() {
+    this.setState({ sittId: -1 });
   }
 
   onReload(event) {
@@ -70,18 +73,6 @@ export class List extends Component {
 
   onLoadMore(event) {
     this.props.actions.loadMore();
-  }
-
-  onQuickSearch(quickSearch) {
-    this.props.actions.updateQuickSearch(quickSearch);
-    let timer = this.state.timer;
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
-    }, 2000);
-    this.setState({ timer: timer });
   }
 
   onUpdateSort(col, way, pos = 99) {
@@ -109,88 +100,44 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
-  onClearFilters() {
-    this.props.actions.initFilters();
-    this.props.actions.initSort();
-    let timer = this.state.timer;
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
-    }, 2000);
-    this.setState({ timer: timer });
-  }
-
   render() {
     let items = [];
     if (this.props.siteType.items.FreeAsso_SiteType) {
       items = buildModel(this.props.siteType.items, 'FreeAsso_SiteType');
     }
-    // L'affichage, items, loading, loadMoreError
-    const globalActions = [
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-      },
-    ];
-    const cols = [
-      {
-        name: 'name',
-        label: 'Nom',
-        col: 'sitt_name',
-        size: '30',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     return (
-      <ResponsiveList
-        title="Types de site"
-        cols={cols}
-        items={items}
-        mainCol="sitt_name"
-        filterIcon={null}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.siteType.sort}
-        filters={this.props.siteType.filters}
-        onSearch={null}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.siteType.loadMorePending}
-        loadMoreFinish={this.props.siteType.loadMoreFinish}
-        loadMoreError={this.props.siteType.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Types de site"
+          cols={cols}
+          items={items}
+          mainCol="sitt_name"
+          filterIcon={null}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.siteType.sort}
+          filters={this.props.siteType.filters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.siteType.loadMorePending}
+          loadMoreFinish={this.props.siteType.loadMoreFinish}
+          loadMoreError={this.props.siteType.loadMoreError}
+        />
+        {this.state.sittId > 0 && (
+          <Modify modal={true} sittId={this.state.sittId} onClose={this.onClose} />
+        )}
+        {this.state.sittId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }

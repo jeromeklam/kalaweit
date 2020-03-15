@@ -8,7 +8,7 @@
     "@mdi/react": "^1.2.1",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",
-    "babel-core": "6.26.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "^25.1.0",
     "babel-loader": "7.1.2",
@@ -72,6 +72,7 @@
     "react-dropzone": "^10.2.1",
     "react-grid-layout": "^0.18.2",
     "react-hot-loader": "^4.12.19",
+    "react-intl": "^4.1.1",
     "react-redux": "^5.0.7",
     "react-responsive": "^8.0.3",
     "react-router-dom": "^4.2.2",
@@ -146,6 +147,9 @@
   },
   "description": "Les Eco-Pattes",
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "babel-plugin-react-intl": "2.*",
     "cordova-plugin-whitelist": "^1.3.4"
   },
   "cordova": {

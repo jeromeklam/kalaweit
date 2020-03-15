@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { SocialIcon } from 'react-social-icons';
+import { IntlProvider } from 'react-intl';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
 import * as commonActions from '../common/redux/actions';
@@ -10,167 +10,16 @@ import { ResponsivePage } from 'freeassofront';
 import { initAxios } from '../../common';
 import { SimpleForm } from '../auth';
 import { CenteredLoading9X9 } from '../ui';
-import {
-  Home as HomeIcon,
-  About as AboutIcon,
-  Login as LoginIcon,
-  Logout as LogoutIcon,
-  Cause as CauseIcon,
-  Person as PersonIcon,
-  Menu as MenuIcon,
-  Donation as DonationIcon,
-  System as SystemIcon,
-  Datas as DatasIcon,
-  Dashboard as DashboardIcon,
-} from '../icons';
 import fond from '../../images/fond.jpg';
+import messages_fr from '../../translations/fr.json';
+import messages_en from '../../translations/en.json';
+import { Menu as MenuIcon } from '../icons';
+import { globalMenu } from './';
 
-const options = [
-  {
-    icon: <HomeIcon />,
-    label: 'Accueil',
-    url: '/',
-    role: 'HOME',
-    public: true,
-  },
-  {
-    icon: <LoginIcon />,
-    label: 'Connexion',
-    url: '/auth/signin',
-    role: 'SIGNIN',
-    public: true,
-  },
-  {
-    icon: <LogoutIcon />,
-    label: 'Déconnexion',
-    url: '/auth/signout',
-    role: 'SIGNOUT',
-    public: false,
-  },
-  {
-    icon: <SocialIcon url="https://facebook.com/KalaweitFrance/" />,
-    label: 'Facebook',
-    url: null,
-    role: 'SOCIAL',
-    position: 1,
-    public: true,
-  },
-  {
-    icon: <DashboardIcon />,
-    label: 'Tableau de bord',
-    url: '/dashboard',
-    role: 'NAV',
-    position: 1,
-    public: false,
-  },
-  {
-    icon: <PersonIcon />,
-    label: 'Membres',
-    url: '/client',
-    role: 'NAV',
-    position: 2,
-    public: false,
-  },
-  {
-    icon: <CauseIcon />,
-    label: 'Causes',
-    url: '/cause',
-    role: 'NAV',
-    position: 3,
-    public: false,
-  },
-  {
-    icon: <DonationIcon />,
-    label: 'Dons',
-    url: '/donation',
-    role: 'NAV',
-    position: 4,
-    public: false,
-  },
-  {
-    icon: <DatasIcon />,
-    label: 'Répertoires',
-    url: null,
-    role: 'MENU',
-    position: 5,
-    public: false,
-    options: [
-      {
-        icon: null,
-        label: 'Sites',
-        url: '/site',
-        role: 'NAV',
-        position: 1,
-      },
-      {
-        icon: null,
-        label: 'Types de site',
-        url: '/site-type',
-        role: 'NAV',
-        position: 2,
-      },
-      {
-        icon: null,
-        label: 'Types de cause',
-        url: '/cause-type',
-        role: 'NAV',
-        position: 3,
-      },
-      {
-        icon: null,
-        label: 'Grandes cause',
-        url: '/cause-main-type',
-        role: 'NAV',
-        position: 4,
-      },
-      {
-        icon: null,
-        label: 'Catégories de personne',
-        url: '/client-category',
-        role: 'NAV',
-        position: 5,
-      },
-      {
-        icon: null,
-        label: 'Types de personne',
-        url: '/client-type',
-        role: 'NAV',
-        position: 6,
-      },
-      {
-        icon: null,
-        label: 'Variables',
-        url: '/data',
-        role: 'NAV',
-        position: 7,
-      },
-    ],
-  },
-  {
-    icon: <SystemIcon />,
-    label: 'Paramétrage',
-    url: null,
-    role: 'MENU',
-    position: 6,
-    public: false,
-    options: [
-      {
-        icon: null,
-        label: 'Emails',
-        url: '/email',
-        role: 'NAV',
-        position: 1,
-      },
-    ],
-  },
-  {
-    icon: <AboutIcon />,
-    label: 'Qui sommes nous ?',
-    url: '/about',
-    role: 'ABOUT',
-    public: true,
-  },
-];
+const intlMessages = {
+  fr: messages_fr,
+  en: messages_en,
+};
 
 export class App extends Component {
   static propTypes = {
@@ -184,6 +33,7 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.onNavigate = this.onNavigate.bind(this);
+    this.onLocaleChange = this.onLocaleChange.bind(this);
     this.onGeo = this.onGeo.bind(this);
   }
 
@@ -221,28 +71,42 @@ export class App extends Component {
     }
   }
 
+  onLocaleChange(locale) {
+    this.props.actions.setLocale(locale);
+  }
+
   onNavigate(url) {
     this.props.history.push(url);
   }
 
   render() {
+    const locale = this.props.common.locale || 'fr';
+    const messages = intlMessages[locale];
     if (this.props.home.loadAllError) {
       return (
-        <div className="text-danger">
-          <span>Erreur d'accès au service</span>
-        </div>
+        <IntlProvider locale={locale} messages={messages}>
+          <div className="text-danger">
+            <span>Erreur d'accès au service</span>
+          </div>
+        </IntlProvider>
       );
     } else {
       return (
-        <div>
+        <IntlProvider locale={locale} messages={messages}>
           <img className="fond-site2 d-none d-sm-block" src={fond} alt="" />
           <ResponsivePage
             menuIcon={<MenuIcon className="light" />}
             title={process.env.REACT_APP_APP_NAME}
-            options={options}
+            options={globalMenu}
             authenticated={this.props.auth.authenticated}
             location={this.props.location}
             onNavigate={this.onNavigate}
+            locales={[
+              { code: 'fra', locale: 'fr', label: 'Français' },
+              { code: 'gbr', locale: 'en', label: 'Royaume-Uni' },
+            ]}
+            currentLocale={locale}
+            onLocale={this.onLocaleChange}
             userForm={<SimpleForm />}
             userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
           >
@@ -255,7 +119,7 @@ export class App extends Component {
               </div>
             )}
           </ResponsivePage>
-        </div>
+        </IntlProvider>
       );
     }
   }
