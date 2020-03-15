@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputSelect, InputText } from 'freeassofront';
+import { InputHidden, InputSelect, InputText, InputCheckbox } from 'freeassofront';
 import { InputDate, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
 import { paymentTypeAsOptions } from '../payment-type/functions.js';
@@ -50,6 +50,18 @@ export default function Form(props) {
             onChange={handleChange}
           />
         </div>
+        <div className="col-md-4"/>
+        <div className="col-md-2">
+          <InputCheckbox
+            label="Actif"
+            id="don_status"
+            name="don_status"
+            labelTop={true}
+            checked={values.don_status === "OK"}
+            onChange={handleChange}
+            error={getErrorMessage('don_status')}
+          />
+        </div>
       </div>
       <div className="row">
         <div className="col-md-6">
@@ -74,6 +86,32 @@ export default function Form(props) {
             onChange={handleChange}
             options={paymentTypeAsOptions(props.paymentTypes)}
             error={getErrorMessage('ptyp_id')}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-12">
+          <InputText
+            label="Description"
+            id="con_desc"
+            name="don_desc"
+            labelTop={true}
+            value={values.don_desc}
+            onChange={handleChange}
+            error={getErrorMessage('don_desc')}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-12">
+          <InputText
+            label="Commentaires"
+            id="con_domment"
+            name="don_comment"
+            labelTop={true}
+            value={values.don_comment}
+            onChange={handleChange}
+            error={getErrorMessage('don_comment')}
           />
         </div>
       </div>

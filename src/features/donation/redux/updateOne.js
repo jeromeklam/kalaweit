@@ -14,14 +14,14 @@ export function updateOne(args = {}) {
       type: DONATION_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const id = args.id;
+      const id = args.data.id;
+      console.log("FK modif don",args);
       const doRequest = freeAssoApi.put('/v1/asso/donation/' + id, args);
       doRequest.then(
         (res) => {
           dispatch({
             type: DONATION_UPDATE_ONE_SUCCESS,
             data: res,
-            id: args,
           });
           resolve(res);
         },
@@ -39,8 +39,6 @@ export function updateOne(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissUpdateOneError() {
   return {
     type: DONATION_UPDATE_ONE_DISMISS_ERROR,
@@ -59,6 +57,7 @@ export function reducer(state, action) {
 
     case DONATION_UPDATE_ONE_SUCCESS:
       // The request is success
+      console.log("FK updateOne success");
       return {
         ...state,
         updateOnePending: false,
@@ -67,6 +66,12 @@ export function reducer(state, action) {
 
     case DONATION_UPDATE_ONE_FAILURE:
       // The request is failed
+      
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
+      console.log("FK updateOne failure", error);
       return {
         ...state,
         updateOnePending: false,
