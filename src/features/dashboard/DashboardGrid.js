@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import GridLayout from 'react-grid-layout';
-import { ResponsiveGridCard } from '../ui';
+import { Responsive, WidthProvider } from 'react-grid-layout';
 import * as actions from './redux/actions';
 import {
   Site as SiteIcon,
   Cause as CauseIcon,
   Friend as FriendIcon,
-  Donation as DonationIcon
+  Donation as DonationIcon,
 } from '../icons';
-import { DashboardCard } from './';
+import { DashboardCard, DashboardToolbar } from './';
+import { getFromLS, saveToLS } from '../ui';
 
 const initialLayout = [
   { i: 'causes', x: 0, y: 0, w: 6, h: 4, minW: 4, maxW: 12, minH: 2, maxH: 8 },
@@ -20,26 +20,31 @@ const initialLayout = [
   { i: 'donations', x: 23, y: 0, w: 6, h: 4, minW: 4, maxW: 12, minH: 2, maxH: 8 },
 ];
 
-const getLayoutSize = (layouts, key) => {
+const getLayoutSize = (layouts, breakpoint, key) => {
   let size = 'sm';
-  const layout = layouts.find(elem => elem.i === key);
-  if (layout) {
-    if (layout.w < 9) {
-      size = 'sm';
-    } else {
-      if (layout.w < 18) {
-        size = 'md';
+  const layoutBr = layouts[breakpoint] || [];
+  if (Array.isArray(layoutBr)) {
+    const layout = layoutBr.find(elem => elem.i === key);
+    if (layout) {
+      if (layout.w < 9) {
+        size = 'sm';
       } else {
-        if (layout.w < 27) {
-          size = 'lg';
+        if (layout.w < 18) {
+          size = 'md';
         } else {
-          size = 'xl';
+          if (layout.w < 27) {
+            size = 'lg';
+          } else {
+            size = 'xl';
+          }
         }
       }
     }
   }
   return size;
 };
+
+const ResponsiveReactGridLayout = WidthProvider(Responsive, { measureBeforeMount: true });
 
 export class DashboardGrid extends Component {
   static propTypes = {
@@ -49,64 +54,76 @@ export class DashboardGrid extends Component {
 
   constructor(props) {
     super(props);
+    const originalLayouts = props.auth.cache || getFromLS('layouts') || {};
     this.state = {
-      layouts: initialLayout,
-    }
-    this.onResize = this.onResize.bind(this);
+      breakpoint: 'lg',
+      layouts: JSON.parse(JSON.stringify(originalLayouts)),
+    };
+    this.onLayoutChange = this.onLayoutChange.bind(this);
+    this.onBreakpointChange = this.onBreakpointChange.bind(this);
   }
 
-  onResize(layouts) {
-    this.setState({ layouts: layouts });
+  onLayoutChange(layout, layouts) {
+    saveToLS('layouts', layouts);
+    this.setState({ layouts });
+  }
+
+  onBreakpointChange(breakpoint) {
+    this.setState({ breakpoint });
   }
 
   render() {
-    const { layouts } = this.state;
+    const { layouts, breakpoint } = this.state;
     if (this.props.auth.authenticated && this.props.dashboard.stats) {
       return (
-        <GridLayout
-          className="layout"
-          cols={36}
-          rowHeight={30}
-          width={1200}
-          verticalCompact={true}
-          onResize={this.onResize}
-          layout={layouts}
-        >
-          <div key="causes">
-            <DashboardCard
-              title="Causes"
-              count={this.props.dashboard.stats.total_cause}
-              icon={<CauseIcon />}
-              url="/cause"
-              size={getLayoutSize(layouts, 'cause')}
-            />
-          </div>
-          <div key="sites">
-            <DashboardCard
-              title="Sites"
-              count={this.props.dashboard.stats.total_site}
-              icon={<SiteIcon />}
-              url="/site"
-              size={getLayoutSize(layouts, 'site')}
-            />
-          </div>
-          <div key="friends">
-            <DashboardCard
-              title="Amis"
-              count={this.props.dashboard.stats.friends}
-              icon={<FriendIcon />}
-              size={getLayoutSize(layouts, 'm2')}
-            />
-          </div>
-          <div key="donations">
-            <DashboardCard
-              title="Donations"
-              count={this.props.dashboard.stats.donations}
-              icon={<DonationIcon />}
-              size={getLayoutSize(layouts, 'm')}
-            />
-          </div>
-        </GridLayout>
+        <div>
+          <DashboardToolbar />
+          <ResponsiveReactGridLayout
+            className="layout"
+            cols={{ lg: 36, md: 36, sm: 36, xs: 36, xxs: 36 }}
+            rowHeight={30}
+            verticalCompact={true}
+            onResize={this.onResize}
+            onLayoutChange={this.onLayoutChange}
+            onBreakpointChange={this.onBreakpointChange}
+            layouts={layouts}
+          >
+            <div key="cause" data-grid={{ w: 6, h: 5, x: 1, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+              <DashboardCard
+                title="Causes"
+                count={this.props.dashboard.stats.total_cause}
+                icon={<CauseIcon />}
+                url="/cause"
+                size={getLayoutSize(layouts, breakpoint, 'cause')}
+              />
+            </div>
+            <div key="sites" data-grid={{ w: 6, h: 5, x: 8, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+              <DashboardCard
+                title="Sites"
+                count={this.props.dashboard.stats.total_site}
+                icon={<SiteIcon />}
+                url="/site"
+                size={getLayoutSize(layouts, breakpoint, 'sitescause')}
+              />
+            </div>
+            <div key="friends" data-grid={{ w: 6, h: 5, x: 15, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+              <DashboardCard
+                title="Amis"
+                count={this.props.dashboard.stats.friends}
+                icon={<FriendIcon />}
+                size={getLayoutSize(layouts, breakpoint, 'friends')}
+              />
+            </div>
+            <div key="donations" data-grid={{ w: 6, h: 5, x: 22, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+              <DashboardCard
+                title="Donations"
+                count={this.props.dashboard.stats.donations}
+                icon={<DonationIcon />}
+                size={getLayoutSize(layouts, breakpoint, 'donations')}
+              />
+            </div>
+          </ResponsiveReactGridLayout>
+        </div>
       );
     }
     return null;

@@ -18,6 +18,7 @@ export default function Form(props) {
     <ResponsiveModalOrForm
       title="Don"
       className="m-5"
+      size="lg"
       tab={values.currentTab}
       tabs={props.tabs}
       onSubmit={handleSubmit}
@@ -27,7 +28,7 @@ export default function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-md-18">
+        <div className="col-md-36">
           <CauseInputPicker
             label="Cause"
             labelTop={true}
@@ -39,7 +40,7 @@ export default function Form(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-24">
           <InputDate
             label="Date"
             labelTop={true}
@@ -50,8 +51,8 @@ export default function Form(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-4"/>
-        <div className="col-md-2">
+        <div className="col-md-8"/>
+        <div className="col-md-4">
           <InputCheckbox
             label="Actif"
             id="don_status"
@@ -64,7 +65,7 @@ export default function Form(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-12">
           <InputText
             label="Montant"
             labelTop={true}
@@ -74,7 +75,7 @@ export default function Form(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-sm-6">
+        <div className="col-sm-12">
           <InputSelect
             label="Type"
             name="payment_type.id"
@@ -90,7 +91,7 @@ export default function Form(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-sm-12">
+        <div className="col-sm-36">
           <InputText
             label="Description"
             id="con_desc"
@@ -103,7 +104,7 @@ export default function Form(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-sm-12">
+        <div className="col-sm-36">
           <InputText
             label="Commentaires"
             id="con_domment"

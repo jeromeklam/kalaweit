@@ -1,8 +1,5 @@
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
-import {
-  freeAssoApi,
-  initAxios
-} from '../../../common';
+import { freeAssoApi, initAxios } from '../../../common';
+import { jsonApiNormalizer, buildModel  } from 'freejsonapi';
 import {
   AUTH_SIGN_IN_BEGIN,
   AUTH_SIGN_IN_SUCCESS,
@@ -10,24 +7,16 @@ import {
   AUTH_SIGN_IN_DISMISS_ERROR,
 } from './constants';
 import cookie from 'react-cookies';
+import { schema, defaultConfig } from '../';
+import { saveToLS } from '../../ui';
+import Ajv from 'ajv';
 
-// Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
-// If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function signIn(args = {}) {
   return dispatch => {
-    // optionally you can have getState as the second argument
     dispatch({
       type: AUTH_SIGN_IN_BEGIN,
     });
-
-    // Return a promise so that you could control UI flow without states in the store.
-    // For example: after submit a form, you need to redirect the page to another when succeeds or show some errors message if fails.
-    // It's hard to use state to manage it, but returning a promise allows you to easily achieve it.
-    // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
     const promise = new Promise((resolve, reject) => {
-      // doRequest is a placeholder Promise. You should replace it with your own logic.
-      // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
-      // args.error here is only for test coverage purpose.
       const doRequest = freeAssoApi.post('/v1/sso/signin', args);
       doRequest.then(
         res => {
@@ -37,7 +26,6 @@ export function signIn(args = {}) {
           });
           resolve(res);
         },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
         err => {
           dispatch({
             type: AUTH_SIGN_IN_FAILURE,
@@ -47,13 +35,10 @@ export function signIn(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissSignInError() {
   return {
     type: AUTH_SIGN_IN_DISMISS_ERROR,
@@ -76,6 +61,7 @@ export function reducer(state, action) {
       let user = false;
       let token = false;
       let authenticated = false;
+      let more = {};
       if (datas && datas.headers && datas.headers.authorization) {
         token = datas.headers.authorization;
       }
@@ -85,11 +71,7 @@ export function reducer(state, action) {
       }
       if (datas.data) {
         let object = jsonApiNormalizer(datas.data);
-        user = buildModel(
-          object,
-          'FreeSSO_User',
-          object.SORTEDELEMS[0]
-        );
+        user = buildModel(object, 'FreeSSO_User', object.SORTEDELEMS[0], {eager: true});
       }
       if (user) {
         authenticated = true;
@@ -102,9 +84,24 @@ export function reducer(state, action) {
           aYearFromNow.setFullYear(aYearFromNow.getFullYear() + 1);
           cookie.save('AutoLogin', autologin, { path: '/', expires: aYearFromNow });
         }
+        if (user.config && user.config.ubrk_config) {
+          more.settings = JSON.parse(user.config.ubrk_config) || defaultConfig;
+        } else {
+          more.settings = defaultConfig;
+        }
+        if (user.config && user.config.ubrk_cache) {
+          more.cache = JSON.parse(user.config.ubrk_cache) || {};
+          saveToLS('layouts', more.cache);
+        } else {
+          more.cache = {};
+        }
+        const ajv = new Ajv({ allErrors: true, verbose: true, useDefaults: true });
+        const validate = ajv.compile(schema);
+        validate(more.settings);
       }
       return {
         ...state,
+        ...more,
         token: token,
         user: user,
         authenticated: authenticated,

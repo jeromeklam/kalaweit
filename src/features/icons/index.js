@@ -52,3 +52,7 @@ export { default as Dashboard } from './Dashboard';
 export { default as SimpleEdit } from './SimpleEdit';
 export { default as Friend } from './Friend';
 export { default as Toolbar } from './Toolbar';
+export { default as AccountClose } from './AccountClose';
+export { default as AccountDetail } from './AccountDetail';
+export { default as Save } from './Save';
+export { default as Zoom } from './Zoom';

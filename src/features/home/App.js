@@ -13,7 +13,7 @@ import { CenteredLoading9X9 } from '../ui';
 import fond from '../../images/fond.jpg';
 import messages_fr from '../../translations/fr.json';
 import messages_en from '../../translations/en.json';
-import { Menu as MenuIcon } from '../icons';
+import { Menu as MenuIcon, AccountDetail, AccountClose } from '../icons';
 import { globalMenu } from './';
 
 const intlMessages = {
@@ -33,6 +33,7 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.onNavigate = this.onNavigate.bind(this);
+    this.onChangeSettings = this.onChangeSettings.bind(this);
     this.onLocaleChange = this.onLocaleChange.bind(this);
     this.onGeo = this.onGeo.bind(this);
   }
@@ -79,6 +80,11 @@ export class App extends Component {
     this.props.history.push(url);
   }
 
+  onChangeSettings(setting, value) {
+    console.log(setting, value);
+    this.props.actions.changeSetting('layout', setting, value);
+  }
+
   render() {
     const locale = this.props.common.locale || 'fr';
     const messages = intlMessages[locale];
@@ -98,9 +104,11 @@ export class App extends Component {
             menuIcon={<MenuIcon className="light" />}
             title={process.env.REACT_APP_APP_NAME}
             options={globalMenu}
+            settings={{...this.props.auth.settings.layout}}
             authenticated={this.props.auth.authenticated}
             location={this.props.location}
             onNavigate={this.onNavigate}
+            onChangeSettings={this.onChangeSettings}
             locales={[
               { code: 'fra', locale: 'fr', label: 'Français' },
               { code: 'gbr', locale: 'en', label: 'Royaume-Uni' },
@@ -109,6 +117,8 @@ export class App extends Component {
             onLocale={this.onLocaleChange}
             userForm={<SimpleForm />}
             userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
+            accountOpened={<AccountClose />}
+            accountClosed={<AccountDetail className="text-primary" />}
           >
             {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
               <div>{this.props.children}</div>

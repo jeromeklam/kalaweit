@@ -1,6 +1,6 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } from 'freeassofront';
-import useForm from '../ui/useForm';
+import { InputHidden, InputText, InputSelect, InputTextarea } from 'freeassofront';
+import { useForm, ResponsiveModalOrForm } from '../ui';
 import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 
@@ -13,14 +13,17 @@ export default function Form(props) {
     props.onNavTab,
   );
   return (
-    <ResponsiveForm
+    <ResponsiveModalOrForm
       className="m-5"
       title="Sites"
+      sise="xl"
+      modal
       tab={values.currentTab}
       tabs={props.tabs}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
+      onClose={props.onClose}
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
@@ -108,6 +111,6 @@ export default function Form(props) {
           />
         </div>
       )}
-    </ResponsiveForm>
+    </ResponsiveModalOrForm>
   );
 }

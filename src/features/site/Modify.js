@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import Form from './Form';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading3Dots } from '../ui';
 import cogoToast from 'cogo-toast';
 
 /**
@@ -17,6 +17,10 @@ export class Modify extends Component {
   static propTypes = {
     site: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
@@ -25,7 +29,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      siteId: this.props.match.params.siteId || false,
+      siteId: this.props.siteId || this.props.match.params.siteId || false,
       item: false,
     };
     /**
@@ -82,7 +86,7 @@ export class Modify extends Component {
       <div className="site-modify global-card">
         {this.props.site.loadOnePending ? (
           <div className="text-center mt-2">
-            <Loading9x9 />
+            <CenteredLoading3Dots show={this.props.loader} />
           </div>
         ) : (
           <div>
