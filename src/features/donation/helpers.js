@@ -56,6 +56,7 @@ export const getCols = ({ props }) => {
       sortable: true,
       type: 'date',
       filterable: { type: 'date' },
+      first: true,
     },
     {
       name: 'mnt',
@@ -109,6 +110,7 @@ export const getCols = ({ props }) => {
       mob_size: '',
       sortable: true,
       filterable: { type: 'text' },
+      last: true,
     },
   ];
 };

@@ -80,6 +80,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
+      first: true,
     },
     {
       name: 'name',
@@ -132,6 +133,7 @@ export const getCols = ({ props }) => {
         type: 'select',
         options: siteAsOptions(props.site.items),
       },
+      last: true,
     },
 
   ];

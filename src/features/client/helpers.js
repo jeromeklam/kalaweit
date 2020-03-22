@@ -77,6 +77,7 @@ export const getCols = ({ props }) => {
       sortable: true,
       filterable: { type: 'text' },
       title: true,
+      first: true,
     },
     {
       name: 'lastname',
@@ -131,6 +132,7 @@ export const getCols = ({ props }) => {
       },
       title: false,
       hidden: true,
+      last: true,
     },
   ];
 };
