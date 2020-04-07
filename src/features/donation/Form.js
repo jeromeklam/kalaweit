@@ -1,10 +1,11 @@
 import React from 'react';
-import { InputHidden, InputSelect, InputText, InputCheckbox } from 'freeassofront';
+import { InputHidden, InputSelect, InputText, InputCheckbox, InputMonetary} from 'freeassofront';
 import { InputDate, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
 import { paymentTypeAsOptions } from '../payment-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as CauseInputPicker } from '../cause';
+import { statusValues } from './';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
@@ -29,6 +30,18 @@ export default function Form(props) {
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
         <div className="col-md-36">
+          <ClientInputPicker
+            label="Membre"
+            labelTop={true}
+            key="client"
+            name="client"
+            item={values.client || null}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-36">
           <CauseInputPicker
             label="Cause"
             labelTop={true}
@@ -51,26 +64,28 @@ export default function Form(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-8"/>
-        <div className="col-md-4">
-          <InputCheckbox
-            label="Actif"
+        <div className="col-md-12">
+          <InputSelect
+            label="Status"
             id="don_status"
             name="don_status"
             labelTop={true}
-            checked={values.don_status === "OK"}
+            value={values.don_status}
             onChange={handleChange}
+            options={statusValues}
             error={getErrorMessage('don_status')}
           />
         </div>
       </div>
       <div className="row">
         <div className="col-md-12">
-          <InputText
+          <InputMonetary
             label="Montant"
             labelTop={true}
             name="don_mnt"
             id="don_mnt"
+            inputMoney="EUR"
+            dbMoney="EUR"
             value={values.don_mnt}
             onChange={handleChange}
           />

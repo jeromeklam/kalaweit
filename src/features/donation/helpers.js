@@ -6,6 +6,13 @@ import {
   FilterClear as FilterClearIcon,
 } from '../icons';
 
+export const statusValues = [
+  { value: 'WAIT', label: 'Attente' },
+  { value: 'OK', label: 'Validé' },
+  { value: 'NOK', label: 'Annulé' },
+  { value: 'NEXT', label: 'A venir' },
+];
+
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
     {
@@ -76,12 +83,7 @@ export const getCols = ({ props }) => {
       mob_size: '',
       sortable: true,
       type: 'switch',
-      values: [
-        { value: 'WAIT', label: 'Attente' },
-        { value: 'OK', label: 'Ok' },
-        { value: 'NOK', label: 'Annulé' },
-        { value: 'NEXT', label: 'A venir' },
-      ],
+      values: statusValues,
       filterable: { type: 'text' },
     },
     {

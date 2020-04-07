@@ -55,8 +55,9 @@ export default class Search extends Component {
 
   render() {
     const filters = [
-      { name: 'cli_firstname', label: 'Prénom', type: 'text' },
-      { name: 'cli_lastname', label: 'Nom', type: 'text' },
+      { name: 'cli_lastname', label: 'Nom', type: 'text', size: '18' },
+      { name: 'cli_firstname', label: 'Prénom', type: 'text', size: '18' },
+      { name: 'cli_email', label: 'Email', type: 'text', size: '36' },
     ];
     return (
       <SearchModal
@@ -68,7 +69,7 @@ export default class Search extends Component {
         onSearch={this.onSearch}
         onSelect={this.props.onSelect}
         list={this.state.list}
-        pickerDisplay="cli_lastname"
+        pickerDisplay="cli_lastname, ,cli_firstname, -- ,cli_email"
         filters={filters}
       />
     );

@@ -24,14 +24,14 @@ export const globalMenu = [
   },
   {
     icon: <LoginIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.connexion" defaultMessage="Connexion" />,
+    label: <FormattedMessage id="app.features.home.app.menu.signin" defaultMessage="Sign in" />,
     url: '/auth/signin',
     role: 'SIGNIN',
     public: true,
   },
   {
     icon: <LogoutIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.deConnexion" defaultMessage="Connexion" />,
+    label: <FormattedMessage id="app.features.home.app.menu.signout" defaultMessage="Sign out" />,
     url: '/auth/signout',
     role: 'SIGNOUT',
     public: false,

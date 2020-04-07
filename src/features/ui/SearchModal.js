@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import { ResponsiveModal, Loading3Dots } from 'freeassofront';
+import { ResponsiveModal } from 'freeassofront';
+import { CenteredLoading3Dots } from '../ui';
 
 export default class SearchModal extends Component {
   static propTypes = {
@@ -14,6 +16,9 @@ export default class SearchModal extends Component {
     list: PropTypes.array.isRequired,
     pickerDisplay: PropTypes.string.isRequired,
     filters: PropTypes.array,
+  };
+  static defaultProps = {
+    filters: [],
   };
 
   constructor(props) {
@@ -43,7 +48,7 @@ export default class SearchModal extends Component {
 
   onClear(event) {
     let filters = this.state.fields;
-    filters.forEaach(item => {
+    filters.forEach(item => {
       item.value = '';
     });
     this.setState({ fields: filters });
@@ -52,15 +57,23 @@ export default class SearchModal extends Component {
 
   onSearch(event) {
     let params = false;
+    let sort = '';
     this.state.fields.forEach(item => {
-        if (item.value !== '') {
-          if (params === false) {
-            params = { filter: { [this.state.condition]: {} }};
-          }
-          params.filter[this.state.condition][item.name] = item.value;
+      if (item.value !== '') {
+        if (params === false) {
+          params = { filter: { [this.state.condition]: {} }};
+        }
+        params.filter[this.state.condition][item.name] = item.value;
+      }
+      if (sort === '') {
+        sort = item.name;
+      } else {
+        sort = sort + ',' + item.name;
       }
     });
-    const filters = params || {};
+    params = params || {};
+    params.sort = sort;
+    const filters = params;
     this.props.onSearch(filters);
   }
 
@@ -68,7 +81,7 @@ export default class SearchModal extends Component {
     const buttons = [
       {name: "Filtrer", function: this.onSearch, theme: "primary", icon: "filter" },
       {name: "Effacer", function: this.onClear, theme: "warning" , icon: "delete"},
-      {name: "Annuler", function: this.props.onClose, theme: "dark", icon: "close"},
+      {name: "Annuler", function: this.props.onClose, theme: "secondary", icon: "close"},
     ];
     return (
       <ResponsiveModal
@@ -78,44 +91,58 @@ export default class SearchModal extends Component {
         onClose={this.props.onClose}
         buttons={buttons}
       >
-        <div>
+        <div className="search-modal">
           <div className="search-filters">
-            {this.state.fields &&
-              this.state.fields.map(item => {
-                return (
-                  <input
-                    key={item.name}
-                    className="form-control"
-                    value={item.value}
-                    name={item.name}
-                    placeholder={item.label}
-                    type="text"
-                    onChange={this.onChange}
-                  />
-                );
-              })
-            }
+            <span>Critères de recherche :</span>
+            <div className="row">
+              {this.state.fields &&
+                this.state.fields.map(item => {
+                  return (
+                    <div className={classnames('col-sm-' + (item.size || '36'))}>
+                      <input
+                        key={item.name}
+                        className="form-control mb-1"
+                        value={item.value}
+                        name={item.name}
+                        placeholder={item.label}
+                        type="text"
+                        onChange={this.onChange}
+                      />
+                    </div>
+                  );
+                })
+              }
+            </div>
+            <hr />
           </div>
           <div className="search-results">
             {this.props.loading ? (
-              <Loading3Dots />
+              <CenteredLoading3Dots />
             ) : (
-              <ul className="list-group">
-                {this.props.list &&
-                  this.props.list.map(item => {
-                    return (
-                      <li
-                        key={item.id}
-                        className="list-group-item list-group-item-action"
-                        onClick={() => {
-                          this.props.onSelect(item);
-                        }}
-                      >
-                        <p>{item[this.props.pickerDisplay]}</p>
-                      </li>
-                    );
-                  })}
-              </ul>
+              <div>
+                <span>Résultats de recherche :</span>
+                <ul className="list-group">
+                  {this.props.list &&
+                    this.props.list.map(item => {
+                      return (
+                        <li
+                          key={item.id}
+                          className="list-group-item list-group-item-action"
+                          onClick={() => {
+                            this.props.onSelect(item);
+                          }}
+                        >
+                          {this.props.pickerDisplay.split(',').map(elem => {
+                            if (item[elem]) {
+                              return <span>{item[elem]}</span>
+                            }
+                            return elem;
+                          })}
+                        </li>
+                      );
+                    })}
+                </ul>
+              </div>
             )}
           </div>
         </div>

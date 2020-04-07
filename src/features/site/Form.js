@@ -16,7 +16,7 @@ export default function Form(props) {
     <ResponsiveModalOrForm
       className="m-5"
       title="Sites"
-      sise="xl"
+      size="lg"
       modal
       tab={values.currentTab}
       tabs={props.tabs}

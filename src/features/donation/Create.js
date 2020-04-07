@@ -16,7 +16,7 @@ export class Create extends Component {
     actions: PropTypes.object.isRequired,
   };
 
-    constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       donationId: 0,

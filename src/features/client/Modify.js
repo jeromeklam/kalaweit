@@ -12,6 +12,11 @@ export class Modify extends Component {
   static propTypes = {
     client: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
@@ -78,8 +83,10 @@ export class Modify extends Component {
     return (
       <div className="client-modify global-card">
         {this.props.client.loadOnePending ? (
-          <div className="text-center mt-2">
-            <CenteredLoading9X9 />
+          <div>
+            {this.props.loader && (
+              <CenteredLoading9X9 />
+            )}
           </div>
         ) : (
           <div>
