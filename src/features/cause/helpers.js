@@ -6,6 +6,7 @@ import {
   DelOne as DelOneIcon,
   FilterClear as FilterClearIcon,
   Sponsorship as SponsorshipIcon,
+  Donation as DonationIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type';
 import { siteAsOptions } from '../site/functions';
@@ -31,8 +32,16 @@ export const getGlobalActions = ({ onClearFilters, onCreate}) => {
   ];
 };
 
-export const getInlineActions = ({ onOpenSponsorships, onOpenPhotos, onGetOne, onDelOne, state}) => {
+export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenPhotos, onGetOne, onDelOne, state}) => {
   return [
+    {
+      name: 'donation',
+      label: 'Dons',
+      onClick: onOpenDonations,
+      theme: 'secondary',
+      icon: <DonationIcon color="white" />,
+      active: state.donations > 0,
+    },
     {
       name: 'sponsorship',
       label: 'Dons réguliers',

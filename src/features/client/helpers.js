@@ -3,9 +3,9 @@ import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
-  Donation as DonationIcon,
   FilterClear as FilterClearIcon,
   Sponsorship as SponsorshipIcon,
+  Donation as DonationIcon,
 } from '../icons';
 import { clientCategoryAsOptions } from '../client-category';
 
