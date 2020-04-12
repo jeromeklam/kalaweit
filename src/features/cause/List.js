@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import * as sponsorshipActions from '../sponsorship/redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
@@ -18,7 +17,10 @@ import {
 } from '../icons';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { InlinePhotos, Create, Modify } from './';
+import * as sponsorshipActions from '../sponsorship/redux/actions';
+import { loadDonations } from '../donation/redux/actions';
 import { InlineSponsorships } from '../sponsorship';
+import { InlineDonations } from '../donation';
 
 export class List extends Component {
   static propTypes = {
@@ -32,6 +34,7 @@ export class List extends Component {
       timer: null,
       photos: 0,
       sponsorships: 0,
+      donations: 0,
       cauId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
@@ -45,9 +48,8 @@ export class List extends Component {
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onOpenPhotos = this.onOpenPhotos.bind(this);
-    this.onClosePhotos = this.onClosePhotos.bind(this);
     this.onOpenSponsorships = this.onOpenSponsorships.bind(this);
-    this.onCloseSponsorships = this.onCloseSponsorships.bind(this);
+    this.onOpenDonations = this.onOpenDonations.bind(this);
   }
 
   componentDidMount() {
@@ -64,20 +66,6 @@ export class List extends Component {
 
   onClose() {
     this.setState({ cauId: -1 });
-  }
-
-  onOpenPhotos(id) {
-    const { photos } = this.state;
-    if (photos === id) {
-      this.setState({ photos: 0, sponsorships: 0 });
-    } else {
-      this.props.actions.loadPhotos(id, true).then(result => {});
-      this.setState({ photos: id, sponsorships: 0 });
-    }
-  }
-
-  onClosePhotos() {
-    this.setState({ photos: 0 });
   }
 
   onDelOne(id) {
@@ -145,18 +133,33 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onOpenSponsorships(id) {
-    const { sponsorships } = this.state;
-    if (sponsorships === id) {
-      this.setState({ photos: 0, sponsorships: 0 });
+  onOpenPhotos(id) {
+    const { photos } = this.state;
+    if (photos === id) {
+      this.setState({ photos: 0, sponsorships: 0, donations: 0});
     } else {
-      this.props.actions.loadSponsorships({ cau_id: id }, true).then(result => {});
-      this.setState({ photos: 0, sponsorships: id });
+      this.props.actions.loadPhotos(id, true).then(result => {});
+      this.setState({ photos: id, sponsorships: 0, donations: 0});
     }
   }
 
-  onCloseSponsorships() {
-    this.setState({ sponsorships: 0 });
+  onOpenSponsorships(id) {
+    const { sponsorships } = this.state;
+    if (sponsorships === id) {
+      this.setState({ photos: 0, sponsorships: 0, donations: 0});
+    } else {
+      this.props.actions.loadSponsorships({ cau_id: id }, true).then(result => {});
+      this.setState({ photos: 0, sponsorships: id, donations: 0 });
+    }
+  }
+
+  onOpenDonations(id) {
+    const { donations } = this.state;
+    if (donations === id) {
+      this.setState({photos:0, sponsorships: 0, donations: 0});
+    } else {
+      this.setState({photos:0, sponsorships: 0, donations: id});
+    }
   }
 
   render() {
@@ -198,6 +201,9 @@ export class List extends Component {
       if (this.state.sponsorships > 0) {
         inlineComponent = <InlineSponsorships mode="cause" id={this.state.sponsorships} />;
         id = this.state.sponsorships;
+      } else {
+        inlineComponent = <InlineDonations mode="cause" id={this.state.donations} />
+        id = this.state.donations;
       }
     }
     return (
@@ -245,12 +251,13 @@ function mapStateToProps(state) {
     causeType: state.causeType,
     causeMainType: state.causeMainType,
     sponsorship: state.sponsorships,
+    donation: state.donations,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, ...sponsorshipActions }, dispatch),
+    actions: bindActionCreators({ ...actions, ...sponsorshipActions, loadDonations }, dispatch),
   };
 }
 
