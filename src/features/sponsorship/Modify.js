@@ -12,6 +12,10 @@ export class Modify extends Component {
   static propTypes = {
     sponsorship: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
@@ -72,11 +76,14 @@ export class Modify extends Component {
   }
 
   render() {
+    console.log(this.props.loader);
     const item = this.state.item;
     return (
       <div className="sponsorship-modify global-card">
         {this.props.sponsorship.loadOnePending ? (
-          <CenteredLoading3Dots />
+          <div>
+            {this.props.loader && <CenteredLoading3Dots />}
+          </div>
         ) : (
           <div>
             {item && (

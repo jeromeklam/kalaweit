@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import { injectIntl } from 'react-intl';
 import { CenteredLoading3Dots } from '../ui';
 import { ResponsiveConfirm } from 'freeassofront';
 import {
-  createSuccess,
-  createError,
   deleteSuccess,
   deleteError,
-  modifySuccess,
-  modifyError,
   InlineAddOne,
   InlineCloseMore,
   InlineEmpty,
@@ -99,6 +96,7 @@ export class InlineSponsorships extends Component {
   }
 
   render() {
+    const { intl } = this.props;
     let sponsorships = this.props.sponsorship.sponsorshipsModels;
     let others = false;
     let counter = 0;
@@ -153,27 +151,28 @@ export class InlineSponsorships extends Component {
                   ) : (
                     <InlineMore
                       oddEven={counter++}
-                      label="Afficher les dons et parrainages terminés"
+                      label={intl.formatMessage({ id: 'app.features.sponsorship.list.displayFinished', defaultMessage: 'Display finished sponsorship(s)' })}
                       onClick={this.onMore}
                     />
                   ))}
                 {others && this.state.more && (
                   <InlineCloseMore
                     oddEven={counter++}
-                    label="Cacher les dons et parrainages terminés"
+                    label={intl.formatMessage({ id: 'app.features.sponsorship.list.hideFinished', defaultMessage: 'Hide finished sponsorship(s)' })}
                     onClick={this.onMore}
                   />
                 )}
                 {sponsorships.length <= 0 && (
-                  <InlineEmpty oddEven={counter++} label="Aucun don ou parrainage régulier" />
+                  <InlineEmpty oddEven={counter++} label={intl.formatMessage({ id: 'app.features.sponsorship.list.noSponsorship', defaultMessage: 'No sponsorship' })} />
                 )}
                 <InlineAddOne
                   oddEven={counter++}
-                  label="Ajouter un don ou parrainage régulier"
+                  label={intl.formatMessage({ id: 'app.features.sponsorship.list.addSponsorship', defaultMessage: 'Add one sponsorship' })}
                   onClick={this.onAdd}
                 />
                 {this.state.spoId > 0 && (
                   <Modify
+                    loader={false}
                     spoId={this.state.spoId}
                     mode={this.props.mode}
                     parentId={this.props.id}
@@ -182,6 +181,7 @@ export class InlineSponsorships extends Component {
                 )}
                 {this.state.spoId === 0 && (
                   <Create
+                    loader={false}
                     spoId={this.state.spoId}
                     mode={this.props.mode}
                     parentId={this.props.id}
@@ -219,4 +219,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlineSponsorships);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(InlineSponsorships));

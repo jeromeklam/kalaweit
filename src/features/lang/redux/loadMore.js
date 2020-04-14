@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer } from 'freejsonapi';
+import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import {
   LANG_LOAD_MORE_BEGIN,
   LANG_LOAD_MORE_SUCCESS,
@@ -67,6 +67,7 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: true,
         loadMoreError: null,
+        flags: [],
       };
 
     case LANG_LOAD_MORE_SUCCESS:
@@ -89,12 +90,14 @@ export function reducer(state, action) {
       } else {
         list = state.items;
       }
+      const langs = buildModel(list, 'FreeFW_Lang');
       return {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
         LoadMoreFinish: true,
         items: list,
+        flags: langs,
       };
 
     case LANG_LOAD_MORE_FAILURE:

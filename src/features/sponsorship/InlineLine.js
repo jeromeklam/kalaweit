@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import { HoverObserver, ResponsiveConfirm } from 'freeassofront';
-import { intlDate } from '../../common';
+import { HoverObserver, ResponsiveConfirm, displayDate, displayMonetary, displayBool } from 'freeassofront';
 import { getPaymentTypeLabel } from '../payment-type';
 import { getFullName } from '../client';
 import { GetOne as GetOneIcon, DelOne as DelOneIcon } from '../icons';
-import { Modify } from './';
 
 export default class InlineLine extends Component {
   static propTypes = {
@@ -43,26 +41,32 @@ export default class InlineLine extends Component {
           )}
           key={sponsorship.id}
         >
-          <div className="col-5">
-            <span>{sponsorship.spo_mnt}</span>
-          </div>
-          <div className="col-5">
+          <div className="col-4 col-first">
             <span>{getPaymentTypeLabel(paymentTypes, sponsorship.payment_type.id)}</span>
           </div>
-          <div className="col-6">
-            <span>{intlDate(sponsorship.spo_from)}</span>
+          <div className="col-4 text-right">
+            <span>{displayMonetary(sponsorship.spo_mnt, sponsorship.spo_money)}</span>
           </div>
-          <div className="col-6">
-            <span>{intlDate(sponsorship.spo_to)}</span>
+          <div className="col-4">
+            <span>{displayDate(sponsorship.spo_from)}</span>
           </div>
-          <div className="col-8">
+          <div className="col-4">
+            <span>{displayDate(sponsorship.spo_to)}</span>
+          </div>
+          <div className="col-10">
             {this.props.mode === 'cause' ? (
               <span>{getFullName(sponsorship.client)}</span>
             ) : (
               <span>{sponsorship.cause.cau_name}</span>
             )}
           </div>
-          <div className="col-6 text-right">
+          <div className="col-3">
+            <span>{displayBool(sponsorship.spo_display_site)}</span>
+          </div>
+          <div className="col-3">
+            <span>{displayBool(sponsorship.spo_send_news)}</span>
+          </div>
+          <div className="col-4 text-right col-last">
             {highlight && (
               <div className="btn-group btn-group-xs" role="group" aria-label="...">
                 <button
@@ -92,15 +96,6 @@ export default class InlineLine extends Component {
             this.onConfirm();
           }}
         />
-        {!this.state.confirm && this.state.spo_id > 0 && (
-          <Modify
-            mode={this.props.mode}
-            onClose={this.onClose}
-            spo_id={this.state.spo_id}
-            sponsorship={this.state.sponsorship}
-            paymentTypes={this.state.paymentTypes}
-          />
-        )}
       </HoverObserver>
     );
   }

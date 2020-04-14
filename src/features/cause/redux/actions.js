@@ -13,3 +13,5 @@ export { initSort } from './initSort';
 export { loadPhotos, dismissLoadPhotosError } from './loadPhotos';
 export { uploadPhoto, dismissUploadPhotoError } from './uploadPhoto';
 export { delCauseMedia, dismissDelCauseMediaError } from './delCauseMedia';
+export { loadNews, dismissLoadNewsError } from './loadNews';
+export { loadOneMedia, dismissLoadOneMediaError } from './loadOneMedia';

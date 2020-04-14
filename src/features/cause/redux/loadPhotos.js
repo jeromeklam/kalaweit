@@ -25,6 +25,7 @@ export function loadPhotos(args = {}, reload = false) {
         const filter = {
           filter: {
             cau_id: args,
+            caum_type: 'PHOTO',
           }
         }
         const addUrl = objectToQueryString(filter);

@@ -5,13 +5,14 @@ import {
   InputText,
   InputCheckbox,
 } from 'freeassofront';
+import { injectIntl } from 'react-intl';
 import { InputDate, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
 import { paymentTypeAsOptions } from '../payment-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as CauseInputPicker } from '../cause';
 
-export default function Form(props) {
+function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     props.tab,
@@ -19,10 +20,11 @@ export default function Form(props) {
     props.onCancel,
     props.errors,
   );
+  const { intl } = props;
   return (
     <ResponsiveModalOrForm
       className=""
-      title="Parrainages"
+      title={intl.formatMessage({ id: 'app.features.sponsorship.form.title', defaultMessage: 'Sponsorship' })}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onClose={props.onClose}
@@ -34,7 +36,7 @@ export default function Form(props) {
           <div className="col-sm-16">
             {props.mode === 'client' && (
               <CauseInputPicker
-                label="Cause"
+                label={intl.formatMessage({ id: 'app.features.sponsorship.form.cause', defaultMessage: 'Cause' })}
                 key="cause"
                 name="cause"
                 labelTop={true}
@@ -45,7 +47,7 @@ export default function Form(props) {
             )}
             {props.mode === 'cause' && (
               <ClientInputPicker
-                label="Membre"
+                label={intl.formatMessage({ id: 'app.features.sponsorship.form.client', defaultMessage: 'Member' })}
                 key="client"
                 name="client"
                 labelTop={true}
@@ -57,7 +59,7 @@ export default function Form(props) {
           </div>
           <div className="col-sm-4">
             <InputCheckbox
-              label="Envoyer les news"
+              label={intl.formatMessage({ id: 'app.features.sponsorship.form.news', defaultMessage: 'Send news' })}
               id="spo_send_news"
               name="spo_send_news"
               labelTop={true}
@@ -70,7 +72,7 @@ export default function Form(props) {
         <div className="row">
           <div className="col-sm-8">
             <InputDate
-              label="Du"
+              label={intl.formatMessage({ id: 'app.features.sponsorship.form.from', defaultMessage: 'From' })}
               name="spo_from"
               labelTop={true}
               value={values.spo_from}
@@ -80,7 +82,7 @@ export default function Form(props) {
           </div>
           <div className="col-sm-8">
             <InputDate
-              label="Au"
+              label={intl.formatMessage({ id: 'app.features.sponsorship.form.to', defaultMessage: 'To' })}
               name="spo_to"
               labelTop={true}
               value={values.spo_to}
@@ -90,7 +92,7 @@ export default function Form(props) {
           </div>
           <div className="col-sm-4">
             <InputCheckbox
-              label="Afficher sur le site"
+              label={intl.formatMessage({ id: 'app.features.sponsorship.form.site', defaultMessage: 'Display on site' })}
               id="spo_display_site"
               name="spo_display_site"
               labelTop={true}
@@ -103,7 +105,7 @@ export default function Form(props) {
         <div className="row">
           <div className="col-sm-8">
             <InputText
-              label="Montant"
+              label={intl.formatMessage({ id: 'app.features.sponsorship.form.amount', defaultMessage: 'Amount' })}
               id="spo_mnt"
               name="spo_mnt"
               labelTop={true}
@@ -114,7 +116,7 @@ export default function Form(props) {
           </div>
           <div className="col-sm-6">
             <InputSelect
-              label="Type"
+              label={intl.formatMessage({ id: 'app.features.sponsorship.form.type', defaultMessage: 'Type' })}
               name="payment_type.id"
               labelTop={true}
               value={values.payment_type.id}
@@ -125,7 +127,7 @@ export default function Form(props) {
           </div>
           <div className="col-sm-2">
             <InputText
-              label="Jour"
+              label={intl.formatMessage({ id: 'app.features.sponsorship.form.day', defaultMessage: 'Day' })}
               id="spo_freq_when"
               name="spo_freq_when"
               labelTop={true}
@@ -138,7 +140,7 @@ export default function Form(props) {
         <div className="row">
           <div className="col-sm-12">
             <InputText
-              label="Remarques"
+              label={intl.formatMessage({ id: 'app.features.sponsorship.form.comments', defaultMessage: 'Comments' })}
               id="spo_freq_detail"
               name="spo_freq_detail"
               labelTop={true}
@@ -152,3 +154,5 @@ export default function Form(props) {
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

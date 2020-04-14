@@ -1,43 +1,80 @@
 import React, { Component } from 'react';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { Copyright } from '../ui';
 import logo from '../../images/logo-timbre.png';
 
-export default class About extends Component {
+class About extends Component {
   static propTypes = {};
 
   render() {
+    const { intl } = this.props;
     return (
       <div className="about-about container pt-5">
         <div className="jumbotron p-9 p-md-15 text-white rounded bg-primary">
           <div className="col-md-36 px-0">
-            <h1 className="display-32 font-italic">Application de gestion pour Kalaweit</h1>
+            <h1 className="display-32 font-italic">
+              <FormattedMessage
+                id="app.features.about.about.application"
+                defaultMessage="Kalaweit application"
+              />
+            </h1>
             <p className="lead my-24">
-              Cette application est réservée à Kalaweit. Si vous souhaitez avoir plus
-              d'informations merci d'utiliser les informations de contact ci-dessous.
+              <FormattedMessage
+                id="app.features.about.about.explanation"
+                defaultMessage="Only for Kalaweit"
+              />
             </p>
             <p className="lead mb-0">
             </p>
           </div>
         </div>
         <div className="row mb-2">
-          <div className="col-md-18"><img src={logo} alt="logo" /></div>
+          <div className="col-md-18"><img src={logo} alt="" /></div>
           <div className="col-md-18">
             <div className="card flex-md-row mb-4 box-shadow h-md-250">
               <div className="card-body d-flex flex-column align-items-start">
-                <strong className="d-inline-block mb-2 text-primary">Kalaweit</strong>
+                <strong className="d-inline-block mb-2 text-primary">
+                  <FormattedMessage
+                    id="app.contact.name"
+                    defaultMessage="KLAM Jérôme"
+                  />
+                  </strong>
                 <h3 className="mb-0">
                   <a className="text-dark">
                     Contact
                   </a>
                 </h3>
-                <p className="card-text mb-auto">69 rue Mouffetard</p>
-                <p className="card-text mb-auto">75005 Paris</p>
-                <p className="card-text mb-auto">(+33) 07 86 01 18 87</p>
                 <p className="card-text mb-auto">
-                  <a href="mailto:contact@lesecopattes.fr">kalaweit.france@yahoo.fr</a>
+                  <FormattedMessage
+                    id="app.contact.address1"
+                    defaultMessage="11, Rue de la Marne"
+                  />
                 </p>
-                <a href="https://kalaweit.org" target="_blank" rel="noopener noreferrer">
-                  Notre site internet
+                <p className="card-text mb-auto">
+                  <FormattedMessage
+                    id="app.contact.address2"
+                    defaultMessage="57050 Le Ban St Martin"
+                  />
+                </p>
+                <p className="card-text mb-auto">
+                  <FormattedMessage
+                    id="app.contact.tel"
+                    defaultMessage="00 33 6 51 81 70 28"
+                  />
+                </p>
+                <p className="card-text mb-auto">
+                  <a href={"mailto:" + intl.formatMessage({ id: 'app.contact.email', defaultMessage: 'jeromeklam@free.fr' })}>
+                    <FormattedMessage
+                      id="app.contact.email"
+                      defaultMessage="jeromeklam@free.fr"
+                    />
+                  </a>
+                </p>
+                <a href={intl.formatMessage({ id: 'app.contact.site', defaultMessage: 'https://freeasso.fr' })} target="_blank" rel="noopener noreferrer">
+                  <FormattedMessage
+                    id="app.contact.site"
+                    defaultMessage="https://freeasso.fr"
+                  />
                 </a>
               </div>
             </div>
@@ -49,3 +86,5 @@ export default class About extends Component {
     );
   }
 }
+
+export default injectIntl(About);

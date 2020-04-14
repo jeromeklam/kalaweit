@@ -1,6 +1,7 @@
 import React from 'react';
 import { InputHidden, InputText, InputSelect, InputCheckbox, ResponsiveForm } from 'freeassofront';
 import useForm from '../ui/useForm';
+import { causeTypeMntType } from './';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel } = useForm(
@@ -41,16 +42,12 @@ export default function Form(props) {
       <div className="row">
         <div className="col-md-8">
           <InputSelect
-            label="Limite"
+            label="Totalisation"
             name="caut_mnt_type"
             id="caut_mnt_type"
             value={values.caut_mnt_type}
             onChange={handleChange}
-            options={[
-              { value: 'ANNUAL', label: 'Annuelle glissante' },
-              { value: 'MAXIMUM', label: 'Globale' },
-              { value: 'OTHER', label: 'Aucune' },
-            ]}
+            options={causeTypeMntType}
           />
         </div>
         <div className="col-md-7">

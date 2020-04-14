@@ -16,7 +16,7 @@ import {
   Search as SearchIcon,
 } from '../icons';
 import { getGlobalActions, getInlineActions, getCols } from './';
-import { InlinePhotos, Create, Modify } from './';
+import { InlinePhotos, InlineNews, Create, Modify } from './';
 import * as sponsorshipActions from '../sponsorship/redux/actions';
 import { loadDonations } from '../donation/redux/actions';
 import { InlineSponsorships } from '../sponsorship';
@@ -33,6 +33,7 @@ export class List extends Component {
     this.state = {
       timer: null,
       photos: 0,
+      news: 0,
       sponsorships: 0,
       donations: 0,
       cauId: -1,
@@ -48,6 +49,7 @@ export class List extends Component {
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onOpenPhotos = this.onOpenPhotos.bind(this);
+    this.onOpenNews = this.onOpenNews.bind(this);
     this.onOpenSponsorships = this.onOpenSponsorships.bind(this);
     this.onOpenDonations = this.onOpenDonations.bind(this);
   }
@@ -136,29 +138,39 @@ export class List extends Component {
   onOpenPhotos(id) {
     const { photos } = this.state;
     if (photos === id) {
-      this.setState({ photos: 0, sponsorships: 0, donations: 0});
+      this.setState({ photos: 0, news: 0, sponsorships: 0, donations: 0});
     } else {
       this.props.actions.loadPhotos(id, true).then(result => {});
-      this.setState({ photos: id, sponsorships: 0, donations: 0});
+      this.setState({ photos: id, news: 0, sponsorships: 0, donations: 0});
+    }
+  }
+
+  onOpenNews(id) {
+    const { news } = this.state;
+    if (news === id) {
+      this.setState({ photos: 0, news: 0, sponsorships: 0, donations: 0});
+    } else {
+      this.props.actions.loadNews(id, true).then(result => {});
+      this.setState({ photos: 0, news: id, sponsorships: 0, donations: 0});
     }
   }
 
   onOpenSponsorships(id) {
     const { sponsorships } = this.state;
     if (sponsorships === id) {
-      this.setState({ photos: 0, sponsorships: 0, donations: 0});
+      this.setState({ photos: 0, news: 0, sponsorships: 0, donations: 0});
     } else {
       this.props.actions.loadSponsorships({ cau_id: id }, true).then(result => {});
-      this.setState({ photos: 0, sponsorships: id, donations: 0 });
+      this.setState({ photos: 0, news: 0, sponsorships: id, donations: 0 });
     }
   }
 
   onOpenDonations(id) {
     const { donations } = this.state;
     if (donations === id) {
-      this.setState({photos:0, sponsorships: 0, donations: 0});
+      this.setState({photos:0, news: 0, sponsorships: 0, donations: 0});
     } else {
-      this.setState({photos:0, sponsorships: 0, donations: id});
+      this.setState({photos:0, news: 0, sponsorships: 0, donations: id});
     }
   }
 
@@ -194,16 +206,21 @@ export class List extends Component {
     );
     let inlineComponent = null;
     let id = null;
-    if (this.state.photos > 0) {
-      inlineComponent = <InlinePhotos />;
-      id = this.state.photos;
+    if (this.state.news > 0) {
+      inlineComponent = <InlineNews />;
+      id = this.state.news;
     } else {
-      if (this.state.sponsorships > 0) {
-        inlineComponent = <InlineSponsorships mode="cause" id={this.state.sponsorships} />;
-        id = this.state.sponsorships;
+      if (this.state.photos > 0) {
+        inlineComponent = <InlinePhotos />;
+        id = this.state.photos;
       } else {
-        inlineComponent = <InlineDonations mode="cause" id={this.state.donations} />
-        id = this.state.donations;
+        if (this.state.sponsorships > 0) {
+          inlineComponent = <InlineSponsorships mode="cause" id={this.state.sponsorships} />;
+          id = this.state.sponsorships;
+        } else {
+          inlineComponent = <InlineDonations mode="cause" id={this.state.donations} />
+          id = this.state.donations;
+        }
       }
     }
     return (
@@ -236,9 +253,9 @@ export class List extends Component {
           loadMoreError={this.props.cause.loadMoreError}
         />
         {this.state.cauId > 0 && (
-          <Modify modal={true} cauId={this.state.cauId} onClose={this.onClose} />
+          <Modify modal={true} cauId={this.state.cauId} onClose={this.onClose} loader={false} />
         )}
-        {this.state.cauId === 0 && <Create modal={true} onClose={this.onClose} />}
+        {this.state.cauId === 0 && <Create modal={true} onClose={this.onClose} loader={false} />}
       </div>
     );
   }

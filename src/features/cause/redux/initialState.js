@@ -2,6 +2,7 @@ import { Filter } from 'freeassofront';
 
 const initialState = {
   items: [],
+  news: [],
   photos: [],
   photosItem: null,
   page_number: 1,
@@ -30,7 +31,12 @@ const initialState = {
   uploadPhotoPending: false,
   uploadPhotoError: null,
   delCauseMediaPending: false,
-  delCauseMediaError: null
+  delCauseMediaError: null,
+  loadNewsPending: false,
+  loadNewsError: null,
+  loadOneMediaPending: false,
+  loadOneMediaError: null,
+  loadOneMediaItem: null,
 };
 
 export default initialState;

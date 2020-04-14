@@ -7,6 +7,7 @@ import {
   FilterClear as FilterClearIcon,
   Sponsorship as SponsorshipIcon,
   Donation as DonationIcon,
+  News as NewsIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type';
 import { siteAsOptions } from '../site/functions';
@@ -32,7 +33,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate}) => {
   ];
 };
 
-export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenPhotos, onGetOne, onDelOne, state}) => {
+export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenPhotos, onOpenNews, onGetOne, onDelOne, state}) => {
   return [
     {
       name: 'donation',
@@ -60,6 +61,15 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
       active: state.photos > 0,
     },
     {
+      name: 'news',
+      label: 'Journal',
+      onClick: onOpenNews,
+      theme: 'secondary',
+      icon: <NewsIcon color="white" />,
+      role: 'OTHER',
+      active: state.news > 0,
+    },
+    {
       name: 'modify',
       label: 'Modifier',
       onClick: onGetOne,
@@ -84,7 +94,7 @@ export const getCols = ({ props }) => {
       name: 'id',
       label: 'Identifiant',
       col: 'id',
-      size: '6',
+      size: '4',
       mob_size: '',
       title: true,
       sortable: true,
@@ -95,26 +105,61 @@ export const getCols = ({ props }) => {
       name: 'name',
       label: 'Nom',
       col: 'cau_name',
-      size: '6',
+      size: '5',
       mob_size: '',
       title: true,
       sortable: true,
       filterable: { type: 'text' },
     },
     {
+      name: 'cau_to',
+      label: 'Libéré / Mort',
+      col: 'cau_to',
+      size: '4',
+      mob_size: '',
+      type: 'date',
+      title: true,
+      filterable: { type: 'date' },
+      sortable: true,
+    },
+    {
       name: 'type',
       label: 'Type',
       col: 'cause_type.caut_name',
-      size: '12',
+      size: '8',
       mob_size: '18',
       title: true,
+      sortable: true,
+    },
+    {
+      name: 'cau_mnt',
+      label: 'Récolté',
+      col: 'cau_mnt',
+      size: '4',
+      mob_size: '',
+      type: 'monetary',
+      title: true,
+      fDisplay: (item, newContent) => { if (item.cau_to === '' || item.cau_to === null) { return newContent; } else { return ''; } },
+      filterable: { type: 'monetary' },
+      sortable: true,
+    },
+    {
+      name: 'cau_mnt_left',
+      label: 'Restant',
+      col: 'cau_mnt_left',
+      size: '4',
+      mob_size: '',
+      type: 'monetary',
+      title: true,
+      fDisplay: (item, newContent) => { if (item.cau_to === '' || item.cau_to === null) { return newContent; } else { return ''; } },
+      filterable: { type: 'monetary' },
       sortable: true,
     },
     {
       name: 'site',
       label: 'Site',
       col: 'site.site_name',
-      size: '10',
+      size: '6',
       mob_size: '',
       title: true,
       sortable: true,

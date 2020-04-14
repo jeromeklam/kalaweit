@@ -129,8 +129,11 @@ export class InlinePhotos extends Component {
           {this.props.cause.loadPhotosPending ? (
             <CenteredLoading3Dots />
           ) : (
-            <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
+            <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
               {photos.map(photo => {
+                if (photo.caum_type != 'PHOTO') {
+                  return null;
+                }
                 let img = '';
                 try {
                   if (photo.caum_short_blob) {
