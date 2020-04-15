@@ -17,7 +17,7 @@ import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
-    siteType: PropTypes.object.isRequired,
+    paymentType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -25,7 +25,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
-      sittId: null,
+      ptypId: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -42,11 +42,11 @@ export class List extends Component {
   }
 
   onCreate() {
-    this.setState({ sittId: 0 });
+    this.setState({ ptypId: 0 });
   }
 
   onGetOne(id) {
-    this.setState({ sittId: id });
+    this.setState({ ptypId: id });
   }
 
   onDelOne(id) {
@@ -54,7 +54,7 @@ export class List extends Component {
   }
 
   onClose() {
-    this.setState({ sittId: null });
+    this.setState({ ptypId: null });
   }
 
   onReload(event) {
@@ -95,8 +95,8 @@ export class List extends Component {
 
   render() {
     let items = [];
-    if (this.props.siteType.items.FreeAsso_SiteType) {
-      items = buildModel(this.props.siteType.items, 'FreeAsso_SiteType');
+    if (this.props.paymentType.items.FreeAsso_PaymentType) {
+      items = buildModel(this.props.paymentType.items, 'FreeAsso_PaymentType');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);
@@ -105,10 +105,10 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Types de site"
+          title="Types de paiement"
           cols={cols}
           items={items}
-          mainCol="sitt_name"
+          mainCol="ptyp_name"
           filterIcon={null}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
@@ -117,19 +117,19 @@ export class List extends Component {
           sortNoneIcon={<SortNoneIcon color="secondary" />}
           inlineActions={inlineActions}
           globalActions={globalActions}
-          sort={this.props.siteType.sort}
-          filters={this.props.siteType.filters}
+          sort={this.props.paymentType.sort}
+          filters={this.props.paymentType.filters}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onLoadMore={this.onLoadMore}
-          loadMorePending={this.props.siteType.loadMorePending}
-          loadMoreFinish={this.props.siteType.loadMoreFinish}
-          loadMoreError={this.props.siteType.loadMoreError}
+          loadMorePending={this.props.paymentType.loadMorePending}
+          loadMoreFinish={this.props.paymentType.loadMoreFinish}
+          loadMoreError={this.props.paymentType.loadMoreError}
         />
-        {this.state.sittId > 0 && (
-          <Modify modal={true} sittId={this.state.sittId} onClose={this.onClose} />
+        {this.state.ptypId > 0 && (
+          <Modify modal={true} ptypId={this.state.ptypId} onClose={this.onClose} />
         )}
-        {this.state.sittId === 0 && <Create modal={true} onClose={this.onClose} />}
+        {this.state.ptypId === 0 && <Create modal={true} onClose={this.onClose} />}
       </div>
     );
   }
@@ -137,7 +137,7 @@ export class List extends Component {
 
 function mapStateToProps(state) {
   return {
-    siteType: state.siteType,
+    paymentType: state.paymentType,
   };
 }
 

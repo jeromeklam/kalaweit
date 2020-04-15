@@ -1,10 +1,11 @@
-// This is the JSON way to define React Router rules in a Rekit app.
-// Learn more from: http://rekit.js.org/docs/routing.html
-
+import { List, Create, Modify } from './';
 
 export default {
-  path: 'payment-type',
-  name: 'Payment type',
+  path: '',
+  name: '',
   childRoutes: [
+    { path: 'payment-type', name: 'List', component: List, auth: 'PRIVATE' },
+    { path: 'payment-type/create', name: 'Create', component: Create, auth: 'PRIVATE' },
+    { path: 'payment-type/modify/:ptypId', name: 'Modify', component: Modify, auth: 'PRIVATE' },
   ],
 };

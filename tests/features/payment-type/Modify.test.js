@@ -1,19 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { DefaultPage } from '../../../src/features/receipt/DefaultPage';
+import { Modify } from '../../../src/features/payment-type/Modify';
 
-describe('receipt/DefaultPage', () => {
+describe('payment-type/Modify', () => {
   it('renders node with correct class name', () => {
     const props = {
-      receipt: {},
+      paymentType: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <DefaultPage {...props} />
+      <Modify {...props} />
     );
 
     expect(
-      renderedComponent.find('.receipt-default-page').length
+      renderedComponent.find('.payment-type-modify').length
     ).toBe(1);
   });
 });

@@ -88,6 +88,13 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
   ];
 };
 
+const endCause = (item) => {
+  if (item.cau_to !== null && item.cau_to !== '') {
+    return 'text-line-through';
+  }
+  return '';
+}
+
 export const getCols = ({ props }) => {
   return [
     {
@@ -100,6 +107,7 @@ export const getCols = ({ props }) => {
       sortable: true,
       filterable: { type: 'text' },
       first: true,
+      fClass: endCause,
     },
     {
       name: 'name',
@@ -110,6 +118,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
+      fClass: endCause,
     },
     {
       name: 'cau_to',

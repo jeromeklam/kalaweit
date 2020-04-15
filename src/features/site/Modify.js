@@ -7,12 +7,8 @@ import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import Form from './Form';
-import { CenteredLoading3Dots } from '../ui';
-import cogoToast from 'cogo-toast';
+import { CenteredLoading3Dots, modifyError, modifySuccess } from '../ui';
 
-/**
- * Modification d'un site
- */
 export class Modify extends Component {
   static propTypes = {
     site: PropTypes.object.isRequired,
@@ -25,42 +21,25 @@ export class Modify extends Component {
 
   constructor(props) {
     super(props);
-    /**
-     * On récupère l'id et l'élément à afficher
-     */
     this.state = {
       siteId: this.props.siteId || this.props.match.params.siteId || false,
       item: false,
     };
-    /**
-     * Bind des méthodes locales au contexte courant
-     */
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }
 
   componentDidMount() {
-    /**
-     *  En async on va demander le chargement des données
-     *  Lorsque fini le store sera modifié
-     */
     this.props.actions.loadOne(this.state.siteId).then(result => {
       const item = this.props.site.loadOneItem;
       this.setState({ item: item });
     });
   }
 
-  /**
-   * Sur annulation, on retourne à la liste
-   */
   onCancel() {
-    this.props.history.push('/site');
+    this.props.onClose();
   }
 
-  /**
-   * Sur enregistrement, sauvegarde, update store et retour à la liste
-   * Sur erreur faut afficher les messages d'anomalie
-   */
   onSubmit(datas) {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas);
@@ -69,19 +48,17 @@ export class Modify extends Component {
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
-        cogoToast.success("Enregistrement effectué");
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Site', result);
-        this.props.history.push('/site');
+        this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        cogoToast.error("Erreur lors de l'enregistrement");
+        modifyError();
       });
   }
 
   render() {
     const item = this.state.item;
-    console.log("FK site modif",this.props)
     return (
       <div className="site-modify global-card">
         {this.props.site.loadOnePending ? (
@@ -91,16 +68,16 @@ export class Modify extends Component {
         ) : (
           <div>
             {item && 
-              <Form 
+              <Form
                 item={item} 
                 datas={this.props.data.items}
                 config={this.props.config.items}
                 site_types={this.props.siteType.items} 
                 properties={this.props.site.properties}
-                tab={this.props.site.tab}
-                tabs={this.props.site.tabs}
+                errors={this.props.site.updateOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
             }
           </div>

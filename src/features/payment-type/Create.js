@@ -4,16 +4,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
-export class DefaultPage extends Component {
+export class Create extends Component {
   static propTypes = {
-    receipt: PropTypes.object.isRequired,
+    paymentType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
   render() {
     return (
-      <div className="receipt-default-page">
-        Page Content: receipt/DefaultPage
+      <div className="payment-type-create">
+        Page Content: payment-type/Create
       </div>
     );
   }
@@ -22,7 +22,7 @@ export class DefaultPage extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    receipt: state.receipt,
+    paymentType: state.paymentType,
   };
 }
 
@@ -36,4 +36,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DefaultPage);
+)(Create);

@@ -101,12 +101,12 @@ export class InlineNews extends Component {
                 <div className="col-6 text-right">
                   <div className="btn-group col-toolbar">
                     <button
-                      className="btn btn-inline btn-primary"
+                      className="btn btn-inline btn-primary text-light"
                       onClick={() => {
                         this.onAddMedia(0);
                       }}
                     >
-                      <AddOneIcon className="text-light" />
+                      <AddOneIcon color="light" />
                     </button>
                   </div>
                 </div>
@@ -148,20 +148,20 @@ export class InlineNews extends Component {
                                         )}
                                       >
                                         <button
-                                          className="btn btn-inline btn-secondary"
+                                          className="btn btn-inline btn-secondary text-light"
                                           onClick={() => {
                                             this.onUpdateMedia(item.id);
                                           }}
                                         >
-                                          <GetOneIcon className="text-light" />
+                                          <GetOneIcon color="light" />
                                         </button>
                                         <button
-                                          className="btn btn-inline btn-warning"
+                                          className="btn btn-inline btn-warning text-light"
                                           onClick={() => {
                                             this.onConfirmMedia(item.id);
                                           }}
                                         >
-                                          <DelOneIcon className="text-light" />
+                                          <DelOneIcon color="light" />
                                         </button>
                                       </div>
                                     </div>

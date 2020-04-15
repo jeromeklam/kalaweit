@@ -5,10 +5,6 @@ const initialState = {
   page_number: 1,
   page_size: 999999,
   tab: '1',
-  tabs: [
-    { key: '1', name: 'identification', label: 'Identification', shortcut: 'L', icon: 'location' },
-    { key: '2', name: 'divers', label: 'Divers', shortcut: 'D', icon: 'misc' },
-  ],
   filters: new Filter(),
   sort: [{ col: 'site_name', way: 'up' }],
   properties: [

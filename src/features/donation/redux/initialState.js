@@ -11,7 +11,7 @@ const initialState = {
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: new Filter(),
-  sort: [{ col: 'don_ts', way: 'down' }],
+  sort: [{ col: 'id', way: 'down' }],
   loadMorePending: false,
   loadMoreError: null,
   createOnePending: false,

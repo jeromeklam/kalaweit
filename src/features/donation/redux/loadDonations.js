@@ -25,6 +25,7 @@ export function loadDonations(args = {}, reload = false) {
         let filter = {
           filter: args,
           sort: '-don_ask_ts,-don_ts',
+          page: {number:1, size: 100}
         };
         const addUrl = objectToQueryString(filter);
         const doRequest = freeAssoApi.get('/v1/asso/donation' + addUrl, {});

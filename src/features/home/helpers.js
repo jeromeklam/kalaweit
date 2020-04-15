@@ -46,7 +46,9 @@ export const globalMenu = [
   },
   {
     icon: <DashboardIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.dashboard" defaultMessage="Dashboard" />,
+    label: (
+      <FormattedMessage id="app.features.home.app.menu.dashboard" defaultMessage="Dashboard" />
+    ),
     url: '/dashboard',
     role: 'NAV',
     position: 1,
@@ -78,10 +80,27 @@ export const globalMenu = [
   },
   {
     icon: <DatasIcon />,
-    label: 'Répertoires',
+    label: 'Administratif',
     url: null,
     role: 'MENU',
     position: 5,
+    public: false,
+    options: [
+      {
+        icon: null,
+        label: 'Types de paiement',
+        url: '/payment-type',
+        role: 'NAV',
+        position: 1,
+      },
+    ],
+  },
+  {
+    icon: <DatasIcon />,
+    label: 'Répertoires',
+    url: null,
+    role: 'MENU',
+    position: 6,
     public: false,
     options: [
       {
@@ -131,7 +150,7 @@ export const globalMenu = [
         label: 'Variables',
         url: '/data',
         role: 'NAV',
-        position: 7,
+        position: 99,
       },
     ],
   },
@@ -140,7 +159,7 @@ export const globalMenu = [
     label: 'Paramétrage',
     url: null,
     role: 'MENU',
-    position: 6,
+    position: 7,
     public: false,
     options: [
       {

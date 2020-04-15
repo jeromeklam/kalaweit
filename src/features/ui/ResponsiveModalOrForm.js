@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import { ResponsiveForm, ResponsiveModal } from 'freeassofront';
 
-export default class ResponsiveModalOrForm extends Component {
+class ResponsiveModalOrForm extends Component {
   static propTypes = {};
 
   render() {
+    const { intl } = this.props;
     if (this.props.modal) {
       const buttons = [
-        { name: 'Enregistrer', function: this.props.onSubmit, theme: 'primary', icon: 'valid' },
-        { name: 'Annuler', function: this.props.onClose, theme: 'secondary', icon: 'close' },
+        {
+          name: intl.formatMessage({
+            id: 'app.form.button.save',
+            defaultMessage: 'Save',
+          }),
+          function: this.props.onSubmit,
+          theme: 'primary',
+          icon: 'valid',
+        },
+        {
+          name: intl.formatMessage({
+            id: 'app.form.button.cancel',
+            defaultMessage: 'Cancel',
+          }),
+          function: this.props.onClose,
+          theme: 'secondary',
+          icon: 'close',
+        },
       ];
       return (
         <ResponsiveModal
@@ -22,3 +40,5 @@ export default class ResponsiveModalOrForm extends Component {
     return <ResponsiveForm {...this.props} />;
   }
 }
+
+export default injectIntl(ResponsiveModalOrForm);

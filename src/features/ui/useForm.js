@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { freeAssoApi } from '../../common';
+import { useIntl } from 'react-intl';
 import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { freeAssoApi } from '../../common';
 
 const explodeReduxModel = obj => {
   let ret = { ...obj };
@@ -216,15 +217,12 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
   };
 
   const getErrorMessage = field => {
+    const intl = useIntl();
     let message = false;
     if (errors && errors.errors) {
       errors.errors.forEach(error => {
         if (error.source && error.source.parameter === field) {
-          if (error.code === 666001) {
-            message = 'Le champ est obligatoire !';
-          } else {
-            message = error.title;
-          }
+          message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
           return true;
         }
       })

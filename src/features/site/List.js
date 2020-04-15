@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
@@ -19,6 +20,8 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import { Create, Modify } from './';
 
 /**
  * Liste des sites
@@ -36,6 +39,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      siteId: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -46,6 +50,7 @@ export class List extends Component {
     this.onClearFilters = this.onClearFilters.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   componentDidMount() {
@@ -56,11 +61,15 @@ export class List extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/site/create');
+    this.setState({ siteId: 0 });
+  }
+
+  onClose() {
+    this.setState({ siteId: null });
   }
 
   onGetOne(id) {
-    this.props.history.push('/site/modify/' + id);
+    this.setState({ siteId: id });
   }
 
   onDelOne(id) {
@@ -133,86 +142,14 @@ export class List extends Component {
    */
   render() {
     // Les des items à afficher avec remplissage progressif
+    const { intl } = this.props;
     let items = [];
     if (this.props.site.items.FreeAsso_Site) {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-      },
-    ];
-    const cols = [
-      {
-        name: 'name',
-        label: 'Nom site',
-        col: 'site_name',
-        size: '8',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-        first: true,
-      },
-      {
-        name: 'address',
-        label: 'Adresse',
-        col: 'site_address1',
-        size: '10',
-        mob_size: '36',
-        title: false,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'cp',
-        label: 'CP',
-        col: 'site_cp',
-        size: '2',
-        mob_size: '10',
-        title: false,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'town',
-        label: 'Commune',
-        col: 'site_town',
-        size: '10',
-        mob_size: '26',
-        title: false,
-        sortable: true,
-        filterable: { type: 'text' },
-        last: true,
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     let search = '';
     const crit = this.props.site.filters.findFirst('site_name');
@@ -222,7 +159,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche nom"
+        label={intl.formatMessage({ id: 'app.features.site.list.quicksearch', defaultMessage: 'Find by name' })}
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -235,31 +172,37 @@ export class List extends Component {
       <FilterFullIcon color="white" />
     );
     return (
-      <ResponsiveList
-        title="Sites"
-        cols={cols}
-        items={items || []}
-        quickSearch={quickSearch}
-        mainCol="site_name"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.site.sort}
-        filters={this.props.site.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.site.loadMorePending}
-        loadMoreFinish={this.props.site.loadMoreFinish}
-        loadMoreError={this.props.site.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title={intl.formatMessage({ id: 'app.features.site.list.title', defaultMessage: 'Sites' })}
+          cols={cols}
+          items={items || []}
+          quickSearch={quickSearch}
+          mainCol="site_name"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon color="light" />}
+          validPanelIcon={<ValidPanelIcon color="light" />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.site.sort}
+          filters={this.props.site.filters}
+          onSearch={this.onQuickSearch}
+          onClearFilters={this.onClearFilters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.site.loadMorePending}
+          loadMoreFinish={this.props.site.loadMoreFinish}
+          loadMoreError={this.props.site.loadMoreError}
+        />
+        {this.state.siteId > 0 && (
+          <Modify modal={true} siteId={this.state.siteId} onClose={this.onClose} />
+        )}
+        {this.state.siteId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }
@@ -276,4 +219,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

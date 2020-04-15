@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import { HoverObserver, ResponsiveConfirm } from 'freeassofront';
-import { intlDate } from '../../common';
+import { HoverObserver, displayDate, displayMonetary, displayBool } from 'freeassofront';
 import { getPaymentTypeLabel } from '../payment-type';
 import { getFullName } from '../client';
 import { GetOne as GetOneIcon, DelOne as DelOneIcon } from '../icons';
@@ -38,6 +37,7 @@ export default class InlineLine extends Component {
   render() {
     const { donation, paymentTypes } = this.props;
     const highlight = this.state.flipped || this.props.inlineOpenedId === this.props.id;
+    console.log(donation);
     return (
       <HoverObserver onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
         <div
@@ -47,14 +47,17 @@ export default class InlineLine extends Component {
           )}
           key={donation.id}
         >
-          <div className="col-5">
-            <span>{donation.don_mnt}</span>
-          </div>
-          <div className="col-5">
+          <div className="col-4 col-first">
             <span>{getPaymentTypeLabel(paymentTypes, donation.payment_type.id)}</span>
           </div>
-          <div className="col-6">
-            <span>{intlDate(donation.don_ask_ts)}</span>
+          <div className="col-4 text-right">
+            <span>{displayMonetary(donation.don_mnt)}</span>
+          </div>
+          <div className="col-4">
+            <span>{displayDate(donation.don_ask_ts)}</span>
+          </div>
+          <div className="col-4">
+            <span>{displayDate(donation.don_end_ts)}</span>
           </div>
           <div className="col-8">
             {this.props.mode === 'cause' ? (
@@ -63,7 +66,10 @@ export default class InlineLine extends Component {
               <span>{donation.cause.cau_name}</span>
             )}
           </div>
-          <div className="col-12 text-right">
+          <div className="col-4">
+            <span>{displayBool(!(donation.sponsorship && donation.sponsorship.id > 0), 'Oui', '')}</span>
+          </div>
+          <div className="col-8 text-right">
             {highlight && (
               <div className="btn-group btn-group-xs" role="group" aria-label="...">
                 <button

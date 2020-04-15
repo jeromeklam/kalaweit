@@ -34,9 +34,6 @@ export class InlineDonations extends Component {
     } else {
       filters = { cli_id: {'eq': props.id }};
     }
-    const dStart = new Date(new Date().getFullYear()-1, 0, 1);
-    filters['don_ts'] = {'gte': dStart.toISOString().slice(0, 10)};
-    console.log(filters);
     this.state = {
       confirm: -1,
       filters: filters,

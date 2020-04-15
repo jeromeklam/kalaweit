@@ -165,19 +165,19 @@ export class InlinePhotos extends Component {
                           </div>
                           <div className="col-24 text-right">
                             <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                              <button type="button" className="btn btn-inline btn-secondary">
+                              <button type="button" className="btn btn-inline btn-secondary text-light">
                                 <ViewIcon
                                   className="text-light inline-action"
                                   onClick={() => this.onView(photo)}
                                 />
                               </button>
-                              <button type="button" className="btn btn-inline btn-secondary">
+                              <button type="button" className="btn btn-inline btn-secondary text-light">
                                 <DownloadIcon
                                   className="text-light inline-action"
                                   onClick={() => this.onDownload(photo)}
                                 />
                               </button>
-                              <button type="button" className="btn btn-inline btn-warning">
+                              <button type="button" className="btn btn-inline btn-warning text-light">
                                 <DelOneIcon
                                   onClick={() => this.onConfirmPhoto(photo.id)}
                                   className="text-light inline-action"
@@ -216,7 +216,7 @@ export class InlinePhotos extends Component {
                       >
                         {({ getRootProps, getInputProps }) => (
                           <section>
-                            <div {...getRootProps()}>
+                            <div {...getRootProps()} className="text-primary">
                               <input {...getInputProps()} />
                               <UploadIcon className="text-primary inline-action" size={4} />
                             </div>

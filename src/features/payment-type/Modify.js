@@ -4,16 +4,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
-export class DefaultPage extends Component {
+export class Modify extends Component {
   static propTypes = {
-    session: PropTypes.object.isRequired,
+    paymentType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
   render() {
     return (
-      <div className="session-default-page">
-        Page Content: session/DefaultPage
+      <div className="payment-type-modify">
+        Page Content: payment-type/Modify
       </div>
     );
   }
@@ -22,7 +22,7 @@ export class DefaultPage extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    session: state.session,
+    paymentType: state.paymentType,
   };
 }
 
@@ -36,4 +36,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DefaultPage);
+)(Modify);

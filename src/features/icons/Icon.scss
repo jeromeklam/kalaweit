@@ -35,39 +35,3 @@ svg.text-primary {
     fill: theme-color('primary');
   }
 }
-
-.text-danger svg {
-  path {
-    fill: theme-color('danger');
-  }
-}
-.text-warning svg {
-  path {
-    fill: theme-color('warning');
-  }
-}
-.text-success svg {
-  path {
-    fill: theme-color('success');
-  }
-}
-.text-dark svg {
-  path {
-    fill: theme-color('dark');
-  }
-}
-.text-light svg {
-  path {
-    fill: theme-color('light');
-  }
-}
-.text-secondary svg {
-  path {
-    fill: theme-color('secondary');
-  }
-}
-.text-primary svg {
-  path {
-    fill: theme-color('primary');
-  }
-}

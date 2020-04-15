@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import Form from './Form';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading3Dots } from '../ui';
 
 /**
  * Création d'un type de site
@@ -15,7 +15,11 @@ export class Create extends Component {
   static propTypes = {
     siteType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
   };
+  static defaultProps = {
+    loader: true,
+  }
 
   constructor(props) {
     super(props);
@@ -45,7 +49,7 @@ export class Create extends Component {
    * Sur annulation, on retourne à la liste
    */
   onCancel() {
-    this.props.history.push('/site-type');
+    this.props.onClose();
   }
 
   /**
@@ -59,7 +63,7 @@ export class Create extends Component {
       .createOne(obj)
       .then(result => {
         this.props.actions.clearItems();
-        this.props.history.push('/site-type');
+        this.props.onClose();
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -73,7 +77,7 @@ export class Create extends Component {
       <div className="site-type-create global-card">
         {this.props.siteType.loadOnePending ? (
           <div className="text-center mt-2">
-            <Loading9x9 />
+            <CenteredLoading3Dots show={this.props.loader} />
           </div>
         ) : (
           <div>
@@ -82,6 +86,7 @@ export class Create extends Component {
                 item={item} 
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
             }
           </div>
