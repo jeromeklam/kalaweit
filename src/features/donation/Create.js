@@ -87,8 +87,8 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="donation-create global-card">
-        {this.props.donation.loadOnePending ? (
-          <CenteredLoading3Dots />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && 

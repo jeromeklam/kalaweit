@@ -1,3 +1,4 @@
+import { jsonApiNormalizer } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   EMAIL_CREATE_ONE_BEGIN,
@@ -61,10 +62,14 @@ export function reducer(state, action) {
 
     case EMAIL_CREATE_ONE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         createOnePending: false,
-        createOneError: action.data.error,
+        createOneError: error,
       };
 
     case EMAIL_CREATE_ONE_DISMISS_ERROR:

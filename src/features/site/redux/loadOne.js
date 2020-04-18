@@ -53,6 +53,8 @@ export function reducer(state, action) {
         ...state,
         loadOnePending: true,
         loadOneError: null,
+        createOneError: null,
+        updateOneError: null,
       };
 
     case SITE_LOAD_ONE_SUCCESS:

@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { loadOne as loadOneCause } from '../cause/redux/actions';
 import { loadOne as loadOneClient } from '../client/redux/actions';
-import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
+import Form from './Form';
 
 export class Create extends Component {
   static propTypes = {
@@ -91,8 +91,8 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="sponsorship-create global-card">
-        {this.props.sponsorship.loadOnePending ? (
-          <CenteredLoading3Dots />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && (
@@ -102,7 +102,7 @@ export class Create extends Component {
                 datas={this.props.data.items}
                 configs={this.props.config.items}
                 properties={this.props.sponsorship.properties}                
-                errors={this.props.sponsorship.updateOneError}
+                errors={this.props.sponsorship.createOneError}
                 paymentTypes={this.props.paymentType.items}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}

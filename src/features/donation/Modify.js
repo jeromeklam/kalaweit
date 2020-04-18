@@ -74,8 +74,8 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="donation-modify global-card">
-        {this.props.donation.loadOnePending ? (
-          <CenteredLoading3Dots />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && (

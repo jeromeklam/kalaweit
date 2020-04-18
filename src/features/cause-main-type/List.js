@@ -6,15 +6,14 @@ import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
 } from '../icons';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -26,11 +25,12 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      camtId: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
-    this.onReload = this.onReload.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
@@ -43,19 +43,20 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/cause-main-type/create');
+  onCreate() {
+    this.setState({ camtId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/cause-main-type/modify/' + id);
+    this.setState({ camtId: id });
   }
 
   onDelOne(id) {
     this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+  }
+
+  onClose() {
+    this.setState({ camtId: null });
   }
 
   onReload(event) {
@@ -120,73 +121,44 @@ export class List extends Component {
   }
 
   render() {
-    // Les des items à afficher avec remplissage progressif
     let items = [];
     if (this.props.causeMainType.items.FreeAsso_CauseMainType) {
       items = buildModel(this.props.causeMainType.items, 'FreeAsso_CauseMainType');
     }
-    const globalActions = [
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-      },
-    ];
-    const cols = [
-      {
-        name: 'name',
-        label: 'Nom',
-        col: 'camt_name',
-        size: '20',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     return (
-      <ResponsiveList
-        title="Grandes cause"
-        cols={cols}
-        items={items}
-        quickSearch={null}
-        mainCol="camt_name"
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.causeMainType.sort}
-        filters={this.props.causeMainType.filters}
-        onSearch={null}
-        onClearFilters={null}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.causeMainType.loadMorePending}
-        loadMoreFinish={this.props.causeMainType.loadMoreFinish}
-        loadMoreError={this.props.causeMainType.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Grandes cause"
+          cols={cols}
+          items={items}
+          quickSearch={null}
+          mainCol="camt_name"
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.causeMainType.sort}
+          filters={this.props.causeMainType.filters}
+          onSearch={null}
+          onClearFilters={null}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.causeMainType.loadMorePending}
+          loadMoreFinish={this.props.causeMainType.loadMoreFinish}
+          loadMoreError={this.props.causeMainType.loadMoreError}
+        />
+        {this.state.camtId > 0 && (
+          <Modify modal={true} camtId={this.state.camtId} onClose={this.onClose} />
+        )}
+        {this.state.camtId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }

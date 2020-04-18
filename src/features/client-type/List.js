@@ -6,15 +6,14 @@ import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
 } from '../icons';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -26,10 +25,12 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      clitId: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
@@ -42,19 +43,20 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/client-type/create');
+  onCreate() {
+    this.setState({ clitId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/client-type/modify/' + id);
+    this.setState({ clitId: id });
   }
 
   onDelOne(id) {
     this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+  }
+
+  onClose() {
+    this.setState({ clitId: null });
   }
 
   onReload(event) {
@@ -124,80 +126,50 @@ export class List extends Component {
     if (this.props.clientType.items.FreeAsso_ClientType) {
       items = buildModel(this.props.clientType.items, 'FreeAsso_ClientType');
     }
-    const globalActions = [
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-      },
-    ];
-    const cols = [
-      {
-        name: 'clit_name',
-        label: 'Nom',
-        col: 'clit_name',
-        size: '30',
-        mob_size: '36',
-        title: false,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     return (
-      <ResponsiveList
-        title="Types de client"
-        cols={cols}
-        items={items}
-        mainCol="clit_name"
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.clientType.sort}
-        filters={this.props.clientType.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.clientType.loadMorePending}
-        loadMoreFinish={this.props.clientType.loadMoreFinish}
-        loadMoreError={this.props.clientType.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Types de client"
+          cols={cols}
+          items={items}
+          mainCol="clit_name"
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.clientType.sort}
+          filters={this.props.clientType.filters}
+          onSearch={this.onQuickSearch}
+          onClearFilters={this.onClearFilters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.clientType.loadMorePending}
+          loadMoreFinish={this.props.clientType.loadMoreFinish}
+          loadMoreError={this.props.clientType.loadMoreError}
+        />
+        {this.state.cautId > 0 && (
+          <Modify modal={true} clitId={this.state.clitId} onClose={this.onClose} />
+        )}
+        {this.state.clitId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     clientType: state.clientType,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

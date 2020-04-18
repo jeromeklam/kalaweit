@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { propagateModel } from '../../common';
 import { withRouter } from 'react-router-dom';
-import { Loading9x9 } from 'freeassofront';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 /**
@@ -61,14 +61,12 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Data', result);
         this.props.history.push('/data');
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        modifyError();
       });
   }
 
@@ -76,13 +74,18 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="data-modify global-card">
-        {this.props.data.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                errors={this.props.data.updateOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+              />
+            }
           </div>
         )}
       </div>

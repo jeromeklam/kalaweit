@@ -24,7 +24,6 @@ export function loadOne(args = {}) {
           });
           resolve(res);
         },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
         err => {
           dispatch({
             type: EMAIL_LOAD_ONE_FAILURE,
@@ -39,8 +38,6 @@ export function loadOne(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadOneError() {
   return {
     type: EMAIL_LOAD_ONE_DISMISS_ERROR,
@@ -55,6 +52,8 @@ export function reducer(state, action) {
         ...state,
         loadOnePending: true,
         loadOneError: null,
+        createOneError: null,
+        updateOneError: null,
       };
 
     case EMAIL_LOAD_ONE_SUCCESS:

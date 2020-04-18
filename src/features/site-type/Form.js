@@ -3,16 +3,18 @@ import { InputHidden, InputText } from 'freeassofront';
 import { useForm, ResponsiveModalOrForm } from '../ui';
 
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel } = useForm(
+  const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
     props.onSubmit,
     props.onCancel,
+    '',
+    props.errors,
   );
   return (
     <ResponsiveModalOrForm
       className="m-5"
-      size="lg"
+      size="md"
       modal={true}
       title="Type de site"
       onSubmit={handleSubmit}
@@ -26,8 +28,10 @@ export default function Form(props) {
             label="Nom"
             name="sitt_name"
             id="sitt_name"
+            required={true}
             value={values.sitt_name}
-            onChange={handleChange}
+            onChange={handleChange}          
+            error={getErrorMessage('sitt_name')}
           />
         </div>
       </div>

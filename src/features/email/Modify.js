@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel, modelsToSelect } from '../../common';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -28,7 +28,6 @@ export class Modify extends Component {
   componentDidMount() {
     this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.email.loadOneItem;
-      console.log(item);
       this.setState({ item: item });
     });
   }
@@ -48,12 +47,12 @@ export class Modify extends Component {
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeFW_Email', result);
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        modifyError();
       });
   }
 
@@ -62,17 +61,18 @@ export class Modify extends Component {
     const options = modelsToSelect(this.props.lang.items, 'id', 'lang_name');
     return (
       <div className="email-modify global-card">
-        {this.props.email.loadOnePending ? (
-          <Loading9x9 />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && (
               <Form
                 item={item}
-                onClose={this.props.onClose}
+                langs={options}
+                errors={this.props.email.updateOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
-                langs={options}
+                onClose={this.props.onClose}
               />
             )}
           </div>
@@ -82,7 +82,6 @@ export class Modify extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     email: state.email,
@@ -90,7 +89,6 @@ function mapStateToProps(state) {
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions, propagateModel }, dispatch),

@@ -6,8 +6,8 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import Form from './Form';
 import { CenteredLoading3Dots, modifyError, modifySuccess } from '../ui';
+import Form from './Form';
 
 export class Modify extends Component {
   static propTypes = {
@@ -46,7 +46,6 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(obj)
       .then(result => {
-        // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Site', result);
@@ -61,10 +60,8 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="site-modify global-card">
-        {this.props.site.loadOnePending ? (
-          <div className="text-center mt-2">
-            <CenteredLoading3Dots show={this.props.loader} />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && 

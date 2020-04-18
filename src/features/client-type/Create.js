@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { Loading9x9 } from 'freeassofront';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -45,7 +46,7 @@ export class Create extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/client-type');
+    this.props.onClose();
   }
 
   /**
@@ -58,12 +59,12 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.clearItems();
-        this.props.history.push('/client-type');
+        createSuccess();
+        this.props.actions.propagateModel('FreeAsso_ClientType', result);
+        this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
@@ -71,13 +72,19 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="client-type-create global-card">
-        {this.props.clientType.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                errors={this.props.clientType.createOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
+              />
+            }
           </div>
         )}
       </div>
@@ -85,21 +92,16 @@ export class Create extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     clientType: state.clientType,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));

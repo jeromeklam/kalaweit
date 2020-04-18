@@ -5,13 +5,10 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
+import { getGlobalActions, getInlineActions, getCols } from './';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -19,7 +16,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
-import { causeTypeMntType } from './';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -31,11 +28,12 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      cautId: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
-    this.onReload = this.onReload.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
@@ -48,19 +46,20 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/cause-type/create');
+  onCreate() {
+    this.setState({ cautId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/cause-type/modify/' + id);
+    this.setState({ cautId: id });
   }
 
   onDelOne(id) {
     this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+  }
+
+  onClose() {
+    this.setState({ cautId: null });
   }
 
   onReload(event) {
@@ -130,107 +129,9 @@ export class List extends Component {
     if (this.props.causeType.items.FreeAsso_CauseType) {
       items = buildModel(this.props.causeType.items, 'FreeAsso_CauseType');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-      },
-    ];
-    const cols = [
-      {
-        name: 'name',
-        label: 'Nom',
-        col: 'caut_name',
-        size: '10',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        first: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'money',
-        label: 'Monnaie',
-        col: 'caut_money',
-        size: '3',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'max',
-        label: 'Maximum',
-        col: 'caut_max_mnt',
-        size: '4',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        type: 'monetary',
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'mnt_type',
-        label: 'Totalisation',
-        col: 'caut_mnt_type',
-        size: '6',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        type: 'switch',
-        values: causeTypeMntType,
-        filterable: { type: 'text'},
-      },
-      {
-        name: 'caut_receipt',
-        label: 'Reçu',
-        col: 'caut_receipt',
-        size: '3',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        type: 'bool',
-        filterable: { type: 'bool' },
-      },
-      {
-        name: 'caut_cert',
-        label: 'Certificat',
-        col: 'caut_certificat',
-        size: '3',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        type: 'bool',
-        last: true,
-        filterable: { type: 'bool' },
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     let search = '';
     const crit = this.props.causeType.filters.findFirst('caut_name');
     if (crit) {
@@ -252,31 +153,37 @@ export class List extends Component {
       <FilterFullIcon color="white" />
     );
     return (
-      <ResponsiveList
-        title="Types de cause"
-        cols={cols}
-        items={items}
-        quickSearch={quickSearch}
-        mainCol="caut_name"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.causeType.sort}
-        filters={this.props.causeType.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.causeType.loadMorePending}
-        loadMoreFinish={this.props.causeType.loadMoreFinish}
-        loadMoreError={this.props.causeType.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Types de cause"
+          cols={cols}
+          items={items}
+          quickSearch={quickSearch}
+          mainCol="caut_name"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.causeType.sort}
+          filters={this.props.causeType.filters}
+          onSearch={this.onQuickSearch}
+          onClearFilters={this.onClearFilters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.causeType.loadMorePending}
+          loadMoreFinish={this.props.causeType.loadMoreFinish}
+          loadMoreError={this.props.causeType.loadMoreError}
+        />
+        {this.state.cautId > 0 && (
+          <Modify modal={true} cautId={this.state.cautId} onClose={this.onClose} />
+        )}
+        {this.state.cautId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }

@@ -1,3 +1,4 @@
+import { jsonApiNormalizer } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   DONATION_CREATE_ONE_BEGIN,
@@ -61,10 +62,14 @@ export function reducer(state, action) {
 
     case DONATION_CREATE_ONE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         createOnePending: false,
-        createOneError: action.data.error,
+        createOneError: error,
       };
 
     case DONATION_CREATE_ONE_DISMISS_ERROR:

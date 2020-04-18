@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import Form from './Form';
+import { propagateModel } from '../../common';
 import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
+import Form from './Form';
 
 export class Create extends Component {
   static propTypes = {
@@ -50,7 +51,7 @@ export class Create extends Component {
       .createOne(obj)
       .then(result => {
         createSuccess();
-        this.props.actions.clearItems();
+        this.props.actions.propagateModel('FreeAsso_Site', result);
         this.props.onClose();
       })
       .catch(errors => {
@@ -59,13 +60,11 @@ export class Create extends Component {
   }
 
   render() {
-    const { item, loading, tab }  = this.state;
+    const { item }  = this.state;
     return (
       <div className="site-type-create global-card">
-       {loading ? (
-          <div className="text-center mt-2">
-            <CenteredLoading3Dots show={this.props.loader} />
-          </div>
+       {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && 
@@ -99,7 +98,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

@@ -65,14 +65,11 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(this.state.causeId, obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Cause', result);
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
         modifyError();
       });
   }
@@ -81,7 +78,7 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="cause-modify global-card">
-        {this.props.cause.loadOnePending ? (
+        {!item ? (
           <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>

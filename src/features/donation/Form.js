@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputSelect, InputText, InputCheckbox, InputMonetary} from 'freeassofront';
+import { InputHidden, InputSelect, InputText, InputMonetary} from 'freeassofront';
 import { InputDate, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
 import { paymentTypeAsOptions } from '../payment-type/functions.js';

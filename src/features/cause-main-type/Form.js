@@ -1,19 +1,26 @@
 import React from 'react';
-import { InputHidden, InputText, ResponsiveForm } from 'freeassofront';
-import useForm from '../ui/useForm';
+import { InputHidden, InputText } from 'freeassofront';
+import { useForm, ResponsiveModalOrForm } from '../ui';
 
-/**
- * Functionnal Component
- */
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel } = useForm(
+  const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
     props.onSubmit,
     props.onCancel,
+    '',
+    props.errors,
   );
   return (
-    <ResponsiveForm className="m-5" title="Grande Cause" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <ResponsiveModalOrForm 
+      className="m-5" 
+      size="md"
+      modal={true} 
+      title="Grande Cause" 
+      onSubmit={handleSubmit} 
+      onCancel={handleCancel}
+      onClose={props.onClose}
+    >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <InputText
@@ -22,8 +29,9 @@ export default function Form(props) {
           required={true}
           value={values.camt_name}
           onChange={handleChange}
+          error={getErrorMessage('camt_name')}
         />
       </div>
-    </ResponsiveForm>
+    </ResponsiveModalOrForm>
   );
 }

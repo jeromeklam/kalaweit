@@ -5,17 +5,14 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
-import { dataTypes } from './functions';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
 } from '../icons';
+import { getGlobalActions, getInlineActions, getCols } from './';
 
 /**
  * Liste des données
@@ -132,50 +129,9 @@ export class List extends Component {
     if (this.props.data.items.FreeAsso_Data) {
       items = buildModel(this.props.data.items, 'FreeAsso_Data');
     }
-    const globalActions = [
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-      },
-    ];
-    const cols = [
-      {
-        name: 'name',
-        label: 'Nom',
-        size: '20',
-        col: 'data_name',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'type',
-        label: 'Type',
-        size: '10',
-        col: 'data_type',
-        type: 'switch',
-        values: dataTypes(),
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     return (
       <ResponsiveList
@@ -208,14 +164,12 @@ export class List extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     data: state.data,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

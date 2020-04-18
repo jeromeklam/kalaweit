@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
 import Form from './Form';
-import { CenteredLoading3Dots } from '../ui';
 
 /**
  * Création d'un type de site
@@ -62,31 +63,31 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.clearItems();
+        createSuccess();
+        this.props.actions.propagateModel('FreeAsso_SiteType', result);
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
   render() {
     const item = this.state.item;
+    console.log("FK site type",this.props);
     return (
       <div className="site-type-create global-card">
-        {this.props.siteType.loadOnePending ? (
-          <div className="text-center mt-2">
-            <CenteredLoading3Dots show={this.props.loader} />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && 
               <Form 
                 item={item} 
+                errors={this.props.siteType.createOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
-                onClose={this.props.onClose}
+                onClose={this.props.onClose} 
               />
             }
           </div>
@@ -104,7 +105,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

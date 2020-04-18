@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { propagateModel } from '../../common';
 import { withRouter } from 'react-router-dom';
-import { Loading9x9 } from 'freeassofront';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -38,7 +38,6 @@ export class Create extends Component {
      */
     this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.causeMainType.loadOneItem;
-      console.log(item);
       this.setState({ item: item });
     });
   }
@@ -46,8 +45,11 @@ export class Create extends Component {
   /**
    * Sur annulation, on retourne à la liste
    */
-  onCancel() {
-    this.props.history.push('/cause-main-type');
+  onCancel(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.onClose();
   }
 
   /**
@@ -59,12 +61,12 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.clearItems();
-        this.props.history.push('/cause-main-type');
+        createSuccess();
+        this.props.actions.propagateModel('FreeAsso_CauseMainType', result);
+        this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
@@ -72,13 +74,19 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="cause-main-type-modify global-card">
-        {this.props.causeMainType.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                errors={this.props.causeMainType.createOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
+              />
+            }
           </div>
         )}
       </div>
@@ -86,14 +94,12 @@ export class Create extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     causeMainType: state.causeMainType,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions, propagateModel }, dispatch),

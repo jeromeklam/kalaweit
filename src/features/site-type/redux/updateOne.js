@@ -64,10 +64,14 @@ export function reducer(state, action) {
 
     case SITE_TYPE_UPDATE_ONE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         updateOnePending: false,
-        updateOneError: action.data.error,
+        updateOneError: error,
       };
 
     case SITE_TYPE_UPDATE_ONE_DISMISS_ERROR:

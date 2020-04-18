@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { Loading9x9 } from 'freeassofront';
 import { propagateModel, modelsToSelect } from '../../common';
+import { CenteredLoading3Dots, modifyError, modifySuccess } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -18,7 +18,7 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.match.params.id || false,
+      id: this.props.cautId || this.props.match.params.id || false,
       item: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -29,34 +29,25 @@ export class Modify extends Component {
     this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.causeType.loadOneItem;
       this.setState({ item: item });
-    });
+    }); 
   }
 
-  onCancel(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/cause-type');
+  onCancel() {
+    this.props.onClose();
   }
 
-  /**
-   * Sur enregistrement, sauvegarde, update store et retour à la liste
-   */
   onSubmit(datas = {}) {
-    // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.id);
     this.props.actions
       .updateOne(this.state.id, obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_CauseType', result);
-        this.props.history.push('/cause-type');
+        this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
-      });
+        modifyError();
+     });
   }
 
   render() {
@@ -64,13 +55,20 @@ export class Modify extends Component {
     const options = modelsToSelect(this.props.causeMainType.items, 'id', 'camt_name');
     return (
       <div className="cause-type-modify global-card">
-        {this.props.causeType.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && <Form item={item} causeMainType={options} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                causeMainType={options} 
+                errors={this.props.causeType.updateOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
+              />
+            }
           </div>
         )}
       </div>
