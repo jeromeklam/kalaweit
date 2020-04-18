@@ -8,12 +8,13 @@ import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker } from './';
 
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel, handleNavTab } = useForm(
+  const { values, handleChange, handleSubmit, handleCancel, handleNavTab, getErrorMessage } = useForm(
     props.item,
     props.tab,
     props.onSubmit,
     props.onCancel,
     props.onNavTab,
+    props.errors,
   );
   return (
     <ResponsiveModalOrForm
@@ -47,8 +48,10 @@ export default function Form(props) {
             name="cau_name"
             id="cau_name"
             labelTop={true}
+            required={true}
             value={values.cau_name}
             onChange={handleChange}
+            error={getErrorMessage('cau_name')}
           />
         </div>
         <div className="col-md-12">

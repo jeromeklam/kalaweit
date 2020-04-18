@@ -76,14 +76,11 @@ export class Modify extends Component {
   }
 
   render() {
-    console.log(this.props.loader);
     const item = this.state.item;
     return (
       <div className="sponsorship-modify global-card">
-        {this.props.sponsorship.loadOnePending ? (
-          <div>
-            {this.props.loader && <CenteredLoading3Dots />}
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && (

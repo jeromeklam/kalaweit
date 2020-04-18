@@ -6,12 +6,8 @@ import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -19,6 +15,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 
 export class List extends Component {
@@ -132,59 +129,9 @@ export class List extends Component {
     if (this.props.email.items.FreeFW_Email) {
       items = buildModel(this.props.email.items, 'FreeFW_Email');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-      },
-    ];
-    const cols = [
-      {
-        name: 'subject',
-        label: 'Sujet',
-        col: 'email_subject',
-        size: '20',
-        mob_size: '',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'code',
-        label: 'Code',
-        col: 'email_code',
-        size: '10',
-        mob_size: '',
-        sortable: true,
-        filterable: { type: true },
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     let search = '';
     const crit = this.props.email.filters.findFirst('email_subject');
     if (crit) {
@@ -241,14 +188,12 @@ export class List extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     email: state.email,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

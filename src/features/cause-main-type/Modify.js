@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { propagateModel } from '../../common';
 import { withRouter } from 'react-router-dom';
-import { Loading9x9 } from 'freeassofront';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -21,7 +21,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      id: this.props.match.params.id || false,
+      id: this.props.camtId || this.props.match.params.id || false,
       item: false,
     };
     /**
@@ -45,8 +45,11 @@ export class Modify extends Component {
   /**
    * Sur annulation, on retourne à la liste
    */
-  onCancel() {
-    this.props.history.push('/cause-main-type');
+  onCancel(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.onClose();
   }
 
   /**
@@ -58,14 +61,12 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(this.state.id, obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_CauseMainType', result);
-        this.props.history.push('/cause-main-type');
+        this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        modifyError();
       });
   }
 
@@ -73,13 +74,19 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="cause-main-type-modify global-card">
-        {this.props.causeMainType.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                errors={this.props.causeMainType.updateOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
+              />
+            }
           </div>
         )}
       </div>

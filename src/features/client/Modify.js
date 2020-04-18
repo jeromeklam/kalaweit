@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -66,14 +66,11 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(this.state.clientId, obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Client', result);
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
         modifyError();
       });
   }
@@ -82,12 +79,8 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="client-modify global-card">
-        {this.props.client.loadOnePending ? (
-          <div>
-            {this.props.loader && (
-              <CenteredLoading9X9 />
-            )}
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && (
@@ -99,6 +92,7 @@ export class Modify extends Component {
                 client_categories={this.props.clientCategory.items}
                 countries={this.props.country.items}
                 languages={this.props.lang.items}
+                errors={this.props.client.updateOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}

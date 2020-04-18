@@ -37,7 +37,6 @@ export default class InlineLine extends Component {
   render() {
     const { donation, paymentTypes } = this.props;
     const highlight = this.state.flipped || this.props.inlineOpenedId === this.props.id;
-    console.log(donation);
     return (
       <HoverObserver onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
         <div

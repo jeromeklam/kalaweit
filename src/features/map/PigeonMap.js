@@ -314,7 +314,6 @@ export class PigeonMap extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     common: state.common,
@@ -323,7 +322,6 @@ function mapStateToProps(state) {
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(

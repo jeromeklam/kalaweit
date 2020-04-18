@@ -6,12 +6,8 @@ import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -19,6 +15,8 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -30,10 +28,12 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      clicId: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
@@ -46,19 +46,20 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/client-category/create');
+  onCreate() {
+    this.setState({ clicId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/client-category/modify/' + id);
+    this.setState({ clicId: id });
   }
 
   onDelOne(id) {
     this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+  }
+
+  onClose() {
+    this.setState({ clicId: null });
   }
 
   onReload(event) {
@@ -127,50 +128,9 @@ export class List extends Component {
     if (this.props.clientCategory.items.FreeAsso_ClientCategory) {
       items = buildModel(this.props.clientCategory.items, 'FreeAsso_ClientCategory');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-      },
-    ];
-    const cols = [
-      {
-        name: 'clic_name',
-        label: 'Nom',
-        col: 'clic_name',
-        size: '30',
-        mob_size: '36',
-        title: false,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     let search = '';
     const crit = this.props.clientCategory.filters.findFirst('clic_name');
@@ -193,43 +153,47 @@ export class List extends Component {
       <FilterFullIcon color="white" />
     );
     return (
-      <ResponsiveList
-        title="Catégories de client"
-        cols={cols}
-        items={items}
-        quickSearch={quickSearch}
-        mainCol="clic_name"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.clientCategory.sort}
-        filters={this.props.clientCategory.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.clientCategory.loadMorePending}
-        loadMoreFinish={this.props.clientCategory.loadMoreFinish}
-        loadMoreError={this.props.clientCategory.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Catégories de client"
+          cols={cols}
+          items={items}
+          quickSearch={quickSearch}
+          mainCol="clic_name"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.clientCategory.sort}
+          filters={this.props.clientCategory.filters}
+          onSearch={this.onQuickSearch}
+          onClearFilters={this.onClearFilters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.clientCategory.loadMorePending}
+          loadMoreFinish={this.props.clientCategory.loadMoreFinish}
+          loadMoreError={this.props.clientCategory.loadMoreError}
+        />
+        {this.state.cautId > 0 && (
+          <Modify modal={true} clicId={this.state.clicId} onClose={this.onClose} />
+        )}
+        {this.state.clicId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     clientCategory: state.clientCategory,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

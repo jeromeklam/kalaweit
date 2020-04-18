@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { modelsToSelect } from '../../common';
-import { Loading9x9 } from 'freeassofront';
+import { propagateModel, modelsToSelect } from '../../common';
+import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -35,7 +35,6 @@ export class Create extends Component {
      */
     this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.email.loadOneItem;
-      console.log(item);
       this.setState({ item: item });
     });
   }
@@ -57,12 +56,12 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.clearItems();
+        createSuccess();
+        this.props.actions.propagateModel('FreeFW_Email', result);
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
@@ -71,17 +70,18 @@ export class Create extends Component {
     const options = modelsToSelect(this.props.lang.items, 'id', 'lang_name');
     return (
       <div className="email-create global-card">
-        {this.props.email.loadOnePending ? (
-          <Loading9x9 />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && (
               <Form
                 item={item}
-                onClose={this.props.onClose}
-                onSubmit={this.onSubmit}
-                onCancel={this.onCancel}
                 langs={options}
+                errors={this.props.email.createOneError}  
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
             )}
           </div>
@@ -91,7 +91,6 @@ export class Create extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     email: state.email,
@@ -99,10 +98,9 @@ function mapStateToProps(state) {
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

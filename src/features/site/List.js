@@ -7,12 +7,8 @@ import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,

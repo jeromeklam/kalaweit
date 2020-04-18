@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, createSuccess, createError } from '../ui';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -61,7 +62,6 @@ export class Create extends Component {
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
         createError();
       });
   }
@@ -70,10 +70,8 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="client-create global-card">
-        {this.props.client.loadOnePending ? (
-          <div className="text-center mt-2">
-            <CenteredLoading9X9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && 
@@ -85,6 +83,7 @@ export class Create extends Component {
                 client_categories={this.props.clientCategory.items}
                 countries={this.props.country.items}
                 languages={this.props.lang.items}
+                errors={this.props.client.createOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
                 onClose={this.props.onClose}
@@ -109,7 +108,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch)
   };
 }
 

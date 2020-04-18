@@ -13,13 +13,6 @@ import {
 import { DashboardCard, DashboardToolbar } from './';
 import { getFromLS, saveToLS } from '../ui';
 
-const initialLayout = [
-  { i: 'causes', x: 0, y: 0, w: 6, h: 4, minW: 4, maxW: 12, minH: 2, maxH: 8 },
-  { i: 'sites', x: 7, y: 0, w: 6, h: 4, minW: 4, maxW: 12, minH: 2, maxH: 8 },
-  { i: 'friends', x: 15, y: 0, w: 6, h: 4, minW: 4, maxW: 12, minH: 2, maxH: 8 },
-  { i: 'donations', x: 23, y: 0, w: 6, h: 4, minW: 4, maxW: 12, minH: 2, maxH: 8 },
-];
-
 const getLayoutSize = (layouts, breakpoint, key) => {
   let size = 'sm';
   const layoutBr = layouts[breakpoint] || [];
@@ -130,7 +123,6 @@ export class DashboardGrid extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     dashboard: state.dashboard,
@@ -138,7 +130,6 @@ function mapStateToProps(state) {
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

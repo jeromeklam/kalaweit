@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading3Dots, modifyError, modifySuccess } from '../ui';
 import Form from './Form';
 
 /**
@@ -44,11 +44,12 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(this.state.id, obj)
       .then(result => {
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_SiteType', result);
         this.props.onClose();
       })
       .catch(errors => {
-        console.log(errors);
+        modifyError();
       });
   }
 
@@ -56,15 +57,14 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="site-type-modify global-card">
-        {this.props.siteType.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && 
               <Form 
                 item={item} 
+                errors={this.props.siteType.updateOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
                 onClose={this.props.onClose}

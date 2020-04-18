@@ -7,7 +7,7 @@
 	"app.contact.tel": "(+33) 7 86 01 18 87",
 	"app.errors.code.10300002": "Le mot de passe est incorrect !",
 	"app.errors.code.10300016": "Le jeton est invalide ou a expiré !",
-  "app.errors.code.666001": "Le champ est oblibatoire !",
+  "app.errors.code.666001": "Le champ est obligatoire !",
   "app.list.button.add": "Ajouter",
   "app.list.button.clear": "Purger",
   "app.list.button.modify": "Modifier",

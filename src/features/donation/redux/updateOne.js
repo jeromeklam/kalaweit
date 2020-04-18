@@ -66,16 +66,14 @@ export function reducer(state, action) {
 
     case DONATION_UPDATE_ONE_FAILURE:
       // The request is failed
-      
       let error = null;
       if (action.data.error && action.data.error.response) {
         error = jsonApiNormalizer(action.data.error.response);
       }
-      console.log("FK updateOne failure", error);
       return {
         ...state,
         updateOnePending: false,
-        updateOneError: action.data.error,
+        updateOneError: error,
       };
 
     case DONATION_UPDATE_ONE_DISMISS_ERROR:

@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { Loading9x9 } from 'freeassofront';
-import { modelsToSelect } from '../../common';
+import { propagateModel, modelsToSelect } from '../../common';
+import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -42,11 +42,8 @@ export class Create extends Component {
   /**
    * Sur annulation, on retourne à la liste
    */
-  onCancel(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/cause-type');
+  onCancel() {
+    this.props.onClose();
   }
 
   /**
@@ -59,12 +56,12 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.clearItems();
-        this.props.history.push('/cause-type');
+        createSuccess();
+        this.props.actions.propagateModel('FreeAsso_CauseType', result);
+        this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
@@ -73,13 +70,20 @@ export class Create extends Component {
     const options = modelsToSelect(this.props.causeMainType.items, 'id', 'camt_name');
     return (
       <div className="cause-type-create global-card">
-        {this.props.causeType.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && <Form item={item} causeMainType={options} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                causeMainType={options} 
+                errors={this.props.causeType.createOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
+              />
+            }
           </div>
         )}
       </div>
@@ -96,7 +100,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

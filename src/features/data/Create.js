@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
-import { Loading9x9 } from 'freeassofront';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
 import Form from './Form';
 
 /**
@@ -58,12 +59,12 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.clearItems();
+        createSuccess();
+        this.props.actions.propagateModel('FreeAsso_Data', result);
         this.props.history.push('/data');
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
@@ -71,13 +72,18 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="data-create global-card">
-        {this.props.data.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                errors={this.props.data.createOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+              />
+            }
           </div>
         )}
       </div>
@@ -93,7 +99,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

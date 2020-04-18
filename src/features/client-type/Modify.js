@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -36,7 +36,7 @@ export class Modify extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/client-type');
+    this.props.onClose();
   }
 
   /**
@@ -48,14 +48,12 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(this.state.id, obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_ClientType', result);
-        this.props.history.push('/client-type');
+        this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        modifyError();
       });
   }
 
@@ -63,13 +61,19 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="client-type-modify global-card">
-        {this.props.clientType.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                errors={this.props.clientType.updateOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
+              />
+            }
           </div>
         )}
       </div>
@@ -77,14 +81,12 @@ export class Modify extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     clientType: state.clientType,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions, propagateModel }, dispatch)

@@ -123,12 +123,36 @@ export default function Form(props) {
                   onChange={handleChange}
                 />
               </div>
+              <div className="col-sm-11">
+                <InputCheckbox
+                   label="Mentionner sur le site"
+                   name="cli_display_site"
+                   labelTop={false}
+                   labelSize={23}
+                   inputSize={13}
+                   checked={values.cli_display_site === true}
+                   onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="row">
               <div className="col-sm-25">
                 <InputText
                   label=""
                   name="cli_address3"
                   labelTop={true}
                   value={values.cli_address3}
+                  onChange={handleChange}
+                />
+              </div>
+               <div className="col-sm-11">
+                <InputCheckbox
+                  label="Recevoir des nouvelles"
+                  name="cli_send_news"
+                  labelTop={false}
+                  labelSize={23}
+                  inputSize={13}
+                  checked={values.cli_send_news === true}
                   onChange={handleChange}
                 />
               </div>

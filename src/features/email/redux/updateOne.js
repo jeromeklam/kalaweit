@@ -39,8 +39,6 @@ export function updateOne(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissUpdateOneError() {
   return {
     type: EMAIL_UPDATE_ONE_DISMISS_ERROR,
@@ -67,10 +65,14 @@ export function reducer(state, action) {
 
     case EMAIL_UPDATE_ONE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         updateOnePending: false,
-        updateOneError: action.data.error,
+        updateOneError: error,
       };
 
     case EMAIL_UPDATE_ONE_DISMISS_ERROR:

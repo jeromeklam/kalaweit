@@ -1,6 +1,6 @@
 import cogoToast from 'cogo-toast';
 
-export const getFromLS = key => {
+export function getFromLS(key) {
   let ls = {};
   if (global.localStorage) {
     try {
@@ -12,7 +12,7 @@ export const getFromLS = key => {
   return ls[key];
 };
 
-export const saveToLS = (key, value) => {
+export function saveToLS (key, value) {
   if (global.localStorage) {
     global.localStorage.setItem(
       'rgl-8',
@@ -23,7 +23,7 @@ export const saveToLS = (key, value) => {
   }
 };
 
-export const showErrors = (intl, error) => {
+export function showErrors (intl, error) {
   if (error && error.errors) {
     error.errors.forEach((oneError) => {
       if (oneError.code) {

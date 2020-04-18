@@ -3,7 +3,7 @@ import { buildModel } from 'freejsonapi';
 /**
  *
  */
-export const getPaymentTypeLabel = (object, id) => {
+export function getPaymentTypeLabel (object, id) {
   let label = '';
   let items = buildModel(object, 'FreeAsso_PaymentType');
   const found = items.find(elem => (elem.id === id));

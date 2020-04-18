@@ -131,7 +131,7 @@ export class InlinePhotos extends Component {
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
               {photos.map(photo => {
-                if (photo.caum_type != 'PHOTO') {
+                if (photo.caum_type !== 'PHOTO') {
                   return null;
                 }
                 let img = '';
@@ -250,14 +250,12 @@ export class InlinePhotos extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     cause: state.cause,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

@@ -95,6 +95,7 @@ const endCause = (item) => {
   return '';
 }
 
+
 export const getCols = ({ props }) => {
   return [
     {
@@ -121,14 +122,13 @@ export const getCols = ({ props }) => {
       fClass: endCause,
     },
     {
-      name: 'cau_to',
-      label: 'Libéré / Mort',
-      col: 'cau_to',
+      name: 'cau_year',
+      label: 'Année naissance',
+      col: 'cau_year',
       size: '4',
       mob_size: '',
-      type: 'date',
+      type: 'numeric',
       title: true,
-      filterable: { type: 'date' },
       sortable: true,
     },
     {
