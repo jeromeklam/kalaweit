@@ -125,7 +125,7 @@ export class App extends Component {
             ) : (
               <div className="text-center mt-5 text-secondary">
                 <h4>... Chargement ...</h4>
-                <CenteredLoading9X9 />
+                <CenteredLoading9X9 className="text-primary"/>
               </div>
             )}
           </ResponsivePage>

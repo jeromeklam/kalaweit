@@ -30,6 +30,8 @@ import sessionReducer from '../features/session/redux/reducer';
 import receiptReducer from '../features/receipt/redux/reducer';
 import certificateReducer from '../features/certificate/redux/reducer';
 import moneyReducer from '../features/money/redux/reducer';
+import notificationReducer from '../features/notification/redux/reducer';
+import jobqueueReducer from '../features/jobqueue/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -68,6 +70,8 @@ const reducerMap = {
   receipt: receiptReducer,
   certificate: certificateReducer,
   money: moneyReducer,
+  notification: notificationReducer,
+  jobqueue: jobqueueReducer,
 };
 
 export default combineReducers(reducerMap);

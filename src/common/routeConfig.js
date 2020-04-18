@@ -30,6 +30,8 @@ import sessionRoute from '../features/session/route';
 import receiptRoute from '../features/receipt/route';
 import certificateRoute from '../features/certificate/route';
 import moneyRoute from '../features/money/route';
+import notificationRoute from '../features/notification/route';
+import jobqueueRoute from '../features/jobqueue/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -63,6 +65,8 @@ const childRoutes = [
   receiptRoute,
   certificateRoute,
   moneyRoute,
+  notificationRoute,
+  jobqueueRoute,
 ];
 
 const routes = [{

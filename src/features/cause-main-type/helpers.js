@@ -32,6 +32,7 @@ export const getInlineActions = ({ onGetOne, onDelOne }) => {
       onClick: onDelOne,
       theme: 'warning',
       icon: <DelOneIcon color="white" />,
+      role: 'DELETE',
     },
   ];
 };
