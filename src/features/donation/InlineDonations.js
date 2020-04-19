@@ -105,9 +105,7 @@ export class InlineDonations extends Component {
       <div>
         <div className="donation-inline-donations">
           {this.props.donation.loadDonationsPending ? (
-            <div className="text-center">
-              <CenteredLoading3Dots className="text-light" />
-            </div>
+            <CenteredLoading3Dots />
           ) : (
             <div className="cause-inline-sponsorships">
               <div className="inline-list">

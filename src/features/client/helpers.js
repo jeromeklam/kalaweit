@@ -17,6 +17,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate}) => {
       onClick: onClearFilters,
       theme: 'secondary',
       icon: <FilterClearIcon color="white" />,
+      role: 'OTHER',
     },
     {
       name: 'create',

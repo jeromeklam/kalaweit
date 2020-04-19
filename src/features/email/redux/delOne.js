@@ -1,3 +1,4 @@
+import { jsonApiNormalizer } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   EMAIL_DEL_ONE_BEGIN,
@@ -36,8 +37,6 @@ export function delOne(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissDelOneError() {
   return {
     type: EMAIL_DEL_ONE_DISMISS_ERROR,
@@ -64,10 +63,14 @@ export function reducer(state, action) {
 
     case EMAIL_DEL_ONE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         delOnePending: false,
-        delOneError: action.data.error,
+        delOneError: error,
       };
 
     case EMAIL_DEL_ONE_DISMISS_ERROR:

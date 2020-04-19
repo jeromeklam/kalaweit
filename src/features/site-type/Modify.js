@@ -16,6 +16,10 @@ export class Modify extends Component {
   static propTypes = {
     siteType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
