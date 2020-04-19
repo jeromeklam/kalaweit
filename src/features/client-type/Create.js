@@ -13,6 +13,10 @@ export class Create extends Component {
   static propTypes = {
     clientType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {

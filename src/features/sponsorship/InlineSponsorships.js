@@ -104,9 +104,7 @@ export class InlineSponsorships extends Component {
       <div>
         <div className="sponsorship-inline-sponsorships">
           {this.props.sponsorship.loadSponsorshipsPending ? (
-            <div className="text-center">
-              <CenteredLoading3Dots className="text-light" />
-            </div>
+            <CenteredLoading3Dots />
           ) : (
             <div className="cause-inline-sponsorships">
               <div className="inline-list">

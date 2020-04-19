@@ -15,6 +15,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { deleteError, deleteSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 
@@ -55,7 +56,15 @@ export class List extends Component {
   }
 
   onDelOne(id) {
-    this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+    this.props.actions
+      .delOne(id)
+      .then(result => {
+        deleteSuccess();
+        this.props.actions.loadMore({}, true)
+      })
+      .catch(errors => {
+        deleteError();
+      });
   }
 
   onClose() {

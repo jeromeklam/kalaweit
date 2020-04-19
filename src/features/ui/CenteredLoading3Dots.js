@@ -13,7 +13,7 @@ export default class CenteredLoading3Dots extends Component {
   render() {
     if (this.props.show) {
       return (
-        <div className="ui-centered-loading-3-dots text-center mt-2 mb-2">
+        <div className="ui-centered-loading-3-dots text-center mt-2 mb-2 text-primary">
           <Loading3Dots />
         </div>
       );

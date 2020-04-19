@@ -4,6 +4,7 @@ import {
   InputSelect,
   InputText,
   InputCheckbox,
+  InputMonetary,
 } from 'freeassofront';
 import { injectIntl } from 'react-intl';
 import { InputDate, ResponsiveModalOrForm } from '../ui';
@@ -25,6 +26,7 @@ function Form(props) {
     <ResponsiveModalOrForm
       className=""
       title={intl.formatMessage({ id: 'app.features.sponsorship.form.title', defaultMessage: 'Sponsorship' })}
+      size="lg"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onClose={props.onClose}
@@ -33,7 +35,7 @@ function Form(props) {
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-sm-16">
+          <div className="col-sm-26">
             {props.mode === 'client' && (
               <CauseInputPicker
                 label={intl.formatMessage({ id: 'app.features.sponsorship.form.cause', defaultMessage: 'Cause' })}
@@ -57,7 +59,7 @@ function Form(props) {
               />
             )}
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-10">
             <InputCheckbox
               label={intl.formatMessage({ id: 'app.features.sponsorship.form.news', defaultMessage: 'Send news' })}
               id="spo_send_news"
@@ -70,7 +72,7 @@ function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-8">
+          <div className="col-sm-13">
             <InputDate
               label={intl.formatMessage({ id: 'app.features.sponsorship.form.from', defaultMessage: 'From' })}
               name="spo_from"
@@ -80,7 +82,7 @@ function Form(props) {
               error={getErrorMessage('spo_from')}
             />
           </div>
-          <div className="col-sm-8">
+          <div className="col-sm-13">
             <InputDate
               label={intl.formatMessage({ id: 'app.features.sponsorship.form.to', defaultMessage: 'To' })}
               name="spo_to"
@@ -90,7 +92,7 @@ function Form(props) {
               error={getErrorMessage('spo_to')}
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-10">
             <InputCheckbox
               label={intl.formatMessage({ id: 'app.features.sponsorship.form.site', defaultMessage: 'Display on site' })}
               id="spo_display_site"
@@ -104,17 +106,19 @@ function Form(props) {
         </div>
         <div className="row">
           <div className="col-sm-8">
-            <InputText
+            <InputMonetary
               label={intl.formatMessage({ id: 'app.features.sponsorship.form.amount', defaultMessage: 'Amount' })}
-              id="spo_mnt"
-              name="spo_mnt"
               labelTop={true}
+              name="spo_mnt"
+              id="spo_mnt"
+              inputMoney="EUR"
+              dbMoney="EUR"
               value={values.spo_mnt}
               onChange={handleChange}
               error={getErrorMessage('spo_mnt')}
             />
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-10">
             <InputSelect
               label={intl.formatMessage({ id: 'app.features.sponsorship.form.type', defaultMessage: 'Type' })}
               name="payment_type.id"
@@ -125,7 +129,7 @@ function Form(props) {
               error={getErrorMessage('ptyp_id')}
             />
           </div>
-          <div className="col-sm-2">
+          <div className="col-sm-3">
             <InputText
               label={intl.formatMessage({ id: 'app.features.sponsorship.form.day', defaultMessage: 'Day' })}
               id="spo_freq_when"
@@ -138,7 +142,7 @@ function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-12">
+          <div className="col-sm-36">
             <InputText
               label={intl.formatMessage({ id: 'app.features.sponsorship.form.comments', defaultMessage: 'Comments' })}
               id="spo_freq_detail"

@@ -21,6 +21,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
       onClick: onClearFilters,
       theme: 'secondary',
       icon: <FilterClearIcon color="white" />,
+      role: 'OTHER',
     },
     {
       name: 'create',
@@ -28,6 +29,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
       onClick: onCreate,
       theme: 'primary',
       icon: <AddOneIcon color="white" />,
+      role: 'CREATE',
     },
   ];
 };
@@ -40,6 +42,7 @@ export const getInlineActions = ({ onGetOne, onDelOne }) => {
       onClick: onGetOne,
       theme: 'secondary',
       icon: <GetOneIcon color="white" />,
+      role: 'MODIFY',
     },
     {
       name: 'delete',
@@ -47,6 +50,7 @@ export const getInlineActions = ({ onGetOne, onDelOne }) => {
       onClick: onDelOne,
       theme: 'warning',
       icon: <DelOneIcon color="white" />,
+      role: 'DELETE',
     },
   ];
 };

@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
-import { getGlobalActions, getInlineActions, getCols } from './';
 import * as actions from './redux/actions';
 import {
   SimpleCancel as CancelPanelIcon,
@@ -13,6 +12,8 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
 } from '../icons';
+import { deleteError, deleteSuccess } from '../ui';
+import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 
 export class List extends Component {
@@ -50,7 +51,15 @@ export class List extends Component {
   }
 
   onDelOne(id) {
-    this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+    this.props.actions
+      .delOne(id)
+      .then(result => {
+        deleteSuccess();
+        this.props.actions.loadMore({}, true)
+      })
+      .catch(errors => {
+        deleteError();
+      });
   }
 
   onClose() {
