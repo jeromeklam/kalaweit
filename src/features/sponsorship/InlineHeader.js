@@ -55,7 +55,7 @@ export default class InlineHeader extends Component {
             <FormattedMessage id="app.features.sponsorship.list.col.news" defaultMessage="News" />
           </span>
         </div>
-        <div className="col-4 text-right col-last">
+        <div className="col-2 text-right col-last">
           <div className="btn-group btn-group-xs" role="group" aria-label="...">
             <button
               type="button"

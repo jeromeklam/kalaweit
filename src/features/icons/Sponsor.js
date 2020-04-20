@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Icon from '@mdi/react';
 import {
-  mdiAccountCash
+  mdiCharity as myIcon,
 } from '@mdi/js';
 
-export default class Donation extends Component {
+export default class Sponsor extends Component {
   static propTypes = {
 
   };
@@ -12,7 +12,7 @@ export default class Donation extends Component {
   render() {
     return (
       <Icon
-        path={mdiAccountCash}
+        path={myIcon}
         size={1}
         color={this.props.color}
       />

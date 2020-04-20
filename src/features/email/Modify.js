@@ -45,8 +45,6 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
         this.props.actions.propagateModel('FreeFW_Email', result);
         this.props.onClose();

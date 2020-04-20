@@ -99,8 +99,9 @@ export class Create extends Component {
               <Form 
                 item={item} 
                 modal={true}
-                errors={this.props.donation.createOneError}
                 paymentTypes={this.props.paymentType.items}
+                sessions={this.props.session.items} 
+                errors={this.props.donation.createOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
                 onClose={this.props.onClose}
@@ -119,6 +120,7 @@ function mapStateToProps(state) {
     client: state.client,
     donation: state.donation,
     paymentType: state.paymentType,
+    session: state.session,
   };
 }
 

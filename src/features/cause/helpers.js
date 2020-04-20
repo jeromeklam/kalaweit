@@ -6,8 +6,9 @@ import {
   DelOne as DelOneIcon,
   FilterClear as FilterClearIcon,
   Sponsorship as SponsorshipIcon,
-  Donation as DonationIcon,
+  CauseDonation as CauseDonationIcon,
   News as NewsIcon,
+  Sponsor as SponsorIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type';
 import { siteAsOptions } from '../site/functions';
@@ -33,19 +34,19 @@ export const getGlobalActions = ({ onClearFilters, onCreate}) => {
   ];
 };
 
-export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenPhotos, onOpenNews, onGetOne, onDelOne, state}) => {
+export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenPhotos, onOpenNews, onOpenSponsors, onGetOne, onDelOne, state}) => {
   return [
     {
       name: 'donation',
       label: 'Dons',
       onClick: onOpenDonations,
       theme: 'secondary',
-      icon: <DonationIcon color="white" />,
+      icon: <CauseDonationIcon color="white" />,
       active: state.donations > 0,
     },
     {
       name: 'sponsorship',
-      label: 'Dons réguliers',
+      label: 'Dons ou parrainages réguliers',
       onClick: onOpenSponsorships,
       theme: 'secondary',
       icon: <SponsorshipIcon color="white" />,
@@ -68,6 +69,15 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
       icon: <NewsIcon color="white" />,
       role: 'OTHER',
       active: state.news > 0,
+    },
+    {
+      name: 'sponsors',
+      label: 'Parrains',
+      onClick: onOpenSponsors,
+      theme: 'secondary',
+      icon: <SponsorIcon color="white" />,
+      role: 'OTHER',
+      active: state.sponsors > 0,
     },
     {
       name: 'modify',

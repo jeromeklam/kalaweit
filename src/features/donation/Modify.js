@@ -86,9 +86,10 @@ export class Modify extends Component {
               <Form
                 item={item}
                 modal={true}
-                donation={this.props.donation}
-                errors={this.props.donation.updateOneError}
+                donation={this.props.donation}              
                 paymentTypes={this.props.paymentType.items}
+                sessions={this.props.session.items}
+                errors={this.props.donation.updateOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}
@@ -105,6 +106,7 @@ function mapStateToProps(state) {
   return {
     donation: state.donation,
     paymentType: state.paymentType,
+    session: state.session,
   };
 }
 

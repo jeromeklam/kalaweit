@@ -37,6 +37,8 @@ const initialState = {
   loadOneMediaPending: false,
   loadOneMediaError: null,
   loadOneMediaItem: null,
+  loadSponsorsPending: false,
+  loadSponsorsError: null,
 };
 
 export default initialState;

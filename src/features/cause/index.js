@@ -10,3 +10,4 @@ export { default as InlineList } from './InlineList';
 export { default as InlinePhotos } from './InlinePhotos';
 export { default as InlineNews } from './InlineNews';
 export { default as ModifyOrCreateMedia } from './ModifyOrCreateMedia';
+export { default as InlineSponsors } from './InlineSponsors';

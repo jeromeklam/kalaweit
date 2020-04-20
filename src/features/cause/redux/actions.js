@@ -15,3 +15,4 @@ export { uploadPhoto, dismissUploadPhotoError } from './uploadPhoto';
 export { delCauseMedia, dismissDelCauseMediaError } from './delCauseMedia';
 export { loadNews, dismissLoadNewsError } from './loadNews';
 export { loadOneMedia, dismissLoadOneMediaError } from './loadOneMedia';
+export { loadSponsors, dismissLoadSponsorsError } from './loadSponsors';

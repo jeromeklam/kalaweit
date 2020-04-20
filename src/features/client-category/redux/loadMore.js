@@ -8,8 +8,6 @@ import {
   CLIENT_CATEGORY_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
-// Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
-// If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => {
     // optionally you can have getState as the second argument
@@ -59,7 +57,6 @@ export function loadMore(args = {}, reload = false) {
             });
             resolve(res);
           },
-          // Use rejectHandler as the second argument so that render errors won't be caught.
           err => {
             dispatch({
               type: CLIENT_CATEGORY_LOAD_MORE_FAILURE,
@@ -74,8 +71,6 @@ export function loadMore(args = {}, reload = false) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadMoreError() {
   return {
     type: CLIENT_CATEGORY_LOAD_MORE_DISMISS_ERROR,

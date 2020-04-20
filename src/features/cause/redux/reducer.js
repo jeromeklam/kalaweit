@@ -24,6 +24,7 @@ import { reducer as uploadPhotoReducer } from './uploadPhoto';
 import { reducer as delCauseMediaReducer } from './delCauseMedia';
 import { reducer as loadNewsReducer } from './loadNews';
 import { reducer as loadOneMediaReducer } from './loadOneMedia';
+import { reducer as loadSponsorsReducer } from './loadSponsors';
 
 const reducers = [
   loadMoreReducer,
@@ -43,6 +44,7 @@ const reducers = [
   delCauseMediaReducer,
   loadNewsReducer,
   loadOneMediaReducer,
+  loadSponsorsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

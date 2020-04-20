@@ -25,17 +25,10 @@ export function loadMore(args = {}, reload = false) {
       const promise = new Promise((resolve, reject) => {
         let params = {
           page: {
-            number: getState().paymentType.page_number,
-            size: getState().paymentType.page_size,
+            number: getState().session.page_number,
+            size: getState().session.page_size,
           },
         };
-        if (args && Object.keys(args).length > 0 && args !== '') {
-          params.filter = {
-            and: {
-              ptyp_name: args,
-            },
-          };
-        }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/session' + addUrl, {});
         doRequest.then(
