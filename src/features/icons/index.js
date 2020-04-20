@@ -58,3 +58,5 @@ export { default as Save } from './Save';
 export { default as Zoom } from './Zoom';
 export { default as News } from './News';
 export { default as Jobqueue } from './Jobqueue';
+export { default as CauseDonation } from './CauseDonation';
+export { default as Sponsor } from './Sponsor';

@@ -29,13 +29,6 @@ export function loadMore(args = {}, reload = false) {
             size: getState().paymentType.page_size,
           },
         };
-        if (args && Object.keys(args).length > 0 && args !== '') {
-          params.filter = {
-            and: {
-              ptyp_name: args,
-            },
-          };
-        }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/payment_type' + addUrl, {});
         doRequest.then(
@@ -60,8 +53,6 @@ export function loadMore(args = {}, reload = false) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadMoreError() {
   return {
     type: PAYMENT_TYPE_LOAD_MORE_DISMISS_ERROR,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { mdiBookInformationVariant as myIcon } from '@mdi/js';
+import { mdiNewspaper as myIcon } from '@mdi/js';
 import { Icon } from './';
 
 export default class News extends Component {

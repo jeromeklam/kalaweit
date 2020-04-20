@@ -15,6 +15,7 @@ import { loadMore as loadMoreCountry } from '../../country/redux/loadMore';
 import { loadMore as loadMoreClientType } from '../../client-type/redux/loadMore';
 import { loadMore as loadMoreClientCategory } from '../../client-category/redux/loadMore';
 import { loadMore as loadMorePaymentType } from '../../payment-type/redux/loadMore';
+import { loadMore as loadMoreSession } from '../../session/redux/loadMore';
 import { loadMore as loadMoreDashboard } from '../../dashboard/redux/loadMore';
 
 export function loadAll(args = {}) {
@@ -34,6 +35,7 @@ export function loadAll(args = {}) {
       dispatch(loadMorePaymentType()),
       dispatch(loadMoreClientType()),
       dispatch(loadMoreClientCategory()),
+      dispatch(loadMoreSession()),
       dispatch(loadMoreDashboard()),
     ]);
     return promise.then(

@@ -17,7 +17,7 @@ import {
 } from '../icons';
 import { deleteError, deleteSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
-import { InlinePhotos, InlineNews, Create, Modify } from './';
+import { InlinePhotos, InlineNews, InlineSponsors, Create, Modify } from './';
 import * as sponsorshipActions from '../sponsorship/redux/actions';
 import { loadDonations } from '../donation/redux/actions';
 import { InlineSponsorships } from '../sponsorship';
@@ -35,8 +35,9 @@ export class List extends Component {
       timer: null,
       photos: 0,
       news: 0,
+      sponsors: 0,
       sponsorships: 0,
-      donations: 0,
+      donations: 0,   
       cauId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
@@ -51,6 +52,7 @@ export class List extends Component {
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onOpenPhotos = this.onOpenPhotos.bind(this);
     this.onOpenNews = this.onOpenNews.bind(this);
+    this.onOpenSponsors = this.onOpenSponsors.bind(this);
     this.onOpenSponsorships = this.onOpenSponsorships.bind(this);
     this.onOpenDonations = this.onOpenDonations.bind(this);
   }
@@ -147,39 +149,49 @@ export class List extends Component {
   onOpenPhotos(id) {
     const { photos } = this.state;
     if (photos === id) {
-      this.setState({ photos: 0, news: 0, sponsorships: 0, donations: 0});
+      this.setState({ photos: 0, news: 0, sponsors: 0, sponsorships: 0, donations: 0 });
     } else {
       this.props.actions.loadPhotos(id, true).then(result => {});
-      this.setState({ photos: id, news: 0, sponsorships: 0, donations: 0});
+      this.setState({ photos: id, news: 0, sponsors: 0, sponsorships: 0, donations: 0 });
     }
   }
 
   onOpenNews(id) {
     const { news } = this.state;
     if (news === id) {
-      this.setState({ photos: 0, news: 0, sponsorships: 0, donations: 0});
+      this.setState({ photos: 0, news: 0, sponsors: 0, sponsorships: 0, donations: 0 });
     } else {
       this.props.actions.loadNews(id, true).then(result => {});
-      this.setState({ photos: 0, news: id, sponsorships: 0, donations: 0});
+      this.setState({ photos: 0, news: id, sponsors: 0, sponsorships: 0, donations: 0 });
+    }
+  }
+
+  onOpenSponsors(id) {
+    const { sponsors } = this.state;
+    if (sponsors === id) {
+      this.setState({ photos: 0, news: 0, sponsors: 0, sponsorships: 0, donations: 0});
+    } else {
+      this.props.actions.loadSponsors({ cau_id: id }, true).then(result => {});
+      this.setState({ photos: 0, news: 0, sponsors: id, sponsorships: 0, donations: 0 });
     }
   }
 
   onOpenSponsorships(id) {
     const { sponsorships } = this.state;
     if (sponsorships === id) {
-      this.setState({ photos: 0, news: 0, sponsorships: 0, donations: 0});
+      this.setState({ photos: 0, news: 0, sponsors: 0, sponsorships: 0, donations: 0 });
     } else {
       this.props.actions.loadSponsorships({ cau_id: id }, true).then(result => {});
-      this.setState({ photos: 0, news: 0, sponsorships: id, donations: 0 });
+      this.setState({ photos: 0, news: 0, sponsors: 0, sponsorships: id, donations: 0 });
     }
   }
 
   onOpenDonations(id) {
     const { donations } = this.state;
     if (donations === id) {
-      this.setState({photos:0, news: 0, sponsorships: 0, donations: 0});
+      this.setState({photos:0, news: 0, sponsors: 0, sponsorships: 0, donations: 0 });
     } else {
-      this.setState({photos:0, news: 0, sponsorships: 0, donations: id});
+      this.setState({photos:0, news: 0, sponsors: 0, sponsorships: 0, donations: id });
     }
   }
 
@@ -223,15 +235,21 @@ export class List extends Component {
         inlineComponent = <InlinePhotos />;
         id = this.state.photos;
       } else {
-        if (this.state.sponsorships > 0) {
-          inlineComponent = <InlineSponsorships mode="cause" id={this.state.sponsorships} />;
-          id = this.state.sponsorships;
+        if (this.state.sponsors > 0) {
+          inlineComponent = <InlineSponsors />
+          id = this.state.sponsors;
         } else {
-          inlineComponent = <InlineDonations mode="cause" id={this.state.donations} />
-          id = this.state.donations;
+          if (this.state.sponsorships > 0) {
+            inlineComponent = <InlineSponsorships mode="cause" id={this.state.sponsorships} />;
+            id = this.state.sponsorships;
+          } else {
+            inlineComponent = <InlineDonations mode="cause" id={this.state.donations} />
+            id = this.state.donations;
+          }
         }
       }
     }
+    console.log("FK  List",this.state);
     return (
       <div>
         <ResponsiveList
