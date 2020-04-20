@@ -5,7 +5,6 @@ import { HoverObserver, displayDate, displayMonetary, displayBool } from 'freeas
 import { getPaymentTypeLabel } from '../payment-type';
 import { getFullName } from '../client';
 import { GetOne as GetOneIcon, DelOne as DelOneIcon } from '../icons';
-import { Modify } from './';
 
 export default class InlineLine extends Component {
   static propTypes = {
@@ -68,7 +67,10 @@ export default class InlineLine extends Component {
           <div className="col-4">
             <span>{displayBool(!(donation.sponsorship && donation.sponsorship.id > 0), 'Oui', '')}</span>
           </div>
-          <div className="col-8 text-right">
+          <div className="col-4">
+            <span>{displayBool(donation.don_display_site)}</span>
+          </div>
+          <div className="col-4 text-right">
             {highlight && (
               <div className="btn-group btn-group-xs" role="group" aria-label="...">
                 <button

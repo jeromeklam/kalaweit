@@ -93,6 +93,13 @@ export const globalMenu = [
         role: 'NAV',
         position: 1,
       },
+      {
+        icon: null,
+        label: 'Types de cause',
+        url: '/cause-type',
+        role: 'NAV',
+        position: 3,
+      },
     ],
   },
   {
@@ -116,13 +123,6 @@ export const globalMenu = [
         url: '/site-type',
         role: 'NAV',
         position: 2,
-      },
-      {
-        icon: null,
-        label: 'Types de cause',
-        url: '/cause-type',
-        role: 'NAV',
-        position: 3,
       },
       {
         icon: null,

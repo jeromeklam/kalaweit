@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { jsonApiNormalizer, buildModel, objectToQueryString } from 'freejsonapi';
 import { SearchModal } from '../ui';
 import { freeAssoApi } from '../../common';
+import { displayItemPicker } from './';
 
 export default class Search extends Component {
   static propTypes = {
@@ -60,7 +61,7 @@ export default class Search extends Component {
         onSearch={this.onSearch}
         onSelect={this.props.onSelect}
         list={this.state.list}
-        pickerDisplay="cau_name"
+        pickerDisplay={displayItemPicker}
         filters={filters}
       />
     );

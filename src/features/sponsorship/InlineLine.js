@@ -60,13 +60,13 @@ export default class InlineLine extends Component {
               <span>{sponsorship.cause.cau_name}</span>
             )}
           </div>
-          <div className="col-3">
+          <div className="col-4">
             <span>{displayBool(sponsorship.spo_display_site)}</span>
           </div>
-          <div className="col-3">
+          <div className="col-4">
             <span>{displayBool(sponsorship.spo_send_news)}</span>
           </div>
-          <div className="col-4 text-right col-last">
+          <div className="col-2 text-right col-last">
             {highlight && (
               <div className="btn-group btn-group-xs" role="group" aria-label="...">
                 <button

@@ -132,12 +132,16 @@ export default class SearchModal extends Component {
                             this.props.onSelect(item);
                           }}
                         >
-                          {this.props.pickerDisplay.split(',').map(elem => {
-                            if (item[elem]) {
-                              return <span>{item[elem]}</span>
-                            }
-                            return elem;
-                          })}
+                          {(typeof this.props.pickerDisplay === 'function') ? (
+                            this.props.pickerDisplay(item)
+                          ) : (
+                            this.props.pickerDisplay.split(',').map(elem => {
+                              if (item[elem]) {
+                                return <span>{item[elem]}</span>
+                              }
+                              return elem;
+                            })
+                          )}
                         </li>
                       );
                     })}

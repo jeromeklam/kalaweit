@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   CAUSE_LOAD_NEWS_INIT,
   CAUSE_LOAD_NEWS_BEGIN,

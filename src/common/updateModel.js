@@ -2,6 +2,7 @@ import { DATA_UPDATE_ONE_UPDATE } from '../features/data/redux/constants';
 import { SITE_TYPE_UPDATE_ONE_UPDATE } from '../features/site-type/redux/constants';
 import { CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-main-type/redux/constants';
 import { CAUSE_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-type/redux/constants';
+import { PAYMENT_TYPE_UPDATE_ONE_UPDATE } from '../features/payment-type/redux/constants';
 import { SITE_UPDATE_ONE_UPDATE } from '../features/site/redux/constants';
 import { EMAIL_UPDATE_ONE_UPDATE } from '../features/email/redux/constants';
 import { CAUSE_UPDATE_ONE_UPDATE } from '../features/cause/redux/constants';
@@ -52,6 +53,12 @@ export function propagateModel(type, model) {
       case 'FreeAsso_CauseType':
         dispatch({
           type: CAUSE_TYPE_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_PaymentType':
+        dispatch({
+          type: PAYMENT_TYPE_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;

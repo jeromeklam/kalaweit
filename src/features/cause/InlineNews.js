@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Flag from 'react-world-flags';
-import { buildModel, getJsonApi } from 'freejsonapi';
+import { buildModel } from 'freejsonapi';
 import { HoverObserver } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import * as actions from './redux/actions';
@@ -173,6 +173,7 @@ export class InlineNews extends Component {
                                   </div>
                                 );
                               }
+                              return null;
                             })}
                         </div>
                       </div>

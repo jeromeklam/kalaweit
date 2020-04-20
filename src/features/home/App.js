@@ -32,10 +32,24 @@ export class App extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      timer: false,
+    }
     this.onNavigate = this.onNavigate.bind(this);
     this.onChangeSettings = this.onChangeSettings.bind(this);
     this.onLocaleChange = this.onLocaleChange.bind(this);
     this.onGeo = this.onGeo.bind(this);
+    this.timers = this.timers.bind(this);
+  }
+
+  timers() {
+    const { timer } = this.state;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    this.props.actions.loadTimers();
+    const newTimer = setTimeout(this.timers, 60000);
+    this.setState({timer: newTimer});
   }
 
   componentDidMount() {
@@ -49,6 +63,7 @@ export class App extends Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.onGeo);
     }
+    this.timers(); 
   }
 
   componentWillReceiveProps(nextProps) {

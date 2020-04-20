@@ -15,7 +15,7 @@ export default function Form(props) {
   return (
     <ResponsiveModalOrForm
       className="m-5"
-      size="xl"
+      size="lg"
       modal={true}
       title="Type de cause"
       onSubmit={handleSubmit}
@@ -24,7 +24,7 @@ export default function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-md-18">
+        <div className="col-sm-36">
           <InputText
             label="Nom"
             name="caut_name"
@@ -35,7 +35,9 @@ export default function Form(props) {
             error={getErrorMessage('caut_name')}
           />
         </div>
-        <div className="col-md-18">
+      </div>
+      <div className="row">
+        <div className="col-sm-36">
           <InputSelect
             label="Grande cause"
             name="cause_main_type.id"
@@ -47,7 +49,7 @@ export default function Form(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-8">
+        <div className="col-md-12">
           <InputSelect
             label="Totalisation"
             name="caut_mnt_type"
@@ -57,7 +59,29 @@ export default function Form(props) {
             options={causeTypeMntType}
           />
         </div>
-        <div className="col-md-7">
+        <div className="col-sm-6">
+        </div>
+        <div className="col-sm-9">
+          <InputCheckbox
+            label="Reçu"
+            name="caut_receipt"
+            id="caut_receipt"
+            checked={values.caut_receipt}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="col-sm-9">
+          <InputCheckbox
+            label="Certificat"
+            name="caut_certificat"
+            id="caut_certificat"
+            checked={values.caut_certificat}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-18">
           <InputMonetary
             label="Maximum"
             labelTop={true}
@@ -69,7 +93,7 @@ export default function Form(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-7">
+        <div className="col-sm-18">
           <InputMonetary
             label="Don minimum"
             labelTop={true}
@@ -81,27 +105,8 @@ export default function Form(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-2">
-        </div>
-        <div className="col-md-6">
-          <InputCheckbox
-            label="Reçu"
-            name="caut_receipt"
-            id="caut_receipt"
-            checked={values.caut_receipt}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="col-md-6">
-          <InputCheckbox
-            label="Certificat"
-            name="caut_certificat"
-            id="caut_certificat"
-            checked={values.caut_certificat}
-            onChange={handleChange}
-          />
-        </div>
       </div>
+      <div className="row"></div>
     </ResponsiveModalOrForm>
   );
 }

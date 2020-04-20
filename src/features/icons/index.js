@@ -57,3 +57,4 @@ export { default as AccountDetail } from './AccountDetail';
 export { default as Save } from './Save';
 export { default as Zoom } from './Zoom';
 export { default as News } from './News';
+export { default as Jobqueue } from './Jobqueue';

@@ -45,12 +45,12 @@ export default class InlineHeader extends Component {
             </span>
           )}
         </div>
-        <div className="col-3">
+        <div className="col-4">
           <span>
-            <FormattedMessage id="app.features.sponsorship.list.col.site" defaultMessage="Site" />
+            <FormattedMessage id="app.features.sponsorship.list.col.site" defaultMessage=" Display on site" />
           </span>
         </div>
-        <div className="col-3">
+        <div className="col-4">
           <span>
             <FormattedMessage id="app.features.sponsorship.list.col.news" defaultMessage="News" />
           </span>

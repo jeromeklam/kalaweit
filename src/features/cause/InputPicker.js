@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { InputPicker as DefaultInputPicker } from 'freeassofront';
-import { Search, Modify } from './';
+import { Search, Modify, displayItemPicker } from './';
 import axios from 'axios';
 import { More, DelOne, Zoom } from '../icons';
 
@@ -72,7 +72,7 @@ export default class InputPicker extends Component {
     this.setState({ display: search, loading: true, cancel: source });
     if (search.length >= 2) {
       axios
-        .get(process.env.REACT_APP_BO_URL + '/v1/asso/cause/autocomplete/' + event.target.value, {
+        .get(process.env.REACT_APP_BO_URL + '/v1/asso/cause/autocomplete/' + search, {
           headers: headers,
         })
         .then(result => {
@@ -128,7 +128,7 @@ export default class InputPicker extends Component {
           onSelect={this.onSelect}
           required={this.props.required || false}
           pickerId="cau_id"
-          pickerDisplay="cau_name"
+          pickerDisplay={displayItemPicker}
           filters={this.props.filters || {}}
           clearIcon={<DelOne className="text-warning" size={0.9 } />}
           moreIcon={<More className="text-secondary" size={0.9 } />}

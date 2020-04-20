@@ -10,6 +10,14 @@ const initialState = {
   loadMorePending: false,
   loadMoreFinish: false,
   loadMoreError: null,
+  loadOnePending: false,
+  loadOneError: null,
+  createOnePending: false,
+  createOneError: null,
+  updateOnePending: false,
+  updateOneError: null,
+  delOnePending: false,
+  delOneError: null,
 };
 
 export default initialState;

@@ -12,6 +12,7 @@ import {
 } from '../icons';
 import { DashboardCard, DashboardToolbar } from './';
 import { getFromLS, saveToLS } from '../ui';
+import { DashboardJobqueues } from '../jobqueue';
 
 const getLayoutSize = (layouts, breakpoint, key) => {
   let size = 'sm';
@@ -81,7 +82,7 @@ export class DashboardGrid extends Component {
             onBreakpointChange={this.onBreakpointChange}
             layouts={layouts}
           >
-            <div key="cause" data-grid={{ w: 6, h: 5, x: 1, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+            <div key="cause" data-grid={{ w: 6, h: 5, x: 0, y: 1, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
                 title="Causes"
                 count={this.props.dashboard.stats.total_cause}
@@ -90,7 +91,7 @@ export class DashboardGrid extends Component {
                 size={getLayoutSize(layouts, breakpoint, 'cause')}
               />
             </div>
-            <div key="sites" data-grid={{ w: 6, h: 5, x: 8, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+            <div key="sites" data-grid={{ w: 6, h: 5, x: 7, y: 1, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
                 title="Sites"
                 count={this.props.dashboard.stats.total_site}
@@ -99,7 +100,7 @@ export class DashboardGrid extends Component {
                 size={getLayoutSize(layouts, breakpoint, 'sitescause')}
               />
             </div>
-            <div key="friends" data-grid={{ w: 6, h: 5, x: 15, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+            <div key="friends" data-grid={{ w: 6, h: 5, x: 14, y: 1, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
                 title="Amis"
                 count={this.props.dashboard.stats.friends}
@@ -107,13 +108,16 @@ export class DashboardGrid extends Component {
                 size={getLayoutSize(layouts, breakpoint, 'friends')}
               />
             </div>
-            <div key="donations" data-grid={{ w: 6, h: 5, x: 22, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+            <div key="donations" data-grid={{ w: 6, h: 5, x: 21, y: 1, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
                 title="Donations"
                 count={this.props.dashboard.stats.donations}
                 icon={<DonationIcon />}
                 size={getLayoutSize(layouts, breakpoint, 'donations')}
               />
+            </div>
+            <div key="jobqueues" data-grid={{ w: 18, h: 5, x: 0, y: 5, minW: 18, maxW: 36, minH: 5 }}>
+              <DashboardJobqueues />
             </div>
           </ResponsiveReactGridLayout>
         </div>

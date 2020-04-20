@@ -102,6 +102,7 @@ export class Create extends Component {
             {item && (
               <Form
                 item={item}
+                mode={this.props.mode}
                 modal={true}
                 datas={this.props.data.items}
                 configs={this.props.config.items}

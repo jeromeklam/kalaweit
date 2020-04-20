@@ -1,8 +1,10 @@
 import initialState from './initialState';
 import { reducer as loadAllReducer } from './loadAll';
+import { reducer as loadTimersReducer } from './loadTimers';
 
 const reducers = [
   loadAllReducer,
+  loadTimersReducer,
 ];
 
 export default function reducer(state = initialState, action) {
