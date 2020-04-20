@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 import Icon from '@mdi/react';
-import {
-  mdiFileDocumentBox
-} from '@mdi/js';
+import { mdiFileDocumentBox } from '@mdi/js';
 
 export default class Documents extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiFileDocumentBox}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={mdiFileDocumentBox} size={1} color={this.props.color} />;
   }
 }

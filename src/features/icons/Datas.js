@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 import { Icon } from './';
-import {
-  mdiDatabaseSettings as myIcon
-} from '@mdi/js';
+import { mdiDatabaseSettings as myIcon } from '@mdi/js';
 
 export default class Datas extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={myIcon}
-        size={1}
-        {...this.props}
-      />
-    );
+    return <Icon path={myIcon} size={1} {...this.props} />;
   }
 }

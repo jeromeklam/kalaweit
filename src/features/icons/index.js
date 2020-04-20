@@ -60,3 +60,5 @@ export { default as News } from './News';
 export { default as Jobqueue } from './Jobqueue';
 export { default as CauseDonation } from './CauseDonation';
 export { default as Sponsor } from './Sponsor';
+export { default as Certificate } from './Certificate';
+export { default as Receipt } from './Receipt';

@@ -12,6 +12,8 @@ import {
   System as SystemIcon,
   Datas as DatasIcon,
   Dashboard as DashboardIcon,
+  Certificate as CertificateIcon,
+  Receipt as ReceiptIcon,
 } from '../icons';
 
 export const globalMenu = [
@@ -79,11 +81,27 @@ export const globalMenu = [
     public: false,
   },
   {
+    icon: <ReceiptIcon />,
+    label: 'Reçus',
+    url: '/receipt',
+    role: 'NAV',
+    position: 5,
+    public: false,
+  },
+  {
+    icon: <CertificateIcon />,
+    label: 'Certificats',
+    url: '/certificate',
+    role: 'NAV',
+    position: 6,
+    public: false,
+  },
+  {
     icon: <DatasIcon />,
     label: 'Administratif',
     url: null,
     role: 'MENU',
-    position: 5,
+    position: 10,
     public: false,
     options: [
       {
@@ -107,7 +125,7 @@ export const globalMenu = [
     label: 'Répertoires',
     url: null,
     role: 'MENU',
-    position: 6,
+    position: 20,
     public: false,
     options: [
       {
