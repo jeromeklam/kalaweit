@@ -2,6 +2,7 @@ import React from 'react';
 import { SocialIcon } from 'react-social-icons';
 import { FormattedMessage } from 'react-intl';
 import {
+  Administrative as AdministrativeIcon,
   Home as HomeIcon,
   About as AboutIcon,
   Login as LoginIcon,
@@ -97,7 +98,7 @@ export const globalMenu = [
     public: false,
   },
   {
-    icon: <DatasIcon />,
+    icon: <AdministrativeIcon />,
     label: 'Administratif',
     url: null,
     role: 'MENU',

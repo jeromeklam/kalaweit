@@ -1,6 +1,6 @@
-export const getFullName = client => {
+export const getFullName = (client) => {
   let fullname = '';
-  if (client && client.cli_firstname && client.cli_lastname) {
+  if (client) {
     fullname = `${client.cli_firstname} ${client.cli_lastname}`;
   }
   return fullname.trim();

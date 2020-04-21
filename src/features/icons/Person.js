@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Icon } from './';
-import { mdiAccount } from '@mdi/js';
+import { mdiAccountMultiple as myMdi } from '@mdi/js';
 
 export default class Person extends Component {
   static propTypes = {};
 
   render() {
-    return <Icon path={mdiAccount} {...this.props} />;
+    return <Icon path={myMdi} {...this.props} />;
   }
 }

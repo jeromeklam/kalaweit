@@ -105,7 +105,7 @@ export default function Form(props) {
             </div>
             <div className="col-9">
               <InputCheckbox
-                label="Disponible à l'adoption"
+                label="Don régulier disponible"
                 name="cau_available"
                 labelTop={true}
                 checked={values.cau_available === true}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Icon } from './';
-import { mdiDatabaseSettings as myIcon } from '@mdi/js';
+import { mdiFolderSettingsOutline as myIcon } from '@mdi/js';
 
 export default class Datas extends Component {
   static propTypes = {};

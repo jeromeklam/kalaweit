@@ -6,7 +6,7 @@ import {
   DelOne as DelOneIcon,
   FilterClear as FilterClearIcon,
   Sponsorship as SponsorshipIcon,
-  CauseDonation as CauseDonationIcon,
+  Donation as CauseDonationIcon,
   News as NewsIcon,
   Sponsor as SponsorIcon,
 } from '../icons';

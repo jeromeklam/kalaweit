@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Icon } from './';
-import { mdiHeartMultiple as myMdi } from '@mdi/js';
+import { mdiFolderHeartOutline as myMdi } from '@mdi/js';
 
-export default class Cause extends Component {
+export default class Administrative extends Component {
   static propTypes = {};
 
   render() {
