@@ -53,8 +53,6 @@ export function loadNews(args = {}, reload = false) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadNewsError() {
   return {
     type: CAUSE_LOAD_NEWS_DISMISS_ERROR,

@@ -63,3 +63,4 @@ export { default as Sponsor } from './Sponsor';
 export { default as Certificate } from './Certificate';
 export { default as Receipt } from './Receipt';
 export { default as Administrative } from './Administrative';
+export { default as ColCheck } from './ColCheck';

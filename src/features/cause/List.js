@@ -249,7 +249,6 @@ export class List extends Component {
         }
       }
     }
-    console.log("FK  List",this.state);
     return (
       <div>
         <ResponsiveList

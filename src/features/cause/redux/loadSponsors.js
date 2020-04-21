@@ -76,7 +76,6 @@ export function reducer(state, action) {
       if (result.data) {
         nbre = result.data.length;
       }
-      console.log(nbre);
       if (nbre > 0) {
         list = jsonApiNormalizer(result);
       } else {
