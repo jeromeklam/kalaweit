@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputCheckbox, InputHidden, InputSelect, InputText  } from 'freeassofront';
+import { InputCheckbox, InputHidden, InputSelect, InputText, InputMonetary  } from 'freeassofront';
 import { InputDate, InputData, ResponsiveModalOrForm, InputTextarea } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
@@ -69,7 +69,7 @@ export default function Form(props) {
       {values.currentTab === '1' && (
         <div>
           <div className="row">
-            <div className="col-9">
+            <div className="col-6">
               <InputSelect
                 label="Sexe"
                 labelTop={true}
@@ -83,7 +83,7 @@ export default function Form(props) {
                 ]}
               />
             </div>
-            <div className="col-md-9">
+            <div className="col-md-6">
               <InputData
                 key="cau_number_1"
                 name="cau_number_1"
@@ -94,7 +94,9 @@ export default function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-9">
+            <div className="col-md-2">
+            </div>
+            <div className="col-7">
               <InputCheckbox
                 label="Visible sur le site"
                 name="cau_public"
@@ -103,13 +105,27 @@ export default function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-9">
+            <div className="col-7">
               <InputCheckbox
                 label="Don régulier disponible"
                 name="cau_available"
                 labelTop={true}
                 checked={values.cau_available === true}
                 onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-1">
+            </div>
+            <div className="col-md-7">
+              <InputMonetary
+                label="Montant récolté"
+                labelTop={true}
+                name="cau_mnt"
+                id="cau_mnt"
+                inputMoney="EUR"
+                dbMoney="EUR"
+                value={values.cau_mnt}
+                disabled={true}
               />
             </div>
           </div>
@@ -134,7 +150,7 @@ export default function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-md-9">
+            <div className="col-md-6">
               <InputData
                 key="cau_string_3"
                 name="cau_string_3"
@@ -143,6 +159,20 @@ export default function Form(props) {
                 datas={props.tab_datas}
                 config={props.tab_configs}
                 onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-5">
+            </div>
+            <div className="col-md-7">
+              <InputMonetary
+                label="Restant"
+                labelTop={true}
+                name="cau_mnt_left"
+                id="cau_mnt_left"
+                inputMoney="EUR"
+                dbMoney="EUR"
+                value={values.cau_mnt_left}
+                disabled={true}
               />
             </div>
           </div>
