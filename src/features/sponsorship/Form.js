@@ -13,6 +13,11 @@ import { paymentTypeAsOptions } from '../payment-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as CauseInputPicker } from '../cause';
 
+const tabs = [
+  { key: '1', name: 'main', label: 'Informations principales', shortcut: 'M', icon: '' },
+  { key: '2', name: 'sponsors', label: 'Parrains', shortcut: 'P', icon: '' },
+];
+
 function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
