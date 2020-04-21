@@ -9,6 +9,10 @@ const initialState = {
   loadMorePending: false,
   loadMoreError: null,
   loadMoreFinish: false,
+  loadOnePending: false,
+  loadOneError: null,
+  loadOneItem: null,
+  emptyItem: null,
 };
 
 export default initialState;

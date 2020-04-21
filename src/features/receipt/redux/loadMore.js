@@ -75,6 +75,18 @@ export function dismissLoadMoreError() {
 
 export function reducer(state, action) {
   switch (action.type) {
+    case RECEIPT_LOAD_MORE_INIT:
+      // Just after a request is sent
+      return {
+        ...state,
+        loadMorePending: true,
+        loadMoreError: null,
+        loadMoreFinish: false,
+        items: [],
+        page_number: 1,
+        page_size: process.env.REACT_APP_PAGE_SIZE,
+      };
+
     case RECEIPT_LOAD_MORE_BEGIN:
       // Just after a request is sent
       return {

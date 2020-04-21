@@ -8,9 +8,21 @@
 
 import initialState from './initialState';
 import { reducer as loadMoreReducer } from './loadMore';
+import { reducer as setFiltersReducer } from './setFilters';
+import { reducer as setSortReducer } from './setSort';
+import { reducer as initFiltersReducer } from './initFilters';
+import { reducer as initSortReducer } from './initSort';
+import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
+import { reducer as loadOneReducer } from './loadOne';
 
 const reducers = [
   loadMoreReducer,
+  setFiltersReducer,
+  setSortReducer,
+  initFiltersReducer,
+  initSortReducer,
+  updateQuickSearchReducer,
+  loadOneReducer,
 ];
 
 export default function reducer(state = initialState, action) {

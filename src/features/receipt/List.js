@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
@@ -124,6 +125,7 @@ export class List extends Component {
   }
 
   render() {
+    const { intl } = this.props;
     let items = false;
     if (this.props.receipt.items.FreeAsso_Receipt) {
       items = buildModel(this.props.receipt.items, 'FreeAsso_Receipt');
@@ -140,7 +142,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche montant"
+        label={intl.formatMessage({ id: 'app.features.receipt.list.quicksearch', defaultMessage: 'Find by member, email' })}
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -155,11 +157,11 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Reçus"
+          title={intl.formatMessage({ id: 'app.features.receipt.list.title', defaultMessage: 'Receipts' })}
           cols={cols}
           items={items}
           quickSearch={quickSearch}
-          mainCol="rec_fullname"
+          mainCol="rec_fullname,rec_email"
           filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
@@ -200,4 +202,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));
