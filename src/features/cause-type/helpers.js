@@ -4,8 +4,16 @@ import {
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
   FilterClear as FilterClearIcon,
+  ColCheck as ColCheckIcon,
+  Minus as MinusIcon,
 } from '../icons';
 import { causeTypeMntType } from './';
+
+export const validSelect = [
+  { label: 'Actif', value: true, icon: <ColCheckIcon /> },
+  { label: 'Inactif', value: false, icon: <MinusIcon /> },
+];
+
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -104,6 +112,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       type: 'bool',
+      values: validSelect,
       filterable: { type: 'bool' },
     },
     {
@@ -115,6 +124,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       type: 'bool',
+      values: validSelect,
       last: true,
       filterable: { type: 'bool' },
     },

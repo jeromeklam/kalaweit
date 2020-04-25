@@ -64,3 +64,5 @@ export { default as Certificate } from './Certificate';
 export { default as Receipt } from './Receipt';
 export { default as Administrative } from './Administrative';
 export { default as ColCheck } from './ColCheck';
+export { default as Male } from './Male';
+export { default as Female } from './Female';
