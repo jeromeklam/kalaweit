@@ -98,7 +98,7 @@ export function reducer(state, action) {
       } else {
         list = [];
       }
-      let photosItem = buildModel(state.items, 'FreeAsso_Cause', action.cau_id);
+      let photosItem = buildModel(state.items, 'FreeAsso_Cause', action.cau_id, {eager: true});
       return {
         ...state,
         loadPhotosPending: false,

@@ -69,7 +69,7 @@ export class InlinePhotos extends Component {
         reader.onload = () => {
           // Do whatever you want with the file contents
           const binaryStr = reader.result;
-          this.props.actions.uploadPhoto(0, item.id, binaryStr).then(result => resolve(true));
+          this.props.actions.uploadPhoto(0, item.id, binaryStr, file.name).then(result => resolve(true));
         };
         reader.readAsDataURL(file);
       });
@@ -121,7 +121,7 @@ export class InlinePhotos extends Component {
   render() {
     let photos = [];
     if (this.props.cause.photos.FreeAsso_CauseMedia) {
-      photos = buildModel(this.props.cause.photos, 'FreeAsso_CauseMedia');
+      photos = buildModel(this.props.cause.photos, 'FreeAsso_CauseMedia', null, {eager: true});
     }
     return (
       <div>

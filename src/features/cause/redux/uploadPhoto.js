@@ -7,7 +7,7 @@ import {
   CAUSE_UPLOAD_PHOTO_DISMISS_ERROR,
 } from './constants';
 
-export function uploadPhoto(caum_id = 0, cau_id = 0, binary = null) {
+export function uploadPhoto(caum_id = 0, cau_id = 0, binary = null, name = null) {
   return dispatch => {
     dispatch({
       type: CAUSE_UPLOAD_PHOTO_BEGIN,
@@ -16,6 +16,7 @@ export function uploadPhoto(caum_id = 0, cau_id = 0, binary = null) {
       const datas = {
         cau_id: cau_id,
         blob: binary,
+        title: name,
       };
       const doRequest = freeAssoApi.post(
         '/v1/asso/cause_media_blob',
