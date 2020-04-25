@@ -260,9 +260,9 @@ export class List extends Component {
           filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
-          sortDownIcon={<SortDownIcon color="secondary" />}
-          sortUpIcon={<SortUpIcon color="secondary" />}
-          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          sortDownIcon={<SortDownIcon color="text-secondary" />}
+          sortUpIcon={<SortUpIcon color="text-secondary" />}
+          sortNoneIcon={<SortNoneIcon color="text-secondary" />}
           inlineActions={inlineActions}
           inlineOpenedId={id}
           inlineComponent={inlineComponent}

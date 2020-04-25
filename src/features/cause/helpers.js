@@ -9,9 +9,17 @@ import {
   Donation as CauseDonationIcon,
   News as NewsIcon,
   Sponsor as SponsorIcon,
+  Male as MaleIcon,
+  Female as FemaleIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type';
 import { siteAsOptions } from '../site/functions';
+
+export const sexSelect = [
+  { label: 'Femelle', value: 'F', icon: <FemaleIcon className="text-secondary"/> },
+  { label: 'Mâle', value: 'M', icon: <MaleIcon className="text-secondary"/> },
+  { label: 'Indéfini', value: 'OTHER' },
+];
 
 export const getGlobalActions = ({ onClearFilters, onCreate}) => {
   return [
@@ -119,17 +127,38 @@ export const getCols = ({ props }) => {
       filterable: { type: 'text' },
       first: true,
       fClass: endCause,
+      hidden: true,
     },
     {
       name: 'name',
       label: 'Nom',
       col: 'cau_name',
-      size: '5',
+      size: '4',
       mob_size: '',
       title: true,
       sortable: true,
       filterable: { type: 'text' },
       fClass: endCause,
+    },
+    {
+      name: 'type',
+      label: 'Type',
+      col: 'cause_type.caut_name',
+      size: '8',
+      mob_size: '',
+      title: true,
+      sortable: true,
+    },
+   {
+      name: 'sexe',
+      label: 'Sexe',
+      col: 'cau_sex',
+      size: '2',
+      mob_size: '',
+      type: 'switch',
+      values: sexSelect,
+      sortable: true,
+      filterable: false,
     },
     {
       name: 'cau_year',
@@ -138,15 +167,6 @@ export const getCols = ({ props }) => {
       size: '4',
       mob_size: '',
       type: 'numeric',
-      title: true,
-      sortable: true,
-    },
-    {
-      name: 'type',
-      label: 'Type',
-      col: 'cause_type.caut_name',
-      size: '8',
-      mob_size: '18',
       title: true,
       sortable: true,
     },

@@ -161,6 +161,7 @@ export class List extends Component {
     ) : (
       <FilterFullIcon color="white" />
     );
+    console.log("FK caut",items);
     return (
       <div>
         <ResponsiveList
