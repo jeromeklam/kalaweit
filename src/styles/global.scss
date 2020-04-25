@@ -262,3 +262,33 @@ svg.text-warning.inline-action:hover {
   text-decoration: line-through;
   font-style: italic;
 }
+
+/* Hover des lignes des listes */
+.row-line-hover {
+  background-color: theme-color('primary-light');
+  color: theme-color('secondary');
+}
+
+/* Couleur de fond spécifique des lignes des listes */
+.row-line-warning {
+  background-color: lighten(theme-color('warning'), 30%);
+}
+.row-line-warning.row-line-hover {
+  background-color: lighten(theme-color('warning'), 25%);
+  color: theme-color('secondary');
+}
+
+/* On force la couleur des icones dans les colonnes des listes */
+.text-secondary svg.col-icon {
+  fill: theme-color('secondary');
+  path {
+    fill: theme-color('secondary');
+  }
+}
+
+.text-light svg.col-icon {
+  fill: theme-color('light');
+  path {
+    fill: theme-color('light');
+  }
+}

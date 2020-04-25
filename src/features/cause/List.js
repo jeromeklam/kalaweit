@@ -55,6 +55,7 @@ export class List extends Component {
     this.onOpenSponsors = this.onOpenSponsors.bind(this);
     this.onOpenSponsorships = this.onOpenSponsorships.bind(this);
     this.onOpenDonations = this.onOpenDonations.bind(this);
+    this.itemClassName = this.itemClassName.bind(this);
   }
 
   componentDidMount() {
@@ -195,8 +196,15 @@ export class List extends Component {
     }
   }
 
+  itemClassName(item) {
+    if (item && item.cau_to !== null && item.cau_to !== '') {
+      return 'row-line-warning';
+    }
+    return '';
+  }
+
   render() {
-    // Les des items à afficher avec remplissage progressif
+    // Les items à afficher avec remplissage progressif
     let items = [];
     if (this.props.cause.items.FreeAsso_Cause) {
       items = buildModel(this.props.cause.items, 'FreeAsso_Cause');
@@ -260,9 +268,9 @@ export class List extends Component {
           filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
-          sortDownIcon={<SortDownIcon color="text-secondary" />}
-          sortUpIcon={<SortUpIcon color="text-secondary" />}
-          sortNoneIcon={<SortNoneIcon color="text-secondary" />}
+          sortDownIcon={<SortDownIcon  />}
+          sortUpIcon={<SortUpIcon />}
+          sortNoneIcon={<SortNoneIcon />}
           inlineActions={inlineActions}
           inlineOpenedId={id}
           inlineComponent={inlineComponent}
@@ -277,6 +285,7 @@ export class List extends Component {
           loadMorePending={this.props.cause.loadMorePending}
           loadMoreFinish={this.props.cause.loadMoreFinish}
           loadMoreError={this.props.cause.loadMoreError}
+          fClassName={this.itemClassName}
         />
         {this.state.cauId > 0 && (
           <Modify modal={true} cauId={this.state.cauId} onClose={this.onClose} loader={false} />

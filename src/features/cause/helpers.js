@@ -16,8 +16,8 @@ import { causeTypeAsOptions } from '../cause-type';
 import { siteAsOptions } from '../site/functions';
 
 export const sexSelect = [
-  { label: 'Femelle', value: 'F', icon: <FemaleIcon className="text-secondary"/> },
-  { label: 'Mâle', value: 'M', icon: <MaleIcon className="text-secondary"/> },
+  { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon"/> },
+  { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon"/> },
   { label: 'Indéfini', value: 'OTHER' },
 ];
 
@@ -106,14 +106,6 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
   ];
 };
 
-const endCause = (item) => {
-  if (item.cau_to !== null && item.cau_to !== '') {
-    return 'text-line-through';
-  }
-  return '';
-}
-
-
 export const getCols = ({ props }) => {
   return [
     {
@@ -125,8 +117,6 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
-      first: true,
-      fClass: endCause,
       hidden: true,
     },
     {
@@ -137,8 +127,8 @@ export const getCols = ({ props }) => {
       mob_size: '',
       title: true,
       sortable: true,
+      first: true,
       filterable: { type: 'text' },
-      fClass: endCause,
     },
     {
       name: 'type',
