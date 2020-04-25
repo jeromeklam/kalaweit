@@ -24,3 +24,4 @@ export { default as InputJson } from './InputJson';
 export { default as InlineList } from './InlineList';
 export { default as Line } from './Line';
 export { default as Col } from './Col';
+export { default as InputSponsors } from './InputSponsors';

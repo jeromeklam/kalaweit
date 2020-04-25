@@ -7,10 +7,10 @@ import {
 } from '../icons';
 
 export const statusValues = [
-  { value: 'WAIT', label: 'Attente' },
-  { value: 'OK', label: 'Validé' },
-  { value: 'NOK', label: 'Annulé' },
-  { value: 'NEXT', label: 'A venir' },
+  { value: 'WAIT', label: 'En attente' },
+  { value: 'OK', label: 'Payé' },
+  { value: 'NOK', label: 'Impayé' },
+  //{ value: 'NEXT', label: 'A venir' },
 ];
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
