@@ -14,7 +14,10 @@ export default class SearchModal extends Component {
     onClose: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
     list: PropTypes.array.isRequired,
-    pickerDisplay: PropTypes.string.isRequired,
+    pickerDisplay: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func
+    ]),
     filters: PropTypes.array,
   };
   static defaultProps = {
@@ -98,9 +101,8 @@ export default class SearchModal extends Component {
               {this.state.fields &&
                 this.state.fields.map(item => {
                   return (
-                    <div className={classnames('col-sm-' + (item.size || '36'))}>
+                    <div key={item.name} className={classnames('col-sm-' + (item.size || '36'))}>
                       <input
-                        key={item.name}
                         className="form-control mb-1"
                         value={item.value}
                         name={item.name}
