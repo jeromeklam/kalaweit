@@ -82,6 +82,7 @@ export default function Form(props) {
             />
           </div>
         </div>
+        <hr />
         {values.currentTab === '1' && (
           <div>
             <div className="row">
