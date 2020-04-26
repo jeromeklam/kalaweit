@@ -1,7 +1,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import { InputHidden, InputSelect, InputText, InputCheckbox, InputMonetary } from 'freeassofront';
-import { InputDate, ResponsiveModalOrForm, InputStringarray } from '../ui';
+import { InputDate, ResponsiveModalOrForm, InputSponsors } from '../ui';
 import useForm from '../ui/useForm';
 import { paymentTypeAsOptions } from '../payment-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
@@ -9,7 +9,7 @@ import { InputPicker as CauseInputPicker } from '../cause';
 
 const tabs = [
   { key: '1', name: 'main', label: 'Informations principales', shortcut: 'M', icon: '' },
-  { key: '2', name: 'sponsors', label: 'Parrains', shortcut: 'P', icon: '' },
+  { key: '2', name: 'sponsors', label: 'Invités', shortcut: 'I', icon: '' },
 ];
 
 function Form(props) {
@@ -22,7 +22,6 @@ function Form(props) {
     getErrorMessage,
   } = useForm(props.item, '1', props.onSubmit, props.onCancel, props.errors);
   const { intl } = props;
-  console.log("FK parrains",values.spo_sponsors);
   return (
     <ResponsiveModalOrForm
       className=""
@@ -198,10 +197,13 @@ function Form(props) {
         {values.currentTab === '2' && (
           <div className="row">
             <div className="col-sm-36">
-              <InputStringarray
+              <InputSponsors
+                label="Invités"
+                id="spo_sponsors"
                 name="spo_sponsors"
                 value={values.spo_sponsors}
                 onChange={handleChange}
+                error={getErrorMessage('spo_sponsors')}
               />
             </div>
           </div>
