@@ -10,8 +10,8 @@ import {
 import { causeTypeMntType } from './';
 
 export const validSelect = [
-  { label: 'Actif', value: true, icon: <ColCheckIcon /> },
-  { label: 'Inactif', value: false, icon: <MinusIcon /> },
+  { label: 'Actif', value: true, icon: <ColCheckIcon className="col-icon" /> },
+  { label: 'Inactif', value: false, icon: <MinusIcon className="col-icon" /> },
 ];
 
 
