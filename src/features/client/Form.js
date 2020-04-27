@@ -195,10 +195,11 @@ export default function Form(props) {
                   name="cli_email"
                   labelTop={true}
                   value={values.cli_email}
+                  className={values.cli_email === values.cli_email_refused ? "text-warning" : ""}
                   onChange={handleChange}
                 />
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-8">
                 <InputText
                   label="Téléphone"
                   name="cli_phone_home"
@@ -207,6 +208,7 @@ export default function Form(props) {
                   onChange={handleChange}
                 />
               </div>
+              <div className="col-sm-1"></div>              
               <div className="col-sm-6">
                 <InputSelect
                   label="Langue"
@@ -223,12 +225,34 @@ export default function Form(props) {
         {values.currentTab === '2' && (
           <div>
             <div className="row">
+              <div className="col-sm-16">
+                <InputText
+                  label="Email (2)"
+                  name="cli_email2"
+                  labelTop={true}
+                  value={values.cli_email2}
+                  className={values.cli_email2 === values.cli_email_refused ? "text-warning" : ""}
+                  onChange={handleChange}
+                />
+              </div>
               <div className="col-sm-8">
                 <InputText
                   label="Téléphone (2)"
                   name="cli_phone_gsm"
                   labelTop={true}
                   value={values.cli_phone_gsm}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+             <div className="row">
+              <div className="col-sm-16">
+                <InputText
+                  label="Email refusé"
+                  name="cli_email_refused"
+                  labelTop={true}
+                  className="text-warning"
+                  value={values.cli_email_refused}
                   onChange={handleChange}
                 />
               </div>

@@ -271,10 +271,10 @@ svg.text-warning.inline-action:hover {
 
 /* Couleur de fond spécifique des lignes des listes */
 .row-line-warning {
-  background-color: lighten(theme-color('warning'), 30%);
+  background-color: theme-color('warning-light');
 }
 .row-line-warning.row-line-hover {
-  background-color: lighten(theme-color('warning'), 25%);
+  background-color: darken(theme-color('warning-light'), 5%);
   color: theme-color('secondary');
 }
 
