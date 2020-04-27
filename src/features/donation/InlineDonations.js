@@ -80,7 +80,7 @@ export class InlineDonations extends Component {
         } else {
           filters = { cli_id: this.props.id };
         }
-        this.setState({ add: false, modify: 0 });
+        this.setState({ add: false, donId: -1 });
         this.props.actions.loadDonations(filters);
       })
       .catch(errors => {
@@ -110,27 +110,22 @@ export class InlineDonations extends Component {
                 )}
                 {donations.length > 0 &&
                   donations.map(donation => {
-                    if (donation.id !== this.state.modify) {
-                      return (
-                        <InlineLine
-                          {...this.props}
-                          oddEven={counter++}
-                          key={donation.id}
-                          donation={donation}
-                          paymentTypes={this.props.paymentType.items}
-                          onGetOne={this.onModify}
-                          onDelOne={this.onConfirm}
-                        />
-                      );
-                    } else {
-                      others = true;
-                    }
-                    return null;
+                    return (
+                      <InlineLine
+                        {...this.props}
+                        oddEven={counter++}
+                        key={donation.id}
+                        donation={donation}
+                        paymentTypes={this.props.paymentType.items}
+                        onGetOne={this.onModify}
+                        onDelOne={this.onConfirm}
+                      />
+                    ); 
                   })}
                 {others &&
                   (this.state.more ? (
                     donations.map(donation => {
-                      if (donation.id !== this.state.modify && !inTheFuture(donation.don_ts)) {
+                      if (!inTheFuture(donation.don_ts)) {
                         return (
                           <InlineLine
                             {...this.props}

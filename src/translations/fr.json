@@ -103,7 +103,7 @@
 	"app.features.sponsorship.list.displayFinished" : "Afficher les parrainages et dons réguliers terminés",
 	"app.features.sponsorship.list.hideFinished" : "Cacher les parrainages et dons réguliers terminés",
 	"app.features.sponsorship.list.noSponsorship" : "Aucun parrainage ou don régulier",
-	"app.features.sponsorship.list.addSponsorship" : "Ajouter un parannainage ou don régulier",
+	"app.features.sponsorship.list.addSponsorship" : "Ajouter un parrainage ou don régulier",
 	"app.user.email": "Courriel",
 	"app.user.firstname": "Prénom",
 	"app.user.lang": "Langue",
