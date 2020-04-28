@@ -73,7 +73,7 @@ export class InlineSponsorships extends Component {
         } else {
           filters = { cli_id: this.props.id };
         }
-        this.setState({ add: false, modify: 0 });
+        this.setState({ add: false, spoId: -1 });
         this.props.actions.loadSponsorships(filters);
       })
       .catch(errors => {

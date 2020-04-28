@@ -15,7 +15,6 @@ export function updateOne(args = {}) {
     });
     const promise = new Promise((resolve, reject) => {
       const id = args.data.id;
-      console.log("FK modif don",args);
       const doRequest = freeAssoApi.put('/v1/asso/donation/' + id, args);
       doRequest.then(
         (res) => {
@@ -57,7 +56,6 @@ export function reducer(state, action) {
 
     case DONATION_UPDATE_ONE_SUCCESS:
       // The request is success
-      console.log("FK updateOne success");
       return {
         ...state,
         updateOnePending: false,
