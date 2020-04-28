@@ -47,6 +47,8 @@ export const getCols = ({ props }) => {
       col: 'camt_name',
       size: '20',
       mob_size: '',
+      first: true,
+      last: true,
       title: true,
       sortable: true,
       filterable: { type: 'text' },
