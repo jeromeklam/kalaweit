@@ -15,7 +15,6 @@ export function updateOne(args = {}) {
     });
     const promise = new Promise((resolve, reject) => {
       const id = args.data.id;
-      console.log("FK modif spo",args);
       const doRequest = freeAssoApi.put('/v1/asso/sponsorship/' + id, args);
       doRequest.then(
         (res) => {
