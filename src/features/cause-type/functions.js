@@ -2,8 +2,15 @@ import { buildModel } from 'freejsonapi';
 
 export const causeTypeMntType = [
   { value: 'ANNUAL', label: 'Annuelle glissante' },
-  { value: 'MAXIMUM', label: 'Globale' },
+  { value: 'MAXIMUM', label: 'Objectif' },
   { value: 'OTHER', label: 'Aucune' },
+];
+
+export const causeTypeFamily = [
+  { value: 'ANIMAL', label: 'Animal' },
+  { value: 'NATURE', label: 'Nature' },
+  { value: 'ADMINISTRATIV', label: 'Association' },
+  { value: 'OTHER', label: 'Autre' },
 ];
 
 /**

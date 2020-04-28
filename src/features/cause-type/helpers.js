@@ -1,4 +1,5 @@
 import React from 'react';
+import { displayMonetary } from 'freeassofront';
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
@@ -14,6 +15,12 @@ export const validSelect = [
   { label: 'Inactif', value: false, icon: <MinusIcon className="col-icon" /> },
 ];
 
+const mntCol = (item) => {
+  if (item.caut_family !== 'ANIMAL') {
+    return '';
+  }
+  return displayMonetary(item.caut_max_mnt);
+}
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -71,6 +78,17 @@ export const getCols = ({ props }) => {
       filterable: { type: 'text' },
     },
     {
+      name: 'camt_name',
+      label: 'Grande cause',
+      col: 'cause_main_type.camt_name',
+      size: '6',
+      mob_size: '',
+      title: true,
+      sortable: true,
+      first: true,
+      filterable: { type: 'text' },
+    },
+    {
       name: 'money',
       label: 'Monnaie',
       col: 'caut_money',
@@ -89,13 +107,14 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       type: 'monetary',
+      fDisplay: mntCol,
       filterable: { type: 'text' },
     },
     {
       name: 'mnt_type',
       label: 'Totalisation',
       col: 'caut_mnt_type',
-      size: '6',
+      size: '5',
       mob_size: '',
       title: true,
       sortable: true,

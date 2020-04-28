@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputHidden, InputText, InputSelect, InputCheckbox, InputMonetary } from 'freeassofront';
 import { useForm, ResponsiveModalOrForm } from '../ui';
-import { causeTypeMntType } from './';
+import { causeTypeMntType, causeTypeFamily } from './';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
@@ -12,6 +12,17 @@ export default function Form(props) {
     '',
     props.errors,
   );
+  let minDate = true;
+  let maxDate = true;
+  let maxLabel = "Maximum";
+  if (values.caut_mnt_type === 'OTHER') {
+    minDate = false;
+    maxDate = false;
+  }
+  if (values.caut_mnt_type === 'ANNUAL') {
+    minDate = false;
+    maxLabel = 'Montant annuel';
+  }
   return (
     <ResponsiveModalOrForm
       className="m-5"
@@ -24,7 +35,7 @@ export default function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-sm-36">
+        <div className="col-sm-18">
           <InputText
             label="Nom"
             name="caut_name"
@@ -35,9 +46,7 @@ export default function Form(props) {
             error={getErrorMessage('caut_name')}
           />
         </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-36">
+        <div className="col-sm-18">
           <InputSelect
             label="Grande cause"
             name="cause_main_type.id"
@@ -59,41 +68,7 @@ export default function Form(props) {
             options={causeTypeMntType}
           />
         </div>
-        <div className="col-sm-6">
-        </div>
-        <div className="col-sm-9">
-          <InputCheckbox
-            label="Reçu"
-            name="caut_receipt"
-            id="caut_receipt"
-            checked={values.caut_receipt}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="col-sm-9">
-          <InputCheckbox
-            label="Certificat"
-            name="caut_certificat"
-            id="caut_certificat"
-            checked={values.caut_certificat}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-18">
-          <InputMonetary
-            label="Maximum"
-            labelTop={true}
-            name="caut_max_mnt"
-            id="caut_max_mnt"
-            inputMoney="EUR"
-            dbMoney="EUR"
-            value={values.caut_max_mnt}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="col-sm-18">
+        <div className="col-sm-12">
           <InputMonetary
             label="Don minimum"
             labelTop={true}
@@ -101,12 +76,55 @@ export default function Form(props) {
             id="caut_min_mnt"
             inputMoney="EUR"
             dbMoney="EUR"
-            value={values.caut_min_mnt}
+            disabled={!minDate}
+            value={minDate ? values.caut_min_mnt : ''}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="col-sm-12">
+          <InputMonetary
+            label={maxLabel}
+            labelTop={true}
+            name="caut_max_mnt"
+            id="caut_max_mnt"
+            inputMoney="EUR"
+            dbMoney="EUR"
+            disabled={!maxDate}
+            value={maxDate ? values.caut_max_mnt : ''}
             onChange={handleChange}
           />
         </div>
       </div>
-      <div className="row"></div>
+      <div className="row">
+        <div className="col-md-12">
+          <InputSelect
+            label="Fonctionnement"
+            name="caut_family"
+            id="caut_family"
+            value={values.caut_family}
+            onChange={handleChange}
+            options={causeTypeFamily}
+          />
+        </div>
+        <div className="col-sm-12">
+          <InputCheckbox
+            label="Emission d'un reçu"
+            name="caut_receipt"
+            id="caut_receipt"
+            checked={values.caut_receipt}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="col-sm-12">
+          <InputCheckbox
+            label="Emission d'un certificat"
+            name="caut_certificat"
+            id="caut_certificat"
+            checked={values.caut_certificat}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
     </ResponsiveModalOrForm>
   );
 }
