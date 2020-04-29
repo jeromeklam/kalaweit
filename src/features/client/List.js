@@ -197,7 +197,6 @@ export class List extends Component {
       inlineComponent = <InlineDonations mode="client" id={this.state.donations} />
       id = this.state.donations;
     }
-    console.log("FK items client",items);
     return (
       <div>
         <ResponsiveList

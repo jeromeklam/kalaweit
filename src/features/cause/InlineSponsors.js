@@ -47,7 +47,6 @@ export class InlineSponsors extends Component {
               {sponsors &&
                 sponsors.map(item => {
                   counter++;
-                  console.log("FK sponsor",item);
                   return (
                     <div
                       className={classnames(
