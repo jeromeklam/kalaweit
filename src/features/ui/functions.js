@@ -1,10 +1,10 @@
 import cogoToast from 'cogo-toast';
 
-export function getFromLS(key) {
+export function getFromLS(key, item = 'rgl-8') {
   let ls = {};
   if (global.localStorage) {
     try {
-      ls = JSON.parse(global.localStorage.getItem('rgl-8')) || {};
+      ls = JSON.parse(global.localStorage.getItem(item)) || {};
     } catch (e) {
       /*Ignore*/
     }
@@ -12,10 +12,10 @@ export function getFromLS(key) {
   return ls[key];
 };
 
-export function saveToLS (key, value) {
+export function saveToLS (key, value, item = 'rgl-8') {
   if (global.localStorage) {
     global.localStorage.setItem(
-      'rgl-8',
+      item,
       JSON.stringify({
         [key]: value,
       }),

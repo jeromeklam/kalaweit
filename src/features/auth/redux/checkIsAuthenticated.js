@@ -8,7 +8,7 @@ import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import { initAxios, freeAssoApi } from '../../../common';
 import cookie from 'react-cookies';
 import { schema, defaultConfig } from '../';
-import { saveToLS } from '../../ui';
+import { saveToLS, getFromLS } from '../../ui';
 import Ajv from 'ajv';
 
 export function checkIsAuthenticated(args = {}) {
@@ -69,6 +69,7 @@ export function reducer(state, action) {
       let token = false;
       let authenticated = false;
       let more = {};
+      let realm = null;
       if (datas && datas.headers && datas.headers.authorization) {
         token = datas.headers.authorization;
       }
@@ -91,6 +92,16 @@ export function reducer(state, action) {
         } else {
           more.cache = {};
         }
+        let defaultRealm = getFromLS('realm', 'freeasso-realm');
+        console.log(defaultRealm);
+        if (user.realms && Array.isArray(user.realms)) {
+          const found = user.realms.find(item => { return item.id === defaultRealm } );
+          if (found) {
+            realm = found;
+          } else {
+            user.realms.forEach(item => {realm = item;});
+          }
+        }
         const ajv = new Ajv({ allErrors: true, verbose: true, useDefaults: true });
         const validate = ajv.compile(schema);
         validate(more.settings);
@@ -100,7 +111,9 @@ export function reducer(state, action) {
         ...more,
         token: token,
         user: user,
+        realm: realm,
         authenticated: authenticated,
+        authFirstChecked: true,
         checkIsAuthenticatedPending: false,
         checkIsAuthenticatedError: null,
       };
@@ -109,6 +122,7 @@ export function reducer(state, action) {
       // The request is failed
       return {
         ...state,
+        authFirstChecked: true,
         checkIsAuthenticatedPending: false,
         checkIsAuthenticatedError: action.data.error || null,
       };
@@ -117,6 +131,7 @@ export function reducer(state, action) {
       // Dismiss the request failure error
       return {
         ...state,
+        authFirstChecked: true,
         checkIsAuthenticatedError: null,
       };
 
