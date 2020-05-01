@@ -1,8 +1,10 @@
 import { defaultConfig } from '../';
 
 const initialState = {
+  authFirstChecked: false,
   authenticated: false,
   user: false,
+  realm: null,
   settings: defaultConfig,
   cache: false,
   token: false,

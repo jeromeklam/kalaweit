@@ -21,6 +21,16 @@ const intlMessages = {
   en: messages_en,
 };
 
+const getRealms = (user) => {
+  let realms = [];
+  if (user && user.realms && Array.isArray(user.realms)) {
+    user.realms.forEach(item => {
+      realms.push({value: item.id, label: item.grp_name});
+    });
+  }
+  return realms;
+}
+
 export class App extends Component {
   static propTypes = {
     children: PropTypes.node,
@@ -38,6 +48,7 @@ export class App extends Component {
     this.onNavigate = this.onNavigate.bind(this);
     this.onChangeSettings = this.onChangeSettings.bind(this);
     this.onLocaleChange = this.onLocaleChange.bind(this);
+    this.onRealmSelect = this.onRealmSelect.bind(this);
     this.onGeo = this.onGeo.bind(this);
     this.timers = this.timers.bind(this);
   }
@@ -100,6 +111,10 @@ export class App extends Component {
     this.props.actions.changeSetting('layout', setting, value);
   }
 
+  onRealmSelect(realm_id) {
+    this.props.actions.setRealm(realm_id);
+  }
+
   render() {
     const locale = this.props.common.locale || 'fr';
     const messages = intlMessages[locale];
@@ -130,12 +145,15 @@ export class App extends Component {
             ]}
             currentLocale={locale}
             onLocale={this.onLocaleChange}
+            currentRealm={this.props.auth.realm && this.props.auth.realm.id}
+            realms={getRealms(this.props.auth.user)}
+            onRealmSelect={this.onRealmSelect}
             userForm={<SimpleForm />}
             userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
             accountOpened={<AccountClose />}
             accountClosed={<AccountDetail className="text-primary" />}
           >
-            {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
+            {this.props.auth.authFirstChecked && (!this.props.auth.authenticated || this.props.home.loadAllFinish) ? (
               <div>{this.props.children}</div>
             ) : (
               <div className="text-center mt-5 text-secondary">

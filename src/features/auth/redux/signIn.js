@@ -62,6 +62,7 @@ export function reducer(state, action) {
       let token = false;
       let authenticated = false;
       let more = {};
+      let realm = null;
       if (datas && datas.headers && datas.headers.authorization) {
         token = datas.headers.authorization;
       }
@@ -78,6 +79,9 @@ export function reducer(state, action) {
         if (token) {
           cookie.save('Authorization', token, { path: '/' });
           initAxios(token);
+        }
+        if (user.realms && Array.isArray(user.realms)) {
+          user.realms.forEach(item => {realm = item;});
         }
         if (autologin) {
           let aYearFromNow = new Date();
@@ -104,6 +108,8 @@ export function reducer(state, action) {
         ...more,
         token: token,
         user: user,
+        realm: realm,
+        authFirstChecked: true,
         authenticated: authenticated,
         signInPending: false,
         signInError: null,
@@ -117,6 +123,7 @@ export function reducer(state, action) {
       }
       return {
         ...state,
+        authFirstChecked: true,
         signInPending: false,
         signInError: error,
       };

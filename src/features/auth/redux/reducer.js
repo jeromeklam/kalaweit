@@ -16,6 +16,7 @@ import { reducer as updateOneReducer } from './updateOne';
 import { reducer as updatePasswordReducer } from './updatePassword';
 import { reducer as updateConfigReducer } from './updateConfig';
 import { reducer as changeSettingReducer } from './changeSetting';
+import { reducer as setRealmReducer } from './setRealm';
 
 const reducers = [
   checkIsAuthenticatedReducer,
@@ -27,6 +28,7 @@ const reducers = [
   updatePasswordReducer,
   updateConfigReducer,
   changeSettingReducer,
+  setRealmReducer,
 ];
 
 export default function reducer(state = initialState, action) {
