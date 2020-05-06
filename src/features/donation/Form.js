@@ -1,6 +1,6 @@
 import React from 'react';
 import { InputHidden, InputSelect, InputText, InputMonetary, InputCheckbox } from 'freeassofront';
-import { InputDate, ResponsiveModalOrForm, InputSponsors } from '../ui';
+import { InputDate, ResponsiveModalOrForm, InputSponsors, InputTextarea } from '../ui';
 import useForm from '../ui/useForm';
 import { paymentTypeAsOptions } from '../payment-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
@@ -222,14 +222,12 @@ export default function Form(props) {
           </div>
           <div className="row">
             <div className="col-sm-36">
-              <InputText
+              <InputTextarea
                 label="Commentaires"
-                id="don_domment"
                 name="don_comment"
                 labelTop={true}
                 value={values.don_comment}
                 onChange={handleChange}
-                error={getErrorMessage('don_comment')}
               />
             </div>
           </div>

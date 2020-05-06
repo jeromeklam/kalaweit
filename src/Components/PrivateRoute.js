@@ -31,14 +31,12 @@ PrivateRoute.propTypes = {
   redirect: PropTypes.string,
 };
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     authenticated: state.auth.authenticated,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch)

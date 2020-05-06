@@ -278,6 +278,15 @@ svg.text-warning.inline-action:hover {
   color: theme-color('secondary');
 }
 
+/* Couleur de fond spécifique des lignes des listes */
+.row-line-info {
+  background-color: theme-color('info-light');
+}
+.row-line-info.row-line-hover {
+  background-color: darken(theme-color('info-light'), 5%);
+  color: theme-color('secondary');
+}
+
 /* On force la couleur des icones dans les colonnes des listes */
 .text-secondary svg.col-icon {
   fill: theme-color('secondary');
