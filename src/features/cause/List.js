@@ -272,7 +272,7 @@ export class List extends Component {
           sortUpIcon={<SortUpIcon />}
           sortNoneIcon={<SortNoneIcon />}
           inlineActions={inlineActions}
-          inlineDisplay={id}
+          inlineOpenedId={id}
           inlineComponent={inlineComponent}
           globalActions={globalActions}
           sort={this.props.cause.sort}

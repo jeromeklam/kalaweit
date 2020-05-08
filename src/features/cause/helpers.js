@@ -123,7 +123,7 @@ export const getCols = ({ props }) => {
       name: 'name',
       label: 'Nom',
       col: 'cau_name',
-      size: '4',
+      size: '3',
       mob_size: '',
       title: true,
       sortable: true,
@@ -188,10 +188,19 @@ export const getCols = ({ props }) => {
       name: 'site',
       label: 'Site',
       col: 'site.site_name',
-      size: '6',
+      size: '3',
       mob_size: '',
       title: true,
       sortable: true,
+    },
+    {
+      name: 'photo',
+      label: '',
+      col: 'default_blob.caum_short_blob',
+      size: '3',
+      mob_size: '',
+      sortable: false,
+      type: 'thumbnail',
     },
     {
       name: 'type',
@@ -218,6 +227,5 @@ export const getCols = ({ props }) => {
       },
       last: true,
     },
-
   ];
 };

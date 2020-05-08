@@ -147,7 +147,6 @@ export const getCols = ({ props }) => {
       mob_size: '',
       sortable: true,
       filterable: { type: 'text' },
-      last: true,
     },
     {
       name: 'note',
@@ -163,7 +162,6 @@ export const getCols = ({ props }) => {
           return ''; 
         } 
       },
-      filterable: { type: 'text' },
       last: true,
     },
   ];
