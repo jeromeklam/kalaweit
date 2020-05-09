@@ -203,6 +203,15 @@ export const getCols = ({ props }) => {
       type: 'thumbnail',
     },
     {
+      name: 'cau_to',
+      label: 'Fin',
+      col: 'cau_to',
+      size: '0',
+      mob_size: '0',
+      hidden: true,
+      filterable: { type: 'date' },
+    },
+    {
       name: 'type',
       label: 'Type',
       col: 'cause_type.caut_id',
