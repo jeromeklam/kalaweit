@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { InputText, InputCheckbox } from 'freeassofront';
-import { DelOne as DelOneIcon } from '../icons';
+import { DelOne as DelOneIcon, Plus as PlusIcon } from '../icons';
 
 class InputSponsorLine extends Component {
   static propTypes = {
@@ -156,8 +156,8 @@ export default class InputSponsors extends Component {
           );
         })}
         {addNew && (
-          <button className="btn btn-primary text-light" onClick={this.onAddNew}>
-            <span>Ajouter un nouvel invité</span>
+          <button className="btn bg-light btn-outline-secondary" onClick={this.onAddNew}>
+            <PlusIcon className="text-primary"/>
           </button>
         )}
       </div>

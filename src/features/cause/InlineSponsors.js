@@ -29,7 +29,7 @@ export class InlineSponsors extends Component {
             <div className="inline-list">
               <div className="row row-title row-line">
                 <div className="col-12">
-                  <span>Nom </span>
+                  <span className="pl-2">Nom </span>
                 </div>
                 <div className="col-12">
                   <span>Email </span>
@@ -56,7 +56,7 @@ export class InlineSponsors extends Component {
                       key={item.id}
                     >
                       <div className="col-12">
-                        <span>{item.spon_name}</span>
+                        <span className="pl-2">{item.spon_name}</span>
                       </div>
                       <div className="col-12">
                         <span>{item.spon_email}</span>
