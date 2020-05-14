@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
+import { propagateModel } from '../../common';
 import {
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
@@ -15,7 +16,8 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
-import { getGlobalActions, getInlineActions, getCols } from './';
+import { modifySuccess, modifyError } from '../ui';
+import { getGlobalActions, getInlineActions, getCols, updateDonStatus } from './';
 import { Create, Modify } from './';
 
 export class List extends Component {
@@ -34,12 +36,15 @@ export class List extends Component {
     this.onReload = this.onReload.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onPayOn = this.onPayOn.bind(this);
+    this.onPayOff = this.onPayOff.bind(this);
     this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
+    this.itemClassName = this.itemClassName.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +57,28 @@ export class List extends Component {
 
   onGetOne(id) {
     this.setState({ donId: id });
+  }
+
+  onPayOn(id) {
+    updateDonStatus(id, 'OK')
+      .then(result => {
+        modifySuccess();
+        this.props.actions.propagateModel('FreeAsso_Donation', result);
+      })
+      .catch(errors => {
+        modifyError();
+      });
+  }
+
+  onPayOff(id) {
+    updateDonStatus(id, 'NOK')
+      .then(result => {
+        modifySuccess();
+        this.props.actions.propagateModel('FreeAsso_Donation', result);
+      })
+      .catch(errors => {
+        modifyError();
+      });
   }
 
   onClose() {
@@ -123,6 +150,17 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
+  itemClassName(item) {
+    if (item) {
+      if (item.don_status === 'NOK') {
+        return 'row-line-warning';
+      } else if (item.don_status === 'WAIT') {
+        return 'row-line-info';
+      }
+    }
+    return '';
+  }
+
   render() {
     let items = false;
     if (this.props.donation.items.FreeAsso_Donation) {
@@ -178,6 +216,7 @@ export class List extends Component {
           loadMorePending={this.props.donation.loadMorePending}
           loadMoreFinish={this.props.donation.loadMoreFinish}
           loadMoreError={this.props.donation.loadMoreError}
+          fClassName={this.itemClassName}
         />
         {this.state.donId > 0 && (
           <Modify modal={true} donId={this.state.donId} onClose={this.onClose} />
@@ -196,7 +235,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

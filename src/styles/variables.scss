@@ -9,6 +9,8 @@ $theme-colors: (
   "warning-light": lighten(#ff9900,40%),
   "light": lighten(#5a4e4e, 60%),
   "success": #7ab255,
+  "info": #5b9ad0,
+  "info-light": lighten(#5b9ad0,30%),
 );
 $grid-breakpoints: (
   xs: 0,

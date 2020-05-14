@@ -10,6 +10,7 @@ import { CLIENT_UPDATE_ONE_UPDATE } from '../features/client/redux/constants';
 import { CLIENT_TYPE_UPDATE_ONE_UPDATE } from '../features/client-type/redux/constants';
 import { CLIENT_CATEGORY_UPDATE_ONE_UPDATE } from '../features/client-category/redux/constants';
 import { SPONSORSHIP_UPDATE_ONE_UPDATE } from '../features/sponsorship/redux/constants';
+import { DONATION_UPDATE_ONE_UPDATE } from '../features/donation/redux/constants';
 
 export function propagateModel(type, model) {
   return dispatch => {
@@ -77,6 +78,12 @@ export function propagateModel(type, model) {
       case 'FreeAsso_Sponsorship':
         dispatch({
           type: SPONSORSHIP_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Donation':
+        dispatch({
+          type: DONATION_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;

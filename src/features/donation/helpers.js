@@ -3,7 +3,10 @@ import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
+  PaymentOn as PaymentOnIcon,
+  PaymentOff as PaymentOffIcon,
   FilterClear as FilterClearIcon,
+  Note as NoteIcon,
 } from '../icons';
 
 export const statusValues = [
@@ -34,8 +37,26 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   ];
 };
 
-export const getInlineActions = ({ onGetOne, onDelOne }) => {
+export const getInlineActions = ({ onGetOne, onDelOne, onPayOn, onPayOff }) => {
   return [
+    {
+      name: 'status',
+      label: 'Payé',
+      onClick: onPayOn,
+      theme: 'secondary',
+      icon: <PaymentOnIcon color="white" />,
+      role: 'MODIFY',
+      fDisplay: (item) => { if (item.don_status === 'NOK' || item.don_status === 'WAIT') { return true; } else { return false; } },
+    },
+    {
+      name: 'status',
+      label: 'Impayé',
+      onClick: onPayOff,
+      theme: 'secondary',
+      icon: <PaymentOffIcon color="white" />,
+      role: 'MODIFY',
+      fDisplay: (item) => { if (item.don_status === 'OK' || item.don_status === 'WAIT') { return true; } else { return false; } },
+    },
     {
       name: 'modify',
       label: 'Modifier',
@@ -61,7 +82,7 @@ export const getCols = ({ props }) => {
       name: 'id',
       label: 'Identifiant',
       col: 'id',
-      size: '4',
+      size: '3',
       mob_size: '',
       title: true,
       sortable: true,
@@ -72,7 +93,7 @@ export const getCols = ({ props }) => {
       name: 'date',
       label: 'Date',
       col: 'don_ts',
-      size: '4',
+      size: '3',
       mob_size: '',
       title: true,
       sortable: true,
@@ -91,7 +112,7 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'status',
-      label: 'Status',
+      label: 'Statut',
       col: 'don_status',
       size: '4',
       mob_size: '',
@@ -126,6 +147,21 @@ export const getCols = ({ props }) => {
       mob_size: '',
       sortable: true,
       filterable: { type: 'text' },
+    },
+    {
+      name: 'note',
+      label: '',
+      col: 'don_comment',
+      size: '2',
+      mob_size: '',
+      sortable: true,
+      fDisplay: (item) => { 
+        if (item.don_comment !== '' && item.don_comment !== null) { 
+          return <NoteIcon className="col-icon" />; 
+        } else { 
+          return ''; 
+        } 
+      },
       last: true,
     },
   ];
