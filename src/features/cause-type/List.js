@@ -164,7 +164,7 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Types de cause"
+          title="Missions"
           cols={cols}
           items={items}
           quickSearch={quickSearch}

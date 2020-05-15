@@ -109,6 +109,17 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
 export const getCols = ({ props }) => {
   return [
     {
+      name: 'photo',
+      label: 'Photo',
+      col: 'default_blob.caum_short_blob',
+      size: '3',
+      mob_size: '',
+      sortable: false,
+      title: true,
+      first: true,
+      type: 'thumbnail',
+    },
+    {
       name: 'id',
       label: 'Identifiant',
       col: 'id',
@@ -127,7 +138,6 @@ export const getCols = ({ props }) => {
       mob_size: '',
       title: true,
       sortable: true,
-      first: true,
       filterable: { type: 'text' },
     },
     {
@@ -192,15 +202,6 @@ export const getCols = ({ props }) => {
       mob_size: '',
       title: true,
       sortable: true,
-    },
-    {
-      name: 'photo',
-      label: '',
-      col: 'default_blob.caum_short_blob',
-      size: '3',
-      mob_size: '',
-      sortable: false,
-      type: 'thumbnail',
     },
     {
       name: 'cau_to',

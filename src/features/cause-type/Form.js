@@ -28,7 +28,7 @@ export default function Form(props) {
       className="m-5"
       size="lg"
       modal={true}
-      title="Type de cause"
+      title="Mission"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onClose={props.onClose}

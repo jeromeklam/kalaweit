@@ -79,7 +79,7 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'camt_name',
-      label: 'Grande cause',
+      label: 'Programme',
       col: 'cause_main_type.camt_name',
       size: '6',
       mob_size: '',

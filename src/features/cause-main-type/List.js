@@ -140,7 +140,7 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Grandes cause"
+          title="Programmes"
           cols={cols}
           items={items}
           quickSearch={null}

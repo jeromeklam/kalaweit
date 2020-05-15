@@ -164,7 +164,7 @@ export class List extends Component {
           loadMoreFinish={this.props.clientType.loadMoreFinish}
           loadMoreError={this.props.clientType.loadMoreError}
         />
-        {this.state.cautId > 0 && (
+        {this.state.clitId > 0 && (
           <Modify modal={true} clitId={this.state.clitId} onClose={this.onClose} />
         )}
         {this.state.clitId === 0 && <Create modal={true} onClose={this.onClose} />}

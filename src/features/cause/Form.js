@@ -1,6 +1,6 @@
 import React from 'react';
 import { InputCheckbox, InputHidden, InputSelect, InputText, InputMonetary  } from 'freeassofront';
-import { InputDate, InputData, ResponsiveModalOrForm, InputTextarea } from '../ui';
+import { InputDate, InputData, ResponsiveModalOrForm, InputTextarea, InputSpin } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
@@ -8,6 +8,7 @@ import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker } from './';
 
 export default function Form(props) {
+  const nYear = new Date().getFullYear(); 
   const { values, handleChange, handleSubmit, handleCancel, handleNavTab, getErrorMessage } = useForm(
     props.item,
     props.tab,
@@ -33,7 +34,7 @@ export default function Form(props) {
       <div className="row">
         <div className="col-md-12">
           <InputSelect
-            label="Type"
+            label="Mission"
             name="cause_type.id"
             labelTop={true}
             value={values.cause_type ? values.cause_type.id : null}
@@ -84,13 +85,14 @@ export default function Form(props) {
               />
             </div>
             <div className="col-md-6">
-              <InputData
-                key="cau_number_1"
-                name="cau_number_1"
+              <InputSpin
+                label="Année de naissance"
+                name="cau_year"
+                id="cau_year"
+                maxValue={nYear}
+                minValue={1990}
                 labelTop={true}
-                value={values.cau_number_1}
-                datas={props.tab_datas}
-                config={props.tab_configs}
+                value={values.cau_year}
                 onChange={handleChange}
               />
             </div>

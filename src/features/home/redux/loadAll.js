@@ -17,6 +17,8 @@ import { loadMore as loadMoreClientCategory } from '../../client-category/redux/
 import { loadMore as loadMorePaymentType } from '../../payment-type/redux/loadMore';
 import { loadMore as loadMoreSession } from '../../session/redux/loadMore';
 import { loadMore as loadMoreDashboard } from '../../dashboard/redux/loadMore';
+import { loadMore as loadMoreSpecies } from '../../species/redux/loadMore';
+import { loadMore as loadMoreSubspecies } from '../../subspecies/redux/loadMore';
 
 export function loadAll(args = {}) {
   return dispatch => {
@@ -37,6 +39,8 @@ export function loadAll(args = {}) {
       dispatch(loadMoreClientCategory()),
       dispatch(loadMoreSession()),
       dispatch(loadMoreDashboard()),
+      dispatch(loadMoreSpecies()),
+      dispatch(loadMoreSubspecies()),
     ]);
     return promise.then(
       res => {
