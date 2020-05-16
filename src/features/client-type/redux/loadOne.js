@@ -12,7 +12,6 @@ export function loadOne(args = {}) {
     dispatch({
       type: CLIENT_TYPE_LOAD_ONE_BEGIN,
     });
-
     const promise = new Promise((resolve, reject) => {
       const doRequest = freeAssoApi.get('/v1/asso/client_type/' + args);
       doRequest.then(
@@ -33,7 +32,6 @@ export function loadOne(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }
@@ -70,10 +68,14 @@ export function reducer(state, action) {
 
     case CLIENT_TYPE_LOAD_ONE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         loadOnePending: false,
-        loadOneError: action.data.error,
+        loadOneError: error,
       };
 
     case CLIENT_TYPE_LOAD_ONE_DISMISS_ERROR:

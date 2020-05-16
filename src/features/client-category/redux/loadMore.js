@@ -10,7 +10,6 @@ import {
 
 export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => {
-    // optionally you can have getState as the second argument
     const loaded = getState().clientCategory.loadMoreFinish;
     const loading = getState().clientCategory.loadMorePending;
     if (!loading && (!loaded || reload)) {

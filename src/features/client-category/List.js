@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
@@ -15,7 +16,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
-import { deleteError, deleteSuccess } from '../ui';
+import { showErrors, deleteSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 
@@ -29,7 +30,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
-      clicId: null,
+      clicId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -63,12 +64,12 @@ export class List extends Component {
         this.props.actions.loadMore({}, true)
       })
       .catch(errors => {
-        deleteError();
+        showErrors(this.props.intl, errors);
       });
   }
 
   onClose() {
-    this.setState({ clicId: null });
+    this.setState({ clicId: -1 });
   }
 
   onReload(event) {
@@ -133,6 +134,7 @@ export class List extends Component {
   }
 
   render() {
+    const { intl } = this.props;
     let items = [];
     if (this.props.clientCategory.items.FreeAsso_ClientCategory) {
       items = buildModel(this.props.clientCategory.items, 'FreeAsso_ClientCategory');
@@ -149,7 +151,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche nom"
+        label={intl.formatMessage({ id: 'app.features.clientCategorye.list.search', defaultMessage: 'Search by name' })}
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -164,7 +166,8 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Catégories de client"
+          title={intl.formatMessage({ id: 'app.features.clientCategorye.list.title', defaultMessage: 'Person categories' })}
+          intl={intl}
           cols={cols}
           items={items}
           quickSearch={quickSearch}
@@ -188,7 +191,7 @@ export class List extends Component {
           loadMoreFinish={this.props.clientCategory.loadMoreFinish}
           loadMoreError={this.props.clientCategory.loadMoreError}
         />
-        {this.state.cautId > 0 && (
+        {this.state.clicId > 0 && (
           <Modify modal={true} clicId={this.state.clicId} onClose={this.onClose} />
         )}
         {this.state.clicId === 0 && <Create modal={true} onClose={this.onClose} />}
@@ -209,4 +212,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

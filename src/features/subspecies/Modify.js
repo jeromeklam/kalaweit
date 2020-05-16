@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, showErrors } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -57,7 +58,7 @@ export class Modify extends Component {
         this.props.onClose();
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -69,16 +70,16 @@ export class Modify extends Component {
           <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && 
-              <Form 
+            {item && (
+              <Form
                 item={item}
                 species={this.props.species.items}
                 errors={this.props.subspecies.updateOneError}
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
                 onClose={this.props.onClose}
               />
-            }
+            )}
           </div>
         )}
       </div>
@@ -95,11 +96,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Modify));
+export default injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify)));

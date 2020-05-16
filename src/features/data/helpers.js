@@ -6,24 +6,25 @@ import {
   DelOne as DelOneIcon,
 } from '../icons';
 
-export const getGlobalActions = ({ onCreate }) => {
+export const getGlobalActions = ({ props, onCreate }) => {
   return [
     {
       name: 'create',
-      label: 'Ajouter',
+      label: props.intl.formatMessage({ id: 'app.list.button.add', defaultMessage: 'Add' }),
       onClick: onCreate,
       theme: 'primary',
+      disabled: true,
       icon: <AddOneIcon color="white" />,
       role: 'CREATE',
     },
   ];
 };
 
-export const getInlineActions = ({ onGetOne, onDelOne }) => {
+export const getInlineActions = ({ props, onGetOne, onDelOne }) => {
   return [
     {
       name: 'modify',
-      label: 'Modifier',
+      label: props.intl.formatMessage({ id: 'app.list.button.modify', defaultMessage: 'Modify' }),
       onClick: onGetOne,
       theme: 'secondary',
       icon: <GetOneIcon color="white" />,
@@ -31,8 +32,9 @@ export const getInlineActions = ({ onGetOne, onDelOne }) => {
     },
     {
       name: 'delete',
-      label: 'Supprimer',
+      label: props.intl.formatMessage({ id: 'app.list.button.delete', defaultMessage: 'Delete' }),
       onClick: onDelOne,
+      disabled: true,
       theme: 'warning',
       icon: <DelOneIcon color="white" />,
       role: 'DELETE',
@@ -44,18 +46,21 @@ export const getCols = ({ props }) => {
   return [
     {
       name: 'name',
-      label: 'Nom',
+      label: props.intl.formatMessage({ id: 'app.features.data.list.col.name', defaultMessage: 'Name' }),
       size: '20',
       col: 'data_name',
       title: true,
       sortable: true,
+      first: true,
       filterable: { type: 'text' },
     },
     {
       name: 'type',
-      label: 'Type',
+      label: props.intl.formatMessage({ id: 'app.features.data.list.col.type', defaultMessage: 'Type' }),
       size: '10',
       col: 'data_type',
+      title: true,
+      last: true,
       type: 'switch',
       values: dataTypes(),
     },

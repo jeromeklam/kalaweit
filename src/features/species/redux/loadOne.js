@@ -70,10 +70,14 @@ export function reducer(state, action) {
 
     case SPECIES_LOAD_ONE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         loadOnePending: false,
-        loadOneError: action.data.error,
+        loadOneError: error,
       };
 
     case SPECIES_LOAD_ONE_DISMISS_ERROR:

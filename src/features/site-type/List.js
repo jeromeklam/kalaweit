@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 import * as actions from './redux/actions';
@@ -12,7 +13,7 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
 } from '../icons';
-import { deleteError, deleteSuccess } from '../ui';
+import { showErrors, deleteSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 
@@ -26,7 +27,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
-      sittId: null,
+      sittId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -58,12 +59,12 @@ export class List extends Component {
         this.props.actions.loadMore({}, true)
       })
       .catch(errors => {
-        deleteError();
+        showErrors(this.props.intl, errors);
       });
   }
 
   onClose() {
-    this.setState({ sittId: null });
+    this.setState({ sittId: -1 });
   }
 
   onReload(event) {
@@ -103,6 +104,7 @@ export class List extends Component {
   }
 
   render() {
+    const { intl } = this.props;
     let items = [];
     if (this.props.siteType.items.FreeAsso_SiteType) {
       items = buildModel(this.props.siteType.items, 'FreeAsso_SiteType');
@@ -114,7 +116,8 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Types de localisation"
+          title={intl.formatMessage({ id: 'app.features.siteType.list.title', defaultMessage: 'Locations types' })}
+          intl={intl}
           cols={cols}
           items={items}
           mainCol="sitt_name"
@@ -156,4 +159,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

@@ -12,7 +12,6 @@ export function createOne(args = {}) {
     dispatch({
       type: CLIENT_CATEGORY_CREATE_ONE_BEGIN,
     });
-
     const promise = new Promise((resolve, reject) => {
       const doRequest = freeAssoApi.post('/v1/asso/client_category', args);
       doRequest.then(
@@ -23,7 +22,6 @@ export function createOne(args = {}) {
           });
           resolve(res);
         },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
             type: CLIENT_CATEGORY_CREATE_ONE_FAILURE,
@@ -33,7 +31,6 @@ export function createOne(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }

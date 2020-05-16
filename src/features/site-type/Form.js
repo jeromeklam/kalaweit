@@ -1,8 +1,9 @@
 import React from 'react';
 import { InputHidden, InputText } from 'freeassofront';
+import { injectIntl } from 'react-intl';
 import { useForm, ResponsiveModalOrForm } from '../ui';
 
-export default function Form(props) {
+function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
@@ -16,7 +17,10 @@ export default function Form(props) {
       className="m-5"
       size="md"
       modal={true}
-      title="Localisation"
+      title={props.intl.formatMessage({
+        id: 'app.features.siteType.form.title',
+        defaultMessage: 'Location type',
+      })}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onClose={props.onClose}
@@ -25,7 +29,10 @@ export default function Form(props) {
       <div className="row">
         <div className="col-sm-36">
           <InputText
-            label="Nom"
+            label={props.intl.formatMessage({
+              id: 'app.features.siteType.form.name',
+              defaultMessage: 'Name',
+            })}
             name="sitt_name"
             id="sitt_name"
             required={true}
@@ -38,3 +45,5 @@ export default function Form(props) {
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

@@ -1,11 +1,22 @@
 import React from 'react';
-import { AddOne as AddOneIcon, GetOne as GetOneIcon, DelOne as DelOneIcon } from '../icons';
+import {
+  AddOne as AddOneIcon,
+  GetOne as GetOneIcon,
+  DelOne as DelOneIcon,
+  ColCheck as ColCheckIcon,
+  Minus as MinusIcon,
+} from '../icons';
 
-export const getGlobalActions = ({ onCreate }) => {
+export const validSelect = [
+  { label: 'Actif', value: true, icon: <ColCheckIcon className="col-icon" /> },
+  { label: 'Inactif', value: false, icon: <MinusIcon className="col-icon" /> },
+];
+
+export const getGlobalActions = ({ props, onCreate }) => {
   return [
     {
       name: 'create',
-      label: 'Ajouter',
+      label: props.intl.formatMessage({ id: 'app.list.button.add', defaultMessage: 'Add' }),
       onClick: onCreate,
       theme: 'primary',
       icon: <AddOneIcon color="white" />,
@@ -14,11 +25,11 @@ export const getGlobalActions = ({ onCreate }) => {
   ];
 };
 
-export const getInlineActions = ({ onGetOne, onDelOne }) => {
+export const getInlineActions = ({ props, onGetOne, onDelOne }) => {
   return [
     {
       name: 'modify',
-      label: 'Modifier',
+      label: props.intl.formatMessage({ id: 'app.list.button.modify', defaultMessage: 'Modify' }),
       onClick: onGetOne,
       theme: 'secondary',
       icon: <GetOneIcon color="white" />,
@@ -26,7 +37,7 @@ export const getInlineActions = ({ onGetOne, onDelOne }) => {
     },
     {
       name: 'delete',
-      label: 'Supprimer',
+      label: props.intl.formatMessage({ id: 'app.list.button.delete', defaultMessage: 'Delete' }),
       onClick: onDelOne,
       theme: 'warning',
       icon: <DelOneIcon color="white" />,
@@ -39,7 +50,10 @@ export const getCols = ({ props }) => {
   return [
     {
       name: 'name',
-      label: 'Nom',
+      label: props.intl.formatMessage({
+        id: 'app.features.paymentType.list.col.name',
+        defaultMessage: 'Name',
+      }),
       col: 'ptyp_name',
       size: '10',
       mob_size: '',
@@ -50,14 +64,18 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'receipt',
-      label: 'Reçu',
+      label: props.intl.formatMessage({
+        id: 'app.features.paymentType.list.col.receipt',
+        defaultMessage: 'Receipt',
+      }),
       col: 'ptyp_receipt',
       size: '6',
       mob_size: '',
       title: true,
       sortable: true,
       type: 'bool',
-      filterable: { type: 'text' },
+      values: validSelect,
+      filterable: { type: 'bool' },
       last: true,
     },
   ];

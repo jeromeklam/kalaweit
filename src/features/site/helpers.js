@@ -7,11 +7,10 @@ import {
 } from '../icons';
 
 export const getGlobalActions = ({ onClearFilters, onCreate, props }) => {
-  const { intl } = props;
   return [
     {
       name: 'clear',
-      label: intl.formatMessage({ id: 'app.list.button.clear', defaultMessage: 'Clear' }),
+      label: props.intl.formatMessage({ id: 'app.list.button.clear', defaultMessage: 'Clear' }),
       onClick: onClearFilters,
       theme: 'secondary',
       icon: <FilterClearIcon color="white" />,
@@ -19,7 +18,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate, props }) => {
     },
     {
       name: 'create',
-      label: intl.formatMessage({ id: 'app.list.button.add', defaultMessage: 'Add new' }),
+      label: props.intl.formatMessage({ id: 'app.list.button.add', defaultMessage: 'Add new' }),
       onClick: onCreate,
       theme: 'primary',
       icon: <AddOneIcon color="white" />,
@@ -29,11 +28,10 @@ export const getGlobalActions = ({ onClearFilters, onCreate, props }) => {
 };
 
 export const getInlineActions = ({ onGetOne, onDelOne, props }) => {
-  const { intl } = props;
   return [
     {
       name: 'modify',
-      label: intl.formatMessage({ id: 'app.list.button.modify', defaultMessage: 'Modify' }),
+      label: props.intl.formatMessage({ id: 'app.list.button.modify', defaultMessage: 'Modify' }),
       onClick: onGetOne,
       theme: 'secondary',
       icon: <GetOneIcon color="white" />,
@@ -41,7 +39,7 @@ export const getInlineActions = ({ onGetOne, onDelOne, props }) => {
     },
     {
       name: 'delete',
-      label: intl.formatMessage({ id: 'app.list.button.delete', defaultMessage: 'Delete' }),
+      label: props.intl.formatMessage({ id: 'app.list.button.delete', defaultMessage: 'Delete' }),
       onClick: onDelOne,
       theme: 'warning',
       icon: <DelOneIcon color="white" />,

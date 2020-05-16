@@ -22,7 +22,6 @@ export function loadMore(args = {}, reload = false) {
           type: SITE_TYPE_LOAD_MORE_BEGIN,
         });
       }
-
       const promise = new Promise((resolve, reject) => {
         let filters = getState().siteType.filters.asJsonApiObject();
         let params = {
@@ -128,10 +127,14 @@ export function reducer(state, action) {
 
     case SITE_TYPE_LOAD_MORE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         loadMorePending: false,
-        loadMoreError: action.data.error,
+        loadMoreError: error,
       };
 
     case SITE_TYPE_LOAD_MORE_DISMISS_ERROR:

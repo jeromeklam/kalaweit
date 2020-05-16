@@ -83,6 +83,7 @@ export class Create extends Component {
               <Form 
                 item={item} 
                 cause_types={this.props.causeType.items} 
+                subspecies={this.props.subspecies.items} 
                 tab_datas={this.props.data.items}
                 tab_configs={this.props.config.items}
                 tab={this.props.cause.tab}
@@ -106,6 +107,7 @@ function mapStateToProps(state) {
     config: state.config,
     cause: state.cause,
     causeType: state.causeType,
+    subspecies: state.subspecies,
   };
 }
 

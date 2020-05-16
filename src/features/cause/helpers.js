@@ -141,9 +141,9 @@ export const getCols = ({ props }) => {
       filterable: { type: 'text' },
     },
     {
-      name: 'type',
-      label: 'Type',
-      col: 'cause_type.caut_name',
+      name: 'subspecies',
+      label: 'Espèce',
+      col: 'subspecies.sspe_name',
       size: '8',
       mob_size: '',
       title: true,

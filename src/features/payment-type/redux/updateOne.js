@@ -8,19 +8,19 @@ import {
   PAYMENT_TYPE_UPDATE_ONE_DISMISS_ERROR,
 } from './constants';
 
-export function updateOne(args = {}) {
+export function updateOne(id, args = {}) {
   return (dispatch) => {
     dispatch({
       type: PAYMENT_TYPE_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/asso/payment_type/' + id, args);
       doRequest.then(
         (res) => {
           dispatch({
             type: PAYMENT_TYPE_UPDATE_ONE_SUCCESS,
             data: res,
+            id: id,
           });
           resolve(res);
         },

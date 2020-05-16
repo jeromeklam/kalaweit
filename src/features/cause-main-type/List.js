@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
@@ -12,7 +13,7 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
 } from '../icons';
-import { deleteError, deleteSuccess } from '../ui';
+import { showErrors, deleteSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 
@@ -60,7 +61,7 @@ export class List extends Component {
         this.props.actions.loadMore({}, true)
       })
       .catch(errors => {
-        deleteError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -130,6 +131,7 @@ export class List extends Component {
   }
 
   render() {
+    const { intl } = this.props;
     let items = [];
     if (this.props.causeMainType.items.FreeAsso_CauseMainType) {
       items = buildModel(this.props.causeMainType.items, 'FreeAsso_CauseMainType');
@@ -140,7 +142,8 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Programmes"
+          title={intl.formatMessage({ id: 'app.features.causeMainType.list.title', defaultMessage: 'Programs' })}
+          intl={intl}
           cols={cols}
           items={items}
           quickSearch={null}
@@ -184,4 +187,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

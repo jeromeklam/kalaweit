@@ -1,9 +1,10 @@
 import React from 'react';
 import { InputHidden, InputText, InputSelect } from 'freeassofront';
 import { useForm, ResponsiveModalOrForm } from '../ui';
+import { injectIntl } from 'react-intl';
 import { speciesAsOptions } from '../species/functions.js';
 
-export default function Form(props) {
+function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
@@ -13,12 +14,15 @@ export default function Form(props) {
     props.errors,
   );
   return (
-    <ResponsiveModalOrForm 
+    <ResponsiveModalOrForm
       className="m-5"
       size="md"
-      modal={true} 
-      title="Sous-espèces" 
-      onSubmit={handleSubmit} 
+      modal={true}
+      title={props.intl.formatMessage({
+        id: 'app.features.subspecies.form.title',
+        defaultMessage: 'Subspecies',
+      })}
+      onSubmit={handleSubmit}
       onCancel={handleCancel}
       onClose={props.onClose}
     >
@@ -26,7 +30,10 @@ export default function Form(props) {
       <div className="row">
         <div className="col-sm-36">
           <InputText
-            label="Nom"
+            label={props.intl.formatMessage({
+              id: 'app.features.subspecies.form.name',
+              defaultMessage: 'Name',
+            })}
             name="sspe_name"
             id="sspe_name"
             required={true}
@@ -36,10 +43,14 @@ export default function Form(props) {
           />
         </div>
       </div>
+      <hr />
       <div className="row">
         <div className="col-sm-36">
           <InputSelect
-            label="Espèce"
+            label={props.intl.formatMessage({
+              id: 'app.features.subspecies.form.species',
+              defaultMessage: 'Species',
+            })}
             name="species.id"
             labelTop={true}
             value={values.species ? values.species.id : null}
@@ -48,6 +59,23 @@ export default function Form(props) {
           />
         </div>
       </div>
+      <div className="row">
+        <div className="col-sm-36">
+          <InputText
+            label={props.intl.formatMessage({
+              id: 'app.features.subspecies.form.scientific',
+              defaultMessage: 'Scientific name',
+            })}
+            name="sspe_scientific"
+            id="sspe_scientific"
+            value={values.sspe_scientific}
+            onChange={handleChange}
+            error={getErrorMessage('sspe_scientific')}
+          />
+        </div>
+      </div>
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

@@ -22,11 +22,11 @@ const mntCol = (item) => {
   return displayMonetary(item.caut_max_mnt);
 }
 
-export const getGlobalActions = ({ onClearFilters, onCreate }) => {
+export const getGlobalActions = ({ props, onClearFilters, onCreate }) => {
   return [
     {
       name: 'clear',
-      label: 'Effacer',
+      label: props.intl.formatMessage({ id: 'app.list.button.clear', defaultMessage: 'Clear filters' }),
       onClick: onClearFilters,
       theme: 'secondary',
       icon: <FilterClearIcon color="white" />,
@@ -34,7 +34,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
     },
     {
       name: 'create',
-      label: 'Ajouter',
+      label: props.intl.formatMessage({ id: 'app.list.button.add', defaultMessage: 'Add' }),
       onClick: onCreate,
       theme: 'primary',
       icon: <AddOneIcon color="white" />,
@@ -43,11 +43,11 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   ];
 };
 
-export const getInlineActions = ({ onGetOne, onDelOne }) => {
+export const getInlineActions = ({ props, onGetOne, onDelOne }) => {
   return [
     {
       name: 'modify',
-      label: 'Modifier',
+      label: props.intl.formatMessage({ id: 'app.list.button.modify', defaultMessage: 'Modify' }),
       onClick: onGetOne,
       theme: 'secondary',
       icon: <GetOneIcon color="white" />,
@@ -55,7 +55,7 @@ export const getInlineActions = ({ onGetOne, onDelOne }) => {
     },
     {
       name: 'delete',
-      label: 'Supprimer',
+      label: props.intl.formatMessage({ id: 'app.list.button.delete', defaultMessage: 'Delete' }),
       onClick: onDelOne,
       theme: 'warning',
       icon: <DelOneIcon color="white" />,
@@ -68,7 +68,7 @@ export const getCols = ({ props }) => {
   return [
     {
       name: 'name',
-      label: 'Nom',
+      label: props.intl.formatMessage({ id: 'app.features.causeType.list.col.name', defaultMessage: 'Name' }),
       col: 'caut_name',
       size: '10',
       mob_size: '',
@@ -79,7 +79,7 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'camt_name',
-      label: 'Programme',
+      label: props.intl.formatMessage({ id: 'app.features.causeType.list.col.mainType', defaultMessage: 'Program' }),
       col: 'cause_main_type.camt_name',
       size: '6',
       mob_size: '',
@@ -90,7 +90,7 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'money',
-      label: 'Monnaie',
+      label: props.intl.formatMessage({ id: 'app.features.causeType.list.col.money', defaultMessage: 'Money' }),
       col: 'caut_money',
       size: '3',
       mob_size: '',
@@ -100,7 +100,7 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'max',
-      label: 'Maximum',
+      label: props.intl.formatMessage({ id: 'app.features.causeType.list.col.maxMnt', defaultMessage: 'Maximum' }),
       col: 'caut_max_mnt',
       size: '4',
       mob_size: '',
@@ -112,7 +112,7 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'mnt_type',
-      label: 'Totalisation',
+      label: props.intl.formatMessage({ id: 'app.features.causeType.list.col.mntType', defaultMessage: 'Totalization' }),
       col: 'caut_mnt_type',
       size: '5',
       mob_size: '',
@@ -124,7 +124,7 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'caut_receipt',
-      label: 'Reçu',
+      label: props.intl.formatMessage({ id: 'app.features.causeType.list.col.receipt', defaultMessage: 'Receipt' }),
       col: 'caut_receipt',
       size: '3',
       mob_size: '',
@@ -136,7 +136,7 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'caut_cert',
-      label: 'Certificat',
+      label: props.intl.formatMessage({ id: 'app.features.causeType.list.col.certificate', defaultMessage: 'Certificate' }),
       col: 'caut_certificat',
       size: '3',
       mob_size: '',

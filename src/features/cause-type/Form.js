@@ -1,9 +1,10 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { InputHidden, InputText, InputSelect, InputCheckbox, InputMonetary } from 'freeassofront';
 import { useForm, ResponsiveModalOrForm } from '../ui';
 import { causeTypeMntType, causeTypeFamily } from './';
 
-export default function Form(props) {
+function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
@@ -14,21 +15,30 @@ export default function Form(props) {
   );
   let minDate = true;
   let maxDate = true;
-  let maxLabel = "Maximum";
+  let maxLabel = props.intl.formatMessage({
+    id: 'app.features.causeType.form.mntMax',
+    defaultMessage: 'Maximum amount',
+  });
   if (values.caut_mnt_type === 'OTHER') {
     minDate = false;
     maxDate = false;
   }
   if (values.caut_mnt_type === 'ANNUAL') {
     minDate = false;
-    maxLabel = 'Montant annuel';
+    maxLabel = props.intl.formatMessage({
+      id: 'app.features.causeType.form.mntAnnual',
+      defaultMessage: 'Annual amount',
+    });
   }
   return (
     <ResponsiveModalOrForm
       className="m-5"
       size="lg"
       modal={true}
-      title="Mission"
+      title={props.intl.formatMessage({
+        id: 'app.features.causeType.form.title',
+        defaultMessage: 'Mission',
+      })}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onClose={props.onClose}
@@ -37,7 +47,10 @@ export default function Form(props) {
       <div className="row">
         <div className="col-sm-18">
           <InputText
-            label="Nom"
+            label={props.intl.formatMessage({
+              id: 'app.features.causeType.form.name',
+              defaultMessage: 'Name',
+            })}
             name="caut_name"
             id="caut_name"
             required={true}
@@ -48,7 +61,10 @@ export default function Form(props) {
         </div>
         <div className="col-sm-18">
           <InputSelect
-            label="Grande cause"
+            label={props.intl.formatMessage({
+              id: 'app.features.causeType.form.mainType',
+              defaultMessage: 'Program',
+            })}
             name="cause_main_type.id"
             id="cause_main_type.id"
             value={values.cause_main_type.id}
@@ -60,7 +76,10 @@ export default function Form(props) {
       <div className="row">
         <div className="col-md-12">
           <InputSelect
-            label="Totalisation"
+            label={props.intl.formatMessage({
+              id: 'app.features.causeType.form.mntType',
+              defaultMessage: 'Totalization',
+            })}
             name="caut_mnt_type"
             id="caut_mnt_type"
             value={values.caut_mnt_type}
@@ -70,7 +89,10 @@ export default function Form(props) {
         </div>
         <div className="col-sm-12">
           <InputMonetary
-            label="Don minimum"
+            label={props.intl.formatMessage({
+              id: 'app.features.causeType.form.minMnt',
+              defaultMessage: 'Minimum amount',
+            })}
             labelTop={true}
             name="caut_min_mnt"
             id="caut_min_mnt"
@@ -98,7 +120,10 @@ export default function Form(props) {
       <div className="row">
         <div className="col-md-12">
           <InputSelect
-            label="Fonctionnement"
+            label={props.intl.formatMessage({
+              id: 'app.features.causeType.form.family',
+              defaultMessage: 'Operation',
+            })}
             name="caut_family"
             id="caut_family"
             value={values.caut_family}
@@ -108,7 +133,10 @@ export default function Form(props) {
         </div>
         <div className="col-sm-12">
           <InputCheckbox
-            label="Emission d'un reçu"
+            label={props.intl.formatMessage({
+              id: 'app.features.causeType.form.receipt',
+              defaultMessage: 'Receipt',
+            })}
             name="caut_receipt"
             id="caut_receipt"
             checked={values.caut_receipt}
@@ -117,7 +145,10 @@ export default function Form(props) {
         </div>
         <div className="col-sm-12">
           <InputCheckbox
-            label="Emission d'un certificat"
+            label={props.intl.formatMessage({
+              id: 'app.features.causeType.form.certificate',
+              defaultMessage: 'Certificate',
+            })}
             name="caut_certificat"
             id="caut_certificat"
             checked={values.caut_certificat}
@@ -128,3 +159,5 @@ export default function Form(props) {
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

@@ -1,8 +1,9 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { InputHidden, InputText, InputCheckbox } from 'freeassofront';
 import { useForm, ResponsiveModalOrForm, InputDate } from '../ui';
 
-export default function Form(props) {
+function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
@@ -11,12 +12,16 @@ export default function Form(props) {
     '',
     props.errors,
   );
+  const { intl } = props;
   return (
     <ResponsiveModalOrForm
       className="m-5"
       size="lg"
       modal={true}
-      title="Type de paiement"
+      title={intl.formatMessage({
+        id: 'app.features.paymentType.form.title',
+        defaultMessage: 'Payment type',
+      })}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onClose={props.onClose}
@@ -26,7 +31,10 @@ export default function Form(props) {
         <div className="row">
           <div className="col-24">
             <InputText
-              label="Nom"
+              label={intl.formatMessage({
+                id: 'app.features.paymentType.form.name',
+                defaultMessage: 'Name',
+              })}
               name="ptyp_name"
               required={true}
               value={values.ptyp_name}
@@ -36,7 +44,10 @@ export default function Form(props) {
           </div>
           <div className="col-12">
             <InputCheckbox
-              label="Donne lieu à un reçu"
+              label={intl.formatMessage({
+                id: 'app.features.paymentType.form.receipt',
+                defaultMessage: 'Send receipt',
+              })}
               name="ptyp_receipt"
               required={true}
               checked={values.ptyp_receipt}
@@ -48,7 +59,10 @@ export default function Form(props) {
         <div className="row">
           <div className="col-18">
             <InputDate
-              label="Du"
+              label={intl.formatMessage({
+                id: 'app.features.paymentType.form.from',
+                defaultMessage: 'From',
+              })}
               name="ptyp_from"
               required={true}
               value={values.ptyp_from}
@@ -58,7 +72,10 @@ export default function Form(props) {
           </div>
           <div className="col-18">
             <InputDate
-              label="Au"
+              label={intl.formatMessage({
+                id: 'app.features.paymentType.form.to',
+                defaultMessage: 'To',
+              })}
               name="ptyp_to"
               required={true}
               value={values.ptyp_to}
@@ -71,3 +88,5 @@ export default function Form(props) {
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

@@ -31,13 +31,10 @@ export function createOne(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissCreateOneError() {
   return {
     type: DATA_CREATE_ONE_DISMISS_ERROR,

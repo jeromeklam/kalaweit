@@ -22,7 +22,7 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      siteId: this.props.siteId || this.props.match.params.siteId || false,
+      id: this.props.siteId || this.props.match.params.siteId || false,
       item: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -30,7 +30,7 @@ export class Modify extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadOne(this.state.siteId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.site.loadOneItem;
       this.setState({ item: item });
     });
@@ -44,7 +44,7 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         // propagateModel est ajouté aux actions en bas de document
         modifySuccess();

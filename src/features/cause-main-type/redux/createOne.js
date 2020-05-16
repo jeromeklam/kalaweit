@@ -12,7 +12,6 @@ export function createOne(args = {}) {
     dispatch({
       type: CAUSE_MAIN_TYPE_CREATE_ONE_BEGIN,
     });
-
     const promise = new Promise((resolve, reject) => {
       const doRequest = freeAssoApi.post('/v1/asso/cause_main_type', args);
       doRequest.then(
@@ -32,7 +31,6 @@ export function createOne(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }

@@ -36,7 +36,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
-      siteId: null,
+      siteId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -62,7 +62,7 @@ export class List extends Component {
   }
 
   onClose() {
-    this.setState({ siteId: null });
+    this.setState({ siteId: -1 });
   }
 
   onGetOne(id) {
@@ -164,7 +164,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label={intl.formatMessage({ id: 'app.features.site.list.quicksearch', defaultMessage: 'Find by name' })}
+        label={intl.formatMessage({ id: 'app.features.site.list.quicksearch', defaultMessage: 'Search by name' })}
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -180,6 +180,7 @@ export class List extends Component {
       <div>
         <ResponsiveList
           title={intl.formatMessage({ id: 'app.features.site.list.title', defaultMessage: 'Sites' })}
+          intl={intl}
           cols={cols}
           items={items || []}
           quickSearch={quickSearch}

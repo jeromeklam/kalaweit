@@ -26,18 +26,25 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
+        let filters = getState().subspecies.filters.asJsonApiObject()
         let params = {
-          page: {
-            number: getState().species.page_number,
-            size: getState().species.page_size,
-          },
+          page: { number: getState().subspecies.page_number, size: getState().subspecies.page_size },
+          ...filters
         };
-        if (args && Object.keys(args).length > 0 && args !== '') {
-          params.filter = {
-            and: {
-              clit_name: args,
-            },
-          };
+        let sort = '';
+        getState().subspecies.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
         }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/subspecies' + addUrl, {});
@@ -125,10 +132,14 @@ export function reducer(state, action) {
 
     case SUBSPECIES_LOAD_MORE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         loadMorePending: false,
-        loadMoreError: action.data.error,
+        loadMoreError: error,
       };
 
     case SUBSPECIES_LOAD_MORE_DISMISS_ERROR:

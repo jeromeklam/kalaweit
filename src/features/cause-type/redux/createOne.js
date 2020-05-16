@@ -8,11 +8,10 @@ import {
 } from './constants';
 
 export function createOne(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return (dispatch) => {
     dispatch({
       type: CAUSE_TYPE_CREATE_ONE_BEGIN,
     });
-
     const promise = new Promise((resolve, reject) => {
       if (args.data.attributes.caut_mnt_type == null ) {
         args.data.attributes.caut_mnt_type = 'OTHER';
@@ -35,7 +34,6 @@ export function createOne(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }

@@ -23,15 +23,25 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
+        let filters = getState().site.filters.asJsonApiObject();
         let params = {
           page: { number: getState().site.page_number, size: getState().site.page_size },
+          ...filters,
         };
-        if (args && Object.keys(args).length > 0 && args !== '') {
-          params.filter = { 
-            and: {
-              site_name: args
-            }
-          };
+        let sort = '';
+        getState().site.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
         }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/site' + addUrl, {});

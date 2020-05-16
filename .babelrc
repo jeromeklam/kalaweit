@@ -1,4 +1,19 @@
 {
-  "presets": ["react-app"],
-  "plugins": ["react-hot-loader/babel", "syntax-dynamic-import", "lodash"]
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "react-hot-loader/babel",
+    "syntax-dynamic-import",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties",
+    "lodash",
+    [ "react-intl",
+      {
+        "messagesDir": "./src/translations",
+        "extractSourceLocation": true
+      }
+    ]
+  ]
 }

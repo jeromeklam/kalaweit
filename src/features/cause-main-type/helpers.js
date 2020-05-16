@@ -5,11 +5,11 @@ import {
   DelOne as DelOneIcon,
 } from '../icons';
 
-export const getGlobalActions = ({ onCreate }) => {
+export const getGlobalActions = ({ props, onCreate }) => {
   return [
     {
       name: 'create',
-      label: 'Ajouter',
+      label: props.intl.formatMessage({ id: 'app.list.button.add', defaultMessage: 'Add' }),
       onClick: onCreate,
       theme: 'primary',
       icon: <AddOneIcon color="white" />,
@@ -18,11 +18,11 @@ export const getGlobalActions = ({ onCreate }) => {
   ];
 };
 
-export const getInlineActions = ({ onGetOne, onDelOne }) => {
+export const getInlineActions = ({ props, onGetOne, onDelOne }) => {
   return [
     {
       name: 'modify',
-      label: 'Modifier',
+      label: props.intl.formatMessage({ id: 'app.list.button.modify', defaultMessage: 'Modify' }),
       onClick: onGetOne,
       theme: 'secondary',
       icon: <GetOneIcon color="white" />,
@@ -30,7 +30,7 @@ export const getInlineActions = ({ onGetOne, onDelOne }) => {
     },
     {
       name: 'delete',
-      label: 'Supprimer',
+      label: props.intl.formatMessage({ id: 'app.list.button.delete', defaultMessage: 'Delete' }),
       onClick: onDelOne,
       theme: 'warning',
       icon: <DelOneIcon color="white" />,
@@ -43,7 +43,7 @@ export const getCols = ({ props }) => {
   return [
     {
       name: 'name',
-      label: 'Nom',
+      label: props.intl.formatMessage({ id: 'app.features.causeMainType.list.col.name', defaultMessage: 'Name' }),
       col: 'camt_name',
       size: '20',
       mob_size: '',

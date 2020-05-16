@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, showErrors } from '../ui';
 import Form from './Form';
 
 /**
@@ -28,7 +29,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      id: this.props.match.params.id || false,
+      id: this.props.dataId || this.props.match.params.id || false,
       item: false,
     };
     /**
@@ -53,7 +54,7 @@ export class Modify extends Component {
    * Sur annulation, on retourne à la liste
    */
   onCancel() {
-    this.props.history.push('/data');
+    this.props.onClose();
   }
 
   /**
@@ -63,14 +64,14 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_Data', this.state.id);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Data', result);
-        this.props.history.push('/data');
+        this.props.onClose();
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -86,8 +87,9 @@ export class Modify extends Component {
               <Form 
                 item={item} 
                 errors={this.props.data.updateOneError}
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
             }
           </div>
@@ -109,4 +111,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));
+export default injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify)));

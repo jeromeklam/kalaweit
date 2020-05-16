@@ -3,6 +3,7 @@ import { InputCheckbox, InputHidden, InputSelect, InputText, InputMonetary  } fr
 import { InputDate, InputData, ResponsiveModalOrForm, InputTextarea, InputSpin } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
+import { subspeciesAsOptions } from '../subspecies';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker } from './';
@@ -32,7 +33,7 @@ export default function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-7">
           <InputSelect
             label="Mission"
             name="cause_type.id"
@@ -43,7 +44,7 @@ export default function Form(props) {
             options={causeTypeAsOptions(props.cause_types)}
           />
         </div>
-        <div className="col-md-12">
+        <div className="col-md-7">
           <InputText
             label="Nom"
             name="cau_name"
@@ -55,9 +56,20 @@ export default function Form(props) {
             error={getErrorMessage('cau_name')}
           />
         </div>
+        <div className="col-md-10">
+          <InputSelect
+            label="Espèce"
+            name="subspecies.id"
+            labelTop={true}
+            value={values.subspecies ? values.subspecies.id : null}
+            addempty={true}
+            onChange={handleChange}
+            options={subspeciesAsOptions(props.subspecies)}
+          />
+        </div>
         <div className="col-md-12">
           <SiteInputPicker
-            label="Site"
+            label="Localisation"
             labelTop={true}
             key="site"
             name="site"

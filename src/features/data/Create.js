@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
+import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import Form from './Form';
 
 /**
@@ -68,7 +69,7 @@ export class Create extends Component {
         this.props.history.push('/data');
       })
       .catch(errors => {
-        createError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -86,6 +87,7 @@ export class Create extends Component {
                 errors={this.props.data.createOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
+                onClose={this.props.onClose} 
               />
             }
           </div>
@@ -107,4 +109,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));
+export default injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Create)));

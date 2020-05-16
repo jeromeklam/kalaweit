@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
+import { CenteredLoading3Dots, showErrors, createSuccess } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -70,7 +71,7 @@ export class Create extends Component {
         this.props.onClose();
       })
       .catch(errors => {
-        createError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -110,4 +111,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));
+export default injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Create)));

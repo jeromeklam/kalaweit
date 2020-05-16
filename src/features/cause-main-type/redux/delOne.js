@@ -12,7 +12,6 @@ export function delOne(args = {}) {
     dispatch({
       type: CAUSE_MAIN_TYPE_DEL_ONE_BEGIN,
     });
-
     const promise = new Promise((resolve, reject) => {
       const id = args;
       const doRequest = freeAssoApi.delete('/v1/asso/cause_main_type/' + id);
@@ -33,7 +32,6 @@ export function delOne(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }

@@ -8,20 +8,19 @@ import {
   DATA_UPDATE_ONE_UPDATE,
 } from './constants';
 
-export function updateOne(args = {}) {
+export function updateOne(id, args = {}) {
   return dispatch => {
     dispatch({
       type: DATA_UPDATE_ONE_BEGIN,
     });
-
     const promise = new Promise((resolve, reject) => {
-      const id = args.id;
       const doRequest = freeAssoApi.put('/v1/asso/data/' + id, args);
       doRequest.then(
         res => {
           dispatch({
             type: DATA_UPDATE_ONE_SUCCESS,
             data: res,
+            id: id,
           });
           resolve(res);
         },
@@ -34,7 +33,6 @@ export function updateOne(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }

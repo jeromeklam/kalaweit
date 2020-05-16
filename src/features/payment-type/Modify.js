@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, modifyError, modifySuccess } from '../ui';
+import { CenteredLoading3Dots, showErrors, modifySuccess } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -23,7 +24,7 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ptypId: props.ptypId,
+      id: props.ptypId,
       item: false,
       loading: true,
     };
@@ -32,7 +33,7 @@ export class Modify extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadOne(this.state.ptypId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.paymentType.loadOneItem;
       this.setState({ item: item, loading: false });
     });
@@ -49,14 +50,14 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_PaymentType', this.state.ptypId);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_PaymentType', result);
         this.props.onClose();
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -102,4 +103,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));
+export default injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify)));
