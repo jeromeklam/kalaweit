@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from './redux/actions';
 import { injectIntl } from 'react-intl';
+import * as actions from './redux/actions';
 import { CenteredLoading3Dots } from '../ui';
 import { ResponsiveConfirm } from 'freeassofront';
 import {
   deleteSuccess,
-  deleteError,
+  showErrors,
   InlineAddOne,
   InlineCloseMore,
   InlineEmpty,
@@ -77,8 +77,7 @@ export class InlineSponsorships extends Component {
         this.props.actions.loadSponsorships(filters);
       })
       .catch(errors => {
-        console.log(errors);
-        deleteError();
+        showErrors(this.props.intl, errors);
       });
   }
 

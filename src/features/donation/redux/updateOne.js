@@ -8,13 +8,12 @@ import {
   DONATION_UPDATE_ONE_UPDATE,
 } from './constants';
 
-export function updateOne(args = {}) {
+export function updateOne(id, args = {}) {
   return (dispatch) => {
     dispatch({
       type: DONATION_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/asso/donation/' + id, args);
       doRequest.then(
         (res) => {

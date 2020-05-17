@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
+import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -67,7 +68,7 @@ export class Create extends Component {
         this.props.onClose();
       })
       .catch(errors => {
-        createError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -79,21 +80,21 @@ export class Create extends Component {
           <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && 
-              <Form 
-                item={item} 
-                cause_types={this.props.causeType.items} 
-                subspecies={this.props.subspecies.items} 
+            {item && (
+              <Form
+                item={item}
+                cause_types={this.props.causeType.items}
+                subspecies={this.props.subspecies.items}
                 tab_datas={this.props.data.items}
                 tab_configs={this.props.config.items}
                 tab={this.props.cause.tab}
                 tabs={this.props.cause.tabs}
                 errors={this.props.cause.createOneError}
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
                 onClose={this.props.onClose}
               />
-            }
+            )}
           </div>
         )}
       </div>
@@ -113,11 +114,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create));
+export default injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Create)));

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
@@ -16,7 +17,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
-import { modifySuccess, modifyError } from '../ui';
+import { showErrors, deleteSuccess, modifySuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols, updateDonStatus } from './';
 import { Create, Modify } from './';
 
@@ -66,7 +67,7 @@ export class List extends Component {
         this.props.actions.propagateModel('FreeAsso_Donation', result);
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -77,7 +78,7 @@ export class List extends Component {
         this.props.actions.propagateModel('FreeAsso_Donation', result);
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -86,7 +87,15 @@ export class List extends Component {
   }
 
   onDelOne(id) {
-    this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+    this.props.actions
+      .delOne(id)
+      .then(result => {
+        deleteSuccess();
+        this.props.actions.loadMore({}, true)
+      })
+      .catch(errors => {
+        showErrors(this.props.intl, errors);
+      });
   }
 
   onReload(event) {
@@ -162,6 +171,7 @@ export class List extends Component {
   }
 
   render() {
+    const { intl } = this.props;
     let items = false;
     if (this.props.donation.items.FreeAsso_Donation) {
       items = buildModel(this.props.donation.items, 'FreeAsso_Donation');
@@ -178,7 +188,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche montant"
+        label={intl.formatMessage({ id: 'app.features.donation.list.search', defaultMessage: 'Search by amount' })}
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -193,7 +203,8 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Dons"
+          title={intl.formatMessage({ id: 'app.features.donation.list.title', defaultMessage: 'Donations' })}
+          intl={intl}
           cols={cols}
           items={items}
           quickSearch={quickSearch}
@@ -239,4 +250,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

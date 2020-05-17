@@ -281,6 +281,10 @@ svg.text-warning.inline-action:hover {
   font-style: italic;
 }
 
+.default-list-body {
+  font-size: 0.9rem;
+}
+
 /* Hover des lignes des listes */
 .row-line-hover {
   background-color: theme-color('primary-light');
@@ -318,4 +322,8 @@ svg.text-warning.inline-action:hover {
   path {
     fill: theme-color('light');
   }
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
 }

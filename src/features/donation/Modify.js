@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, showErrors } from '../ui';
 import { propagateModel } from '../../common';
 import Form from './Form';
 
@@ -24,7 +25,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      donId: props.donId,
+      id: props.donId,
       donation: props.donation,
       item: false,
     };
@@ -40,7 +41,7 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.donId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.donation.loadOneItem;
       this.setState({ item: item });
     });
@@ -63,14 +64,15 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_Donation', this.state.donId);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         modifySuccess();
+        console.log('test');
         this.props.actions.propagateModel('FreeAsso_Donation', result);
         this.props.onClose();
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -116,4 +118,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Modify);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Modify));

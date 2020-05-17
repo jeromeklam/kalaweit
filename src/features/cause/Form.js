@@ -1,5 +1,6 @@
 import React from 'react';
-import { InputCheckbox, InputHidden, InputSelect, InputText, InputMonetary  } from 'freeassofront';
+import { injectIntl } from 'react-intl';
+import { InputCheckbox, InputHidden, InputSelect, InputText, InputMonetary } from 'freeassofront';
 import { InputDate, InputData, ResponsiveModalOrForm, InputTextarea, InputSpin } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
@@ -7,23 +8,93 @@ import { subspeciesAsOptions } from '../subspecies';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker } from './';
+import { InlineSponsorships } from '../sponsorship';
+import { InlineDonations } from '../donation';
+import { InlinePhotos, InlineSponsors } from './';
 
-export default function Form(props) {
-  const nYear = new Date().getFullYear(); 
-  const { values, handleChange, handleSubmit, handleCancel, handleNavTab, getErrorMessage } = useForm(
-    props.item,
-    props.tab,
-    props.onSubmit,
-    props.onCancel,
-    props.onNavTab,
-    props.errors,
-  );
+function Form(props) {
+  const nYear = new Date().getFullYear();
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    handleCancel,
+    handleNavTab,
+    getErrorMessage,
+  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  const tabs = [
+    {
+      key: '1',
+      name: 'identification',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.form.main',
+        defaultMessage: 'Mission',
+      }),
+      shortcut: 'A',
+      icon: 'cause',
+    },
+    {
+      key: '2',
+      name: 'divers',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.form.more',
+        defaultMessage: 'Complement',
+      }),
+      shortcut: 'D',
+      icon: 'misc',
+    },
+  ];
+  const modifTabs = [
+    {
+      key: '3',
+      name: 'sponsorship',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.tab.sponsorships',
+        defaultMessage: 'Sponsorships',
+      }),
+      shortcut: 'I',
+      icon: 'client',
+    },
+    {
+      key: '4',
+      name: 'donation',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.tab.donations',
+        defaultMessage: 'Donations',
+      }),
+      shortcut: 'C',
+      icon: 'misc',
+    },
+    {
+      key: '5',
+      name: 'picture',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.tab.pictures',
+        defaultMessage: 'Pictures',
+      }),
+      shortcut: 'C',
+      icon: 'misc',
+    },
+    {
+      key: '6',
+      name: 'sponsor',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.tab.sponsors',
+        defaultMessage: 'Sponsors',
+      }),
+      shortcut: 'C',
+      icon: 'misc',
+    },
+  ];
   return (
     <ResponsiveModalOrForm
-      title="Cause"
+      title={props.intl.formatMessage({
+        id: 'app.features.cause.form.title',
+        defaultMessage: 'Mission',
+      })}
       className="m-5"
       tab={values.currentTab}
-      tabs={props.tabs}
+      tabs={!props.modify ? tabs : tabs.concat(modifTabs)}
       size="xl"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
@@ -35,7 +106,10 @@ export default function Form(props) {
       <div className="row">
         <div className="col-md-7">
           <InputSelect
-            label="Mission"
+            label={props.intl.formatMessage({
+              id: 'app.features.cause.form.causeType',
+              defaultMessage: 'Mission',
+            })}
             name="cause_type.id"
             labelTop={true}
             value={values.cause_type ? values.cause_type.id : null}
@@ -46,7 +120,10 @@ export default function Form(props) {
         </div>
         <div className="col-md-7">
           <InputText
-            label="Nom"
+            label={props.intl.formatMessage({
+              id: 'app.features.cause.form.name',
+              defaultMessage: 'Name',
+            })}
             name="cau_name"
             id="cau_name"
             labelTop={true}
@@ -58,7 +135,10 @@ export default function Form(props) {
         </div>
         <div className="col-md-10">
           <InputSelect
-            label="Espèce"
+            label={props.intl.formatMessage({
+              id: 'app.features.cause.form.subspecies',
+              defaultMessage: 'Subspecies',
+            })}
             name="subspecies.id"
             labelTop={true}
             value={values.subspecies ? values.subspecies.id : null}
@@ -69,7 +149,10 @@ export default function Form(props) {
         </div>
         <div className="col-md-12">
           <SiteInputPicker
-            label="Localisation"
+            label={props.intl.formatMessage({
+              id: 'app.features.cause.form.site',
+              defaultMessage: 'Location',
+            })}
             labelTop={true}
             key="site"
             name="site"
@@ -84,7 +167,10 @@ export default function Form(props) {
           <div className="row">
             <div className="col-6">
               <InputSelect
-                label="Sexe"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.sex',
+                  defaultMessage: 'Sex',
+                })}
                 labelTop={true}
                 name="cau_sex"
                 id="cau_sex"
@@ -98,7 +184,10 @@ export default function Form(props) {
             </div>
             <div className="col-md-6">
               <InputSpin
-                label="Année de naissance"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.cauYear',
+                  defaultMessage: 'Born in',
+                })}
                 name="cau_year"
                 id="cau_year"
                 maxValue={nYear}
@@ -108,11 +197,13 @@ export default function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-md-2">
-            </div>
+            <div className="col-md-2"></div>
             <div className="col-7">
               <InputCheckbox
-                label="Visible sur le site"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.public',
+                  defaultMessage: 'Show on site',
+                })}
                 name="cau_public"
                 labelTop={true}
                 checked={values.cau_public === true}
@@ -121,18 +212,23 @@ export default function Form(props) {
             </div>
             <div className="col-7">
               <InputCheckbox
-                label="Don régulier disponible"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.available',
+                  defaultMessage: 'Sponsorship',
+                })}
                 name="cau_available"
                 labelTop={true}
                 checked={values.cau_available === true}
                 onChange={handleChange}
               />
             </div>
-            <div className="col-md-1">
-            </div>
+            <div className="col-md-1"></div>
             <div className="col-md-7">
               <InputMonetary
-                label="Montant récolté"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.mnt',
+                  defaultMessage: 'Raised',
+                })}
                 labelTop={true}
                 name="cau_mnt"
                 id="cau_mnt"
@@ -146,7 +242,10 @@ export default function Form(props) {
           <div className="row">
             <div className="col-md-9">
               <InputDate
-                label="Entrée"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.from',
+                  defaultMessage: 'From',
+                })}
                 labelTop={true}
                 name="cau_from"
                 id="cau_from"
@@ -156,7 +255,10 @@ export default function Form(props) {
             </div>
             <div className="col-md-9">
               <InputDate
-                label="Sortie"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.to',
+                  defaultMessage: 'End',
+                })}
                 labelTop={true}
                 name="cau_to"
                 id="cau_to"
@@ -175,11 +277,13 @@ export default function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-md-5">
-            </div>
+            <div className="col-md-5"></div>
             <div className="col-md-7">
               <InputMonetary
-                label="Restant"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.left',
+                  defaultMessage: 'Left',
+                })}
                 labelTop={true}
                 name="cau_mnt_left"
                 id="cau_mnt_left"
@@ -193,7 +297,10 @@ export default function Form(props) {
           <div className="row">
             <div className="col-18">
               <CauseInputPicker
-                label="Père"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.parent1',
+                  defaultMessage: 'Father',
+                })}
                 labelTop={true}
                 key="parent1"
                 name="parent1"
@@ -203,7 +310,10 @@ export default function Form(props) {
             </div>
             <div className="col-18">
               <CauseInputPicker
-                label="Mère"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.parent2',
+                  defaultMessage: 'Mother',
+                })}
                 labelTop={true}
                 key="parent2"
                 name="parent2"
@@ -219,7 +329,10 @@ export default function Form(props) {
           <div className="row">
             <div className="col-md-12">
               <ClientInputPicker
-                label="Soigneur"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.proprietary',
+                  defaultMessage: 'Sanitary',
+                })}
                 key="proprietary"
                 name="proprietary"
                 labelTop={true}
@@ -231,7 +344,10 @@ export default function Form(props) {
           <div className="row">
             <div className="col-md-36">
               <InputTextarea
-                label="Observations"
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.desc',
+                  defaultMessage: 'Description',
+                })}
                 labelTop={true}
                 name="cau_desc"
                 value={values.cau_desc}
@@ -241,6 +357,28 @@ export default function Form(props) {
           </div>
         </div>
       )}
+      {values.currentTab === '3' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineSponsorships mode="cause" id={values.id} />
+        </div>
+      )}
+      {values.currentTab === '4' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineDonations mode="cause" id={values.id} />
+        </div>
+      )}
+      {values.currentTab === '5' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlinePhotos cauId={values.id} />
+        </div>
+      )}
+      {values.currentTab === '6' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineSponsors cauId={values.id} />
+        </div>
+      )}
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

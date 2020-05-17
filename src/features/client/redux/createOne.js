@@ -12,10 +12,8 @@ export function createOne(args = {}) {
     dispatch({
       type: CLIENT_CREATE_ONE_BEGIN,
     });
-
     const promise = new Promise((resolve, reject) => {
       const doRequest = freeAssoApi.post('/v1/asso/client', args);
-
       doRequest.then(
         (res) => {
           dispatch({
@@ -33,7 +31,6 @@ export function createOne(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }

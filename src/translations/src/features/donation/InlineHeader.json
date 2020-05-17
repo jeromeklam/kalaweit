@@ -1,0 +1,106 @@
+[
+  {
+    "id": "app.features.donation.list.col.type",
+    "defaultMessage": "Type",
+    "file": "src/features/donation/InlineHeader.js",
+    "start": {
+      "line": 19,
+      "column": 12
+    },
+    "end": {
+      "line": 19,
+      "column": 95
+    }
+  },
+  {
+    "id": "app.features.donation.list.col.amount",
+    "defaultMessage": "Amount",
+    "file": "src/features/donation/InlineHeader.js",
+    "start": {
+      "line": 24,
+      "column": 12
+    },
+    "end": {
+      "line": 24,
+      "column": 99
+    }
+  },
+  {
+    "id": "app.features.donation.list.col.from",
+    "defaultMessage": "From",
+    "file": "src/features/donation/InlineHeader.js",
+    "start": {
+      "line": 29,
+      "column": 12
+    },
+    "end": {
+      "line": 29,
+      "column": 95
+    }
+  },
+  {
+    "id": "app.features.donation.list.col.to",
+    "defaultMessage": "To",
+    "file": "src/features/donation/InlineHeader.js",
+    "start": {
+      "line": 34,
+      "column": 12
+    },
+    "end": {
+      "line": 34,
+      "column": 91
+    }
+  },
+  {
+    "id": "app.features.donation.list.col.client",
+    "defaultMessage": "Member",
+    "file": "src/features/donation/InlineHeader.js",
+    "start": {
+      "line": 40,
+      "column": 14
+    },
+    "end": {
+      "line": 40,
+      "column": 101
+    }
+  },
+  {
+    "id": "app.features.donation.list.col.cause",
+    "defaultMessage": "Mission",
+    "file": "src/features/donation/InlineHeader.js",
+    "start": {
+      "line": 44,
+      "column": 14
+    },
+    "end": {
+      "line": 44,
+      "column": 101
+    }
+  },
+  {
+    "id": "app.features.donation.list.col.once",
+    "defaultMessage": "Once",
+    "file": "src/features/donation/InlineHeader.js",
+    "start": {
+      "line": 50,
+      "column": 12
+    },
+    "end": {
+      "line": 50,
+      "column": 95
+    }
+  },
+  {
+    "id": "app.features.donation.list.col.displaySite",
+    "defaultMessage": "Show on Site",
+    "file": "src/features/donation/InlineHeader.js",
+    "start": {
+      "line": 55,
+      "column": 12
+    },
+    "end": {
+      "line": 55,
+      "column": 110
+    }
+  }
+]

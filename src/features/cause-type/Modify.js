@@ -67,6 +67,7 @@ export class Modify extends Component {
             {item && 
               <Form 
                 item={item} 
+                modify={true}
                 causeMainType={options} 
                 errors={this.props.causeType.updateOneError}
                 onSubmit={this.onSubmit} 

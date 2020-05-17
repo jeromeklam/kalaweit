@@ -16,11 +16,14 @@ export const statusValues = [
   //{ value: 'NEXT', label: 'A venir' },
 ];
 
-export const getGlobalActions = ({ onClearFilters, onCreate }) => {
+export const getGlobalActions = ({ props, onClearFilters, onCreate }) => {
   return [
     {
       name: 'clear',
-      label: 'Effacer',
+      label: props.intl.formatMessage({
+        id: 'app.list.button.clear',
+        defaultMessage: 'Clear filters',
+      }),
       onClick: onClearFilters,
       theme: 'secondary',
       icon: <FilterClearIcon color="white" />,
@@ -28,7 +31,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
     },
     {
       name: 'create',
-      label: 'Ajouter',
+      label: props.intl.formatMessage({ id: 'app.list.button.add', defaultMessage: 'Add' }),
       onClick: onCreate,
       theme: 'primary',
       icon: <AddOneIcon color="white" />,
@@ -37,29 +40,41 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   ];
 };
 
-export const getInlineActions = ({ onGetOne, onDelOne, onPayOn, onPayOff }) => {
+export const getInlineActions = ({ props, onGetOne, onDelOne, onPayOn, onPayOff }) => {
   return [
     {
       name: 'status',
-      label: 'Payé',
+      label: props.intl.formatMessage({ id: 'app.list.button.paid', defaultMessage: 'Paid' }),
       onClick: onPayOn,
       theme: 'secondary',
       icon: <PaymentOnIcon color="white" />,
-      role: 'MODIFY',
-      fDisplay: (item) => { if (item.don_status === 'NOK' || item.don_status === 'WAIT') { return true; } else { return false; } },
+      role: 'OTHER',
+      fDisplay: item => {
+        if (item.don_status === 'NOK' || item.don_status === 'WAIT') {
+          return true;
+        } else {
+          return false;
+        }
+      },
     },
     {
       name: 'status',
-      label: 'Impayé',
+      label: props.intl.formatMessage({ id: 'app.list.button.unpaid', defaultMessage: 'Unpaid' }),
       onClick: onPayOff,
       theme: 'secondary',
       icon: <PaymentOffIcon color="white" />,
-      role: 'MODIFY',
-      fDisplay: (item) => { if (item.don_status === 'OK' || item.don_status === 'WAIT') { return true; } else { return false; } },
+      role: 'OTHER',
+      fDisplay: item => {
+        if (item.don_status === 'OK' || item.don_status === 'WAIT') {
+          return true;
+        } else {
+          return false;
+        }
+      },
     },
     {
       name: 'modify',
-      label: 'Modifier',
+      label: props.intl.formatMessage({ id: 'app.list.button.modify', defaultMessage: 'Modify' }),
       onClick: onGetOne,
       theme: 'secondary',
       icon: <GetOneIcon color="white" />,
@@ -67,7 +82,7 @@ export const getInlineActions = ({ onGetOne, onDelOne, onPayOn, onPayOff }) => {
     },
     {
       name: 'delete',
-      label: 'Supprimer',
+      label: props.intl.formatMessage({ id: 'app.list.button.delete', defaultMessage: 'Delete' }),
       onClick: onDelOne,
       theme: 'warning',
       icon: <DelOneIcon color="white" />,
@@ -80,19 +95,50 @@ export const getCols = ({ props }) => {
   return [
     {
       name: 'id',
-      label: 'Identifiant',
+      label: props.intl.formatMessage({
+        id: 'app.features.donation.list.col.id',
+        defaultMessage: 'Id.',
+      }),
       col: 'id',
       size: '3',
       mob_size: '',
       title: true,
       sortable: true,
       filterable: { type: 'text' },
+      hidden: true,
+    },
+    {
+      name: 'lastname',
+      label: props.intl.formatMessage({
+        id: 'app.features.donation.list.col.realTs',
+        defaultMessage: 'Lastname',
+      }),
+      col: 'client.cli_lastname',
+      size: '5',
+      mob_size: '',
+      sortable: true,
       first: true,
+      filterable: { type: 'text' },
+    },
+    {
+      name: 'firstame',
+      label: props.intl.formatMessage({
+        id: 'app.features.donation.list.col.realTs',
+        defaultMessage: 'Firstname',
+      }),
+      col: 'client.cli_firstname',
+      size: '5',
+      mob_size: '',
+      sortable: true,
+      filterable: { type: 'text' },
     },
     {
       name: 'date',
-      label: 'Date',
-      col: 'don_ts',
+      label: props.intl.formatMessage({
+        id: 'app.features.donation.list.col.realTs',
+        defaultMessage: 'Done on',
+      }),
+      col: 'don_real_ts',
       size: '3',
       mob_size: '',
       title: true,
@@ -102,9 +148,12 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'mnt',
-      label: 'Montant',
+      label: props.intl.formatMessage({
+        id: 'app.features.donation.list.col.mnt',
+        defaultMessage: 'Amount',
+      }),
       col: 'don_mnt',
-      size: '4',
+      size: '3',
       mob_size: '',
       sortable: true,
       type: 'monetary',
@@ -112,9 +161,12 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'status',
-      label: 'Statut',
+      label: props.intl.formatMessage({
+        id: 'app.features.donation.list.col.status',
+        defaultMessage: 'Status',
+      }),
       col: 'don_status',
-      size: '4',
+      size: '3',
       mob_size: '',
       sortable: true,
       type: 'switch',
@@ -122,26 +174,24 @@ export const getCols = ({ props }) => {
       filterable: { type: 'text' },
     },
     {
-      name: 'lastname',
-      label: 'Nom',
-      col: 'client.cli_lastname',
-      size: '6',
+      name: 'type',
+      label: props.intl.formatMessage({
+        id: 'app.features.donation.list.col.type',
+        defaultMessage: 'Type',
+      }),
+      col: 'payment_type.ptyp_name',
+      size: '4',
       mob_size: '',
       sortable: true,
-      filterable: { type: 'text' },
-    },
-    {
-      name: 'firstame',
-      label: 'Prénom',
-      col: 'client.cli_firstname',
-      size: '6',
-      mob_size: '',
-      sortable: true,
+      type: 'text',
       filterable: { type: 'text' },
     },
     {
       name: 'name',
-      label: 'Cause',
+      label: props.intl.formatMessage({
+        id: 'app.features.donation.list.col.cause',
+        defaultMessage: 'Mission',
+      }),
       col: 'cause.cau_name',
       size: '6',
       mob_size: '',
@@ -150,17 +200,20 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'note',
-      label: '',
+      label: props.intl.formatMessage({
+        id: 'app.features.donation.list.col.comments',
+        defaultMessage: 'Comments',
+      }),
       col: 'don_comment',
-      size: '2',
+      size: '7',
       mob_size: '',
       sortable: true,
-      fDisplay: (item) => { 
-        if (item.don_comment !== '' && item.don_comment !== null) { 
-          return <NoteIcon className="col-icon" />; 
-        } else { 
-          return ''; 
-        } 
+      fDisplay: item => {
+        if (item.don_comment !== '' && item.don_comment !== null) {
+          return <NoteIcon className="col-icon" />;
+        } else {
+          return '';
+        }
       },
       last: true,
     },

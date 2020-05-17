@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import {
   deleteSuccess,
-  deleteError,
+  showErrors,
   InlineAddOne,
   InlineCloseMore,
   InlineEmpty,
@@ -26,9 +27,9 @@ export class InlineDonations extends Component {
     super(props);
     let filters = {};
     if (props.mode === 'cause') {
-      filters = { cau_id: {'eq': props.id }};
+      filters = { cau_id: { eq: props.id } };
     } else {
-      filters = { cli_id: {'eq': props.id }};
+      filters = { cli_id: { eq: props.id } };
     }
     this.state = {
       confirm: -1,
@@ -84,7 +85,7 @@ export class InlineDonations extends Component {
         this.props.actions.loadDonations(filters);
       })
       .catch(errors => {
-        deleteError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -94,6 +95,7 @@ export class InlineDonations extends Component {
   }
 
   render() {
+    const { intl } = this.props;
     const donations = this.props.donation.donationsModels;
     let others = false;
     let counter = 0;
@@ -120,7 +122,7 @@ export class InlineDonations extends Component {
                         onGetOne={this.onModify}
                         onDelOne={this.onConfirm}
                       />
-                    ); 
+                    );
                   })}
                 {others &&
                   (this.state.more ? (
@@ -143,19 +145,32 @@ export class InlineDonations extends Component {
                   ) : (
                     <InlineMore
                       oddEven={counter++}
-                      label="Afficher tous les dons"
+                      label={intl.formatMessage({
+                        id: 'app.features.donation.list.displayFinished',
+                        defaultMessage: 'Display finished donation(s)',
+                      })}
                       onClick={this.onMore}
                     />
                   ))}
                 {others && this.state.more && (
                   <InlineCloseMore
                     oddEven={counter++}
-                    label="Cacher les dons terminés"
+                    label={intl.formatMessage({
+                      id: 'app.features.donation.list.hideFinished',
+                      defaultMessage: 'Hide finished donation(s)',
+                    })}
                     onClick={this.onMore}
                   />
                 )}
                 {!this.state.add && donations.length <= 0 && <InlineEmpty label="Aucun don" />}
-                <InlineAddOne oddEven={counter++} label="Ajouter un don" onClick={this.onAdd} />
+                <InlineAddOne
+                  oddEven={counter++}
+                  label={intl.formatMessage({
+                    id: 'app.features.donation.list.addDonation',
+                    defaultMessage: 'Add one donation',
+                  })}
+                  onClick={this.onAdd}
+                />
                 {this.state.donId > 0 && (
                   <Modify
                     donId={this.state.donId}
@@ -203,4 +218,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlineDonations);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(InlineDonations));

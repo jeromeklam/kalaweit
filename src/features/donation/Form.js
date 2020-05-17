@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { InputHidden, InputSelect, InputMonetary, InputCheckbox } from 'freeassofront';
 import { InputDate, ResponsiveModalOrForm, InputSponsors, InputTextarea } from '../ui';
 import useForm from '../ui/useForm';
@@ -7,12 +8,6 @@ import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as CauseInputPicker } from '../cause';
 import { sessionAsOptions } from '../session/functions.js';
 import { statusValues } from './';
-
-const tabs = [
-  { key: '1', name: 'main', label: 'Informations principales', shortcut: 'P', icon: '' },
-  { key: '2', name: 'sponsors', label: 'Invités', shortcut: 'S', icon: '' },
-  { key: '3', name: 'certificate', label: 'Certificat', shortcut: 'C', icon: '' },
-];
 
 const afterChange = (name, item) => {
   switch (name) {
@@ -25,7 +20,7 @@ const afterChange = (name, item) => {
               let myDate = new Date(item.don_real_ts);
               switch (cautDuration) {
                 case '1Y': {
-                  myDate.setFullYear(myDate.getFullYear()+1);
+                  myDate.setFullYear(myDate.getFullYear() + 1);
                   item.don_end_ts = myDate.toUTCString();
                   break;
                 }
@@ -38,7 +33,7 @@ const afterChange = (name, item) => {
                   item.don_end_ts = null;
                 }
               }
-            } catch(ex) {
+            } catch (ex) {
               console.log(ex);
             }
           }
@@ -46,13 +41,13 @@ const afterChange = (name, item) => {
       }
       break;
     }
-    default : {
+    default: {
       break;
     }
   }
 };
 
-export default function Form(props) {
+function Form(props) {
   const {
     values,
     handleChange,
@@ -65,16 +60,52 @@ export default function Form(props) {
    * Quelques petites variables de travail
    */
   let cauEndDate = false;
-  let cauFamily = 'OTHER'
+  let cauFamily = 'OTHER';
   if (values.cause) {
     cauFamily = values.cause.cau_family;
   }
   /**
    * Render
    */
+  const { intl } = props;
+  const tabs = [
+    {
+      key: '1',
+      name: 'main',
+      label: intl.formatMessage({
+        id: 'app.features.donation.tab.main',
+        defaultMessage: 'Donation',
+      }),
+      shortcut: 'P',
+      icon: '',
+    },
+    {
+      key: '2',
+      name: 'sponsors',
+      label: intl.formatMessage({
+        id: 'app.features.donation.tab.sponsors',
+        defaultMessage: 'Sponsors',
+      }),
+      shortcut: 'S',
+      icon: '',
+    },
+    {
+      key: '3',
+      name: 'certificate',
+      label: intl.formatMessage({
+        id: 'app.features.donation.tab.sertificate',
+        defaultMessage: 'Certificate',
+      }),
+      shortcut: 'C',
+      icon: '',
+    },
+  ];
   return (
     <ResponsiveModalOrForm
-      title="Don"
+      title={intl.formatMessage({
+        id: 'app.features.donation.form.title',
+        defaultMessage: 'Donation',
+      })}
       className="m-5"
       size="xl"
       tab={values.currentTab}
@@ -90,7 +121,10 @@ export default function Form(props) {
         <div className="row">
           <div className="col-sm-14">
             <ClientInputPicker
-              label="Membre"
+              label={intl.formatMessage({
+                id: 'app.features.donation.form.client',
+                defaultMessage: 'Member',
+              })}
               labelTop={true}
               key="client"
               name="client"
@@ -100,7 +134,10 @@ export default function Form(props) {
           </div>
           <div className="col-sm-14">
             <CauseInputPicker
-              label="Cause"
+              label={intl.formatMessage({
+                id: 'app.features.donation.form.cause',
+                defaultMessage: 'Mission',
+              })}
               labelTop={true}
               key="cause"
               name="cause"
@@ -110,7 +147,10 @@ export default function Form(props) {
           </div>
           <div className="col-md-8">
             <InputSelect
-              label="Session"
+              label={intl.formatMessage({
+                id: 'app.features.donation.form.session',
+                defaultMessage: 'Session',
+              })}
               name="session.id"
               labelTop={true}
               value={values.session ? values.session.id : null}
@@ -127,7 +167,10 @@ export default function Form(props) {
           <div className="row">
             <div className="col-md-8">
               <InputDate
-                label="Effectué le"
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.realTs',
+                  defaultMessage: 'Done on',
+                })}
                 labelTop={true}
                 name="don_real_ts"
                 id="don_real_ts"
@@ -138,7 +181,10 @@ export default function Form(props) {
             </div>
             <div className="col-md-8">
               <InputDate
-                label="Totalisé jusqu'au"
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.endTs',
+                  defaultMessage: 'End on',
+                })}
                 labelTop={true}
                 name="don_end_ts"
                 id="don_end_ts"
@@ -147,11 +193,13 @@ export default function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-md-4">
-            </div>
+            <div className="col-md-4"></div>
             <div className="col-md-8">
               <InputCheckbox
-                label="Provient d'un don régulier"
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.sponsorship',
+                  defaultMessage: 'Sponsorship',
+                })}
                 name="sponsorship.id"
                 labelTop={true}
                 disabled={true}
@@ -160,7 +208,10 @@ export default function Form(props) {
             </div>
             <div className="col-md-8">
               <InputCheckbox
-                label="Provient d'une génération"
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.origin',
+                  defaultMessage: 'Generated',
+                })}
                 name="origin.id"
                 labelTop={true}
                 disabled={true}
@@ -172,7 +223,10 @@ export default function Form(props) {
           <div className="row">
             <div className="col-md-8">
               <InputMonetary
-                label="Montant"
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.mnt',
+                  defaultMessage: 'Amount',
+                })}
                 labelTop={true}
                 name="don_mnt"
                 id="don_mnt"
@@ -184,7 +238,10 @@ export default function Form(props) {
             </div>
             <div className="col-sm-8">
               <InputSelect
-                label="Type"
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.type',
+                  defaultMessage: 'Type',
+                })}
                 name="payment_type.id"
                 labelTop={true}
                 inline
@@ -196,20 +253,25 @@ export default function Form(props) {
                 error={getErrorMessage('ptyp_id')}
               />
             </div>
-            <div className="col-md-4">
-            </div>
+            <div className="col-md-4"></div>
             <div className="col-sm-8">
-            <InputCheckbox
-              label="Mentionner sur le site"
-              name="don_display_site"
-              labelTop={true}
-              checked={values.don_display_site === true}
-              onChange={handleChange}
-            />
-          </div>
+              <InputCheckbox
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.displaySite',
+                  defaultMessage: 'Show on site',
+                })}
+                name="don_display_site"
+                labelTop={true}
+                checked={values.don_display_site === true}
+                onChange={handleChange}
+              />
+            </div>
             <div className="col-md-8">
               <InputSelect
-                label="Statut"
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.status',
+                  defaultMessage: 'Status',
+                })}
                 id="don_status"
                 name="don_status"
                 labelTop={true}
@@ -223,7 +285,10 @@ export default function Form(props) {
           <div className="row">
             <div className="col-sm-36">
               <InputTextarea
-                label="Commentaires"
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.comment',
+                  defaultMessage: 'Comments',
+                })}
                 name="don_comment"
                 labelTop={true}
                 value={values.don_comment}
@@ -239,7 +304,10 @@ export default function Form(props) {
           <div className="row">
             <div className="col-sm-36">
               <InputSponsors
-                label="Invités"
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.sponsors',
+                  defaultMessage: 'Sponsors',
+                })}
                 id="don_sponsors"
                 name="don_sponsors"
                 value={values.don_sponsors}
@@ -255,3 +323,5 @@ export default function Form(props) {
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

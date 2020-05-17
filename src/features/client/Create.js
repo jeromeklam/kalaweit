@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
+import { CenteredLoading3Dots, showErrors, createSuccess } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -66,7 +67,7 @@ export class Create extends Component {
         this.props.onClose();
       })
       .catch(errors => {
-        createError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -78,21 +79,21 @@ export class Create extends Component {
           <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && 
-              <Form 
+            {item && (
+              <Form
                 tabs={this.props.client.tabs}
                 tab={this.props.client.tab}
-                item={item} 
+                item={item}
                 client_types={this.props.clientType.items}
                 client_categories={this.props.clientCategory.items}
                 countries={this.props.country.items}
                 languages={this.props.lang.items}
                 errors={this.props.client.createOneError}
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
                 onClose={this.props.onClose}
               />
-            }
+            )}
           </div>
         )}
       </div>
@@ -112,11 +113,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Create));

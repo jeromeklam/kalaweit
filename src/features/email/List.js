@@ -151,7 +151,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche nom"
+        label={intl.formatMessage({ id: 'app.features.email.list.search', defaultMessage: 'Search by subject' })}
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}

@@ -1,0 +1,54 @@
+[
+  {
+    "id": "app.features.sponsors.list.col.name",
+    "defaultMessage": "Fullname",
+    "file": "src/features/ui/InputSponsors.js",
+    "start": {
+      "line": 135,
+      "column": 14
+    },
+    "end": {
+      "line": 135,
+      "column": 101
+    }
+  },
+  {
+    "id": "app.features.sponsors.list.col.email",
+    "defaultMessage": "Email",
+    "file": "src/features/ui/InputSponsors.js",
+    "start": {
+      "line": 140,
+      "column": 14
+    },
+    "end": {
+      "line": 140,
+      "column": 99
+    }
+  },
+  {
+    "id": "app.features.sponsors.list.col.displaySite",
+    "defaultMessage": "Show on site",
+    "file": "src/features/ui/InputSponsors.js",
+    "start": {
+      "line": 145,
+      "column": 14
+    },
+    "end": {
+      "line": 145,
+      "column": 112
+    }
+  },
+  {
+    "id": "app.features.sponsors.list.col.sendNews",
+    "defaultMessage": "Send news",
+    "file": "src/features/ui/InputSponsors.js",
+    "start": {
+      "line": 150,
+      "column": 14
+    },
+    "end": {
+      "line": 150,
+      "column": 106
+    }
+  }
+]

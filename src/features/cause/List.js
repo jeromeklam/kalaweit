@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -15,7 +16,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
-import { deleteError, deleteSuccess } from '../ui';
+import { showErrors, deleteSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { InlinePhotos, InlineNews, InlineSponsors, Create, Modify } from './';
 import * as sponsorshipActions from '../sponsorship/redux/actions';
@@ -82,7 +83,7 @@ export class List extends Component {
         this.props.actions.loadMore({}, true)
       })
       .catch(errors => {
-        deleteError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -152,7 +153,6 @@ export class List extends Component {
     if (photos === id) {
       this.setState({ photos: 0, news: 0, sponsors: 0, sponsorships: 0, donations: 0 });
     } else {
-      this.props.actions.loadPhotos(id, true).then(result => {});
       this.setState({ photos: id, news: 0, sponsors: 0, sponsorships: 0, donations: 0 });
     }
   }
@@ -172,7 +172,6 @@ export class List extends Component {
     if (sponsors === id) {
       this.setState({ photos: 0, news: 0, sponsors: 0, sponsorships: 0, donations: 0});
     } else {
-      this.props.actions.loadSponsors({ cau_id: id }, true).then(result => {});
       this.setState({ photos: 0, news: 0, sponsors: id, sponsorships: 0, donations: 0 });
     }
   }
@@ -204,6 +203,7 @@ export class List extends Component {
   }
 
   render() {
+    const { intl } = this.props;
     // Les items à afficher avec remplissage progressif
     let items = [];
     if (this.props.cause.items.FreeAsso_Cause) {
@@ -221,7 +221,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche nom"
+        label={intl.formatMessage({ id: 'app.features.cause.list.search', defaultMessage: 'Search by name' })}
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -240,11 +240,11 @@ export class List extends Component {
       id = this.state.news;
     } else {
       if (this.state.photos > 0) {
-        inlineComponent = <InlinePhotos />;
+        inlineComponent = <InlinePhotos cauId={this.state.photos} />;
         id = this.state.photos;
       } else {
         if (this.state.sponsors > 0) {
-          inlineComponent = <InlineSponsors />
+          inlineComponent = <InlineSponsors cauId={this.state.photos} />
           id = this.state.sponsors;
         } else {
           if (this.state.sponsorships > 0) {
@@ -260,7 +260,8 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Causes"
+          title={intl.formatMessage({ id: 'app.features.cause.list.title', defaultMessage: 'Missions' })}
+          intl={intl}
           cols={cols}
           items={items}
           quickSearch={quickSearch}
@@ -313,4 +314,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

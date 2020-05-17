@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { InputText, InputCheckbox } from 'freeassofront';
 import { DelOne as DelOneIcon, Plus as PlusIcon } from '../icons';
@@ -66,7 +67,7 @@ class InputSponsorLine extends Component {
 
 const emptyItem = { name: '', email: '', site: true, news: true };
 
-export default class InputSponsors extends Component {
+class InputSponsors extends Component {
   static propTypes = {
     label: PropTypes.string,
   };
@@ -130,16 +131,24 @@ export default class InputSponsors extends Component {
       <div className="form-group">
         <div className="row">
           <div className="col-sm-12">
-            <span>Nom, prénom de l'invité</span>
+            <span>
+              <FormattedMessage id="app.features.sponsors.list.col.name" defaultMessage="Fullname" />
+            </span>
           </div>
           <div className="col-sm-12">
-            <span>Email</span>
+            <span>
+              <FormattedMessage id="app.features.sponsors.list.col.email" defaultMessage="Email" />
+            </span>
           </div>
           <div className="col-sm-4">
-            <span>Site</span>
+            <span>
+              <FormattedMessage id="app.features.sponsors.list.col.displaySite" defaultMessage="Show on site" />
+            </span>
           </div>
           <div className="col-sm-4">
-            <span>Nouvelles</span>
+            <span>
+              <FormattedMessage id="app.features.sponsors.list.col.sendNews" defaultMessage="Send news" />
+            </span>
           </div>
         </div>
         {sponsors.map((sponsor, i) => {
@@ -164,3 +173,5 @@ export default class InputSponsors extends Component {
     );
   }
 }
+
+export default injectIntl(InputSponsors);

@@ -1,15 +1,23 @@
-import { Filter } from 'freeassofront';
+import {Filter} from 'freeassofront';
 
 const initialState = {
   items: [],
-  raw: [],
   page_number: 1,
-  page_size: 999999,
+  page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: new Filter(),
-  sort: [{ col: 'sess_name', way: 'up' }],
-  emptyItem: null,
+  sort: [{col:"sess_exercice",way:"down"}],
   loadMorePending: false,
+  loadMoreFinish: false,
   loadMoreError: null,
+  loadOnePending: false,
+  loadOneItem: null,
+  loadOneError: null,
+  updateOnePending: false,
+  updateOneError: null,
+  createOnePending: false,
+  createOneError: null,
+  delOnePending: false,
+  delOneError: null,
 };
 
 export default initialState;

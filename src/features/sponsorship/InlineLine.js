@@ -53,7 +53,7 @@ export default class InlineLine extends Component {
           <div className="col-4">
             <span>{displayDate(sponsorship.spo_to)}</span>
           </div>
-          <div className="col-10">
+          <div className="col-8">
             {this.props.mode === 'cause' ? (
               <span>{getFullName(sponsorship.client)}</span>
             ) : (
@@ -66,7 +66,7 @@ export default class InlineLine extends Component {
           <div className="col-4">
             <span>{displayBool(sponsorship.spo_send_news,<ColCheckIcon className="text-secondary"/>,'')}</span>
           </div>
-          <div className="col-2 text-right col-last">
+          <div className="col-4 text-right col-last">
             {highlight && (
               <div className="btn-group btn-group-xs" role="group" aria-label="...">
                 <button

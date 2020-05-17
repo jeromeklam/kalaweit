@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { loadSponsorships } from '../sponsorship/redux/actions';
 import { loadDonations } from '../donation/redux/actions';
@@ -17,7 +18,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
-import { deleteError, deleteSuccess } from '../ui';
+import { showErrors, deleteSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 import { InlineSponsorships } from '../sponsorship';
@@ -75,7 +76,7 @@ export class List extends Component {
         this.props.actions.loadMore({}, true)
       })
       .catch(errors => {
-        deleteError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -159,6 +160,7 @@ export class List extends Component {
   }
 
   render() {
+    const { intl } = this.props;
     // Les des items à afficher avec remplissage progressif
     let items = [];
     if (this.props.client.items.FreeAsso_Client) {
@@ -176,7 +178,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche nom, prénom"
+        label={intl.formatMessage({ id: 'app.features.client.list.search', defaultMessage: 'Search by first or last names' })}
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -200,7 +202,8 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Membres"
+          title={intl.formatMessage({ id: 'app.features.client.list.title', defaultMessage: 'Members' })}
+          intl={intl}
           cols={cols}
           items={items}
           quickSearch={quickSearch}
@@ -250,4 +253,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

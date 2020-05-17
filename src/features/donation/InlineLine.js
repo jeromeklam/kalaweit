@@ -70,7 +70,7 @@ export default class InlineLine extends Component {
           <div className="col-4">
             <span>{displayBool(donation.don_display_site,<ColCheckIcon className="text-secondary"/>,'')}</span>
           </div>
-          <div className="col-4 text-right">
+          <div className="col-4 text-right col-last">
             {highlight && (
               <div className="btn-group btn-group-xs" role="group" aria-label="...">
                 <button

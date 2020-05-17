@@ -48,7 +48,7 @@ function Form(props) {
                   <CauseInputPicker
                     label={intl.formatMessage({
                       id: 'app.features.sponsorship.form.cause',
-                      defaultMessage: 'Cause',
+                      defaultMessage: 'Mission',
                     })}
                     key="cause"
                     name="cause"

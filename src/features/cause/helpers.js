@@ -16,16 +16,19 @@ import { causeTypeAsOptions } from '../cause-type';
 import { siteAsOptions } from '../site/functions';
 
 export const sexSelect = [
-  { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon"/> },
-  { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon"/> },
+  { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon" /> },
+  { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon" /> },
   { label: 'Indéfini', value: 'OTHER' },
 ];
 
-export const getGlobalActions = ({ onClearFilters, onCreate}) => {
+export const getGlobalActions = ({ props, onClearFilters, onCreate }) => {
   return [
     {
       name: 'clear',
-      label: 'Effacer',
+      label: props.intl.formatMessage({
+        id: 'app.list.button.clear',
+        defaultMessage: 'Clear filters',
+      }),
       onClick: onClearFilters,
       theme: 'secondary',
       icon: <FilterClearIcon color="white" />,
@@ -33,7 +36,10 @@ export const getGlobalActions = ({ onClearFilters, onCreate}) => {
     },
     {
       name: 'create',
-      label: 'Ajouter',
+      label: props.intl.formatMessage({
+        id: 'app.list.button.add',
+        defaultMessage: 'Add',
+      }),
       onClick: onCreate,
       theme: 'primary',
       icon: <AddOneIcon color="white" />,
@@ -42,11 +48,24 @@ export const getGlobalActions = ({ onClearFilters, onCreate}) => {
   ];
 };
 
-export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenPhotos, onOpenNews, onOpenSponsors, onGetOne, onDelOne, state}) => {
+export const getInlineActions = ({
+  props,
+  onOpenDonations,
+  onOpenSponsorships,
+  onOpenPhotos,
+  onOpenNews,
+  onOpenSponsors,
+  onGetOne,
+  onDelOne,
+  state,
+}) => {
   return [
     {
       name: 'donation',
-      label: 'Dons',
+      label: props.intl.formatMessage({
+        id: 'app.list.button.donations',
+        defaultMessage: 'Donations',
+      }),
       onClick: onOpenDonations,
       theme: 'secondary',
       icon: <CauseDonationIcon color="white" />,
@@ -54,7 +73,10 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
     },
     {
       name: 'sponsorship',
-      label: 'Dons ou parrainages réguliers',
+      label: props.intl.formatMessage({
+        id: 'app.list.button.sponsorships',
+        defaultMessage: 'Sponsorships',
+      }),
       onClick: onOpenSponsorships,
       theme: 'secondary',
       icon: <SponsorshipIcon color="white" />,
@@ -62,7 +84,10 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
     },
     {
       name: 'images',
-      label: 'Photos',
+      label: props.intl.formatMessage({
+        id: 'app.list.button.photos',
+        defaultMessage: 'Pictures',
+      }),
       onClick: onOpenPhotos,
       theme: 'secondary',
       icon: <GetPhotoIcon color="white" />,
@@ -71,7 +96,10 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
     },
     {
       name: 'news',
-      label: 'Journal',
+      label: props.intl.formatMessage({
+        id: 'app.list.button.news',
+        defaultMessage: 'News',
+      }),
       onClick: onOpenNews,
       theme: 'secondary',
       icon: <NewsIcon color="white" />,
@@ -80,7 +108,10 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
     },
     {
       name: 'sponsors',
-      label: 'Parrains',
+      label: props.intl.formatMessage({
+        id: 'app.list.button.sponsors',
+        defaultMessage: 'Sponsors',
+      }),
       onClick: onOpenSponsors,
       theme: 'secondary',
       icon: <SponsorIcon color="white" />,
@@ -89,7 +120,10 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
     },
     {
       name: 'modify',
-      label: 'Modifier',
+      label: props.intl.formatMessage({
+        id: 'app.list.button.modify',
+        defaultMessage: 'Modify',
+      }),
       onClick: onGetOne,
       theme: 'secondary',
       icon: <GetOneIcon color="white" />,
@@ -97,7 +131,10 @@ export const getInlineActions = ({ onOpenDonations,  onOpenSponsorships, onOpenP
     },
     {
       name: 'delete',
-      label: 'Supprimer',
+      label: props.intl.formatMessage({
+        id: 'app.list.button.delete',
+        defaultMessage: 'Delete',
+      }),
       onClick: onDelOne,
       theme: 'warning',
       icon: <DelOneIcon color="white" />,
@@ -110,7 +147,10 @@ export const getCols = ({ props }) => {
   return [
     {
       name: 'photo',
-      label: 'Photo',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.picture',
+        defaultMessage: 'Picture',
+      }),
       col: 'default_blob.caum_short_blob',
       size: '3',
       mob_size: '',
@@ -121,7 +161,10 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'id',
-      label: 'Identifiant',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.id',
+        defaultMessage: 'Number',
+      }),
       col: 'id',
       size: '4',
       mob_size: '',
@@ -132,7 +175,10 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'name',
-      label: 'Nom',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.name',
+        defaultMessage: 'Name',
+      }),
       col: 'cau_name',
       size: '3',
       mob_size: '',
@@ -142,16 +188,22 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'subspecies',
-      label: 'Espèce',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.subspecies',
+        defaultMessage: 'Subspecies',
+      }),
       col: 'subspecies.sspe_name',
       size: '8',
       mob_size: '',
       title: true,
       sortable: true,
     },
-   {
+    {
       name: 'sexe',
-      label: 'Sexe',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.sex',
+        defaultMessage: 'Sex',
+      }),
       col: 'cau_sex',
       size: '2',
       mob_size: '',
@@ -162,7 +214,10 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'cau_year',
-      label: 'Année naissance',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.cauYear',
+        defaultMessage: 'Born in',
+      }),
       col: 'cau_year',
       size: '4',
       mob_size: '',
@@ -172,31 +227,52 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'cau_mnt',
-      label: 'Récolté',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.mnt',
+        defaultMessage: 'Raised',
+      }),
       col: 'cau_mnt',
       size: '4',
       mob_size: '',
       type: 'monetary',
       title: true,
-      fDisplay: (item, newContent) => { if (item.cau_to === '' || item.cau_to === null) { return newContent; } else { return ''; } },
+      fDisplay: (item, newContent) => {
+        if (item.cau_to === '' || item.cau_to === null) {
+          return newContent;
+        } else {
+          return '';
+        }
+      },
       filterable: { type: 'monetary' },
       sortable: true,
     },
     {
       name: 'cau_mnt_left',
-      label: 'Restant',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.left',
+        defaultMessage: 'Left',
+      }),
       col: 'cau_mnt_left',
       size: '4',
       mob_size: '',
       type: 'monetary',
       title: true,
-      fDisplay: (item, newContent) => { if (item.cau_to === '' || item.cau_to === null) { return newContent; } else { return ''; } },
+      fDisplay: (item, newContent) => {
+        if (item.cau_to === '' || item.cau_to === null) {
+          return newContent;
+        } else {
+          return '';
+        }
+      },
       filterable: { type: 'monetary' },
       sortable: true,
     },
     {
       name: 'site',
-      label: 'Site',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.site',
+        defaultMessage: 'Location',
+      }),
       col: 'site.site_name',
       size: '3',
       mob_size: '',
@@ -205,7 +281,10 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'cau_to',
-      label: 'Fin',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.end',
+        defaultMessage: 'End',
+      }),
       col: 'cau_to',
       size: '0',
       mob_size: '0',
@@ -214,7 +293,10 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'type',
-      label: 'Type',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.causeType',
+        defaultMessage: 'Mission',
+      }),
       col: 'cause_type.caut_id',
       size: '0',
       mob_size: '0',
@@ -226,7 +308,10 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'site',
-      label: 'Site',
+      label: props.intl.formatMessage({
+        id: 'app.features.cause.list.col.site',
+        defaultMessage: 'Location',
+      }),
       col: 'site.site_id',
       size: '0',
       mob_size: '0',

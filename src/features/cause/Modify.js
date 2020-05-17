@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, showErrors } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -70,7 +71,7 @@ export class Modify extends Component {
         this.props.onClose();
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -85,6 +86,7 @@ export class Modify extends Component {
             {item && (
               <Form
                 item={item}
+                modify={true}
                 cause_types={this.props.causeType.items}
                 tab_datas={this.props.data.items}
                 subspecies={this.props.subspecies.items}
@@ -120,4 +122,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));
+export default injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify)));

@@ -119,6 +119,13 @@ export const globalMenu = [
         role: 'NAV',
         position: 3,
       },
+      {
+        icon: null,
+        label: <FormattedMessage id="app.features.home.app.menu.session" defaultMessage="Sessions" />,
+        url: '/session',
+        role: 'NAV',
+        position: 4,
+      },
     ],
   },
   {

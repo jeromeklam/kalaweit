@@ -1,11 +1,11 @@
-import { CAUSE_UPDATE_ONE_UPDATE } from '../features/cause/redux/constants';
-import { CLIENT_UPDATE_ONE_UPDATE } from '../features/client/redux/constants';
-import { DONATION_UPDATE_ONE_UPDATE } from '../features/donation/redux/constants';
 import { CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-main-type/redux/constants';
 import { CAUSE_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-type/redux/constants';
+import { CAUSE_UPDATE_ONE_UPDATE } from '../features/cause/redux/constants';
 import { CLIENT_CATEGORY_UPDATE_ONE_UPDATE } from '../features/client-category/redux/constants';
 import { CLIENT_TYPE_UPDATE_ONE_UPDATE } from '../features/client-type/redux/constants';
+import { CLIENT_UPDATE_ONE_UPDATE } from '../features/client/redux/constants';
 import { DATA_UPDATE_ONE_UPDATE } from '../features/data/redux/constants';
+import { DONATION_UPDATE_ONE_UPDATE } from '../features/donation/redux/constants';
 import { EMAIL_UPDATE_ONE_UPDATE } from '../features/email/redux/constants';
 import { PAYMENT_TYPE_UPDATE_ONE_UPDATE } from '../features/payment-type/redux/constants';
 import { SITE_UPDATE_ONE_UPDATE } from '../features/site/redux/constants';
@@ -17,30 +17,6 @@ import { SUBSPECIES_UPDATE_ONE_UPDATE } from '../features/subspecies/redux/const
 export function propagateModel(type, model) {
   return dispatch => {
     switch (type) {
-      case 'FreeAsso_Cause':
-        dispatch({
-          type: CAUSE_UPDATE_ONE_UPDATE,
-          data: model,
-        });
-        break;
-      case 'FreeAsso_Client':
-        dispatch({
-          type: CLIENT_UPDATE_ONE_UPDATE,
-          data: model,
-        });
-        break;
-      case 'FreeAsso_Sponsorship':
-        dispatch({
-          type: SPONSORSHIP_UPDATE_ONE_UPDATE,
-          data: model,
-        });
-        break;
-      case 'FreeAsso_Donation':
-        dispatch({
-          type: DONATION_UPDATE_ONE_UPDATE,
-          data: model,
-        });
-        break;
       case 'FreeAsso_CauseMainType':
         dispatch({
           type: CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
@@ -50,6 +26,12 @@ export function propagateModel(type, model) {
       case 'FreeAsso_CauseType':
         dispatch({
           type: CAUSE_TYPE_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Cause':
+        dispatch({
+          type: CAUSE_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;
@@ -65,9 +47,21 @@ export function propagateModel(type, model) {
           data: model,
         });
         break;
+      case 'FreeAsso_Client':
+        dispatch({
+          type: CLIENT_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
       case 'FreeAsso_Data':
         dispatch({
           type: DATA_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Donation':
+        dispatch({
+          type: DONATION_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;
@@ -98,6 +92,12 @@ export function propagateModel(type, model) {
       case 'FreeAsso_Species':
         dispatch({
           type: SPECIES_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Sponsorship':
+        dispatch({
+          type: SPONSORSHIP_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;

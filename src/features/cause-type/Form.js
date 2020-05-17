@@ -5,6 +5,7 @@ import { useForm, ResponsiveModalOrForm } from '../ui';
 import { causeTypeMntType, causeTypeFamily } from './';
 
 function Form(props) {
+  const modify = props.modify || false; 
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
@@ -82,6 +83,7 @@ function Form(props) {
             })}
             name="caut_mnt_type"
             id="caut_mnt_type"
+            disabled={modify}
             value={values.caut_mnt_type}
             onChange={handleChange}
             options={causeTypeMntType}
@@ -126,6 +128,7 @@ function Form(props) {
             })}
             name="caut_family"
             id="caut_family"
+            disabled={modify}
             value={values.caut_family}
             onChange={handleChange}
             options={causeTypeFamily}

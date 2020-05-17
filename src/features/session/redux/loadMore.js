@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   SESSION_LOAD_MORE_INIT,
   SESSION_LOAD_MORE_BEGIN,
@@ -23,23 +23,37 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
+        let filters = getState().session.filters.asJsonApiObject();
         let params = {
-          page: {
-            number: getState().session.page_number,
-            size: getState().session.page_size,
-          },
+          page: { number: getState().session.page_number, size: getState().session.page_size },
+          ...filters,
         };
+        let sort = '';
+        getState().session.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
+        }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/session' + addUrl, {});
         doRequest.then(
-          (res) => {
+          res => {
             dispatch({
               type: SESSION_LOAD_MORE_SUCCESS,
               data: res,
             });
             resolve(res);
           },
-          (err) => {
+          err => {
             dispatch({
               type: SESSION_LOAD_MORE_FAILURE,
               data: { error: err },
@@ -48,6 +62,7 @@ export function loadMore(args = {}, reload = false) {
           },
         );
       });
+
       return promise;
     }
   };
@@ -72,6 +87,7 @@ export function reducer(state, action) {
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
       };
+
     case SESSION_LOAD_MORE_BEGIN:
       // Just after a request is sent
       return {
@@ -82,8 +98,7 @@ export function reducer(state, action) {
 
     case SESSION_LOAD_MORE_SUCCESS:
       // The request is success
-      let list = [];
-      let raw = [];
+      let list = {};
       let nbre = 0;
       let result = false;
       if (action.data && action.data.data) {
@@ -95,7 +110,6 @@ export function reducer(state, action) {
       if (nbre > 0) {
         if (state.items) {
           list = jsonApiNormalizer(result, state.items);
-          raw = buildModel(list, 'FreeAsso_Session');
         } else {
           list = jsonApiNormalizer(result);
         }
@@ -108,16 +122,19 @@ export function reducer(state, action) {
         loadMoreError: null,
         loadMoreFinish: nbre < state.page_size,
         items: list,
-        raw: raw,
         page_number: state.page_number + 1,
       };
 
     case SESSION_LOAD_MORE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         loadMorePending: false,
-        loadMoreError: action.data.error,
+        loadMoreError: error,
       };
 
     case SESSION_LOAD_MORE_DISMISS_ERROR:

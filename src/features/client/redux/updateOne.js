@@ -13,7 +13,6 @@ export function updateOne(id, args = {}) {
     dispatch({
       type: CLIENT_UPDATE_ONE_BEGIN,
     });
-
     const promise = new Promise((resolve, reject) => {
       const doRequest = freeAssoApi.put('/v1/asso/client/' + id, args);
       doRequest.then(
@@ -33,7 +32,6 @@ export function updateOne(id, args = {}) {
         },
       );
     });
-
     return promise;
   };
 }

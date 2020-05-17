@@ -44,7 +44,7 @@ export function loadMore(args = {}, reload = false) {
           params.sort = sort;
         }
         const addUrl = objectToQueryString(params);
-        const doRequest = freeAssoApi.get('/v1/sys/jobqueue' + addUrl, {});
+        const doRequest = freeAssoApi.get('/v1/core/jobqueue' + addUrl, {});
         doRequest.then(
           (res) => {
             dispatch({

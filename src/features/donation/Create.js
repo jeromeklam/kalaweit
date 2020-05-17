@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { loadOne as loadOneCause } from '../cause/redux/actions';
 import { loadOne as loadOneClient } from '../client/redux/actions';
-import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
+import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import { propagateModel } from '../../common';
 import Form from './Form';
 
@@ -44,13 +45,13 @@ export class Create extends Component {
         this.props.actions.loadOneClient(this.props.parentId).then(result => {
           item.client = this.props.client.loadOneItem;
           this.setState({ item: item });
-        })
+        });
       } else {
         if (this.props.mode === 'cause') {
           this.props.actions.loadOneCause(this.props.parentId).then(result => {
             item.cause = this.props.cause.loadOneItem;
             this.setState({ item: item });
-          })
+          });
         } else {
           this.setState({ item: item });
         }
@@ -83,7 +84,7 @@ export class Create extends Component {
         this.props.onClose();
       })
       .catch(errors => {
-        createError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -95,18 +96,18 @@ export class Create extends Component {
           <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && 
-              <Form 
-                item={item} 
+            {item && (
+              <Form
+                item={item}
                 modal={true}
                 paymentTypes={this.props.paymentType.items}
-                sessions={this.props.session.items} 
+                sessions={this.props.session.items}
                 errors={this.props.donation.createOneError}
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
                 onClose={this.props.onClose}
               />
-            }
+            )}
           </div>
         )}
       </div>
@@ -126,11 +127,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, loadOneCause, loadOneClient, propagateModel }, dispatch)
+    actions: bindActionCreators(
+      { ...actions, loadOneCause, loadOneClient, propagateModel },
+      dispatch,
+    ),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Create));

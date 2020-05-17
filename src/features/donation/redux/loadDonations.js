@@ -113,10 +113,14 @@ export function reducer(state, action) {
 
     case DONATION_LOAD_DONATIONS_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         loadDonationsPending: false,
-        loadDonationsError: action.data.error,
+        loadDonationsError: error,
       };
 
     case DONATION_LOAD_DONATIONS_DISMISS_ERROR:

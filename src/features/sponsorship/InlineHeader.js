@@ -34,20 +34,20 @@ export default class InlineHeader extends Component {
             <FormattedMessage id="app.features.sponsorship.list.col.to" defaultMessage="To" />
           </span>
         </div>
-        <div className="col-10">
+        <div className="col-8">
           {this.props.mode === 'cause' ? (
             <span>
               <FormattedMessage id="app.features.sponsorship.list.col.client" defaultMessage="Member" />
             </span>
           ) : (
             <span>
-              <FormattedMessage id="app.features.sponsorship.list.col.cause" defaultMessage="Cause" />
+              <FormattedMessage id="app.features.sponsorship.list.col.cause" defaultMessage="Mission" />
             </span>
           )}
         </div>
         <div className="col-4">
           <span>
-            <FormattedMessage id="app.features.sponsorship.list.col.site" defaultMessage=" Display on site" />
+            <FormattedMessage id="app.features.sponsorship.list.col.site" defaultMessage="Show on site" />
           </span>
         </div>
         <div className="col-4">
@@ -55,7 +55,7 @@ export default class InlineHeader extends Component {
             <FormattedMessage id="app.features.sponsorship.list.col.news" defaultMessage="News" />
           </span>
         </div>
-        <div className="col-2 text-right col-last">
+        <div className="col-4 text-right col-last">
           <div className="btn-group btn-group-xs" role="group" aria-label="...">
             <button
               type="button"

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -29,6 +30,7 @@ export class InlinePhotos extends Component {
     this.state = {
       confirm: false,
       caum_id: 0,
+      id: this.props.cauId,
       view: false,
       blob: false,
       item: null,
@@ -41,6 +43,10 @@ export class InlinePhotos extends Component {
     this.onDownload = this.onDownload.bind(this);
     this.onView = this.onView.bind(this);
     this.onCloseView = this.onCloseView.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.actions.loadPhotos(this.state.id, true).then(result => {});
   }
 
   onCheck(item, caum_id) {
@@ -119,6 +125,7 @@ export class InlinePhotos extends Component {
   }
 
   render() {
+    const { intl } = this.props;
     let photos = [];
     if (this.props.cause.photos.FreeAsso_CauseMedia) {
       photos = buildModel(this.props.cause.photos, 'FreeAsso_CauseMedia', null, {eager: true});
@@ -149,7 +156,9 @@ export class InlinePhotos extends Component {
                         <div className="row">
                           <div className="col-12">
                             <span className="">
-                              <small>Principale</small>
+                              <small>
+                                <FormattedMessage id="app.features.picture.list.main" defaultMessage="Main" />
+                              </small>
                             </span>
                             &nbsp;
                             {photo.id === this.props.cause.photosItem.default_blob.id ? (
@@ -199,7 +208,9 @@ export class InlinePhotos extends Component {
                   <div className="card-header">
                     <div className="row">
                       <div className="col-36">
-                        <span className="">Ajouter une photo</span>
+                        <span className="">
+                          <FormattedMessage id="app.features.picture.list.add" defaultMessage="Add one picture" />
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -262,4 +273,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlinePhotos);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(InlinePhotos));
