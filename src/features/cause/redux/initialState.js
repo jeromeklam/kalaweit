@@ -1,4 +1,10 @@
 import { Filter } from 'freeassofront';
+//import { FILTER_OPER_GREATER_OR_EQUAL_OR_NULL } from 'freeassofront/src/features/filter/index.js';
+
+let initialFilters = new Filter();
+const now = new Date().toISOString();
+initialFilters.addFilter('cau_to', now, 'gten');
+initialFilters.addFilter('cause_type.camt_id', 355, 'eq', true);
 
 const initialState = {
   items: [],
@@ -9,7 +15,7 @@ const initialState = {
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   tab: "1",
-  filters: new Filter(),
+  filters: initialFilters,
   sort: [{col:"cau_name",way:"up"}],
   loadMorePending: false,
   loadMoreFinish: false,

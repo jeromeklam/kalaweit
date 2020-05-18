@@ -125,7 +125,6 @@ export class InlinePhotos extends Component {
   }
 
   render() {
-    const { intl } = this.props;
     let photos = [];
     if (this.props.cause.photos.FreeAsso_CauseMedia) {
       photos = buildModel(this.props.cause.photos, 'FreeAsso_CauseMedia', null, {eager: true});

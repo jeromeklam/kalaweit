@@ -57,14 +57,6 @@ function Form(props) {
     getErrorMessage,
   } = useForm(props.item, '1', props.onSubmit, props.onCancel, null, props.errors, afterChange);
   /**
-   * Quelques petites variables de travail
-   */
-  let cauEndDate = false;
-  let cauFamily = 'OTHER';
-  if (values.cause) {
-    cauFamily = values.cause.cau_family;
-  }
-  /**
    * Render
    */
   const { intl } = props;

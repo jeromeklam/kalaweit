@@ -3,7 +3,6 @@ import { injectIntl } from 'react-intl';
 import { InputHidden, InputText, InputSelect } from 'freeassofront';
 import { useForm, ResponsiveModalOrForm, InputDate } from '../ui';
 import { countryAsOptions } from '../country/functions.js';
-import { langAsOptions } from '../lang/functions.js';
 
 const Form = props => {
   const { intl } = props;

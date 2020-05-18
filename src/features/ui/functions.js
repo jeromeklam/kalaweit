@@ -1,4 +1,5 @@
 import cogoToast from 'cogo-toast';
+import { jsonApiNormalizer } from 'freejsonapi';
 
 export function getFromLS(key, item = 'rgl-8') {
   let ls = {};
@@ -10,9 +11,9 @@ export function getFromLS(key, item = 'rgl-8') {
     }
   }
   return ls[key];
-};
+}
 
-export function saveToLS (key, value, item = 'rgl-8') {
+export function saveToLS(key, value, item = 'rgl-8') {
   if (global.localStorage) {
     global.localStorage.setItem(
       item,
@@ -21,22 +22,41 @@ export function saveToLS (key, value, item = 'rgl-8') {
       }),
     );
   }
-};
+}
 
-export function showErrors (intl, error) {
-  if (error && error.errors) {
-    error.errors.forEach((oneError) => {
-      if (oneError.code) {
-        const code = `app.errors.code.${oneError.code}`;
-        const message = intl.formatMessage({
-          id: code,
-          defaultMessage: oneError.title,
-        });
-        cogoToast.error(message);
+export function showErrors(intl, error) {
+  if (error) {
+    if (!error.errors) {
+      if (error.response) {
+        error = jsonApiNormalizer(error.response);
       }
+    }
+    if (error.errors) {
+      error.errors.forEach(oneError => {
+        if (oneError.code) {
+          const code = `app.errors.code.${oneError.code}`;
+          const message = intl.formatMessage({
+            id: code,
+            defaultMessage: oneError.title,
+          });
+          cogoToast.error(message);
+        }
+      });
+    } else {
+      const message = intl.formatMessage({
+        id: 'app.errors.default',
+        defaultMessage: 'Unknown error !',
+      });
+      cogoToast.error(message);
+    }
+  } else {
+    const message = intl.formatMessage({
+      id: 'app.errors.default',
+      defaultMessage: 'Unknown error !',
     });
+    cogoToast.error(message);
   }
-};
+}
 
 export const messageError = (message = 'Unknown error') => {
   cogoToast.error(message);
@@ -71,8 +91,8 @@ export const deleteError = (message = null) => {
 };
 
 export const downloadBlob = (data, type, filename) => {
-  const bytes = new Uint8Array(data); 
-  const blob = new Blob([bytes], {type: type});
+  const bytes = new Uint8Array(data);
+  const blob = new Blob([bytes], { type: type });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -86,4 +106,4 @@ export const downloadBlob = (data, type, filename) => {
   a.addEventListener('click', clickHandler, false);
   a.click();
   return a;
-}
+};

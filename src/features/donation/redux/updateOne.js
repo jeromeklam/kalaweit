@@ -84,6 +84,7 @@ export function reducer(state, action) {
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
       let news = jsonApiUpdate(myItems, 'FreeAsso_Donation', object);
+      console.log(object);
       return {
         ...state,
         updateOneError: null,

@@ -64,6 +64,14 @@ export function propagateModel(type, model) {
           type: DONATION_UPDATE_ONE_UPDATE,
           data: model,
         });
+        dispatch({
+          type: CAUSE_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        dispatch({
+          type: CLIENT_UPDATE_ONE_UPDATE,
+          data: model,
+        });
         break;
       case 'FreeFW_Email':
         dispatch({

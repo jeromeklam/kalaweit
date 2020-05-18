@@ -146,7 +146,7 @@ export class Signin extends Component {
                 <InputEmail
                   id="username"
                   name="username"
-                  label={<FormattedMessage id="app.features.auth.login.username" defaultMessage="Connexion" />}
+                  label={<FormattedMessage id="app.features.auth.login.username" defaultMessage="Email address" />}
                   placeholder={intl.formatMessage({ id: 'app.features.auth.login.username', defaultMessage: 'Email address' })}
                   required=""
                   autoFocus=""
@@ -176,7 +176,7 @@ export class Signin extends Component {
                 <InputEmail
                   id="username"
                   name="username"
-                  label={<FormattedMessage id="app.features.auth.login.username" defaultMessage="Connexion" />}
+                  label={<FormattedMessage id="app.features.auth.login.username" defaultMessage="Email address" />}
                   placeholder={intl.formatMessage({ id: 'app.features.auth.login.username', defaultMessage: 'Email address' })}
                   required=""
                   autoFocus=""
@@ -188,7 +188,7 @@ export class Signin extends Component {
                 <InputPassword
                   id="password"
                   name="password"
-                  label={<FormattedMessage id="app.features.auth.login.password" defaultMessage="Connexion" />}
+                  label={<FormattedMessage id="app.features.auth.login.password" defaultMessage="Password" />}
                   placeholder={intl.formatMessage({ id: 'app.features.auth.login.password', defaultMessage: 'Password' })}
                   required=""
                   labelInline
@@ -200,7 +200,7 @@ export class Signin extends Component {
                   <InputCheckbox
                     name="remember"
                     checked={this.state.remember}
-                    detail={<FormattedMessage id="app.features.auth.login.rememberMe" defaultMessage="Connexion" />}
+                    detail={<FormattedMessage id="app.features.auth.login.rememberMe" defaultMessage="Remember me" />}
                     onChange={this.onChange}
                   />
                 </div>

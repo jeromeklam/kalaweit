@@ -32,7 +32,6 @@ export function delOne(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }

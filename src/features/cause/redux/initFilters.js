@@ -3,18 +3,23 @@ import {
   CAUSE_INIT_FILTERS,
 } from './constants';
 
-export function initFilters() {
+export function initFilters(camtId) {
   return {
     type: CAUSE_INIT_FILTERS,
+    camtId: camtId
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
     case CAUSE_INIT_FILTERS:
+      let newFilters = new Filter();
+      const now = new Date().toISOString();
+      newFilters.addFilter('cau_to', now, 'gten');
+      newFilters.addFilter('cause_type.camt_id', action.camtId || 0, 'eq', true);
       return {
         ...state,
-        filters: new Filter(),
+        filters: newFilters,
       };
 
     default:

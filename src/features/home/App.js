@@ -15,6 +15,7 @@ import messages_fr from '../../translations/fr.json';
 import messages_en from '../../translations/en.json';
 import { Menu as MenuIcon, AccountDetail, AccountClose } from '../icons';
 import { globalMenu } from './';
+import { causeMainTypeAsOptions } from '../cause-main-type';
 
 const intlMessages = {
   fr: messages_fr,
@@ -116,6 +117,7 @@ export class App extends Component {
   }
 
   render() {
+    const types = causeMainTypeAsOptions(this.props.causeMainType.items);
     const locale = this.props.common.locale || 'fr';
     const messages = intlMessages[locale];
     if (this.props.home.loadAllError) {
@@ -133,7 +135,7 @@ export class App extends Component {
           <ResponsivePage
             menuIcon={<MenuIcon className="light" />}
             title={process.env.REACT_APP_APP_NAME}
-            options={globalMenu}
+            options={globalMenu(types)}
             settings={{...this.props.auth.settings.layout}}
             authenticated={this.props.auth.authenticated}
             location={this.props.location}
@@ -173,6 +175,7 @@ function mapStateToProps(state) {
     home: state.home,
     auth: state.auth,
     common: state.common,
+    causeMainType: state.causeMainType,
   };
 }
 

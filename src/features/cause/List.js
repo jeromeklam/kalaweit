@@ -30,6 +30,13 @@ export class List extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.match.params.camtId !== state.camtId) {
+      return { camtId: props.match.params.camtId };
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -40,6 +47,7 @@ export class List extends Component {
       sponsorships: 0,
       donations: 0,   
       cauId: -1,
+      camtId: this.props.match.params.camtId,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -60,7 +68,15 @@ export class List extends Component {
   }
 
   componentDidMount() {
+    this.props.actions.initFilters(this.state.camtId);
     this.props.actions.loadMore();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.camtId !== this.state.camtId) {
+      this.props.actions.initFilters(this.state.camtId);
+      this.props.actions.loadMore(false, true);
+    }
   }
 
   onCreate(event) {
@@ -132,7 +148,7 @@ export class List extends Component {
   }
 
   onClearFilters() {
-    this.props.actions.initFilters();
+    this.props.actions.initFilters(this.state.camtId);
     this.props.actions.initSort();
     let timer = this.state.timer;
     if (timer) {
@@ -145,6 +161,7 @@ export class List extends Component {
   }
 
   onLoadMore(event) {
+    this.props.actions.initFilters(this.state.camtId);
     this.props.actions.loadMore();
   }
 
