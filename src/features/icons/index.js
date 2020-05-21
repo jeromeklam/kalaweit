@@ -73,3 +73,5 @@ export { default as Down } from './Down';
 export { default as Up } from './Up';
 export { default as MenuOpened } from './MenuOpened';
 export { default as MenuClosed } from './MenuClosed';
+export { default as LockOn } from './LockOn';
+export { default as LockOff } from './LockOff';

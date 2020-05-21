@@ -194,6 +194,30 @@ export const getCols = ({ props }) => {
       last: true,
     },
     {
+      name: 'receipt',
+      label: props.intl.formatMessage({
+        id: 'app.features.client.list.col.cliReceipt',
+        defaultMessage: 'Send receipt',
+      }),
+      col: 'cli_receipt',
+      hidden: true,
+      sortable: false,
+      filterable: { type: 'bool' },
+      type: 'bool',
+    },
+    {
+      name: 'cli_email_refused',
+      label: props.intl.formatMessage({
+        id: 'app.features.client.list.col.cliEmailRefused',
+        defaultMessage: 'Email refused',
+      }),
+      col: 'cli_email_refused',
+      hidden: true,
+      sortable: false,
+      filterable: { type: 'text' },
+      type: 'text',
+    },
+    {
       name: 'category',
       label: props.intl.formatMessage({
         id: 'app.features.client.list.col.category',

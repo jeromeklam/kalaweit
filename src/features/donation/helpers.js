@@ -7,6 +7,7 @@ import {
   PaymentOff as PaymentOffIcon,
   FilterClear as FilterClearIcon,
   Note as NoteIcon,
+  Sponsorship as SponsorshipIcon,
 } from '../icons';
 
 export const statusValues = [
@@ -15,6 +16,14 @@ export const statusValues = [
   { value: 'NOK', label: 'Impayé' },
   //{ value: 'NEXT', label: 'A venir' },
 ];
+
+const missionDisplay = (item) => {
+  let result = item.cause.cau_name;
+  if (item.sponsorship && item.sponsorship.id > 0) {
+    return <span className="text-secondary">{result} <SponsorshipIcon size={0.6}/></span>
+  }
+  return result;
+}
 
 export const getGlobalActions = ({ props, onClearFilters, onCreate }) => {
   return [
@@ -195,6 +204,7 @@ export const getCols = ({ props }) => {
       col: 'cause.cau_name',
       size: '6',
       mob_size: '',
+      fDisplay: missionDisplay,
       sortable: true,
       filterable: { type: 'text' },
     },

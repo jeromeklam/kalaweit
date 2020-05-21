@@ -29,7 +29,7 @@ const _loadClient = id => {
   return freeAssoApi.get('/v1/asso/client/' + id, {});
 };
 
-const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null) => {
+const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null, locked = []) => {
   const [values, setValues] = useState({
     ...initialState,
     currentTab: initialTab,
@@ -37,6 +37,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
     loadCause: false,
     loadSite: false,
     errors: errors,
+    locked: locked,
   });
 
   const handleSubmit = event => {
@@ -250,7 +251,31 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
     }
     return message;
   }
-        
+
+  const isLocked = (p_field) => {
+    const found = values.locked.find(elem => elem.field === p_field);
+    if (found) {
+      return found.locked;
+    }
+    return null;
+  }
+
+  const toggleLockOn = (p_field) => {
+    const found = values.locked.findIndex(elem => elem.field === p_field);
+    if (found >= 0) {
+      values.locked[found].locked = true;
+    }
+    setValues({ ...values });
+  }
+
+  const toggleLockOff = (p_field) => {
+    const found = values.locked.findIndex(elem => elem.field === p_field);
+    if (found >= 0) {
+      values.locked[found].locked = false;
+    }
+    setValues({ ...values });
+  }  
+   
   return {
     values,
     handleChange,
@@ -258,6 +283,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
     handleCancel,
     handleNavTab,
     getErrorMessage,
+    isLocked,
+    toggleLockOn,
+    toggleLockOff,
   };
 };
 
