@@ -88,6 +88,7 @@ export class Modify extends Component {
               <Form
                 item={item}
                 modal={true}
+                modify={true}
                 donation={this.props.donation}              
                 paymentTypes={this.props.paymentType.items}
                 sessions={this.props.session.items}

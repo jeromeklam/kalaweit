@@ -36,7 +36,7 @@ class About extends Component {
                 <strong className="d-inline-block mb-2 text-primary">
                   <FormattedMessage
                     id="app.contact.name"
-                    defaultMessage="KLAM Jérôme"
+                    defaultMessage="KALAWEIT"
                   />
                   </strong>
                 <h3 className="mb-0">
@@ -46,34 +46,40 @@ class About extends Component {
                 </h3>
                 <p className="card-text mb-auto">
                   <FormattedMessage
+                    id="app.contact.contact"
+                    defaultMessage="Constance Cluset"
+                  />
+                </p>
+                <p className="card-text mb-auto">
+                  <FormattedMessage
                     id="app.contact.address1"
-                    defaultMessage="11, Rue de la Marne"
+                    defaultMessage="69 rue Mouffetard"
                   />
                 </p>
                 <p className="card-text mb-auto">
                   <FormattedMessage
                     id="app.contact.address2"
-                    defaultMessage="57050 Le Ban St Martin"
+                    defaultMessage="75005 Paris"
                   />
                 </p>
                 <p className="card-text mb-auto">
                   <FormattedMessage
                     id="app.contact.tel"
-                    defaultMessage="00 33 6 51 81 70 28"
+                    defaultMessage="(+33) 07 86 01 18 87"
                   />
                 </p>
                 <p className="card-text mb-auto">
-                  <a href={"mailto:" + intl.formatMessage({ id: 'app.contact.email', defaultMessage: 'jeromeklam@free.fr' })}>
+                  <a href={"mailto:" + intl.formatMessage({ id: 'app.contact.email', defaultMessage: 'kalaweit.france@yahoo.fr' })}>
                     <FormattedMessage
                       id="app.contact.email"
-                      defaultMessage="jeromeklam@free.fr"
+                      defaultMessage="kalaweit.france@yahoo.fr"
                     />
                   </a>
                 </p>
-                <a href={intl.formatMessage({ id: 'app.contact.site', defaultMessage: 'https://freeasso.fr' })} target="_blank" rel="noopener noreferrer">
+                <a href={intl.formatMessage({ id: 'app.contact.site', defaultMessage: 'https://kalaweit.org' })} target="_blank" rel="noopener noreferrer">
                   <FormattedMessage
                     id="app.contact.site"
-                    defaultMessage="https://freeasso.fr"
+                    defaultMessage="https://kalaweit.org"
                   />
                 </a>
               </div>

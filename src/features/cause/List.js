@@ -23,6 +23,7 @@ import * as sponsorshipActions from '../sponsorship/redux/actions';
 import { loadDonations } from '../donation/redux/actions';
 import { InlineSponsorships } from '../sponsorship';
 import { InlineDonations } from '../donation';
+import { getCauseMaintype } from '../cause-main-type';
 
 export class List extends Component {
   static propTypes = {
@@ -39,6 +40,7 @@ export class List extends Component {
 
   constructor(props) {
     super(props);
+    const cmt = getCauseMaintype(this.props.causeMainType.items, this.props.match.params.camtId);
     this.state = {
       timer: null,
       photos: 0,
@@ -48,6 +50,7 @@ export class List extends Component {
       donations: 0,   
       cauId: -1,
       camtId: this.props.match.params.camtId,
+      causeMainType: cmt,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -74,6 +77,8 @@ export class List extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.camtId !== this.state.camtId) {
+      const cmt = getCauseMaintype(this.props.causeMainType.items, this.props.match.params.camtId);
+      this.setState({ causeMainType: cmt });
       this.props.actions.initFilters(this.state.camtId);
       this.props.actions.loadMore(false, true);
     }
@@ -221,6 +226,7 @@ export class List extends Component {
 
   render() {
     const { intl } = this.props;
+    console.log(this.state.causeMainType);
     // Les items à afficher avec remplissage progressif
     let items = [];
     if (this.props.cause.items.FreeAsso_Cause) {

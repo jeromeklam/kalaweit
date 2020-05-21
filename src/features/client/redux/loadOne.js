@@ -52,6 +52,7 @@ export function reducer(state, action) {
         loadOneError: null,
         createOneError: null,
         updateOneError: null,
+        delOneError: null,
       };
 
     case CLIENT_LOAD_ONE_SUCCESS:

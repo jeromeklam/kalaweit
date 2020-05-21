@@ -1,17 +1,44 @@
 import { buildModel } from 'freejsonapi';
 
+export const causeMainTypeFamily = [
+  { value: 'ANIMAL', label: 'Animal' },
+  { value: 'NATURE', label: 'Nature' },
+  { value: 'ADMINISTRATIV', label: 'Association' },
+  { value: 'OTHER', label: 'Autre' },
+];
+
+/**
+ * 
+ */
+export function getCauseMaintype(objects, camt_id) {
+  let causeMainType = null;
+  if (objects) {
+    let items = buildModel(
+      objects,
+      'FreeAsso_CauseMainType',
+    );
+    if (items) {
+      const item = items.find(elem => elem.id === camt_id)
+      if (item) {
+        causeMainType = item;
+      }
+    }
+  }
+  return causeMainType;
+}
+
 /**
  * Export all cause main types as an array of value=>label
  * 
- * @param {object} object
+ * @param {object} objects
  * 
  * @return {array}
  */
-export function causeMainTypeAsOptions(object) {
+export function causeMainTypeAsOptions(objects) {
   let arr   = [];
-  if (object) {
+  if (objects) {
     let items = buildModel(
-      object,
+      objects,
       'FreeAsso_CauseMainType',
     );
     if (items) {

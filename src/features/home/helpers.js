@@ -271,7 +271,7 @@ export const globalMenu = (types) => {
     },
     {
       icon: <AboutIcon />,
-      label: 'Qui sommes nous ?',
+      label: <FormattedMessage id="app.features.home.app.menu.aboutUs" defaultMessage="About Us" />,
       url: '/about',
       role: 'ABOUT',
       public: true,

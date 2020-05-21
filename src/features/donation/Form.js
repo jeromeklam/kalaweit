@@ -7,37 +7,20 @@ import { paymentTypeAsOptions } from '../payment-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as CauseInputPicker } from '../cause';
 import { sessionAsOptions } from '../session/functions.js';
-import { statusValues } from './';
+import { statusValues, calculateDonationEndTs } from './';
 
 const afterChange = (name, item) => {
   switch (name) {
+    case 'don_real_ts':
     case 'cause': {
-      if (item.cause) {
-        if (item.cause.id > 0 && item.cause.cause_type) {
-          let cautDuration = item.cause.cause_type.caut_once_duration;
-          if (item.don_end_ts === null) {
-            try {
-              let myDate = new Date(item.don_real_ts);
-              switch (cautDuration) {
-                case '1Y': {
-                  myDate.setFullYear(myDate.getFullYear() + 1);
-                  item.don_end_ts = myDate.toUTCString();
-                  break;
-                }
-                case '1M': {
-                  myDate.setMonth(myDate.getMonth() + 1);
-                  item.don_end_ts = myDate.toUTCString();
-                  break;
-                }
-                default: {
-                  item.don_end_ts = null;
-                }
-              }
-            } catch (ex) {
-              console.log(ex);
-            }
-          }
-        }
+      const endTs = calculateDonationEndTs(item);
+      let update = true;
+      const found = item.locked.find(elem => elem.field === 'don_end_ts'); 
+      if (found && found.locked === false) {
+        update = false;
+      }
+      if (update) {
+        item.don_end_ts = endTs;
       }
       break;
     }
@@ -48,6 +31,16 @@ const afterChange = (name, item) => {
 };
 
 function Form(props) {
+  let lockEndTs = true;
+  if (props.modify) {
+    const endTs = calculateDonationEndTs(props.item);
+    const d1 = new Date(props.item.don_end_ts);
+    const d2 = new Date(endTs);
+    if (d1.getTime() !== d2.getTime()) {
+      lockEndTs = false;
+    }
+  }
+  const lockedFields = [{field: 'don_end_ts', locked: lockEndTs}];
   const {
     values,
     handleChange,
@@ -55,7 +48,10 @@ function Form(props) {
     handleCancel,
     handleNavTab,
     getErrorMessage,
-  } = useForm(props.item, '1', props.onSubmit, props.onCancel, null, props.errors, afterChange);
+    isLocked,
+    toggleLockOn,
+    toggleLockOff,
+  } = useForm(props.item, '1', props.onSubmit, props.onCancel, null, props.errors, afterChange, lockedFields);
   /**
    * Render
    */
@@ -157,7 +153,7 @@ function Form(props) {
       {values.currentTab === '1' && (
         <div>
           <div className="row">
-            <div className="col-md-8">
+            <div className="col-md-10">
               <InputDate
                 label={intl.formatMessage({
                   id: 'app.features.donation.form.realTs',
@@ -171,7 +167,7 @@ function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-md-8">
+            <div className="col-md-10">
               <InputDate
                 label={intl.formatMessage({
                   id: 'app.features.donation.form.endTs',
@@ -183,9 +179,11 @@ function Form(props) {
                 inputSize={36}
                 value={values.don_end_ts}
                 onChange={handleChange}
+                locked={isLocked('don_end_ts')}
+                onLockOn={toggleLockOn}
+                onLockOff={toggleLockOff}
               />
             </div>
-            <div className="col-md-4"></div>
             <div className="col-md-8">
               <InputCheckbox
                 label={intl.formatMessage({
@@ -213,7 +211,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-8">
+            <div className="col-md-10">
               <InputMonetary
                 label={intl.formatMessage({
                   id: 'app.features.donation.form.mnt',
@@ -228,7 +226,7 @@ function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-sm-8">
+            <div className="col-sm-10">
               <InputSelect
                 label={intl.formatMessage({
                   id: 'app.features.donation.form.type',
@@ -245,7 +243,6 @@ function Form(props) {
                 error={getErrorMessage('ptyp_id')}
               />
             </div>
-            <div className="col-md-4"></div>
             <div className="col-sm-8">
               <InputCheckbox
                 label={intl.formatMessage({
