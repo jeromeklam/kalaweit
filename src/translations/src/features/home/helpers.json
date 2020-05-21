@@ -2,7 +2,7 @@
   {
     "id": "app.features.home.app.menu.home",
     "defaultMessage": "Home",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 33,
       "column": 13
@@ -15,7 +15,7 @@
   {
     "id": "app.features.home.app.menu.signin",
     "defaultMessage": "Sign in",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 40,
       "column": 13
@@ -28,7 +28,7 @@
   {
     "id": "app.features.home.app.menu.signout",
     "defaultMessage": "Sign out",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 47,
       "column": 13
@@ -41,7 +41,7 @@
   {
     "id": "app.features.home.app.menu.dashboard",
     "defaultMessage": "Dashboard",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 63,
       "column": 8
@@ -54,7 +54,7 @@
   {
     "id": "app.features.home.app.menu.person",
     "defaultMessage": "Members",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 72,
       "column": 13
@@ -67,7 +67,7 @@
   {
     "id": "app.features.home.app.menu.cause",
     "defaultMessage": "Missions",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 80,
       "column": 13
@@ -80,7 +80,7 @@
   {
     "id": "app.features.home.app.menu.donation",
     "defaultMessage": "Donations",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 90,
       "column": 8
@@ -93,7 +93,7 @@
   {
     "id": "app.features.home.app.menu.receipt",
     "defaultMessage": "Receipts",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 99,
       "column": 13
@@ -106,7 +106,7 @@
   {
     "id": "app.features.home.app.menu.certificate",
     "defaultMessage": "Certificates",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 108,
       "column": 8
@@ -119,7 +119,7 @@
   {
     "id": "app.features.home.app.menu.administrativ",
     "defaultMessage": "Administrativ",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 121,
       "column": 8
@@ -132,7 +132,7 @@
   {
     "id": "app.features.home.app.menu.paymentType",
     "defaultMessage": "Payment types",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 134,
       "column": 12
@@ -145,7 +145,7 @@
   {
     "id": "app.features.home.app.menu.causeType",
     "defaultMessage": "Missions",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 146,
       "column": 12
@@ -158,7 +158,7 @@
   {
     "id": "app.features.home.app.menu.session",
     "defaultMessage": "Sessions",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 155,
       "column": 12
@@ -171,7 +171,7 @@
   {
     "id": "app.features.home.app.menu.settings",
     "defaultMessage": "Settings",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 166,
       "column": 8
@@ -184,7 +184,7 @@
   {
     "id": "app.features.home.app.menu.site",
     "defaultMessage": "Locations",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 176,
       "column": 12
@@ -197,7 +197,7 @@
   {
     "id": "app.features.home.app.menu.siteType",
     "defaultMessage": "Locations types",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 185,
       "column": 12
@@ -210,7 +210,7 @@
   {
     "id": "app.features.home.app.menu.causeMainType",
     "defaultMessage": "Programs",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 197,
       "column": 12
@@ -223,7 +223,7 @@
   {
     "id": "app.features.home.app.menu.clientCategories",
     "defaultMessage": "Person categories",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 209,
       "column": 12
@@ -236,7 +236,7 @@
   {
     "id": "app.features.home.app.menu.clientType",
     "defaultMessage": "Person types",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 221,
       "column": 12
@@ -249,7 +249,7 @@
   {
     "id": "app.features.home.app.menu.species",
     "defaultMessage": "Species",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 233,
       "column": 12
@@ -262,7 +262,7 @@
   {
     "id": "app.features.home.app.menu.subspecies",
     "defaultMessage": "Subspecies",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 242,
       "column": 12
@@ -275,7 +275,7 @@
   {
     "id": "app.features.home.app.menu.emails",
     "defaultMessage": "Notifications",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 254,
       "column": 12
@@ -288,7 +288,7 @@
   {
     "id": "app.features.home.app.menu.datas",
     "defaultMessage": "Datas",
-    "file": "src/features/home/helpers.js",
+    "file": "src\\features\\home\\helpers.js",
     "start": {
       "line": 265,
       "column": 17

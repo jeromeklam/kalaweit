@@ -13,7 +13,13 @@ import { CenteredLoading9X9 } from '../ui';
 import fond from '../../images/fond.jpg';
 import messages_fr from '../../translations/fr.json';
 import messages_en from '../../translations/en.json';
-import { Menu as MenuIcon, AccountDetail, AccountClose } from '../icons';
+import { 
+  Menu as MenuIcon, 
+  AccountDetail, 
+  AccountClose,
+  MenuOpened as MenuOpenedIcon,
+  MenuClosed as MenuClosedIcon, 
+} from '../icons';
 import { globalMenu } from './';
 import { causeMainTypeAsOptions } from '../cause-main-type';
 
@@ -154,6 +160,8 @@ export class App extends Component {
             userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
             accountOpened={<AccountClose />}
             accountClosed={<AccountDetail className="text-primary" />}
+            menuOpened={<MenuOpenedIcon />}
+            menuClosed={<MenuClosedIcon />}
           >
             {this.props.auth.authFirstChecked && (!this.props.auth.authenticated || this.props.home.loadAllFinish) ? (
               <div>{this.props.children}</div>

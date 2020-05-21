@@ -2,7 +2,7 @@
   {
     "id": "app.features.picture.list.main",
     "defaultMessage": "Main",
-    "file": "src/features/cause/InlinePhotos.js",
+    "file": "src\\features\\cause\\InlinePhotos.js",
     "start": {
       "line": 159,
       "column": 32
@@ -15,7 +15,7 @@
   {
     "id": "app.features.picture.list.add",
     "defaultMessage": "Add one picture",
-    "file": "src/features/cause/InlinePhotos.js",
+    "file": "src\\features\\cause\\InlinePhotos.js",
     "start": {
       "line": 211,
       "column": 26

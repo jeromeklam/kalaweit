@@ -126,6 +126,12 @@ svg.text-warning.inline-action:hover {
     fill: theme-color('primary-light') !important;
   }
 }
+.sidebar-navigation li:hover a > .sidebar-menu-arrow > svg {
+  fill: theme-color('primary-light') !important;
+  path {
+    fill: theme-color('primary-light') !important;
+  }
+}
 
 .btn-left {
   &.btn {

@@ -1,0 +1,106 @@
+[
+  {
+    "id": "app.features.about.about.application",
+    "defaultMessage": "Kalaweit application",
+    "file": "src\\features\\about\\About.js",
+    "start": {
+      "line": 16,
+      "column": 14
+    },
+    "end": {
+      "line": 19,
+      "column": 16
+    }
+  },
+  {
+    "id": "app.features.about.about.explanation",
+    "defaultMessage": "Only for Kalaweit",
+    "file": "src\\features\\about\\About.js",
+    "start": {
+      "line": 22,
+      "column": 14
+    },
+    "end": {
+      "line": 25,
+      "column": 16
+    }
+  },
+  {
+    "id": "app.contact.name",
+    "defaultMessage": "KLAM Jérôme",
+    "file": "src\\features\\about\\About.js",
+    "start": {
+      "line": 37,
+      "column": 18
+    },
+    "end": {
+      "line": 40,
+      "column": 20
+    }
+  },
+  {
+    "id": "app.contact.address1",
+    "defaultMessage": "11, Rue de la Marne",
+    "file": "src\\features\\about\\About.js",
+    "start": {
+      "line": 48,
+      "column": 18
+    },
+    "end": {
+      "line": 51,
+      "column": 20
+    }
+  },
+  {
+    "id": "app.contact.address2",
+    "defaultMessage": "57050 Le Ban St Martin",
+    "file": "src\\features\\about\\About.js",
+    "start": {
+      "line": 54,
+      "column": 18
+    },
+    "end": {
+      "line": 57,
+      "column": 20
+    }
+  },
+  {
+    "id": "app.contact.tel",
+    "defaultMessage": "00 33 6 51 81 70 28",
+    "file": "src\\features\\about\\About.js",
+    "start": {
+      "line": 60,
+      "column": 18
+    },
+    "end": {
+      "line": 63,
+      "column": 20
+    }
+  },
+  {
+    "id": "app.contact.email",
+    "defaultMessage": "jeromeklam@free.fr",
+    "file": "src\\features\\about\\About.js",
+    "start": {
+      "line": 67,
+      "column": 20
+    },
+    "end": {
+      "line": 70,
+      "column": 22
+    }
+  },
+  {
+    "id": "app.contact.site",
+    "defaultMessage": "https://freeasso.fr",
+    "file": "src\\features\\about\\About.js",
+    "start": {
+      "line": 74,
+      "column": 18
+    },
+    "end": {
+      "line": 77,
+      "column": 20
+    }
+  }
+]
