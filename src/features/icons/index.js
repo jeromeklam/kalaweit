@@ -71,3 +71,5 @@ export { default as PaymentOff } from './PaymentOff';
 export { default as Note } from './Note';
 export { default as Down } from './Down';
 export { default as Up } from './Up';
+export { default as MenuOpened } from './MenuOpened';
+export { default as MenuClosed } from './MenuClosed';
