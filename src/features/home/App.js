@@ -21,7 +21,7 @@ import {
   MenuClosed as MenuClosedIcon, 
 } from '../icons';
 import { globalMenu } from './';
-import { causeMainTypeAsOptions } from '../cause-main-type';
+import { causeTypeAsOptions } from '../cause-type';
 
 const intlMessages = {
   fr: messages_fr,
@@ -123,7 +123,7 @@ export class App extends Component {
   }
 
   render() {
-    const types = causeMainTypeAsOptions(this.props.causeMainType.items);
+    const types = causeTypeAsOptions(this.props.causeType.items);
     const locale = this.props.common.locale || 'fr';
     const messages = intlMessages[locale];
     if (this.props.home.loadAllError) {
@@ -183,7 +183,7 @@ function mapStateToProps(state) {
     home: state.home,
     auth: state.auth,
     common: state.common,
-    causeMainType: state.causeMainType,
+    causeType: state.causeType,
   };
 }
 

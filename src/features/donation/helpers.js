@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEmptyText } from 'freeassofront';
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
@@ -161,11 +162,12 @@ export const getCols = ({ props }) => {
         id: 'app.features.donation.list.col.mnt',
         defaultMessage: 'Amount',
       }),
-      col: 'don_mnt',
+      col: 'don_mnt_input',
       size: '3',
       mob_size: '',
       sortable: true,
       type: 'monetary',
+      col_money: 'don_money_input',
       filterable: { type: 'text' },
     },
     {
@@ -219,7 +221,7 @@ export const getCols = ({ props }) => {
       mob_size: '',
       sortable: true,
       fDisplay: item => {
-        if (item.don_comment !== '' && item.don_comment !== null) {
+        if (!isEmptyText(item.don_comment)) {
           return <NoteIcon className="col-icon" />;
         } else {
           return '';

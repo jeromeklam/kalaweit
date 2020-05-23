@@ -34,6 +34,7 @@ import notificationReducer from '../features/notification/redux/reducer';
 import jobqueueReducer from '../features/jobqueue/redux/reducer';
 import speciesReducer from '../features/species/redux/reducer';
 import subspeciesReducer from '../features/subspecies/redux/reducer';
+import rateReducer from '../features/rate/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -76,6 +77,7 @@ const reducerMap = {
   jobqueue: jobqueueReducer,
   species: speciesReducer,
   subspecies: subspeciesReducer,
+  rate: rateReducer,
 };
 
 export default combineReducers(reducerMap);

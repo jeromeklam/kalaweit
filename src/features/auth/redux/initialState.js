@@ -15,6 +15,8 @@ const initialState = {
   signOutPending: false,
   signOutError: null,
   locale: 'fr',
+  inputMoney: 'EUR',
+  displayMoney: 'EUR',
   askPasswordPending: false,
   askPasswordError: null,
   changePasswordPending: false,

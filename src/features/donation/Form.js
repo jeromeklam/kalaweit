@@ -1,7 +1,13 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import { InputHidden, InputSelect, InputMonetary, InputCheckbox } from 'freeassofront';
-import { InputDate, ResponsiveModalOrForm, InputSponsors, InputTextarea } from '../ui';
+import { InputHidden, InputSelect, InputCheckbox, roundMonetary } from 'freeassofront';
+import {
+  InputDate,
+  ResponsiveModalOrForm,
+  InputSponsors,
+  InputTextarea,
+  InputMonetary,
+} from '../ui';
 import useForm from '../ui/useForm';
 import { paymentTypeAsOptions } from '../payment-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
@@ -11,11 +17,38 @@ import { statusValues, calculateDonationEndTs } from './';
 
 const afterChange = (name, item) => {
   switch (name) {
+    case 'currentMoney':
+      if (item.currentMoney !== item.dbMoney) {
+        const mnt = roundMonetary(parseFloat(item.don_mnt || 0) / 0.9449, 'fr-FR', item.currentMoney);
+        if (Math.abs(parseFloat(item.don_mnt_input || 0) - mnt) > 0.01) {
+          item.don_mnt_input = mnt;
+        }
+      } else {
+        item.don_mnt_input = item.don_mnt;
+      }
+      item.don_money_input = item.currentMoney;
+      break;
+    case 'don_mnt':
+      item.don_mnt_input = item.don_mnt;
+      item.don_money_input = item.dbMoney;
+      break;
+    case 'don_mnt_input':
+      if (item.currentMoney !== item.dbMoney) {
+        const mnt = roundMonetary(parseFloat(item.don_mnt_input || 0) * 0.9449, 'fr-FR', item.currentMoney);
+        if (Math.abs(parseFloat(item.don_mnt || 0) - mnt) > 0.01) {
+          item.don_mnt = mnt;
+        }
+      } else {
+        item.don_mnt = item.don_mnt_input;
+      }
+      item.don_money_input = item.currentMoney;
+      item.don_money = item.dbMoney;
+      break;
     case 'don_real_ts':
     case 'cause': {
       const endTs = calculateDonationEndTs(item);
       let update = true;
-      const found = item.locked.find(elem => elem.field === 'don_end_ts'); 
+      const found = item.locked.find(elem => elem.field === 'don_end_ts');
       if (found && found.locked === false) {
         update = false;
       }
@@ -40,7 +73,13 @@ function Form(props) {
       lockEndTs = false;
     }
   }
-  const lockedFields = [{field: 'don_end_ts', locked: lockEndTs}];
+  const lockedFields = [{ field: 'don_end_ts', locked: lockEndTs }];
+  const item = {
+    ...props.item,
+    currentMoney: props.inputMoney,
+    inputMoney: props.inputMoney,
+    dbMoney: props.dbMoney,
+  };
   const {
     values,
     handleChange,
@@ -51,7 +90,17 @@ function Form(props) {
     isLocked,
     toggleLockOn,
     toggleLockOff,
-  } = useForm(props.item, '1', props.onSubmit, props.onCancel, null, props.errors, afterChange, lockedFields);
+    switchMoney,
+  } = useForm(
+    item,
+    '1',
+    props.onSubmit,
+    props.onCancel,
+    null,
+    props.errors,
+    afterChange,
+    lockedFields,
+  );
   /**
    * Render
    */
@@ -212,19 +261,37 @@ function Form(props) {
           </div>
           <div className="row">
             <div className="col-md-10">
-              <InputMonetary
-                label={intl.formatMessage({
-                  id: 'app.features.donation.form.mnt',
-                  defaultMessage: 'Amount',
-                })}
-                labelTop={true}
-                name="don_mnt"
-                id="don_mnt"
-                inputMoney="EUR"
-                dbMoney="EUR"
-                value={values.don_mnt}
-                onChange={handleChange}
-              />
+              {values.inputMoney === values.dbMoney ? (
+                <InputMonetary
+                  label={intl.formatMessage({
+                    id: 'app.features.donation.form.mnt',
+                    defaultMessage: 'Amount',
+                  })}
+                  labelTop={true}
+                  name="don_mnt"
+                  id="don_mnt"
+                  inputMoney={values.currentMoney}
+                  dbMoney="EUR"
+                  value={values.don_mnt}
+                  onChange={handleChange}
+                  onMoneySwitch={switchMoney}
+                />
+              ) : (
+                <InputMonetary
+                  label={intl.formatMessage({
+                    id: 'app.features.donation.form.mnt',
+                    defaultMessage: 'Amount',
+                  })}
+                  labelTop={true}
+                  name="don_mnt_input"
+                  id="don_mnt_input"
+                  inputMoney={values.currentMoney}
+                  dbMoney="EUR"
+                  value={values.don_mnt_input}
+                  onChange={handleChange}
+                  onMoneySwitch={switchMoney}
+                />
+              )}
             </div>
             <div className="col-sm-10">
               <InputSelect

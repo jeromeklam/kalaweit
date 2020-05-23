@@ -4,7 +4,7 @@ import { Filter } from 'freeassofront';
 let initialFilters = new Filter();
 const now = new Date().toISOString();
 initialFilters.addFilter('cau_to', now, 'gten');
-initialFilters.addFilter('cause_type.camt_id', 355, 'eq', true);
+initialFilters.addFilter('caut_id', 355, 'eq', true);
 
 const initialState = {
   items: [],

@@ -19,6 +19,7 @@ import { loadMore as loadMoreSession } from '../../session/redux/loadMore';
 import { loadMore as loadMoreDashboard } from '../../dashboard/redux/loadMore';
 import { loadMore as loadMoreSpecies } from '../../species/redux/loadMore';
 import { loadMore as loadMoreSubspecies } from '../../subspecies/redux/loadMore';
+import { loadMore as loadMoreRates } from '../../rate/redux/loadMore';
 
 export function loadAll(args = {}) {
   return dispatch => {
@@ -41,6 +42,7 @@ export function loadAll(args = {}) {
       dispatch(loadMoreDashboard()),
       dispatch(loadMoreSpecies()),
       dispatch(loadMoreSubspecies()),
+      dispatch(loadMoreRates()),
     ]);
     return promise.then(
       res => {

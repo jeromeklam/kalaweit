@@ -26,3 +26,4 @@ export { default as Line } from './Line';
 export { default as Col } from './Col';
 export { default as InputSponsors } from './InputSponsors';
 export { default as InputSpin } from './InputSpin';
+export { default as InputMonetary } from './InputMonetary';

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { mdiCertificate as myIcon } from '@mdi/js';
+import { mdiSwapHorizontalBold as myIcon } from '@mdi/js';
 import { Icon } from './';
 
-export default class Dashboard extends Component {
+export default class Swap extends Component {
   static propTypes = {};
 
   render() {

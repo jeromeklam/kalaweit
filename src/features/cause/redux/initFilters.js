@@ -3,10 +3,10 @@ import {
   CAUSE_INIT_FILTERS,
 } from './constants';
 
-export function initFilters(camtId) {
+export function initFilters(cautId) {
   return {
     type: CAUSE_INIT_FILTERS,
-    camtId: camtId
+    cautId: cautId
   };
 }
 
@@ -16,7 +16,7 @@ export function reducer(state, action) {
       let newFilters = new Filter();
       const now = new Date().toISOString();
       newFilters.addFilter('cau_to', now, 'gten');
-      newFilters.addFilter('cause_type.camt_id', action.camtId || 0, 'eq', true);
+      newFilters.addFilter('caut_id', action.cautId || 0, 'eq', true);
       return {
         ...state,
         filters: newFilters,

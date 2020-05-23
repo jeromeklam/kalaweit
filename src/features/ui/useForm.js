@@ -238,6 +238,18 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
     setValues({ ...values, currentTab: keyTab });
   };
 
+  const switchMoney = () => {
+    if (afterChange) {
+      if (values.currentMoney === values.dbMoney) { 
+        values.currentMoney = values.inputMoney;
+      } else {
+        values.currentMoney = values.dbMoney;
+      }
+      afterChange('currentMoney', values);
+    }
+    setValues({ ...values });
+  }
+
   const getErrorMessage = field => {
     const intl = useIntl();
     let message = false;
@@ -286,6 +298,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
     isLocked,
     toggleLockOn,
     toggleLockOff,
+    switchMoney,
   };
 };
 

@@ -89,6 +89,8 @@ export class Modify extends Component {
                 item={item}
                 modal={true}
                 modify={true}
+                inputMoney={item.don_money_input || 'EUR'}
+                dbMoney={'EUR'}
                 donation={this.props.donation}              
                 paymentTypes={this.props.paymentType.items}
                 sessions={this.props.session.items}
@@ -107,6 +109,8 @@ export class Modify extends Component {
 
 function mapStateToProps(state) {
   return {
+    inputMoney: state.auth.inputMoney,
+    displayMoney: state.auth.displayMoney,
     donation: state.donation,
     paymentType: state.paymentType,
     session: state.session,

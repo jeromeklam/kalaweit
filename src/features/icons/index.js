@@ -75,3 +75,5 @@ export { default as MenuOpened } from './MenuOpened';
 export { default as MenuClosed } from './MenuClosed';
 export { default as LockOn } from './LockOn';
 export { default as LockOff } from './LockOff';
+export { default as Swap } from './Swap';
+export { default as Rate } from './Rate';

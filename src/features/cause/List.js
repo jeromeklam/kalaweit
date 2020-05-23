@@ -23,7 +23,7 @@ import * as sponsorshipActions from '../sponsorship/redux/actions';
 import { loadDonations } from '../donation/redux/actions';
 import { InlineSponsorships } from '../sponsorship';
 import { InlineDonations } from '../donation';
-import { getCauseMaintype } from '../cause-main-type';
+import { getCausetype } from '../cause-type';
 
 export class List extends Component {
   static propTypes = {
@@ -32,15 +32,15 @@ export class List extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    if (props.match.params.camtId !== state.camtId) {
-      return { camtId: props.match.params.camtId };
+    if (props.match.params.cautId !== state.cautId) {
+      return { cautId: props.match.params.cautId };
     }
     return null;
   }
 
   constructor(props) {
     super(props);
-    const cmt = getCauseMaintype(this.props.causeMainType.items, this.props.match.params.camtId);
+    const causeType = getCausetype(this.props.causeType.items, this.props.match.params.cautId);
     this.state = {
       timer: null,
       photos: 0,
@@ -49,8 +49,8 @@ export class List extends Component {
       sponsorships: 0,
       donations: 0,   
       cauId: -1,
-      camtId: this.props.match.params.camtId,
-      causeMainType: cmt,
+      cautId: this.props.match.params.cautId,
+      causeType: causeType,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -71,15 +71,15 @@ export class List extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.initFilters(this.state.camtId);
+    this.props.actions.initFilters(this.state.cautId);
     this.props.actions.loadMore();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.camtId !== this.state.camtId) {
-      const cmt = getCauseMaintype(this.props.causeMainType.items, this.props.match.params.camtId);
-      this.setState({ causeMainType: cmt });
-      this.props.actions.initFilters(this.state.camtId);
+    if (prevState.cautId !== this.state.cautId) {
+      const causeType = getCausetype(this.props.causeType.items, this.props.match.params.cautId);
+      this.setState({ causeType: causeType });
+      this.props.actions.initFilters(this.state.cautId);
       this.props.actions.loadMore(false, true);
     }
   }
@@ -153,7 +153,7 @@ export class List extends Component {
   }
 
   onClearFilters() {
-    this.props.actions.initFilters(this.state.camtId);
+    this.props.actions.initFilters(this.state.cautId);
     this.props.actions.initSort();
     let timer = this.state.timer;
     if (timer) {
@@ -166,7 +166,7 @@ export class List extends Component {
   }
 
   onLoadMore(event) {
-    this.props.actions.initFilters(this.state.camtId);
+    this.props.actions.initFilters(this.state.cautId);
     this.props.actions.loadMore();
   }
 
@@ -226,7 +226,7 @@ export class List extends Component {
 
   render() {
     const { intl } = this.props;
-    console.log(this.state.causeMainType);
+    console.log(this.state.causeType);
     // Les items à afficher avec remplissage progressif
     let items = [];
     if (this.props.cause.items.FreeAsso_Cause) {

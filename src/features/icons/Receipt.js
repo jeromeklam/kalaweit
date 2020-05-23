@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { mdiBank as myIcon } from '@mdi/js';
+import { mdiFileDocument as myIcon } from '@mdi/js';
 import { Icon } from './';
 
-export default class Dashboard extends Component {
+export default class Receipt extends Component {
   static propTypes = {};
 
   render() {

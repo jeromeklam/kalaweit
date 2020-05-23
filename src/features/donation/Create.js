@@ -100,6 +100,8 @@ export class Create extends Component {
               <Form
                 item={item}
                 modal={true}
+                inputMoney={this.props.inputMoney || 'EUR'}
+                dbMoney={'EUR'}
                 paymentTypes={this.props.paymentType.items}
                 sessions={this.props.session.items}
                 errors={this.props.donation.createOneError}
@@ -117,6 +119,8 @@ export class Create extends Component {
 
 function mapStateToProps(state) {
   return {
+    inputMoney: state.auth.inputMoney,
+    displayMoney: state.auth.displayMoney,
     cause: state.cause,
     client: state.client,
     donation: state.donation,

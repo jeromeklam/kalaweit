@@ -8,7 +8,7 @@ import {
 } from './constants';
 import cookie from 'react-cookies';
 import { schema, defaultConfig } from '../';
-import { saveToLS } from '../../ui';
+import { saveToLS, getFromLS } from '../../ui';
 import Ajv from 'ajv';
 
 export function signIn(args = {}) {
@@ -63,6 +63,8 @@ export function reducer(state, action) {
       let authenticated = false;
       let more = {};
       let realm = null;
+      let inputMoney = state.inputMoney;
+      let displayMoney = state.displayMoney; 
       if (datas && datas.headers && datas.headers.authorization) {
         token = datas.headers.authorization;
       }
@@ -105,6 +107,17 @@ export function reducer(state, action) {
         } else {
           more.cache = {};
         }
+        let defaultRealm = getFromLS('realm', 'freeasso-realm');
+        if (user.realms && Array.isArray(user.realms)) {
+          const found = user.realms.find(item => { return item.id === defaultRealm } );
+          if (found) {
+            realm = found;
+          } else {
+            user.realms.forEach(item => {realm = item;});
+          }
+          inputMoney = realm.grp_money_input;
+          displayMoney = realm.grp_money_code;
+        }
         const ajv = new Ajv({ allErrors: true, verbose: true, useDefaults: true });
         const validate = ajv.compile(schema);
         validate(more.settings);
@@ -119,6 +132,8 @@ export function reducer(state, action) {
         authenticated: authenticated,
         signInPending: false,
         signInError: null,
+        inputMoney: inputMoney,
+        displayMoney: displayMoney,
       };
 
     case AUTH_SIGN_IN_FAILURE:
