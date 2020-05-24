@@ -1,0 +1,145 @@
+[
+  {
+    "id": "app.user.firstname",
+    "defaultMessage": "Firstname",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 209,
+      "column": 27
+    },
+    "end": {
+      "line": 209,
+      "column": 98
+    }
+  },
+  {
+    "id": "app.user.lastname",
+    "defaultMessage": "Lastname",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 216,
+      "column": 27
+    },
+    "end": {
+      "line": 216,
+      "column": 96
+    }
+  },
+  {
+    "id": "app.user.email",
+    "defaultMessage": "Email",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 223,
+      "column": 27
+    },
+    "end": {
+      "line": 223,
+      "column": 90
+    }
+  },
+  {
+    "id": "app.user.lang",
+    "defaultMessage": "Language",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 230,
+      "column": 27
+    },
+    "end": {
+      "line": 230,
+      "column": 92
+    }
+  },
+  {
+    "id": "app.features.auth.form.save",
+    "defaultMessage": "Save",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 318,
+      "column": 26
+    },
+    "end": {
+      "line": 321,
+      "column": 28
+    }
+  },
+  {
+    "id": "app.features.auth.form.oldPassword",
+    "defaultMessage": "Old password",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 275,
+      "column": 22
+    },
+    "end": {
+      "line": 278,
+      "column": 24
+    }
+  },
+  {
+    "id": "app.features.auth.form.password",
+    "defaultMessage": "Password",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 288,
+      "column": 22
+    },
+    "end": {
+      "line": 291,
+      "column": 24
+    }
+  },
+  {
+    "id": "app.features.auth.form.password2",
+    "defaultMessage": "Confirm password",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 302,
+      "column": 22
+    },
+    "end": {
+      "line": 305,
+      "column": 24
+    }
+  },
+  {
+    "id": "app.features.auth.form.tabIdentity",
+    "defaultMessage": "Identity",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 340,
+      "column": 14
+    },
+    "end": {
+      "line": 340,
+      "column": 100
+    }
+  },
+  {
+    "id": "app.features.auth.form.tabPassword",
+    "defaultMessage": "Change password",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 351,
+      "column": 14
+    },
+    "end": {
+      "line": 354,
+      "column": 16
+    }
+  },
+  {
+    "id": "app.features.auth.form.tabSettings",
+    "defaultMessage": "Settings",
+    "file": "src/features/auth/SimpleForm.js",
+    "start": {
+      "line": 365,
+      "column": 14
+    },
+    "end": {
+      "line": 365,
+      "column": 100
+    }
+  }
+]

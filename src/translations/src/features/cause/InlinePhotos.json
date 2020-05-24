@@ -1,0 +1,28 @@
+[
+  {
+    "id": "app.features.picture.list.main",
+    "defaultMessage": "Main",
+    "file": "src/features/cause/InlinePhotos.js",
+    "start": {
+      "line": 159,
+      "column": 32
+    },
+    "end": {
+      "line": 159,
+      "column": 110
+    }
+  },
+  {
+    "id": "app.features.picture.list.add",
+    "defaultMessage": "Add one picture",
+    "file": "src/features/cause/InlinePhotos.js",
+    "start": {
+      "line": 211,
+      "column": 26
+    },
+    "end": {
+      "line": 211,
+      "column": 114
+    }
+  }
+]
