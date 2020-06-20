@@ -35,6 +35,7 @@ function Form(props) {
     <ResponsiveModalOrForm
       className="m-5"
       size="lg"
+      height="md"
       modal={true}
       title={props.intl.formatMessage({
         id: 'app.features.causeType.form.title',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import { InputHidden, InputSelect, InputCheckbox, roundMonetary } from 'freeassofront';
+import { InputHidden, InputSelect, InputText, InputCheckbox, roundMonetary } from 'freeassofront';
 import {
   InputDate,
   ResponsiveModalOrForm,
@@ -126,6 +126,8 @@ function Form(props) {
       shortcut: 'S',
       icon: '',
     },
+  ];
+  const tabs2 = [
     {
       key: '3',
       name: 'certificate',
@@ -137,6 +139,10 @@ function Form(props) {
       icon: '',
     },
   ];
+  let allTabs = tabs;
+  if (values.cause.cause_type && values.cause.cause_type.caut_certificat) {
+    allTabs = allTabs.concat(tabs2);
+  }
   return (
     <ResponsiveModalOrForm
       title={intl.formatMessage({
@@ -145,8 +151,9 @@ function Form(props) {
       })}
       className="m-5"
       size="xl"
-      tab={values.currentTab}
-      tabs={tabs}
+      height="lg"
+      tab={values._currentTab}
+      tabs={allTabs}
       onNavTab={handleNavTab}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
@@ -199,7 +206,7 @@ function Form(props) {
         </div>
       </div>
       <hr />
-      {values.currentTab === '1' && (
+      {values._currentTab === '1' && (
         <div>
           <div className="row">
             <div className="col-md-10">
@@ -354,7 +361,7 @@ function Form(props) {
           </div>
         </div>
       )}
-      {values.currentTab === '2' && (
+      {values._currentTab === '2' && (
         <div>
           <div className="row"></div>
           <div className="row">
@@ -374,7 +381,36 @@ function Form(props) {
           </div>
         </div>
       )}
-      {values.currentTab === '3' && <div className="row"></div>}
+      {values._currentTab === '3' && 
+        <div className="row">
+          <div className="col-sm-18">
+            <InputText
+              label={props.intl.formatMessage({
+                id: 'app.features.certificate.form.fullname',
+                defaultMessage: 'Fullname',
+              })}
+              name="certificate.cert_fullname"
+              id="cert_fullname"
+              labelTop={true}
+              value={values.certificate.cert_fullname}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-sm-18">
+            <InputText
+              label={props.intl.formatMessage({
+                id: 'app.features.certificate.form.email',
+                defaultMessage: 'Email',
+              })}
+              name="certificate.cert_email"
+              id="cert_email"
+              labelTop={true}
+              value={values.certificate.cert_email}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+      }
       <hr />
     </ResponsiveModalOrForm>
   );

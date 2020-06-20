@@ -1,6 +1,7 @@
 import { defaultConfig } from '../';
 
 const initialState = {
+  loadTimeOut: 500,
   authFirstChecked: false,
   authenticated: false,
   user: false,

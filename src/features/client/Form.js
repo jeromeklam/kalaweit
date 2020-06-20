@@ -69,7 +69,7 @@ function Form(props) {
         defaultMessage: 'Member',
       })}
       className="m-5"
-      tab={values.currentTab}
+      tab={values._currentTab}
       tabs={!props.modify ? tabs : tabs.concat(modifTabs)}
       size="xl"
       onNavTab={handleNavTab}
@@ -148,7 +148,7 @@ function Form(props) {
           </div>
         </div>
         <hr />
-        {values.currentTab === '1' && (
+        {values._currentTab === '1' && (
           <div>
             <div className="row">
               <div className="col-sm-24">
@@ -320,7 +320,7 @@ function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '2' && (
+        {values._currentTab === '2' && (
           <div>
             <div className="row">
               <div className="col-sm-16">
@@ -381,12 +381,12 @@ function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '3' && (
+        {values._currentTab === '3' && (
           <div className="border border-secondary rounded overflow-x-hidden">
             <InlineSponsorships mode="client" id={values.id} />
           </div>
         )}
-        {values.currentTab === '4' && (
+        {values._currentTab === '4' && (
           <div className="border border-secondary rounded overflow-x-hidden">
             <InlineDonations mode="client" id={values.id} />
           </div>

@@ -6,7 +6,7 @@ import routeConfig from './common/routeConfig';
 import Root from './Root';
 import { initAxios } from './common';
 
-const store = configStore();
+export const store = configStore();
 
 function renderApp(app) {
   initAxios()

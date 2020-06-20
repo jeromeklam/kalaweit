@@ -32,12 +32,12 @@ const _loadClient = id => {
 const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null, locked = []) => {
   const [values, setValues] = useState({
     ...initialState,
-    currentTab: initialTab,
-    loadClient: false,
-    loadCause: false,
-    loadSite: false,
-    errors: errors,
-    locked: locked,
+    _currentTab: initialTab,
+    _loadClient: false,
+    _loadCause: false,
+    _loadSite: false,
+    _errors: errors,
+    _locked: locked,
   });
 
   const handleSubmit = event => {
@@ -61,13 +61,13 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
           values[first] = datas;
           break;
         case 'FreeAsso_Cause':
-          if (!values.loadCause) {
+          if (!values._loadCause) {
             const id = event.target.value || '0';
-            values.loadCause = true;
+            values._loadCause = true;
             setValues(explodeReduxModel(values));
             _loadCause(id)
               .then(result => {
-                values.loadCause = false;
+                values._loadCause = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
@@ -79,19 +79,19 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 }
               })
               .catch(err => {
-                values.loadCause = false;
+                values._loadCause = false;
                 setValues(explodeReduxModel(values));
               });
           }
           break;
         case 'FreeAsso_Client':
-          if (!values.loadClient) {
+          if (!values._loadClient) {
             const id = event.target.value || '0';
-            values.loadClient = true;
+            values._loadClient = true;
             setValues(explodeReduxModel(values));
             _loadClient(id)
               .then(result => {
-                values.loadClient = false;
+                values._loadClient = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Client', id, { eager: true });
@@ -103,19 +103,19 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 }
               })
               .catch(err => {
-                values.loadClient = false;
+                values._loadClient = false;
                 setValues(explodeReduxModel(values));
               });
           }
           break;
         case 'FreeAsso_Site':
-          if (!values.loadSite) {
+          if (!values._loadSite) {
             const id = event.target.value || '0';
-            values.loadSite = true;
+            values._loadSite = true;
             setValues(explodeReduxModel(values));
             _loadSite(id)
               .then(result => {
-                values.loadSite = false;
+                values._loadSite = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Site', id, { eager: true });
@@ -127,7 +127,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 }
               })
               .catch(err => {
-                values.loadSite = false;
+                values._loadSite = false;
                 setValues(explodeReduxModel(values));
               });
           }
@@ -146,13 +146,13 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
           values[first] = datas;
           break;
         case 'FreeAsso_Cause':
-          if (!values.loadCause) {
+          if (!values._loadCause) {
             const id = event.target.value || '0';
-            values.loadCause = true;
+            values._loadCause = true;
             setValues(explodeReduxModel(values));
             _loadCause(id)
               .then(result => {
-                values.loadCause = false;
+                values._loadCause = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
@@ -164,19 +164,19 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 }
               })
               .catch(err => {
-                values.loadCause = false;
+                values._loadCause = false;
                 setValues(explodeReduxModel(values));
               });
           }
           break;
         case 'FreeAsso_Client':
-          if (!values.loadClient) {
+          if (!values._loadClient) {
             const id = event.target.value || '0';
-            values.loadClient = true;
+            values._loadClient = true;
             setValues(explodeReduxModel(values));
             _loadClient(id)
               .then(result => {
-                values.loadClient = false;
+                values._loadClient = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Client', id, { eager: true });
@@ -188,19 +188,19 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 }
               })
               .catch(err => {
-                values.loadClient = false;
+                values._loadClient = false;
                 setValues(explodeReduxModel(values));
               });
           }
           break;
         case 'FreeAsso_Site':
-          if (!values.loadSite) {
+          if (!values._loadSite) {
             const id = event.target.value || '0';
-            values.loadSite = true;
+            values._loadSite = true;
             setValues(explodeReduxModel(values));
             _loadSite(id)
               .then(result => {
-                values.loadSite = false;
+                values._loadSite = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Site', id, { eager: true });
@@ -212,7 +212,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 }
               })
               .catch(err => {
-                values.loadSite = false;
+                values._loadSite = false;
                 setValues(explodeReduxModel(values));
               });
           }
@@ -235,7 +235,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
   };
 
   const handleNavTab = keyTab => {
-    setValues({ ...values, currentTab: keyTab });
+    setValues({ ...values, _currentTab: keyTab });
   };
 
   const switchMoney = () => {
@@ -265,7 +265,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
   }
 
   const isLocked = (p_field) => {
-    const found = values.locked.find(elem => elem.field === p_field);
+    const found = values._locked.find(elem => elem.field === p_field);
     if (found) {
       return found.locked;
     }
@@ -273,17 +273,17 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
   }
 
   const toggleLockOn = (p_field) => {
-    const found = values.locked.findIndex(elem => elem.field === p_field);
+    const found = values._locked.findIndex(elem => elem.field === p_field);
     if (found >= 0) {
-      values.locked[found].locked = true;
+      values._locked[found].locked = true;
     }
     setValues({ ...values });
   }
 
   const toggleLockOff = (p_field) => {
-    const found = values.locked.findIndex(elem => elem.field === p_field);
+    const found = values._locked.findIndex(elem => elem.field === p_field);
     if (found >= 0) {
-      values.locked[found].locked = false;
+      values._locked[found].locked = false;
     }
     setValues({ ...values });
   }  

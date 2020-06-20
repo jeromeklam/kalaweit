@@ -46,7 +46,7 @@ function Form(props) {
       onCancel={handleCancel}
       onNavTab={handleNavTab}
       onClose={props.onClose}
-      tab={values.currentTab}
+      tab={values._currentTab}
       tabs={tabs}
       modal={true}
     >
@@ -82,7 +82,7 @@ function Form(props) {
         </div>
       </div>
       <hr />
-      {values.currentTab === '1' && (
+      {values._currentTab === '1' && (
         <div>
           <div className="row">
             <div className="col-sm-18">
@@ -145,7 +145,7 @@ function Form(props) {
         </div>
       )}
       <hr />
-      {values.currentTab === '2' && (
+      {values._currentTab === '2' && (
         <div className="row">
           <div className="col-sm-36">
             <InputTextarea

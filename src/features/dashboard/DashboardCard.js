@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
+import ScrollArea from 'react-scrollbar';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 export default class DashboardCard extends Component {
-  static propTypes = {};
+  static propTypes = {
+    children: PropTypes.element,
+    header: PropTypes.element,
+    url: PropTypes.string,
+  };
+  static defaultProps = {
+    children: null,
+    header: null,
+    url: null,
+  };
 
   render() {
     let counter = null;
@@ -31,10 +42,13 @@ export default class DashboardCard extends Component {
               </div>
             )}
             <p className="card-category">{this.props.title}</p>
+            {this.props.header}
           </div>
           <div className="card-body">
             {counter && <h3 className="card-title">{counter}</h3>}
-            {this.props.children && <div>{this.props.children}</div>}
+            <ScrollArea style={{ height: '100%' }} noScrollX>
+              {this.props.children && <div>{this.props.children}</div>}
+            </ScrollArea>
           </div>
           <div className="card-footer">
             <div className="stats"></div>

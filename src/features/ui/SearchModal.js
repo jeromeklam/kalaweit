@@ -86,24 +86,34 @@ export default class SearchModal extends Component {
       {name: "Effacer", function: this.onClear, theme: "warning" , icon: "delete"},
       {name: "Annuler", function: this.props.onClose, theme: "secondary", icon: "close"},
     ];
-    return (
-      <ResponsiveModal
-        size="lg"
-        title={this.props.title}
-        show={this.props.show}
-        onClose={this.props.onClose}
-        buttons={buttons}
-      >
-        <div className="search-modal">
-          <div className="search-filters">
-            <span>Critères de recherche :</span>
-            <div className="row">
-              {this.state.fields &&
-                this.state.fields.map(item => {
+    const searchArea = (
+      <div>
+        <h6 className="text-secondary">Critères de recherche :</h6>
+        <div className="search-filters row">
+            {this.state.fields &&
+              this.state.fields.map((item, i) => {
+                if (item.type === 'select') {
                   return (
-                    <div key={item.name} className={classnames('col-sm-' + (item.size || '36'))}>
+                    <div className={classnames('col-sm-' + (item.size || '18'))} key={`${item.name}-${i}`}>
+                      <select
+                        className="form-control"
+                        value={item.value}
+                        name={item.name}
+                        placeholder={item.label}
+                        onChange={this.onChange}
+                      >
+                        <option value="">{item.label}</option>
+                        {item.options.map(option => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="col-sm-18" key={`${item.name}-${i}`}>
                       <input
-                        className="form-control mb-1"
+                        className="form-control"
                         value={item.value}
                         name={item.name}
                         placeholder={item.label}
@@ -112,11 +122,25 @@ export default class SearchModal extends Component {
                       />
                     </div>
                   );
-                })
-              }
-            </div>
-            <hr />
+                }
+              })
+            }
           </div>
+      </div>
+    );
+    return (
+      <ResponsiveModal
+        size="lg"
+        title={this.props.title}
+        show={this.props.show}
+        onClose={this.props.onClose}
+        buttons={buttons}
+        header={searchArea}
+        height="400px"
+        modalClassName="bg-primary-light text-primary"
+        closeClassName="text-primary"
+      >
+        <div className="search-modal">
           <div className="search-results">
             {this.props.loading ? (
               <CenteredLoading3Dots />

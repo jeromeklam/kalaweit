@@ -2,6 +2,7 @@ import axios  from 'axios';
 import cookie from 'react-cookies';
 
 export function initAxios(token) {
+  // Response interceptor.
   axios.defaults.headers.common['Api-Id'] = process.env.REACT_APP_API_ID;
   axios.defaults.timeout                  = 40000;
   if (token) {

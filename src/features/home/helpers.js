@@ -18,15 +18,17 @@ import {
 
 export const globalMenu = (types) => {
   let causes = [];
-  types.forEach((elem) => {
-    causes.push({
-      icon: '',
-      label: elem.label,
-      url: '/cause/' + elem.value + '/',
-      role: 'NAV',
-      public: true,
+  if (types) {
+    types.forEach((elem) => {
+      causes.push({
+        icon: '',
+        label: elem.label,
+        url: '/cause/' + elem.value + '/',
+        role: 'NAV',
+        public: true,
+      });
     });
-  });
+  }
   return [
     {
       icon: <HomeIcon />,

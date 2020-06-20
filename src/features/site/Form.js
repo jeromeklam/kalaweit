@@ -37,7 +37,7 @@ function Form(props) {
       title={intl.formatMessage({ id: 'app.features.site.form.title', defaultMessage: 'Site' })}
       size="lg"
       modal
-      tab={values.currentTab}
+      tab={values._currentTab}
       tabs={tabs}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
@@ -87,7 +87,7 @@ function Form(props) {
         </div>
       </div>
       <hr />
-      {values.currentTab === '1' && (
+      {values._currentTab === '1' && (
         <div>
           <div className="row">
             <div className="col-sm-36">
@@ -144,7 +144,7 @@ function Form(props) {
           </div>
         </div>
       )}
-      {values.currentTab === '2' && (
+      {values._currentTab === '2' && (
         <div>
           <div className="row">
             <div className="col-sm-36">

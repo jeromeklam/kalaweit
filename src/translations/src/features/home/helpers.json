@@ -4,11 +4,11 @@
     "defaultMessage": "Home",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 33,
+      "line": 35,
       "column": 13
     },
     "end": {
-      "line": 33,
+      "line": 35,
       "column": 92
     }
   },
@@ -17,11 +17,11 @@
     "defaultMessage": "Sign in",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 40,
+      "line": 42,
       "column": 13
     },
     "end": {
-      "line": 40,
+      "line": 42,
       "column": 97
     }
   },
@@ -30,11 +30,11 @@
     "defaultMessage": "Sign out",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 47,
+      "line": 49,
       "column": 13
     },
     "end": {
-      "line": 47,
+      "line": 49,
       "column": 99
     }
   },
@@ -43,11 +43,11 @@
     "defaultMessage": "Dashboard",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 63,
+      "line": 65,
       "column": 8
     },
     "end": {
-      "line": 63,
+      "line": 65,
       "column": 97
     }
   },
@@ -56,11 +56,11 @@
     "defaultMessage": "Members",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 72,
+      "line": 74,
       "column": 13
     },
     "end": {
-      "line": 72,
+      "line": 74,
       "column": 97
     }
   },
@@ -69,11 +69,11 @@
     "defaultMessage": "Missions",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 80,
+      "line": 82,
       "column": 13
     },
     "end": {
-      "line": 80,
+      "line": 82,
       "column": 97
     }
   },
@@ -82,11 +82,11 @@
     "defaultMessage": "Donations",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 90,
+      "line": 92,
       "column": 8
     },
     "end": {
-      "line": 90,
+      "line": 92,
       "column": 96
     }
   },
@@ -95,11 +95,11 @@
     "defaultMessage": "Receipts",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 99,
+      "line": 101,
       "column": 13
     },
     "end": {
-      "line": 99,
+      "line": 101,
       "column": 99
     }
   },
@@ -108,11 +108,11 @@
     "defaultMessage": "Certificates",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 108,
+      "line": 110,
       "column": 8
     },
     "end": {
-      "line": 111,
+      "line": 113,
       "column": 10
     }
   },
@@ -121,11 +121,11 @@
     "defaultMessage": "Administrativ",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 121,
+      "line": 123,
       "column": 8
     },
     "end": {
-      "line": 124,
+      "line": 126,
       "column": 10
     }
   },
@@ -134,11 +134,11 @@
     "defaultMessage": "Payment types",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 134,
+      "line": 136,
       "column": 12
     },
     "end": {
-      "line": 137,
+      "line": 139,
       "column": 14
     }
   },
@@ -147,11 +147,11 @@
     "defaultMessage": "Missions",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 146,
+      "line": 148,
       "column": 12
     },
     "end": {
-      "line": 146,
+      "line": 148,
       "column": 100
     }
   },
@@ -160,11 +160,11 @@
     "defaultMessage": "Sessions",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 155,
+      "line": 157,
       "column": 12
     },
     "end": {
-      "line": 155,
+      "line": 157,
       "column": 98
     }
   },
@@ -173,11 +173,11 @@
     "defaultMessage": "Settings",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 166,
+      "line": 168,
       "column": 8
     },
     "end": {
-      "line": 166,
+      "line": 168,
       "column": 95
     }
   },
@@ -186,11 +186,11 @@
     "defaultMessage": "Locations",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 176,
+      "line": 178,
       "column": 12
     },
     "end": {
-      "line": 176,
+      "line": 178,
       "column": 96
     }
   },
@@ -199,11 +199,11 @@
     "defaultMessage": "Locations types",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 185,
+      "line": 187,
       "column": 12
     },
     "end": {
-      "line": 188,
+      "line": 190,
       "column": 14
     }
   },
@@ -212,11 +212,11 @@
     "defaultMessage": "Programs",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 197,
+      "line": 199,
       "column": 12
     },
     "end": {
-      "line": 200,
+      "line": 202,
       "column": 14
     }
   },
@@ -225,11 +225,11 @@
     "defaultMessage": "Person categories",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 209,
+      "line": 211,
       "column": 12
     },
     "end": {
-      "line": 212,
+      "line": 214,
       "column": 14
     }
   },
@@ -238,11 +238,11 @@
     "defaultMessage": "Person types",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 221,
+      "line": 223,
       "column": 12
     },
     "end": {
-      "line": 224,
+      "line": 226,
       "column": 14
     }
   },
@@ -251,11 +251,11 @@
     "defaultMessage": "Species",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 233,
+      "line": 235,
       "column": 12
     },
     "end": {
-      "line": 233,
+      "line": 235,
       "column": 97
     }
   },
@@ -264,11 +264,11 @@
     "defaultMessage": "Subspecies",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 242,
+      "line": 244,
       "column": 12
     },
     "end": {
-      "line": 245,
+      "line": 247,
       "column": 14
     }
   },
@@ -277,11 +277,11 @@
     "defaultMessage": "Notifications",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 254,
+      "line": 256,
       "column": 12
     },
     "end": {
-      "line": 257,
+      "line": 259,
       "column": 14
     }
   },
@@ -290,11 +290,11 @@
     "defaultMessage": "Datas",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 265,
+      "line": 267,
       "column": 17
     },
     "end": {
-      "line": 265,
+      "line": 267,
       "column": 98
     }
   },
@@ -303,11 +303,11 @@
     "defaultMessage": "About Us",
     "file": "src/features/home/helpers.js",
     "start": {
-      "line": 274,
+      "line": 276,
       "column": 13
     },
     "end": {
-      "line": 274,
+      "line": 276,
       "column": 99
     }
   }

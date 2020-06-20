@@ -30,7 +30,8 @@ function Form(props) {
         defaultMessage: 'Sponsorship',
       })}
       size="lg"
-      tab={values.currentTab}
+      height="md"
+      tab={values._currentTab}
       tabs={tabs}
       onNavTab={handleNavTab}
       onSubmit={handleSubmit}
@@ -40,7 +41,7 @@ function Form(props) {
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
-        {values.currentTab === '1' && (
+        {values._currentTab === '1' && (
           <div>
             <div className="row">
               <div className="col-sm-26">
@@ -194,7 +195,7 @@ function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '2' && (
+        {values._currentTab === '2' && (
           <div className="row">
             <div className="col-sm-36">
               <InputSponsors

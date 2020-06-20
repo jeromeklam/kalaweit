@@ -7,6 +7,7 @@ import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { loadOne as loadOneCause } from '../cause/redux/actions';
 import { loadOne as loadOneClient } from '../client/redux/actions';
+import { loadOne as loadOneCertificate } from '../certificate/redux/actions';
 import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import { propagateModel } from '../../common';
 import Form from './Form';
@@ -41,21 +42,24 @@ export class Create extends Component {
      */
     this.props.actions.loadOne(this.state.donationId).then(result => {
       const item = this.props.donation.loadOneItem;
-      if (this.props.mode === 'client') {
-        this.props.actions.loadOneClient(this.props.parentId).then(result => {
-          item.client = this.props.client.loadOneItem;
-          this.setState({ item: item });
-        });
-      } else {
-        if (this.props.mode === 'cause') {
-          this.props.actions.loadOneCause(this.props.parentId).then(result => {
-            item.cause = this.props.cause.loadOneItem;
+      this.props.actions.loadOneCertificate(0).then(result => {
+        item.certificate = this.props.certificate.loadOneItem;
+        if (this.props.mode === 'client') {
+          this.props.actions.loadOneClient(this.props.parentId).then(result => {
+            item.client = this.props.client.loadOneItem;
             this.setState({ item: item });
           });
         } else {
-          this.setState({ item: item });
+          if (this.props.mode === 'cause') {
+            this.props.actions.loadOneCause(this.props.parentId).then(result => {
+              item.cause = this.props.cause.loadOneItem;
+              this.setState({ item: item });
+            });
+          } else {
+            this.setState({ item: item });
+          }
         }
-      }
+      });
     });
   }
 
@@ -132,7 +136,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
-      { ...actions, loadOneCause, loadOneClient, propagateModel },
+      { ...actions, loadOneCause, loadOneClient, loadOneCertificate, propagateModel },
       dispatch,
     ),
   };

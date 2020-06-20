@@ -292,21 +292,6 @@ export const getCols = ({ props }) => {
       filterable: { type: 'date' },
     },
     {
-      name: 'type',
-      label: props.intl.formatMessage({
-        id: 'app.features.cause.list.col.causeType',
-        defaultMessage: 'Mission',
-      }),
-      col: 'cause_type.caut_id',
-      size: '0',
-      mob_size: '0',
-      hidden: true,
-      filterable: {
-        type: 'select',
-        options: causeTypeAsOptions(props.causeType.items),
-      },
-    },
-    {
       name: 'site',
       label: props.intl.formatMessage({
         id: 'app.features.cause.list.col.site',

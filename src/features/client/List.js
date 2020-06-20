@@ -99,7 +99,7 @@ export class List extends Component {
     }
     timer = setTimeout(() => {
       this.props.actions.loadMore({}, true);
-    }, 2000);
+    }, this.props.loadTimeOut);
     this.setState({ timer: timer });
   }
 
@@ -111,7 +111,7 @@ export class List extends Component {
     }
     timer = setTimeout(() => {
       this.props.actions.loadMore({}, true);
-    }, 2000);
+    }, this.props.loadTimeOut);
     this.setState({ timer: timer });
   }
 
@@ -124,7 +124,7 @@ export class List extends Component {
     }
     timer = setTimeout(() => {
       this.props.actions.loadMore({}, true);
-    }, 2000);
+    }, this.props.loadTimeOut);
     this.setState({ timer: timer });
   }
 
@@ -137,7 +137,7 @@ export class List extends Component {
     }
     timer = setTimeout(() => {
       this.props.actions.loadMore({}, true);
-    }, 2000);
+    }, this.props.loadTimeOut);
     this.setState({ timer: timer });
   }
 
@@ -240,6 +240,7 @@ export class List extends Component {
 
 function mapStateToProps(state) {
   return {
+    loadTimeOut: state.auth.loadTimeOut,
     client: state.client,
     clientCategory: state.clientCategory,
     sponsorship: state.sponsorships,

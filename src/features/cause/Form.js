@@ -93,7 +93,7 @@ function Form(props) {
         defaultMessage: 'Mission',
       })}
       className="m-5"
-      tab={values.currentTab}
+      tab={values._currentTab}
       tabs={!props.modify ? tabs : tabs.concat(modifTabs)}
       size="xl"
       onSubmit={handleSubmit}
@@ -133,20 +133,22 @@ function Form(props) {
             error={getErrorMessage('cau_name')}
           />
         </div>
-        <div className="col-md-10">
-          <InputSelect
-            label={props.intl.formatMessage({
-              id: 'app.features.cause.form.subspecies',
-              defaultMessage: 'Subspecies',
-            })}
-            name="subspecies.id"
-            labelTop={true}
-            value={values.subspecies ? values.subspecies.id : null}
-            addempty={true}
-            onChange={handleChange}
-            options={subspeciesAsOptions(props.subspecies)}
-          />
-        </div>
+        {(values.cause_type && values.cause_type.caut_family === 'ANIMAL') && 
+          <div className="col-md-10">
+            <InputSelect
+              label={props.intl.formatMessage({
+                id: 'app.features.cause.form.subspecies',
+                defaultMessage: 'Subspecies',
+              })}
+              name="subspecies.id"
+              labelTop={true}
+              value={values.subspecies ? values.subspecies.id : null}
+              addempty={true}
+              onChange={handleChange}
+              options={subspeciesAsOptions(props.subspecies)}
+            />
+          </div>
+        }
         <div className="col-md-12">
           <SiteInputPicker
             label={props.intl.formatMessage({
@@ -162,40 +164,44 @@ function Form(props) {
         </div>
       </div>
       <hr />
-      {values.currentTab === '1' && (
+      {values._currentTab === '1' && (
         <div>
           <div className="row">
             <div className="col-6">
-              <InputSelect
-                label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.sex',
-                  defaultMessage: 'Sex',
-                })}
-                labelTop={true}
-                name="cau_sex"
-                id="cau_sex"
-                value={values.cau_sex}
-                onChange={handleChange}
-                options={[
-                  { label: 'Male', value: 'M' },
-                  { label: 'Femelle', value: 'F' },
-                ]}
-              />
+              {(values.cause_type && values.cause_type.caut_family === 'ANIMAL') && 
+                <InputSelect
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.sex',
+                    defaultMessage: 'Sex',
+                  })}
+                  labelTop={true}
+                  name="cau_sex"
+                  id="cau_sex"
+                  value={values.cau_sex}
+                  onChange={handleChange}
+                  options={[
+                    { label: 'Male', value: 'M' },
+                    { label: 'Femelle', value: 'F' },
+                  ]}
+                />
+              }
             </div>
             <div className="col-md-6">
-              <InputSpin
-                label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.cauYear',
-                  defaultMessage: 'Born in',
-                })}
-                name="cau_year"
-                id="cau_year"
-                maxValue={nYear}
-                minValue={1990}
-                labelTop={true}
-                value={values.cau_year}
-                onChange={handleChange}
-              />
+              {(values.cause_type && values.cause_type.caut_family === 'ANIMAL') && 
+                <InputSpin
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.cauYear',
+                    defaultMessage: 'Born in',
+                  })}
+                  name="cau_year"
+                  id="cau_year"
+                  maxValue={nYear}
+                  minValue={1990}
+                  labelTop={true}
+                  value={values.cau_year}
+                  onChange={handleChange}
+                />
+              }
             </div>
             <div className="col-md-2"></div>
             <div className="col-7">
@@ -267,15 +273,17 @@ function Form(props) {
               />
             </div>
             <div className="col-md-6">
-              <InputData
-                key="cau_string_3"
-                name="cau_string_3"
-                labelTop={true}
-                value={values.cau_string_3}
-                datas={props.tab_datas}
-                config={props.tab_configs}
-                onChange={handleChange}
-              />
+              {values.cau_end && 
+                <InputData
+                  key="cau_string_3"
+                  name="cau_string_3"
+                  labelTop={true}
+                  value={values.cau_string_3}
+                  datas={props.tab_datas}
+                  config={props.tab_configs}
+                  onChange={handleChange}
+                />
+              }
             </div>
             <div className="col-md-5"></div>
             <div className="col-md-7">
@@ -294,53 +302,57 @@ function Form(props) {
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col-18">
-              <CauseInputPicker
-                label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.parent1',
-                  defaultMessage: 'Father',
-                })}
-                labelTop={true}
-                key="parent1"
-                name="parent1"
-                item={values.parent1 || null}
-                onChange={handleChange}
-              />
+          {(values.cause_type && values.cause_type.caut_family === 'ANIMAL') && 
+            <div className="row">
+              <div className="col-18">
+                <CauseInputPicker
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.parent1',
+                    defaultMessage: 'Father',
+                  })}
+                  labelTop={true}
+                  key="parent1"
+                  name="parent1"
+                  item={values.parent1 || null}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-18">
+                <CauseInputPicker
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.parent2',
+                    defaultMessage: 'Mother',
+                  })}
+                  labelTop={true}
+                  key="parent2"
+                  name="parent2"
+                  item={values.parent2 || null}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
-            <div className="col-18">
-              <CauseInputPicker
-                label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.parent2',
-                  defaultMessage: 'Mother',
-                })}
-                labelTop={true}
-                key="parent2"
-                name="parent2"
-                item={values.parent2 || null}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+          }
         </div>
       )}
-      {values.currentTab === '2' && (
+      {values._currentTab === '2' && (
         <div>
-          <div className="row">
-            <div className="col-md-12">
-              <ClientInputPicker
-                label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.proprietary',
-                  defaultMessage: 'Sanitary',
-                })}
-                key="proprietary"
-                name="proprietary"
-                labelTop={true}
-                item={values.proprietary || null}
-                onChange={handleChange}
-              />
+          {(values.cause_type && values.cause_type.caut_family === 'ANIMAL') && 
+            <div className="row">
+              <div className="col-md-12">
+                <ClientInputPicker
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.proprietary',
+                    defaultMessage: 'Sanitary',
+                  })}
+                  key="proprietary"
+                  name="proprietary"
+                  labelTop={true}
+                  item={values.proprietary || null}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
-          </div>
+          }
           <div className="row">
             <div className="col-md-36">
               <InputTextarea
@@ -357,22 +369,22 @@ function Form(props) {
           </div>
         </div>
       )}
-      {values.currentTab === '3' && (
+      {values._currentTab === '3' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineSponsorships mode="cause" id={values.id} />
         </div>
       )}
-      {values.currentTab === '4' && (
+      {values._currentTab === '4' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineDonations mode="cause" id={values.id} />
         </div>
       )}
-      {values.currentTab === '5' && (
+      {values._currentTab === '5' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlinePhotos cauId={values.id} />
         </div>
       )}
-      {values.currentTab === '6' && (
+      {values._currentTab === '6' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineSponsors cauId={values.id} />
         </div>

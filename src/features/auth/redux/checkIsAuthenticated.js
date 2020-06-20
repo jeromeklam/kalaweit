@@ -71,49 +71,51 @@ export function reducer(state, action) {
       let more = {};
       let realm = null;
       let inputMoney = state.inputMoney;
-      let displayMoney = state.displayMoney; 
-      if (datas && datas.headers && datas.headers.authorization) {
-        token = datas.headers.authorization;
-      }
-      if (datas && datas.headers && datas.headers['app-id']) {
-        cookie.save('APP_ID', datas.headers['app-id'], { path: '/' });
-      }
-      if (datas && datas.headers && datas.headers['sso-id']) {
-        cookie.save('SSO_ID', datas.headers['sso-id'], { path: '/' });
-      }
-      if (datas.data) {
-        let object = jsonApiNormalizer(datas.data);
-        user = buildModel(object, 'FreeSSO_User', object.SORTEDELEMS[0], { eager: true });
-      }
-      if (token && user) {
-        authenticated = true;
-        cookie.save('Authorization', token, { path: '/' });
-        initAxios(token);
-        if (user.config && user.config.ubrk_config) {
-          more.settings = JSON.parse(user.config.ubrk_config) || defaultConfig;
-        } else {
-          more.settings = defaultConfig;
+      let displayMoney = state.displayMoney;
+      if (datas) {
+        if (datas.headers && datas.headers.authorization) {
+          token = datas.headers.authorization;
         }
-        if (user.config && user.config.ubrk_cache) {
-          more.cache = JSON.parse(user.config.ubrk_cache) || {};
-          saveToLS('layouts', more.cache);
-        } else {
-          more.cache = {};
+        if (datas.headers && datas.headers['app-id']) {
+          cookie.save('APP_ID', datas.headers['app-id'], { path: '/' });
         }
-        let defaultRealm = getFromLS('realm', 'freeasso-realm');
-        if (user.realms && Array.isArray(user.realms)) {
-          const found = user.realms.find(item => { return item.id === defaultRealm } );
-          if (found) {
-            realm = found;
+        if (datas.headers && datas.headers['sso-id']) {
+          cookie.save('SSO_ID', datas.headers['sso-id'], { path: '/' });
+        }
+        if (datas.data) {
+          let object = jsonApiNormalizer(datas.data);
+          user = buildModel(object, 'FreeSSO_User', object.SORTEDELEMS[0], { eager: true });
+        }
+        if (token && user) {
+          authenticated = true;
+          cookie.save('Authorization', token, { path: '/' });
+          initAxios(token);
+          if (user.config && user.config.ubrk_config) {
+            more.settings = JSON.parse(user.config.ubrk_config) || defaultConfig;
           } else {
-            user.realms.forEach(item => {realm = item;});
+            more.settings = defaultConfig;
           }
-          inputMoney = realm.grp_money_input;
-          displayMoney = realm.grp_money_code;
+          if (user.config && user.config.ubrk_cache) {
+            more.cache = JSON.parse(user.config.ubrk_cache) || {};
+            saveToLS('layouts', more.cache);
+          } else {
+            more.cache = {};
+          }
+          let defaultRealm = getFromLS('realm', 'freeasso-realm');
+          if (user.realms && Array.isArray(user.realms)) {
+            const found = user.realms.find(item => { return item.id === defaultRealm } );
+            if (found) {
+              realm = found;
+            } else {
+              user.realms.forEach(item => {realm = item;});
+            }
+            inputMoney = realm.grp_money_input;
+            displayMoney = realm.grp_money_code;
+          }
+          const ajv = new Ajv({ allErrors: true, verbose: true, useDefaults: true });
+          const validate = ajv.compile(schema);
+          validate(more.settings);
         }
-        const ajv = new Ajv({ allErrors: true, verbose: true, useDefaults: true });
-        const validate = ajv.compile(schema);
-        validate(more.settings);
       }
       return {
         ...state,

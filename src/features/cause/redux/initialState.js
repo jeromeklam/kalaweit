@@ -1,10 +1,10 @@
-import { Filter } from 'freeassofront';
-//import { FILTER_OPER_GREATER_OR_EQUAL_OR_NULL } from 'freeassofront/src/features/filter/index.js';
+import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL, FILTER_OPER_EQUAL } from 'freeassofront';
 
 let initialFilters = new Filter();
 const now = new Date().toISOString();
-initialFilters.addFilter('cau_to', now, 'gten');
-initialFilters.addFilter('caut_id', 355, 'eq', true);
+initialFilters.addFilter('cau_to', now, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL);
+initialFilters.addFilter('caut_id', 355, FILTER_OPER_EQUAL, true);
+initialFilters.setMode(FILTER_MODE_AND);
 
 const initialState = {
   items: [],

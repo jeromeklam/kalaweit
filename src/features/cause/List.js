@@ -15,6 +15,8 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
+  DelOne as ClearIcon,
+  Calendar as CalendarIcon,
 } from '../icons';
 import { showErrors, deleteSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
@@ -123,7 +125,7 @@ export class List extends Component {
     }
     timer = setTimeout(() => {
       this.props.actions.loadMore({}, true);
-    }, 2000);
+    }, this.props.loadTimeOut);
     this.setState({ timer: timer });
   }
 
@@ -135,7 +137,7 @@ export class List extends Component {
     }
     timer = setTimeout(() => {
       this.props.actions.loadMore({}, true);
-    }, 2000);
+    }, this.props.loadTimeOut);
     this.setState({ timer: timer });
   }
 
@@ -148,7 +150,7 @@ export class List extends Component {
     }
     timer = setTimeout(() => {
       this.props.actions.loadMore({}, true);
-    }, 2000);
+    }, this.props.loadTimeOut);
     this.setState({ timer: timer });
   }
 
@@ -161,7 +163,7 @@ export class List extends Component {
     }
     timer = setTimeout(() => {
       this.props.actions.loadMore({}, true);
-    }, 2000);
+    }, this.props.loadTimeOut);
     this.setState({ timer: timer });
   }
 
@@ -295,6 +297,8 @@ export class List extends Component {
           sortDownIcon={<SortDownIcon  />}
           sortUpIcon={<SortUpIcon />}
           sortNoneIcon={<SortNoneIcon />}
+          calIcon={<CalendarIcon className="text-secondary" />}
+          clearIcon={<ClearIcon className="text-warning" />}
           inlineActions={inlineActions}
           inlineOpenedId={id}
           inlineComponent={inlineComponent}
@@ -322,6 +326,7 @@ export class List extends Component {
 
 function mapStateToProps(state) {
   return {
+    loadTimeOut: state.auth.loadTimeOut,
     cause: state.cause,
     site: state.site,
     causeType: state.causeType,
