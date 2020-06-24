@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, getEmptyJsonApi } from 'freejsonapi';
 import {
   JOBQUEUE_LOAD_MORE_INIT,
   JOBQUEUE_LOAD_MORE_BEGIN,
@@ -81,7 +81,7 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: true,
         loadMoreError: null,
-        items: [],
+        items: getEmptyJsonApi('FreeFW_Jobqueue'),
       };
 
     case JOBQUEUE_LOAD_MORE_BEGIN:

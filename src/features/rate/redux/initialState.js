@@ -1,4 +1,5 @@
-import {Filter} from 'freeassofront';
+import { Filter } from 'freeassofront';
+import { getEmptyJsonApi } from 'freejsonapi';
 
 const initialState = {
   items: [],

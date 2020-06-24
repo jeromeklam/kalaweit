@@ -1,10 +1,12 @@
+import { getEmptyJsonApi } from 'freejsonapi';
+
 const initialState = {
   sponsorships: [],
   sponsorshipsModels: [],
   cli_id: null,
   cau_id: null,
   emptyItem: null,
-  items: [],
+  items: getEmptyJsonApi('FreeAsso_Sponsorship'),
   loadSponsorshipsPending: false,
   loadSponsorshipsError: null,
   loadOnePending: false,

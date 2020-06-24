@@ -130,6 +130,7 @@ function mapStateToProps(state) {
     donation: state.donation,
     paymentType: state.paymentType,
     session: state.session,
+    certificate: state.certificate,
   };
 }
 

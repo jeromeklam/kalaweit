@@ -67,11 +67,11 @@ export class Modify extends Component {
       .updateOne(this.state.id, obj)
       .then(result => {
         modifySuccess();
-        console.log('test');
         this.props.actions.propagateModel('FreeAsso_Donation', result);
         this.props.onClose();
       })
       .catch(errors => {
+        console.log(errors);
         showErrors(this.props.intl, errors);
       });
   }

@@ -48,8 +48,8 @@ const afterChange = (name, item) => {
     case 'cause': {
       const endTs = calculateDonationEndTs(item);
       let update = true;
-      const found = item.locked.find(elem => elem.field === 'don_end_ts');
-      if (found && found.locked === false) {
+      const found = item._locked.find(elem => elem.field === 'don_end_ts');
+      if (found && found._locked === false) {
         update = false;
       }
       if (update) {
@@ -382,32 +382,66 @@ function Form(props) {
         </div>
       )}
       {values._currentTab === '3' && 
-        <div className="row">
-          <div className="col-sm-18">
-            <InputText
-              label={props.intl.formatMessage({
-                id: 'app.features.certificate.form.fullname',
-                defaultMessage: 'Fullname',
-              })}
-              name="certificate.cert_fullname"
-              id="cert_fullname"
-              labelTop={true}
-              value={values.certificate.cert_fullname}
-              onChange={handleChange}
-            />
+        <div>
+          <div className="row">
+            <div className="col-sm-18">
+              <InputText
+                label={props.intl.formatMessage({
+                  id: 'app.features.certificate.form.fullname',
+                  defaultMessage: 'Fullname',
+                })}
+                name="certificate.cert_fullname"
+                id="cert_fullname"
+                labelTop={true}
+                value={values.certificate.cert_fullname}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-sm-18">
+              <InputText
+                label={props.intl.formatMessage({
+                  id: 'app.features.certificate.form.email',
+                  defaultMessage: 'Email',
+                })}
+                name="certificate.cert_email"
+                id="cert_email"
+                labelTop={true}
+                value={values.certificate.cert_email}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-          <div className="col-sm-18">
-            <InputText
-              label={props.intl.formatMessage({
-                id: 'app.features.certificate.form.email',
-                defaultMessage: 'Email',
-              })}
-              name="certificate.cert_email"
-              id="cert_email"
-              labelTop={true}
-              value={values.certificate.cert_email}
-              onChange={handleChange}
-            />
+          <div className="row d-none">
+            <div className="col-sm-12">
+              <InputMonetary
+                label={props.intl.formatMessage({
+                  id: 'app.features.certificate.form.output_mnt',
+                  defaultMessage: 'Amount',
+                })}
+                name="certificate.cert_output_mnt"
+                id="cert_output_mnt"
+                labelTop={true}
+                disabled={true}
+                inputMoney={values.certificate.cert_output_money}
+                value={values.certificate.cert_output_mnt}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-sm-12">
+              <InputDate
+                label={intl.formatMessage({
+                  id: 'app.features.donation.form.printTs',
+                  defaultMessage: 'Printed on',
+                })}
+                labelTop={true}
+                name="cert_print_ts"
+                id="cert_print_ts"
+                inputSize={36}
+                value={values.certificate.cert_print_ts}
+                onChange={handleChange}
+                disabled={true}
+              />
+            </div>
           </div>
         </div>
       }

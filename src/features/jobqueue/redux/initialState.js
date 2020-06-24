@@ -1,7 +1,8 @@
 import { Filter } from 'freeassofront';
+import { getEmptyJsonApi } from 'freejsonapi';
 
 const initialState = {
-  items: [],
+  items: getEmptyJsonApi('FreeFW_Jobqueue'),
   pendings: [],
   page_number: 1,
   page_size: 999,

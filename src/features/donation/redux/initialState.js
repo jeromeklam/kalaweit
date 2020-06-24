@@ -1,7 +1,8 @@
 import { Filter } from 'freeassofront';
+import { getEmptyJsonApi } from 'freejsonapi';
 
 const initialState = {
-  items: [],
+  items: getEmptyJsonApi('FreeAsso_Donation'),
   models: [],
   donations: [],
   donationsModels: [],

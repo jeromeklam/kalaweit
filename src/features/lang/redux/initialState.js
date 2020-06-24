@@ -1,5 +1,7 @@
+import { getEmptyJsonApi } from 'freejsonapi';
+
 const initialState = {
-  items: [],
+  items: getEmptyJsonApi('FreeFW_Lang'),
   flags: [],
   loadMorePending: false,
   loadMoreError: null,

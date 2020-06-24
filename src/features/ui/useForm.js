@@ -12,21 +12,21 @@ const _loadSite = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/site/' + id, {});
+  return freeAssoApi.get('/v1/asso/site/' + id + '?include=', {});
 };
 
 const _loadCause = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/cause/' + id, {});
+  return freeAssoApi.get('/v1/asso/cause/' + id + '?include=cause_type', {});
 };
 
 const _loadClient = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/client/' + id, {});
+  return freeAssoApi.get('/v1/asso/client/' + id + '?include=client_type,client_category', {});
 };
 
 const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null, locked = []) => {
