@@ -133,7 +133,7 @@ function Form(props) {
             error={getErrorMessage('cau_name')}
           />
         </div>
-        {(values.cause_type && values.cause_type.caut_family === 'ANIMAL') && 
+        {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
           <div className="col-md-10">
             <InputSelect
               label={props.intl.formatMessage({
@@ -148,7 +148,7 @@ function Form(props) {
               options={subspeciesAsOptions(props.subspecies)}
             />
           </div>
-        }
+        )}
         <div className="col-md-12">
           <SiteInputPicker
             label={props.intl.formatMessage({
@@ -168,7 +168,7 @@ function Form(props) {
         <div>
           <div className="row">
             <div className="col-6">
-              {(values.cause_type && values.cause_type.caut_family === 'ANIMAL') && 
+              {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
                 <InputSelect
                   label={props.intl.formatMessage({
                     id: 'app.features.cause.form.sex',
@@ -184,10 +184,10 @@ function Form(props) {
                     { label: 'Femelle', value: 'F' },
                   ]}
                 />
-              }
+              )}
             </div>
             <div className="col-md-6">
-              {(values.cause_type && values.cause_type.caut_family === 'ANIMAL') && 
+              {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
                 <InputSpin
                   label={props.intl.formatMessage({
                     id: 'app.features.cause.form.cauYear',
@@ -201,7 +201,7 @@ function Form(props) {
                   value={values.cau_year}
                   onChange={handleChange}
                 />
-              }
+              )}
             </div>
             <div className="col-md-2"></div>
             <div className="col-7">
@@ -273,7 +273,7 @@ function Form(props) {
               />
             </div>
             <div className="col-md-6">
-              {values.cau_end && 
+              {values.cau_end && (
                 <InputData
                   key="cau_string_3"
                   name="cau_string_3"
@@ -283,7 +283,7 @@ function Form(props) {
                   config={props.tab_configs}
                   onChange={handleChange}
                 />
-              }
+              )}
             </div>
             <div className="col-md-5"></div>
             <div className="col-md-7">
@@ -302,7 +302,7 @@ function Form(props) {
               />
             </div>
           </div>
-          {(values.cause_type && values.cause_type.caut_family === 'ANIMAL') && 
+          {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
             <div className="row">
               <div className="col-18">
                 <CauseInputPicker
@@ -331,12 +331,61 @@ function Form(props) {
                 />
               </div>
             </div>
-          }
+          )}
+          {values.cause_type.caut_certificat && (
+            <div className="row">
+              <div className="col-sm-12">
+                <InputMonetary
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.unitBase',
+                    defaultMessage: 'Certificate base quantity',
+                  })}
+                  labelTop={true}
+                  name="cau_unit_base"
+                  id="cau_unit_base"
+                  inputMoney="EUR"
+                  dbMoney="EUR"
+                  value={values.cau_unit_base}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-sm-12">
+                <InputText
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.unitUnit',
+                    defaultMessage: 'Certificate base unit',
+                  })}
+                  name="cau_unit_unit"
+                  id="cau_unit_unit"
+                  labelTop={true}
+                  required={true}
+                  value={values.cau_unit_unit}
+                  onChange={handleChange}
+                  error={getErrorMessage('cau_unit_unit')}
+                />
+              </div>
+              <div className="col-sm-12">
+                <InputMonetary
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.unitMnt',
+                    defaultMessage: 'Certificate base amount',
+                  })}
+                  labelTop={true}
+                  name="cau_unit_mnt"
+                  id="cau_unit_mnt"
+                  inputMoney="EUR"
+                  dbMoney="EUR"
+                  value={values.cau_unit_mnt}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          )}
         </div>
       )}
       {values._currentTab === '2' && (
         <div>
-          {(values.cause_type && values.cause_type.caut_family === 'ANIMAL') && 
+          {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
             <div className="row">
               <div className="col-md-12">
                 <ClientInputPicker
@@ -352,7 +401,7 @@ function Form(props) {
                 />
               </div>
             </div>
-          }
+          )}
           <div className="row">
             <div className="col-md-36">
               <InputTextarea

@@ -26,6 +26,7 @@ export function saveToLS(key, value, item = 'rgl-8') {
 
 export function showErrors(intl, error) {
   if (error) {
+    console.log(error);
     if (!error.errors) {
       if (error.response) {
         error = jsonApiNormalizer(error.response);
