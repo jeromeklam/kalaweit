@@ -140,6 +140,7 @@ function Form(props) {
     },
   ];
   let allTabs = tabs;
+  console.log(values);
   if (values.cause.cause_type && values.cause.cause_type.caut_certificat) {
     allTabs = allTabs.concat(tabs2);
   }
@@ -411,38 +412,59 @@ function Form(props) {
               />
             </div>
           </div>
-          <div className="row d-none">
-            <div className="col-sm-12">
-              <InputMonetary
-                label={props.intl.formatMessage({
-                  id: 'app.features.certificate.form.output_mnt',
-                  defaultMessage: 'Amount',
-                })}
-                name="certificate.cert_output_mnt"
-                id="cert_output_mnt"
-                labelTop={true}
-                disabled={true}
-                inputMoney={values.certificate.cert_output_money}
-                value={values.certificate.cert_output_mnt}
-                onChange={handleChange}
-              />
+          {props.modify &&
+            <div>
+              <div className="row">
+                <div className="col-sm-12">
+                  <InputMonetary
+                    label={props.intl.formatMessage({
+                      id: 'app.features.certificate.form.output_mnt',
+                      defaultMessage: 'Amount',
+                    })}
+                    name="certificate.cert_output_mnt"
+                    id="cert_output_mnt"
+                    labelTop={true}
+                    disabled={true}
+                    inputMoney={values.certificate.cert_output_money}
+                    value={values.certificate.cert_output_mnt}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-sm-12">
+                  <InputText
+                    label={props.intl.formatMessage({
+                      id: 'app.features.certificate.form.data1',
+                      defaultMessage: 'Data',
+                    })}
+                    name="certificate.cert_data1"
+                    id="cert_data1"
+                    labelTop={true}
+                    disabled={true}
+                    value={values.certificate.cert_data1}
+                    append={values.certificate.cert_unit_unit}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-sm-12">
+                  <InputDate
+                    label={intl.formatMessage({
+                      id: 'app.features.donation.form.printTs',
+                      defaultMessage: 'Printed on',
+                    })}
+                    labelTop={true}
+                    name="cert_print_ts"
+                    id="cert_print_ts"
+                    inputSize={36}
+                    value={values.certificate.cert_print_ts}
+                    onChange={handleChange}
+                    disabled={true}
+                  />
+                </div>
+              </div>
+              <div className="row">
+              </div>
             </div>
-            <div className="col-sm-12">
-              <InputDate
-                label={intl.formatMessage({
-                  id: 'app.features.donation.form.printTs',
-                  defaultMessage: 'Printed on',
-                })}
-                labelTop={true}
-                name="cert_print_ts"
-                id="cert_print_ts"
-                inputSize={36}
-                value={values.certificate.cert_print_ts}
-                onChange={handleChange}
-                disabled={true}
-              />
-            </div>
-          </div>
+          }
         </div>
       }
       <hr />

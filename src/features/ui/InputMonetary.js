@@ -5,7 +5,7 @@ import { Swap as SwapIcon, LockOn as LockOnIcon, LockOff as LockOffIcon } from '
 export default class InputDate extends Component {
   render() {
     let lockIcon = null;
-    let disabled = false;
+    let disabled = this.props.disabled || false;
     let toggle = null;
     if (this.props.locked === false) {
       lockIcon = <LockOffIcon className="text-primary" size={0.9} />

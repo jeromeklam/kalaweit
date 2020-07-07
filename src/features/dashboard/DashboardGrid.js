@@ -82,24 +82,6 @@ export class DashboardGrid extends Component {
             onBreakpointChange={this.onBreakpointChange}
             layouts={layouts}
           >
-            <div key="cause" data-grid={{ w: 6, h: 5, x: 0, y: 1, minW: 6, maxW: 18, minH: 4 }}>
-              <DashboardCard
-                title="Causes"
-                count={this.props.dashboard.stats.total_cause}
-                icon={<CauseIcon />}
-                url="/cause"
-                size={getLayoutSize(layouts, breakpoint, 'cause')}
-              />
-            </div>
-            <div key="sites" data-grid={{ w: 6, h: 5, x: 7, y: 1, minW: 6, maxW: 18, minH: 4 }}>
-              <DashboardCard
-                title="Sites"
-                count={this.props.dashboard.stats.total_site}
-                icon={<SiteIcon />}
-                url="/site"
-                size={getLayoutSize(layouts, breakpoint, 'sitescause')}
-              />
-            </div>
             <div key="friends" data-grid={{ w: 6, h: 5, x: 14, y: 1, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
                 title="Amis"
