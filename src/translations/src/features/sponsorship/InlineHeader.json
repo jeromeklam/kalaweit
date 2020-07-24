@@ -2,7 +2,7 @@
   {
     "id": "app.features.sponsorship.list.col.type",
     "defaultMessage": "Type",
-    "file": "src/features/sponsorship/InlineHeader.js",
+    "file": "src\\features\\sponsorship\\InlineHeader.js",
     "start": {
       "line": 19,
       "column": 12
@@ -15,7 +15,7 @@
   {
     "id": "app.features.sponsorship.list.col.amount",
     "defaultMessage": "Amount",
-    "file": "src/features/sponsorship/InlineHeader.js",
+    "file": "src\\features\\sponsorship\\InlineHeader.js",
     "start": {
       "line": 24,
       "column": 12
@@ -28,7 +28,7 @@
   {
     "id": "app.features.sponsorship.list.col.from",
     "defaultMessage": "From",
-    "file": "src/features/sponsorship/InlineHeader.js",
+    "file": "src\\features\\sponsorship\\InlineHeader.js",
     "start": {
       "line": 29,
       "column": 12
@@ -41,7 +41,7 @@
   {
     "id": "app.features.sponsorship.list.col.to",
     "defaultMessage": "To",
-    "file": "src/features/sponsorship/InlineHeader.js",
+    "file": "src\\features\\sponsorship\\InlineHeader.js",
     "start": {
       "line": 34,
       "column": 12
@@ -54,7 +54,7 @@
   {
     "id": "app.features.sponsorship.list.col.client",
     "defaultMessage": "Member",
-    "file": "src/features/sponsorship/InlineHeader.js",
+    "file": "src\\features\\sponsorship\\InlineHeader.js",
     "start": {
       "line": 40,
       "column": 14
@@ -67,7 +67,7 @@
   {
     "id": "app.features.sponsorship.list.col.cause",
     "defaultMessage": "Mission",
-    "file": "src/features/sponsorship/InlineHeader.js",
+    "file": "src\\features\\sponsorship\\InlineHeader.js",
     "start": {
       "line": 44,
       "column": 14
@@ -80,7 +80,7 @@
   {
     "id": "app.features.sponsorship.list.col.site",
     "defaultMessage": "Show on site",
-    "file": "src/features/sponsorship/InlineHeader.js",
+    "file": "src\\features\\sponsorship\\InlineHeader.js",
     "start": {
       "line": 50,
       "column": 12
@@ -93,7 +93,7 @@
   {
     "id": "app.features.sponsorship.list.col.news",
     "defaultMessage": "News",
-    "file": "src/features/sponsorship/InlineHeader.js",
+    "file": "src\\features\\sponsorship\\InlineHeader.js",
     "start": {
       "line": 55,
       "column": 12

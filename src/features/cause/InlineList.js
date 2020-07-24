@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
 import { Loading3Dots } from 'freeassofront';
 import { SimpleLabel as DataSimpleLabel } from '../data';
 import { freeAssoApi } from '../../common';
@@ -28,7 +28,7 @@ export default class InlineList extends Component {
       doRequest
         .then(result => {
           const lines = jsonApiNormalizer(result.data);
-          const items = buildModel(lines, 'FreeAsso_Cause');
+          const items = normalizedObjectModeler(lines, 'FreeAsso_Cause');
           this.setState({ loading: false, list: items });
         })
         .catch(err => {

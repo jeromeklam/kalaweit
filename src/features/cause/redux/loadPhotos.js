@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
 import {
   CAUSE_LOAD_PHOTOS_INIT,
   CAUSE_LOAD_PHOTOS_BEGIN,
@@ -98,7 +98,7 @@ export function reducer(state, action) {
       } else {
         list = [];
       }
-      let photosItem = buildModel(state.items, 'FreeAsso_Cause', action.cau_id, {eager: true});
+      let photosItem = normalizedObjectModeler(state.items, 'FreeAsso_Cause', action.cau_id, {eager: true});
       return {
         ...state,
         loadPhotosPending: false,

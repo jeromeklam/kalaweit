@@ -1,8 +1,8 @@
 import { Filter } from 'freeassofront';
-import { getEmptyJsonApi } from 'freejsonapi';
+import { getNewNormalizedObject } from 'freejsonapi';
 
 const initialState = {
-  items: getEmptyJsonApi('FreeFW_Email'),
+  items: getNewNormalizedObject('FreeFW_Email'),
   models: [],
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,

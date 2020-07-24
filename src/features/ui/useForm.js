@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 
 const explodeReduxModel = obj => {
@@ -70,7 +70,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values._loadCause = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -94,7 +94,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values._loadClient = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Client', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -118,7 +118,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values._loadSite = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Site', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Site', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -155,7 +155,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values._loadCause = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -179,7 +179,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values._loadClient = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Client', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -203,7 +203,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values._loadSite = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Site', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Site', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);

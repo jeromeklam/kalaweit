@@ -1,7 +1,7 @@
-import { getEmptyJsonApi } from 'freejsonapi';
+import { getNewNormalizedObject } from 'freejsonapi';
 
 const initialState = {
-  items: getEmptyJsonApi('FreeFW_Lang'),
+  items: getNewNormalizedObject('FreeFW_Lang'),
   flags: [],
   loadMorePending: false,
   loadMoreError: null,

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { displayDatetime } from 'freeassofront';
 import { DashboardCard } from '../dashboard';
 import * as actions from './redux/actions';
@@ -22,7 +22,7 @@ export class DashboardJobqueues extends Component {
     let counter = 0;
     let jobqueues = [];
     if (this.props.jobqueue.items.FreeFW_Jobqueue) {
-      jobqueues = buildModel(this.props.jobqueue.items, 'FreeFW_Jobqueue');
+      jobqueues = normalizedObjectModeler(this.props.jobqueue.items, 'FreeFW_Jobqueue');
     }
     const header = (
       <InlineList>

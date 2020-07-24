@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import classnames from 'classnames';
+import { ScrollTo } from 'react-scroll-to';
 import * as actions from './redux/actions';
+import { objectToQueryString, jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveConfirm } from 'freeassofront';
+import { freeAssoApi } from '../../common';
 import { CenteredLoading3Dots } from '../ui';
 import {
   deleteSuccess,
@@ -36,6 +40,12 @@ export class InlineDonations extends Component {
       filters: filters,
       more: false,
       donId: -1,
+      years: [],
+      loading: true,
+      loadingDonations: true,
+      currentYear: null,
+      donations: [],
+      myRef: React.createRef(),
     };
     this.onMore = this.onMore.bind(this);
     this.onAdd = this.onAdd.bind(this);
@@ -44,10 +54,70 @@ export class InlineDonations extends Component {
     this.onDelete = this.onDelete.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
+    this.localLoadDonations = this.localLoadDonations.bind(this);
+    this.localLoadDonationsYears = this.localLoadDonationsYears.bind(this);
+  }
+
+  localLoadDonationsYears() {
+    let filter = {
+      filter: this.state.filters,
+      sort: '-don_ask_ts,-don_ts',
+      page: { number: 1, size: 100 },
+    };
+    const addUrl = objectToQueryString(filter);
+    const doRequest = freeAssoApi.get('/v1/asso/donation/years' + addUrl, {});
+    doRequest
+      .then(result => {
+        if (result && result.data) {
+          const list = jsonApiNormalizer(result.data);
+          const years = normalizedObjectModeler(list, 'FreeAsso_DonationYear') || false;
+          let currentYear = null;
+          if (years.length > 0) {
+            currentYear = years[0].don_real_ts_year;
+          }
+          this.setState({ years: years, loading: false, currentYear: currentYear });
+          this.localLoadDonations(currentYear);
+        } else {
+          this.setState({ years: [], loading: false, currentYear: null });
+        }
+      })
+      .catch(error => {
+        this.setState({ years: [], loading: false, currentYear: null });
+      });
+  }
+
+  localLoadDonations(year) {
+    this.setState({ loadingDonations: true, currentYear: year, donations: [], myRef: React.createRef() });
+    let filters = this.state.filters;
+    filters.don_real_ts_year = { eq: year };
+    let filter = {
+      filter: filters,
+      sort: '-don_ask_ts,-don_ts',
+      page: { number: 1, size: 300 },
+    };
+    const addUrl = objectToQueryString(filter);
+    const doRequest = freeAssoApi.get('/v1/asso/donation' + addUrl, {});
+    doRequest.then(result => {
+      if (result && result.data) {
+        const list = jsonApiNormalizer(result.data);
+        const donations = normalizedObjectModeler(list, 'FreeAsso_Donation') || false;
+        this.setState({ donations: donations, loadingDonations: false, myRef: React.createRef() });
+      } else {
+        this.setState({ donations: [], loadingDonations: false });
+      }
+    });
   }
 
   componentDidMount() {
-    this.props.actions.loadDonations(this.state.filters, true);
+    this.localLoadDonationsYears();
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.myRef);
+    const element = this.state.myRef.current;
+    if (element) {
+      element.scrollIntoView({behavior: 'smooth'});
+    }
   }
 
   onMore() {
@@ -96,101 +166,108 @@ export class InlineDonations extends Component {
 
   render() {
     const { intl } = this.props;
-    const donations = this.props.donation.donationsModels;
-    let others = false;
     let counter = 0;
     return (
       <div>
         <div className="donation-inline-donations">
-          {this.props.donation.loadDonationsPending ? (
+          {this.state.loading ? (
             <CenteredLoading3Dots />
           ) : (
-            <div className="cause-inline-sponsorships">
-              <div className="inline-list">
-                {donations.length > 0 && (
-                  <InlineHeader {...this.props} oddEven={counter++} onAddOne={this.onAdd} />
-                )}
-                {donations.length > 0 &&
-                  donations.map(donation => {
-                    return (
-                      <InlineLine
-                        {...this.props}
-                        oddEven={counter++}
-                        key={donation.id}
-                        donation={donation}
-                        paymentTypes={this.props.paymentType.items}
-                        onGetOne={this.onModify}
-                        onDelOne={this.onConfirm}
-                      />
-                    );
-                  })}
-                {others &&
-                  (this.state.more ? (
-                    donations.map(donation => {
-                      if (!inTheFuture(donation.don_ts)) {
-                        return (
-                          <InlineLine
-                            {...this.props}
-                            oddEven={counter++}
-                            key={donation.id}
-                            sponsorship={donation}
-                            paymentTypes={this.props.paymentType.items}
-                            onGetOne={this.onModify}
-                            onDelOne={this.onConfirm}
-                          />
-                        );
-                      }
-                      return null;
+            <ScrollTo>
+              {({ scroll }) => (
+                <div className="cause-inline-sponsorships">
+                  {this.state.years && this.state.years.length > 0 ? (
+                    this.state.years.map(year => {
+                      return (
+                        <div class="card" key={`don_year_${year.don_real_ts_year}`}>
+                          <div
+                            class={classnames(
+                              'card-header',
+                              year.don_real_ts_year === this.state.currentYear
+                                ? 'bg-secondary text-light'
+                                : 'bg-secondary-light',
+                            )}
+                          >
+                            <button
+                              ref={year.don_real_ts_year === this.state.currentYear ? this.state.myRef : null}
+                              class={classnames(
+                                'collapsed card-link',
+                                year.don_real_ts_year === this.state.currentYear
+                                  ? 'bg-secondary text-light'
+                                  : 'bg-secondary-light',
+                              )}
+                              onClick={() => {
+                                //scroll({ ref: myRef, y: 0, smooth: true });
+                                this.localLoadDonations(year.don_real_ts_year);
+                              }}
+                            >
+                              <span>{year.don_real_ts_year}</span>
+                            </button>
+                          </div>
+                          <div
+                            class={classnames(
+                              year.don_real_ts_year !== this.state.currentYear && 'collapse',
+                            )}
+                          >
+                            <div class="card-body">
+                              {year.don_real_ts_year === this.state.currentYear &&
+                              this.state.loadingDonations ? (
+                                <CenteredLoading3Dots />
+                              ) : (
+                                <div className="inline-list">
+                                  {this.state.donations && this.state.donations.length > 0 && (
+                                    <InlineHeader
+                                      {...this.props}
+                                      oddEven={counter++}
+                                      onAddOne={this.onAdd}
+                                    />
+                                  )}
+                                  {this.state.donations &&
+                                    this.state.donations.length > 0 &&
+                                    this.state.donations.map(donation => {
+                                      return (
+                                        <InlineLine
+                                          {...this.props}
+                                          oddEven={counter++}
+                                          key={donation.id}
+                                          donation={donation}
+                                          paymentTypes={this.props.paymentType.items}
+                                          onGetOne={this.onModify}
+                                          onDelOne={this.onConfirm}
+                                        />
+                                      );
+                                    })}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
                     })
                   ) : (
-                    <InlineMore
-                      oddEven={counter++}
-                      label={intl.formatMessage({
-                        id: 'app.features.donation.list.displayFinished',
-                        defaultMessage: 'Display finished donation(s)',
-                      })}
-                      onClick={this.onMore}
-                    />
-                  ))}
-                {others && this.state.more && (
-                  <InlineCloseMore
-                    oddEven={counter++}
-                    label={intl.formatMessage({
-                      id: 'app.features.donation.list.hideFinished',
-                      defaultMessage: 'Hide finished donation(s)',
-                    })}
-                    onClick={this.onMore}
-                  />
-                )}
-                {!this.state.add && donations.length <= 0 && <InlineEmpty label="Aucun don" />}
-                <InlineAddOne
-                  oddEven={counter++}
-                  label={intl.formatMessage({
-                    id: 'app.features.donation.list.addDonation',
-                    defaultMessage: 'Add one donation',
-                  })}
-                  onClick={this.onAdd}
-                />
-                {this.state.donId > 0 && (
-                  <Modify
-                    donId={this.state.donId}
-                    mode={this.props.mode}
-                    parentId={this.props.id}
-                    onClose={this.onCloseForm}
-                  />
-                )}
-                {this.state.donId === 0 && (
-                  <Create
-                    donId={this.state.donId}
-                    mode={this.props.mode}
-                    parentId={this.props.id}
-                    onClose={this.onCloseForm}
-                  />
-                )}
-              </div>
-            </div>
+                    <InlineEmpty label="Aucun don" />
+                  )}
+                </div>
+              )}
+            </ScrollTo>
           )}
         </div>
+        {this.state.donId > 0 && (
+          <Modify
+            donId={this.state.donId}
+            mode={this.props.mode}
+            parentId={this.props.id}
+            onClose={this.onCloseForm}
+          />
+        )}
+        {this.state.donId === 0 && (
+          <Create
+            donId={this.state.donId}
+            mode={this.props.mode}
+            parentId={this.props.id}
+            onClose={this.onCloseForm}
+          />
+        )}
         {this.state.confirm > 0 && (
           <ResponsiveConfirm
             show={this.state.confirm}

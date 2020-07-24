@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 import * as actions from './redux/actions';
 import {
@@ -107,7 +107,7 @@ export class List extends Component {
     const { intl } = this.props;
     let items = [];
     if (this.props.session.items.FreeAsso_Session) {
-      items = buildModel(this.props.session.items, 'FreeAsso_Session');
+      items = normalizedObjectModeler(this.props.session.items, 'FreeAsso_Session');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);

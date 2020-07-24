@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Flag from 'react-world-flags';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { HoverObserver } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import * as actions from './redux/actions';
@@ -61,7 +61,7 @@ export class InlineNews extends Component {
     let news = [];
     let counter = 0;
     if (this.props.cause.news.FreeAsso_CauseMedia) {
-      news = buildModel(this.props.cause.news, 'FreeAsso_CauseMedia');
+      news = normalizedObjectModeler(this.props.cause.news, 'FreeAsso_CauseMedia');
     }
     return (
       <div>

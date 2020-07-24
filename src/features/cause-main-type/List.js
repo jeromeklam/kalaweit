@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 import {
   SimpleCancel as CancelPanelIcon,
@@ -134,7 +134,7 @@ export class List extends Component {
     const { intl } = this.props;
     let items = [];
     if (this.props.causeMainType.items.FreeAsso_CauseMainType) {
-      items = buildModel(this.props.causeMainType.items, 'FreeAsso_CauseMainType');
+      items = normalizedObjectModeler(this.props.causeMainType.items, 'FreeAsso_CauseMainType');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);

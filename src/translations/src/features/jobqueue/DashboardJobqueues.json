@@ -2,7 +2,7 @@
   {
     "id": "app.features.jobqueue.list.name",
     "defaultMessage": "Name",
-    "file": "src/features/jobqueue/DashboardJobqueues.js",
+    "file": "src\\features\\jobqueue\\DashboardJobqueues.js",
     "start": {
       "line": 32,
       "column": 14
@@ -15,7 +15,7 @@
   {
     "id": "app.features.jobqueue.list.status",
     "defaultMessage": "Status",
-    "file": "src/features/jobqueue/DashboardJobqueues.js",
+    "file": "src\\features\\jobqueue\\DashboardJobqueues.js",
     "start": {
       "line": 37,
       "column": 14
@@ -28,7 +28,7 @@
   {
     "id": "app.features.jobqueue.list.next",
     "defaultMessage": "Next",
-    "file": "src/features/jobqueue/DashboardJobqueues.js",
+    "file": "src\\features\\jobqueue\\DashboardJobqueues.js",
     "start": {
       "line": 42,
       "column": 14
@@ -41,7 +41,7 @@
   {
     "id": "app.features.jobqueue.list.empty",
     "defaultMessage": "No pending tasks",
-    "file": "src/features/jobqueue/DashboardJobqueues.js",
+    "file": "src\\features\\jobqueue\\DashboardJobqueues.js",
     "start": {
       "line": 92,
       "column": 18

@@ -1,4 +1,4 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 
 /**
@@ -10,7 +10,7 @@ import { buildModel } from 'freejsonapi';
  */
 export function sessionAsOptions(object) {
   let arr = [];
-  let items = buildModel(object, 'FreeAsso_Session');
+  let items = normalizedObjectModeler(object, 'FreeAsso_Session');
   items.forEach(item => {
     arr.push({ value: item.id, label: item.sess_name });
   });

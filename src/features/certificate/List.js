@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
   Filter as FilterIcon,
@@ -128,7 +128,7 @@ export class List extends Component {
     const { intl } = this.props;
     let items = false;
     if (this.props.certificate.items.FreeAsso_Certificate) {
-      items = buildModel(this.props.certificate.items, 'FreeAsso_Certificate');
+      items = normalizedObjectModeler(this.props.certificate.items, 'FreeAsso_Certificate');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);

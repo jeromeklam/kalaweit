@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { propagateModel } from '../../common';
 import {
@@ -174,7 +174,7 @@ export class List extends Component {
     const { intl } = this.props;
     let items = false;
     if (this.props.donation.items.FreeAsso_Donation) {
-      items = buildModel(this.props.donation.items, 'FreeAsso_Donation');
+      items = normalizedObjectModeler(this.props.donation.items, 'FreeAsso_Donation');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);

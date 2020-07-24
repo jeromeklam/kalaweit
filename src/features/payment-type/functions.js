@@ -1,11 +1,11 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 /**
  *
  */
 export function getPaymentTypeLabel (object, id) {
   let label = '';
-  let items = buildModel(object, 'FreeAsso_PaymentType');
+  let items = normalizedObjectModeler(object, 'FreeAsso_PaymentType');
   const found = items.find(elem => (elem.id === id));
   if (found) {
     label = found.ptyp_name;
@@ -22,7 +22,7 @@ export function getPaymentTypeLabel (object, id) {
  */
 export function paymentTypeAsOptions(object) {
   let arr = [];
-  let items = buildModel(object, 'FreeAsso_PaymentType');
+  let items = normalizedObjectModeler(object, 'FreeAsso_PaymentType');
   items.forEach(item => {
     arr.push({ value: item.id, label: item.ptyp_name });
   });

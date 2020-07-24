@@ -1,8 +1,8 @@
 import { Filter } from 'freeassofront';
-import { getEmptyJsonApi } from 'freejsonapi';
+import { getNewNormalizedObject } from 'freejsonapi';
 
 const initialState = {
-  items: getEmptyJsonApi('FreeAsso_ClientType'),
+  items: getNewNormalizedObject('FreeAsso_ClientType'),
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: new Filter(),

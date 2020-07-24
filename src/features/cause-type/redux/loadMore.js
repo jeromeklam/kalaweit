@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString, getEmptyJsonApi } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, getNewNormalizedObject } from 'freejsonapi';
 import {
   CAUSE_TYPE_LOAD_MORE_INIT,
   CAUSE_TYPE_LOAD_MORE_BEGIN,
@@ -85,7 +85,7 @@ export function reducer(state, action) {
         loadMorePending: true,
         loadMoreError: null,
         loadMoreFinish: false,
-        items: getEmptyJsonApi('FreeAsso_CauseType'),
+        items: getNewNormalizedObject('FreeAsso_CauseType'),
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
       };

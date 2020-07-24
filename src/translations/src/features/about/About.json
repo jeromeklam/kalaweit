@@ -2,7 +2,7 @@
   {
     "id": "app.features.about.about.application",
     "defaultMessage": "Kalaweit application",
-    "file": "src/features/about/About.js",
+    "file": "src\\features\\about\\About.js",
     "start": {
       "line": 16,
       "column": 14
@@ -15,7 +15,7 @@
   {
     "id": "app.features.about.about.explanation",
     "defaultMessage": "Only for Kalaweit",
-    "file": "src/features/about/About.js",
+    "file": "src\\features\\about\\About.js",
     "start": {
       "line": 22,
       "column": 14
@@ -28,7 +28,7 @@
   {
     "id": "app.contact.name",
     "defaultMessage": "KALAWEIT",
-    "file": "src/features/about/About.js",
+    "file": "src\\features\\about\\About.js",
     "start": {
       "line": 37,
       "column": 18
@@ -41,7 +41,7 @@
   {
     "id": "app.contact.contact",
     "defaultMessage": "Constance Cluset",
-    "file": "src/features/about/About.js",
+    "file": "src\\features\\about\\About.js",
     "start": {
       "line": 48,
       "column": 18
@@ -54,7 +54,7 @@
   {
     "id": "app.contact.address1",
     "defaultMessage": "69 rue Mouffetard",
-    "file": "src/features/about/About.js",
+    "file": "src\\features\\about\\About.js",
     "start": {
       "line": 54,
       "column": 18
@@ -67,7 +67,7 @@
   {
     "id": "app.contact.address2",
     "defaultMessage": "75005 Paris",
-    "file": "src/features/about/About.js",
+    "file": "src\\features\\about\\About.js",
     "start": {
       "line": 60,
       "column": 18
@@ -80,7 +80,7 @@
   {
     "id": "app.contact.tel",
     "defaultMessage": "(+33) 07 86 01 18 87",
-    "file": "src/features/about/About.js",
+    "file": "src\\features\\about\\About.js",
     "start": {
       "line": 66,
       "column": 18
@@ -93,7 +93,7 @@
   {
     "id": "app.contact.email",
     "defaultMessage": "kalaweit.france@yahoo.fr",
-    "file": "src/features/about/About.js",
+    "file": "src\\features\\about\\About.js",
     "start": {
       "line": 73,
       "column": 20
@@ -106,7 +106,7 @@
   {
     "id": "app.contact.site",
     "defaultMessage": "https://kalaweit.org",
-    "file": "src/features/about/About.js",
+    "file": "src\\features\\about\\About.js",
     "start": {
       "line": 80,
       "column": 18

@@ -6,7 +6,7 @@ import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { loadSponsorships } from '../sponsorship/redux/actions';
 import { loadDonations } from '../donation/redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
   Filter as FilterIcon,
@@ -164,7 +164,7 @@ export class List extends Component {
     // Les des items à afficher avec remplissage progressif
     let items = [];
     if (this.props.client.items.FreeAsso_Client) {
-      items = buildModel(this.props.client.items, 'FreeAsso_Client');
+      items = normalizedObjectModeler(this.props.client.items, 'FreeAsso_Client');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);

@@ -1,4 +1,4 @@
-import { getEmptyJsonApi } from 'freejsonapi';
+import { getNewNormalizedObject } from 'freejsonapi';
 
 const initialState = {
   sponsorships: [],
@@ -6,7 +6,7 @@ const initialState = {
   cli_id: null,
   cau_id: null,
   emptyItem: null,
-  items: getEmptyJsonApi('FreeAsso_Sponsorship'),
+  items: getNewNormalizedObject('FreeAsso_Sponsorship'),
   loadSponsorshipsPending: false,
   loadSponsorshipsError: null,
   loadOnePending: false,

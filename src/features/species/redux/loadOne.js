@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import {
   SPECIES_LOAD_ONE_BEGIN,
   SPECIES_LOAD_ONE_SUCCESS,
@@ -60,7 +60,7 @@ export function reducer(state, action) {
       // The request is success
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(object, 'FreeAsso_Species', action.id, { eager: true });
+      item = normalizedObjectModeler(object, 'FreeAsso_Species', action.id, { eager: true });
       return {
         ...state,
         loadOnePending: false,

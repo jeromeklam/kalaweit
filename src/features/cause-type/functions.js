@@ -1,4 +1,4 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 export const causeTypeMntType = [
   { value: 'ANNUAL', label: 'Annuelle glissante' },
@@ -19,7 +19,7 @@ export const causeTypeFamily = [
 export function getCausetype(objects, caut_id) {
   let causeType = null;
   if (objects) {
-    let items = buildModel(
+    let items = normalizedObjectModeler(
       objects,
       'FreeAsso_CauseType',
     );
@@ -43,7 +43,7 @@ export function getCausetype(objects, caut_id) {
 export function causeTypeAsOptions(object) {
   let arr = [];
   if (object) {
-    let items = buildModel(object, 'FreeAsso_CauseType');
+    let items = normalizedObjectModeler(object, 'FreeAsso_CauseType');
     if (items) {
       items.forEach(item => {
         arr.push({ value: item.id, label: item.caut_name });

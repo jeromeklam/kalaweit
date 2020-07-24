@@ -1,4 +1,4 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 export const causeMainTypeFamily = [
   { value: 'ANIMAL', label: 'Animal' },
@@ -13,7 +13,7 @@ export const causeMainTypeFamily = [
 export function getCauseMaintype(objects, camt_id) {
   let causeMainType = null;
   if (objects) {
-    let items = buildModel(
+    let items = normalizedObjectModeler(
       objects,
       'FreeAsso_CauseMainType',
     );
@@ -37,7 +37,7 @@ export function getCauseMaintype(objects, camt_id) {
 export function causeMainTypeAsOptions(objects) {
   let arr   = [];
   if (objects) {
-    let items = buildModel(
+    let items = normalizedObjectModeler(
       objects,
       'FreeAsso_CauseMainType',
     );

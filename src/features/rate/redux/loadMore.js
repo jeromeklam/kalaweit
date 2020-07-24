@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, getEmptyJsonApi } from 'freejsonapi';
+import { jsonApiNormalizer, getNewNormalizedObject } from 'freejsonapi';
 import {
   RATE_LOAD_MORE_BEGIN,
   RATE_LOAD_MORE_SUCCESS,

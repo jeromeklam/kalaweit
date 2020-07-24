@@ -1,4 +1,4 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 /**
  * Export all site types as an array of value=>label
@@ -9,7 +9,7 @@ import { buildModel } from 'freejsonapi';
  */
 export function configAsOptions(object) {
   let arr = [];
-  let items = buildModel(object, 'FreeAsso_Config');
+  let items = normalizedObjectModeler(object, 'FreeAsso_Config');
   console.log('configAsOptions', items);
   console.log('configAsOptions2', object);
   return arr;

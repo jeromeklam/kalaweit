@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import {
   CERTIFICATE_LOAD_ONE_BEGIN,
   CERTIFICATE_LOAD_ONE_SUCCESS,
@@ -57,7 +57,7 @@ export function reducer(state, action) {
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
       let emptyItem = state.emptyItem;
-      item = buildModel(object, 'FreeAsso_Certificate', action.id, { eager: true });
+      item = normalizedObjectModeler(object, 'FreeAsso_Certificate', action.id, { eager: true });
       if (action.id <= 0) {
         emptyItem = { ...item };
       }

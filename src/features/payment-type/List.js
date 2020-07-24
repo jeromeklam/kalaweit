@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import * as actions from './redux/actions';
@@ -107,7 +107,7 @@ export class List extends Component {
     const { intl } = this.props;
     let items = [];
     if (this.props.paymentType.items.FreeAsso_PaymentType) {
-      items = buildModel(this.props.paymentType.items, 'FreeAsso_PaymentType');
+      items = normalizedObjectModeler(this.props.paymentType.items, 'FreeAsso_PaymentType');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);

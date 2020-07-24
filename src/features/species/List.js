@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 import {
   SimpleCancel as CancelPanelIcon,
@@ -135,7 +135,7 @@ export class List extends Component {
     // Les des items à afficher avec remplissage progressif
     let items = [];
     if (this.props.species.items.FreeAsso_Species) {
-      items = buildModel(this.props.species.items, 'FreeAsso_Species');
+      items = normalizedObjectModeler(this.props.species.items, 'FreeAsso_Species');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);

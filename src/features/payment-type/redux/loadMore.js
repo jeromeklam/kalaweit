@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString, buildModel, getEmptyJsonApi} from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler, getNewNormalizedObject} from 'freejsonapi';
 import {
   PAYMENT_TYPE_LOAD_MORE_INIT,
   PAYMENT_TYPE_LOAD_MORE_BEGIN,
@@ -82,7 +82,7 @@ export function reducer(state, action) {
         loadMorePending: true,
         loadMoreError: null,
         loadMoreFinish: false,
-        items: getEmptyJsonApi('FreeAsso_PaymentType'),
+        items: getNewNormalizedObject('FreeAsso_PaymentType'),
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
       };
@@ -110,7 +110,7 @@ export function reducer(state, action) {
       if (nbre > 0) {
         if (state.items) {
           list = jsonApiNormalizer(result, state.items);
-          raw = buildModel(list, 'FreeAsso_PaymentType');
+          raw = normalizedObjectModeler(list, 'FreeAsso_PaymentType');
         } else {
           list = jsonApiNormalizer(result);
         }

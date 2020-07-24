@@ -1,8 +1,8 @@
 import { Filter } from 'freeassofront';
-import { getEmptyJsonApi } from 'freejsonapi';
+import { getNewNormalizedObject } from 'freejsonapi';
 
 const initialState = {
-  items: getEmptyJsonApi('FreeFW_Country'),
+  items: getNewNormalizedObject('FreeFW_Country'),
   page_number: 1,
   page_size: 0,
   filters: new Filter(),

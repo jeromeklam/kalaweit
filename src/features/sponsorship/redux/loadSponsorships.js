@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
 import {
   SPONSORSHIP_LOAD_SPONSORSHIPS_INIT,
   SPONSORSHIP_LOAD_SPONSORSHIPS_BEGIN,
@@ -97,7 +97,7 @@ export function reducer(state, action) {
       } else {
         list = [];
       }
-      const models = buildModel(list, 'FreeAsso_Sponsorship', null, {
+      const models = normalizedObjectModeler(list, 'FreeAsso_Sponsorship', null, {
         eager: true,
       }) || [];
       let cli_id = action.cli_id || null;

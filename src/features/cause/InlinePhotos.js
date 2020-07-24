@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
-import { buildModel, getJsonApi } from 'freejsonapi';
+import { normalizedObjectModeler, getJsonApi } from 'freejsonapi';
 import { ResponsiveConfirm } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import * as actions from './redux/actions';
@@ -127,7 +127,7 @@ export class InlinePhotos extends Component {
   render() {
     let photos = [];
     if (this.props.cause.photos.FreeAsso_CauseMedia) {
-      photos = buildModel(this.props.cause.photos, 'FreeAsso_CauseMedia', null, {eager: true});
+      photos = normalizedObjectModeler(this.props.cause.photos, 'FreeAsso_CauseMedia', null, {eager: true});
     }
     return (
       <div>

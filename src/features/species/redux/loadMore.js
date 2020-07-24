@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString, getEmptyJsonApi } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, getNewNormalizedObject } from 'freejsonapi';
 import {
   SPECIES_LOAD_MORE_INIT,
   SPECIES_LOAD_MORE_BEGIN,
@@ -83,7 +83,7 @@ export function reducer(state, action) {
         loadMorePending: true,
         loadMoreError: null,
         loadMoreFinish: false,
-        items: getEmptyJsonApi('FreeAsso_Species'),
+        items: getNewNormalizedObject('FreeAsso_Species'),
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
       };

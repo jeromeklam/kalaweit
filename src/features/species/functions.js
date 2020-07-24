@@ -1,4 +1,4 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 /**
  * Export all species as an array of value=>label
@@ -10,7 +10,7 @@ import { buildModel } from 'freejsonapi';
 export function speciesAsOptions(object) {
   let arr   = [];
   if (object) {
-    let items = buildModel(
+    let items = normalizedObjectModeler(
       object,
       'FreeAsso_Species',
     );

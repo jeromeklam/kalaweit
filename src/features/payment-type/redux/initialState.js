@@ -1,8 +1,8 @@
 import { Filter } from 'freeassofront';
-import { getEmptyJsonApi } from 'freejsonapi';
+import { getNewNormalizedObject } from 'freejsonapi';
 
 const initialState = {
-  items: getEmptyJsonApi('FreeAsso_PaymentType'),
+  items: getNewNormalizedObject('FreeAsso_PaymentType'),
   page_number: 1,
   page_size: 999999,
   filters: new Filter(),

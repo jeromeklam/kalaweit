@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import {
   PAYMENT_TYPE_LOAD_ONE_BEGIN,
   PAYMENT_TYPE_LOAD_ONE_SUCCESS,
@@ -56,7 +56,7 @@ export function reducer(state, action) {
       // The request is success
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(object, 'FreeAsso_PaymentType', action.id, { eager: true });
+      item = normalizedObjectModeler(object, 'FreeAsso_PaymentType', action.id, { eager: true });
       return {
         ...state,
         loadOnePending: false,

@@ -78,7 +78,7 @@ function Form(props) {
       onClose={props.onClose}
       modal={true}
     >
-      <div className="card-body">
+      <div>
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
           <div className="col-sm-9">

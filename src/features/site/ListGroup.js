@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { HoverObserver } from 'freeassofront';
 import { isInViewPort } from '../../common';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { InlineList as InlineListCause } from '../cause';
 import {
   MapCenter as MapCenterIcon,
@@ -94,7 +94,7 @@ export class ListGroup extends Component {
   render() {
     let items = false;
     if (this.props.site.items.FreeAsso_Site) {
-      items = buildModel(this.props.site.items, 'FreeAsso_Site');
+      items = normalizedObjectModeler(this.props.site.items, 'FreeAsso_Site');
     }
     return (
       <div className="site-list-group">

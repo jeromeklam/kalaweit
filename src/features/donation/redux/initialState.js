@@ -1,8 +1,8 @@
 import { Filter } from 'freeassofront';
-import { getEmptyJsonApi } from 'freejsonapi';
+import { getNewNormalizedObject } from 'freejsonapi';
 
 const initialState = {
-  items: getEmptyJsonApi('FreeAsso_Donation'),
+  items: getNewNormalizedObject('FreeAsso_Donation'),
   models: [],
   donations: [],
   donationsModels: [],

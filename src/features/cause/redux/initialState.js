@@ -1,5 +1,5 @@
 import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL, FILTER_OPER_EQUAL } from 'freeassofront';
-import { getEmptyJsonApi } from 'freejsonapi';
+import { getNewNormalizedObject } from 'freejsonapi';
 
 let initialFilters = new Filter();
 const now = new Date().toISOString();
@@ -8,7 +8,7 @@ initialFilters.addFilter('caut_id', 355, FILTER_OPER_EQUAL, true);
 initialFilters.setMode(FILTER_MODE_AND);
 
 const initialState = {
-  items: getEmptyJsonApi('FreeAsso_Cause'),
+  items: getNewNormalizedObject('FreeAsso_Cause'),
   news: [],
   photos: [],
   photosItem: null,

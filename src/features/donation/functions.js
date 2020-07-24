@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../common';
-import { jsonApiNormalizer, buildModel, getJsonApi } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler, getJsonApi } from 'freejsonapi';
 
 export const calculateDonationEndTs = item => {
   let endTs = item.don_end_ts;
@@ -38,7 +38,7 @@ export const updateDonStatus = (donId, newStatus) => {
     doRequestGet.then(
       res => {
         let object = jsonApiNormalizer(res.data);
-        let item = buildModel(object, 'FreeAsso_Donation', donId);
+        let item = normalizedObjectModeler(object, 'FreeAsso_Donation', donId);
         item.don_status = newStatus;
         object = getJsonApi(item, 'FreeAsso_Donation', donId);
         const doRequestPut = freeAssoApi.put('/v1/asso/donation/' + donId, object);

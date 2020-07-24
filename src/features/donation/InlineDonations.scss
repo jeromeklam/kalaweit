@@ -1,1 +1,16 @@
 @import '../../styles/mixins';
+
+.donation-inline-donations {
+  .card {
+    border: 0;
+  }
+  .card-header {
+    border-radius: 0px;
+  }
+  .card-link {
+    border: 0px;
+  }
+  .card-body {
+    padding: 0px;
+  }
+}

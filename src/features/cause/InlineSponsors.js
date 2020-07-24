@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import * as actions from './redux/actions';
 import classnames from 'classnames';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { displayBool } from 'freeassofront';
 import { ColCheck as ColCheckIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
@@ -31,7 +31,7 @@ export class InlineSponsors extends Component {
     let sponsors = [];
     let counter = 0;
     if (this.props.cause.sponsors.FreeAsso_Sponsor) {
-      sponsors = buildModel(this.props.cause.sponsors, 'FreeAsso_Sponsor');
+      sponsors = normalizedObjectModeler(this.props.cause.sponsors, 'FreeAsso_Sponsor');
     }
     return (
       <div>
