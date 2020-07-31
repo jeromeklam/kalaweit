@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
 import {
   CLIENT_CATEGORY_UPDATE_ONE_BEGIN,
   CLIENT_CATEGORY_UPDATE_ONE_SUCCESS,
@@ -82,7 +82,7 @@ export function reducer(state, action) {
     case CLIENT_CATEGORY_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeAsso_ClientCategory', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_ClientCategory', object);
       return {
         ...state,
         updateOneError: null,

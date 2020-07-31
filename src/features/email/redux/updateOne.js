@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
 import {
   EMAIL_UPDATE_ONE_BEGIN,
   EMAIL_UPDATE_ONE_SUCCESS,
@@ -83,7 +83,7 @@ export function reducer(state, action) {
     case EMAIL_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeFW_Email', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeFW_Email', object);
       return {
         ...state,
         updateOneError: null,

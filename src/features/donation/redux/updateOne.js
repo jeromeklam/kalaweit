@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
 import {
   DONATION_UPDATE_ONE_BEGIN,
   DONATION_UPDATE_ONE_SUCCESS,
@@ -83,7 +83,7 @@ export function reducer(state, action) {
     case DONATION_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeAsso_Donation', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_Donation', object);
       console.log(object);
       return {
         ...state,

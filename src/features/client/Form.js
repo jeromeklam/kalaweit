@@ -12,11 +12,20 @@ import { InlineSponsorships } from '../sponsorship';
 import { InlineDonations } from '../donation';
 
 function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel, handleNavTab } = useForm(
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    handleCancel,
+    handleNavTab,
+    getErrorMessage,
+  } = useForm(
     props.item,
     props.tab || '1',
     props.onSubmit,
     props.onCancel,
+    props.onNavTab,
+    props.errors,
   );
   const tabs = [
     {
@@ -62,12 +71,10 @@ function Form(props) {
       icon: 'misc',
     },
   ];
+  const title = `${values.cli_firstname} ${values.cli_lastname}`; 
   return (
     <ResponsiveModalOrForm
-      title={props.intl.formatMessage({
-        id: 'app.features.client.form.title',
-        defaultMessage: 'Member',
-      })}
+      title={title}
       className="m-5"
       tab={values._currentTab}
       tabs={!props.modify ? tabs : tabs.concat(modifTabs)}
@@ -80,76 +87,78 @@ function Form(props) {
     >
       <div>
         <InputHidden name="id" id="id" value={values.id} />
-        <div className="row">
-          <div className="col-sm-9">
-            <InputText
-              label={props.intl.formatMessage({
-                id: 'app.features.client.form.lastname',
-                defaultMessage: 'Lastname',
-              })}
-              name="cli_lastname"
-              id="cli_lastname"
-              required={true}
-              labelTop={true}
-              value={values.cli_lastname}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="col-sm-9">
-            <InputText
-              label={props.intl.formatMessage({
-                id: 'app.features.client.form.firstname',
-                defaultMessage: 'Firstname',
-              })}
-              name="cli_firstname"
-              id="cli_firstname"
-              labelTop={true}
-              value={values.cli_firstname}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="col-sm-7">
-            <InputSelect
-              label={props.intl.formatMessage({
-                id: 'app.features.client.form.category',
-                defaultMessage: 'Category',
-              })}
-              name="client_category.id"
-              labelTop={true}
-              value={values.client_category ? values.client_category.id : null}
-              onChange={handleChange}
-              options={clientCategoryAsOptions(props.client_categories)}
-            />
-          </div>
-          <div className="col-sm-7">
-            <InputSelect
-              label={props.intl.formatMessage({
-                id: 'app.features.client.form.type',
-                defaultMessage: 'Type',
-              })}
-              name="client_type.id"
-              labelTop={true}
-              value={values.client_type ? values.client_type.id : null}
-              onChange={handleChange}
-              options={clientTypeAsOptions(props.client_types)}
-            />
-          </div>
-          <div className="col-sm-4">
-            <InputCheckbox
-              label={props.intl.formatMessage({
-                id: 'app.features.client.form.active',
-                defaultMessage: 'Active',
-              })}
-              name="cli_active"
-              labelTop={true}
-              checked={values.cli_active === true}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <hr />
         {values._currentTab === '1' && (
           <div>
+            <div className="row">
+              <div className="col-sm-9">
+                <InputText
+                  label={props.intl.formatMessage({
+                    id: 'app.features.client.form.lastname',
+                    defaultMessage: 'Lastname',
+                  })}
+                  name="cli_lastname"
+                  id="cli_lastname"
+                  required={true}
+                  labelTop={true}
+                  value={values.cli_lastname}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_lastname')}
+                />
+              </div>
+              <div className="col-sm-9">
+                <InputText
+                  label={props.intl.formatMessage({
+                    id: 'app.features.client.form.firstname',
+                    defaultMessage: 'Firstname',
+                  })}
+                  name="cli_firstname"
+                  id="cli_firstname"
+                  labelTop={true}
+                  value={values.cli_firstname}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_firstname')}
+                />
+              </div>
+              <div className="col-sm-7">
+                <InputSelect
+                  label={props.intl.formatMessage({
+                    id: 'app.features.client.form.category',
+                    defaultMessage: 'Category',
+                  })}
+                  name="client_category.id"
+                  labelTop={true}
+                  value={values.client_category ? values.client_category.id : null}
+                  onChange={handleChange}
+                  options={clientCategoryAsOptions(props.client_categories)}
+                />
+              </div>
+              <div className="col-sm-7">
+                <InputSelect
+                  label={props.intl.formatMessage({
+                    id: 'app.features.client.form.type',
+                    defaultMessage: 'Type',
+                  })}
+                  name="client_type.id"
+                  labelTop={true}
+                  value={values.client_type ? values.client_type.id : null}
+                  onChange={handleChange}
+                  options={clientTypeAsOptions(props.client_types)}
+                />
+              </div>
+              <div className="col-sm-4">
+                <InputCheckbox
+                  label={props.intl.formatMessage({
+                    id: 'app.features.client.form.active',
+                    defaultMessage: 'Active',
+                  })}
+                  name="cli_active"
+                  labelTop={true}
+                  checked={values.cli_active === true}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_active')}
+                />
+              </div>
+            </div>
             <div className="row">
               <div className="col-sm-24">
                 <InputText
@@ -158,6 +167,7 @@ function Form(props) {
                   labelTop={true}
                   value={values.cli_address1}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_address1')}
                 />
               </div>
               <div className="col-sm-6">
@@ -172,6 +182,7 @@ function Form(props) {
                   inputSize={16}
                   checked={values.cli_certificat === true}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_certificat')}
                 />
               </div>
               <div className="col-sm-6">
@@ -186,6 +197,7 @@ function Form(props) {
                   labelTop={false}
                   checked={values.cli_receipt === true}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_receipt')}
                 />
               </div>
             </div>
@@ -197,6 +209,7 @@ function Form(props) {
                   labelTop={true}
                   value={values.cli_address2}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_address2')}
                 />
               </div>
               <div className="col-sm-11">
@@ -211,6 +224,7 @@ function Form(props) {
                   inputSize={14}
                   checked={values.cli_display_site === true}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_display_site')}
                 />
               </div>
             </div>
@@ -222,6 +236,7 @@ function Form(props) {
                   labelTop={true}
                   value={values.cli_address3}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_address3')}
                 />
               </div>
               <div className="col-sm-11">
@@ -236,6 +251,7 @@ function Form(props) {
                   inputSize={14}
                   checked={values.cli_send_news === true}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_send_news')}
                 />
               </div>
             </div>
@@ -250,6 +266,7 @@ function Form(props) {
                   labelTop={true}
                   value={values.cli_cp}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_cp')}
                 />
               </div>
               <div className="col-sm-17">
@@ -262,6 +279,7 @@ function Form(props) {
                   labelTop={true}
                   value={values.cli_town}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_town')}
                 />
               </div>
               <div className="col-sm-11">
@@ -290,6 +308,7 @@ function Form(props) {
                   value={values.cli_email}
                   className={values.cli_email === values.cli_email_refused ? 'text-warning' : ''}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_email')}
                 />
               </div>
               <div className="col-sm-8">
@@ -302,6 +321,7 @@ function Form(props) {
                   labelTop={true}
                   value={values.cli_phone_home}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_phone_home')}
                 />
               </div>
               <div className="col-sm-6">
@@ -318,10 +338,6 @@ function Form(props) {
                 />
               </div>
             </div>
-          </div>
-        )}
-        {values._currentTab === '2' && (
-          <div>
             <div className="row">
               <div className="col-sm-16">
                 <InputText
@@ -334,6 +350,7 @@ function Form(props) {
                   value={values.cli_email2}
                   className={values.cli_email2 === values.cli_email_refused ? 'text-warning' : ''}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_email2')}
                 />
               </div>
               <div className="col-sm-8">
@@ -346,9 +363,14 @@ function Form(props) {
                   labelTop={true}
                   value={values.cli_phone_gsm}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_phone_gsm')}
                 />
               </div>
             </div>
+          </div>
+        )}
+        {values._currentTab === '2' && (
+          <div>
             <div className="row">
               <div className="col-sm-16">
                 <InputText
@@ -361,6 +383,7 @@ function Form(props) {
                   className="text-warning"
                   value={values.cli_email_refused}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_email_refused')}
                 />
               </div>
             </div>
@@ -376,6 +399,7 @@ function Form(props) {
                   id="cli_desc"
                   value={values.cli_desc}
                   onChange={handleChange}
+                  error={getErrorMessage('cli_desc')}
                 />
               </div>
             </div>

@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
 import {
   PAYMENT_TYPE_UPDATE_ONE_UPDATE,
   PAYMENT_TYPE_UPDATE_ONE_BEGIN,
@@ -84,7 +84,7 @@ export function reducer(state, action) {
     case PAYMENT_TYPE_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeAsso_PaymentType', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_PaymentType', object);
       return {
         ...state,
         updateOneError: null,

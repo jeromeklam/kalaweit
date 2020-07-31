@@ -255,9 +255,12 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
     let message = false;
     if (errors && errors.errors) {
       errors.errors.forEach(error => {
+        console.log("FK param error :: ",error);
         if (error.source && error.source.parameter === field) {
-          message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
-          return true;
+          if (error.source && error.source.parameter === field) {
+            message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
+            return true;
+          }
         }
       })
     }

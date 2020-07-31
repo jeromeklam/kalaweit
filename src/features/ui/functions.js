@@ -24,25 +24,49 @@ export function saveToLS(key, value, item = 'rgl-8') {
   }
 }
 
-export function showErrors(intl, error) {
+export const showErrors = (intl, error, defCode = "") => {  
   if (error) {
-    console.log(error);
+    
     if (!error.errors) {
       if (error.response) {
         error = jsonApiNormalizer(error.response);
       }
     }
     if (error.errors) {
+      let nbErrorField = 0;
+      let displayDefaultError = true;      
       error.errors.forEach(oneError => {
-        if (oneError.code) {
-          const code = `app.errors.code.${oneError.code}`;
-          const message = intl.formatMessage({
-            id: code,
-            defaultMessage: oneError.title,
-          });
-          cogoToast.error(message);
-        }
+        //source: {pointer: "/data/attributes/fct_code", parameter: "fct_code"}
+        if (oneError.source && oneError.source.parameter && oneError.source.parameter !== "") {
+          nbErrorField += 1;
+        } else {
+          displayDefaultError = false;
+          if (oneError.code) {            
+            const code = `app.errors.code.${oneError.code}`;
+            const message = intl.formatMessage({
+              id: code,
+              defaultMessage: oneError.title,
+            });
+            cogoToast.error(message);
+          } else {
+            if (oneError.status) {
+              const code = `app.errors.code.${oneError.status}`;
+              const message = intl.formatMessage({
+                id: code,
+                defaultMessage: oneError.title,
+              });
+              cogoToast.error(message);
+            }
+          }
+        }          
       });
+      if (displayDefaultError) {
+        const message = intl.formatMessage({
+          id: `app.errors.default.${defCode}`,
+          defaultMessage: 'Unknown error !',
+        });
+        cogoToast.error(message);
+      } 
     } else {
       const message = intl.formatMessage({
         id: 'app.errors.default',
@@ -57,7 +81,7 @@ export function showErrors(intl, error) {
     });
     cogoToast.error(message);
   }
-}
+};
 
 export const messageError = (message = 'Unknown error') => {
   cogoToast.error(message);

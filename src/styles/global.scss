@@ -18,6 +18,12 @@ body {
   @include scrollbars(10px, theme-color('primary'), theme-color('paimary-light'));
 }
 
+.modal-body {
+  font-size: 0.9rem;
+}
+.input-group {
+  font-size: 0.9rem;
+}
 .form-group {
   margin-bottom: 0.5rem;
   label {
@@ -100,6 +106,19 @@ svg.text-warning.inline-action:hover {
   fill: theme-color('warning-dark');
   path {
     fill: theme-color('warning-dark') !important;
+  }
+}
+
+.btn-input {
+  &.btn {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  svg {
+    height: 1.1rem !important;
+    width: 1.1rem !important;
   }
 }
 
@@ -362,4 +381,23 @@ svg.text-warning.inline-action:hover {
 }
 .input-picker-right {
   float: right;
+}
+.modal-shadow {
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+}
+.btn-secondary {
+  color: white;
+  background-color: theme-color('secondary');
+  border-color: theme-color('secondary-light');
+}
+.btn-primary {
+  color: white;
+  background-color: theme-color('primary');
+  border-color: theme-color('primary-light');
+}
+.btn-warning {
+  color: white;
+  background-color: theme-color('warning');
+  border-color: theme-color('warning-light');
 }

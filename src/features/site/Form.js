@@ -34,7 +34,7 @@ function Form(props) {
   return (
     <ResponsiveModalOrForm
       className="m-5"
-      title={intl.formatMessage({ id: 'app.features.site.form.title', defaultMessage: 'Site' })}
+      title={values.site_name}
       size="lg"
       modal
       tab={values._currentTab}
@@ -45,50 +45,49 @@ function Form(props) {
       onClose={props.onClose}
     >
       <InputHidden name="id" id="id" value={values.id} />
-      <div className="row">
-        <div className="col-sm-12">
-          <InputText
-            label={intl.formatMessage({
-              id: 'app.features.site.form.name',
-              defaultMessage: 'Name',
-            })}
-            required={true}
-            name="site_name"
-            value={values.site_name}
-            onChange={handleChange}
-            error={getErrorMessage('site_name')}
-          />
-        </div>
-        <div className="col-sm-12">
-          <InputSelect
-            label={intl.formatMessage({
-              id: 'app.features.site.form.type',
-              defaultMessage: 'Type',
-            })}
-            name="site_type.id"
-            required={true}
-            value={values.site_type ? values.site_type.id : null}
-            onChange={handleChange}
-            options={siteTypeAsOptions(props.site_types)}
-            addempty={true}
-          />
-        </div>
-        <div className="col-sm-12">
-          <InputText
-            label={intl.formatMessage({
-              id: 'app.features.site.form.code',
-              defaultMessage: 'Code',
-            })}
-            name="site_code"
-            value={values.site_code}
-            onChange={handleChange}
-            error={getErrorMessage('site_code')}
-          />
-        </div>
-      </div>
-      <hr />
       {values._currentTab === '1' && (
         <div>
+          <div className="row">
+            <div className="col-sm-12">
+              <InputText
+                label={intl.formatMessage({
+                  id: 'app.features.site.form.name',
+                  defaultMessage: 'Name',
+                })}
+                required={true}
+                name="site_name"
+                value={values.site_name}
+                onChange={handleChange}
+                error={getErrorMessage('site_name')}
+              />
+            </div>
+            <div className="col-sm-12">
+              <InputSelect
+                label={intl.formatMessage({
+                  id: 'app.features.site.form.type',
+                  defaultMessage: 'Type',
+                })}
+                name="site_type.id"
+                required={true}
+                value={values.site_type ? values.site_type.id : null}
+                onChange={handleChange}
+                options={siteTypeAsOptions(props.site_types)}
+                addempty={true}
+              />
+            </div>
+            <div className="col-sm-12">
+              <InputText
+                label={intl.formatMessage({
+                  id: 'app.features.site.form.code',
+                  defaultMessage: 'Code',
+                })}
+                name="site_code"
+                value={values.site_code}
+                onChange={handleChange}
+                error={getErrorMessage('site_code')}
+              />
+            </div>
+          </div>
           <div className="row">
             <div className="col-sm-36">
               <InputText

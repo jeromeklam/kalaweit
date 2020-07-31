@@ -88,10 +88,7 @@ function Form(props) {
   ];
   return (
     <ResponsiveModalOrForm
-      title={props.intl.formatMessage({
-        id: 'app.features.cause.form.title',
-        defaultMessage: 'Mission',
-      })}
+      title={values.cau_name}
       className="m-5"
       tab={values._currentTab}
       tabs={!props.modify ? tabs : tabs.concat(modifTabs)}
@@ -103,203 +100,205 @@ function Form(props) {
       modal={true}
     >
       <InputHidden name="id" id="id" value={values.id} />
-      <div className="row">
-        <div className="col-md-7">
-          <InputSelect
-            label={props.intl.formatMessage({
-              id: 'app.features.cause.form.causeType',
-              defaultMessage: 'Mission',
-            })}
-            name="cause_type.id"
-            labelTop={true}
-            value={values.cause_type ? values.cause_type.id : null}
-            addempty={true}
-            onChange={handleChange}
-            options={causeTypeAsOptions(props.cause_types)}
-          />
-        </div>
-        <div className="col-md-7">
-          <InputText
-            label={props.intl.formatMessage({
-              id: 'app.features.cause.form.name',
-              defaultMessage: 'Name',
-            })}
-            name="cau_name"
-            id="cau_name"
-            labelTop={true}
-            required={true}
-            value={values.cau_name}
-            onChange={handleChange}
-            error={getErrorMessage('cau_name')}
-          />
-        </div>
-        {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
-          <div className="col-md-10">
-            <InputSelect
-              label={props.intl.formatMessage({
-                id: 'app.features.cause.form.subspecies',
-                defaultMessage: 'Subspecies',
-              })}
-              name="subspecies.id"
-              labelTop={true}
-              value={values.subspecies ? values.subspecies.id : null}
-              addempty={true}
-              onChange={handleChange}
-              options={subspeciesAsOptions(props.subspecies)}
-            />
-          </div>
-        )}
-        <div className="col-md-12">
-          <SiteInputPicker
-            label={props.intl.formatMessage({
-              id: 'app.features.cause.form.site',
-              defaultMessage: 'Location',
-            })}
-            labelTop={true}
-            key="site"
-            name="site"
-            item={values.site || null}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
-      <hr />
       {values._currentTab === '1' && (
         <div>
           <div className="row">
-            <div className="col-6">
-              {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
+            <div className="col-md-7">
+              <InputSelect
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.causeType',
+                  defaultMessage: 'Mission',
+                })}
+                name="cause_type.id"
+                labelTop={true}
+                value={values.cause_type ? values.cause_type.id : null}
+                addempty={true}
+                onChange={handleChange}
+                options={causeTypeAsOptions(props.cause_types)}
+              />
+            </div>
+            <div className="col-md-7">
+              <InputText
+                label={props.intl.formatMessage({
+                  id: 'app.features.cause.form.name',
+                  defaultMessage: 'Name',
+                })}
+                name="cau_name"
+                id="cau_name"
+                labelTop={true}
+                required={true}
+                value={values.cau_name}
+                onChange={handleChange}
+                error={getErrorMessage('cau_name')}
+              />
+            </div>
+            {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
+              <div className="col-md-10">
                 <InputSelect
                   label={props.intl.formatMessage({
-                    id: 'app.features.cause.form.sex',
-                    defaultMessage: 'Sex',
+                    id: 'app.features.cause.form.subspecies',
+                    defaultMessage: 'Subspecies',
                   })}
+                  name="subspecies.id"
                   labelTop={true}
-                  name="cau_sex"
-                  id="cau_sex"
-                  value={values.cau_sex}
+                  value={values.subspecies ? values.subspecies.id : null}
+                  addempty={true}
                   onChange={handleChange}
-                  options={[
-                    { label: 'Male', value: 'M' },
-                    { label: 'Femelle', value: 'F' },
-                  ]}
+                  options={subspeciesAsOptions(props.subspecies)}
                 />
-              )}
-            </div>
-            <div className="col-md-6">
-              {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
-                <InputSpin
-                  label={props.intl.formatMessage({
-                    id: 'app.features.cause.form.cauYear',
-                    defaultMessage: 'Born in',
-                  })}
-                  name="cau_year"
-                  id="cau_year"
-                  maxValue={nYear}
-                  minValue={1990}
-                  labelTop={true}
-                  value={values.cau_year}
-                  onChange={handleChange}
-                />
-              )}
-            </div>
-            <div className="col-md-2"></div>
-            <div className="col-7">
-              <InputCheckbox
+              </div>
+            )}
+            <div className="col-md-12">
+              <SiteInputPicker
                 label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.public',
-                  defaultMessage: 'Show on site',
+                  id: 'app.features.cause.form.site',
+                  defaultMessage: 'Location',
                 })}
-                name="cau_public"
                 labelTop={true}
-                checked={values.cau_public === true}
+                key="site"
+                name="site"
+                item={values.site || null}
                 onChange={handleChange}
-              />
-            </div>
-            <div className="col-7">
-              <InputCheckbox
-                label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.available',
-                  defaultMessage: 'Sponsorship',
-                })}
-                name="cau_available"
-                labelTop={true}
-                checked={values.cau_available === true}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-1"></div>
-            <div className="col-md-7">
-              <InputMonetary
-                label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.mnt',
-                  defaultMessage: 'Raised',
-                })}
-                labelTop={true}
-                name="cau_mnt"
-                id="cau_mnt"
-                inputMoney="EUR"
-                dbMoney="EUR"
-                value={values.cau_mnt}
-                disabled={true}
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-9">
-              <InputDate
-                label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.from',
-                  defaultMessage: 'From',
-                })}
-                labelTop={true}
-                name="cau_from"
-                id="cau_from"
-                value={values.cau_from}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-9">
-              <InputDate
-                label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.to',
-                  defaultMessage: 'End',
-                })}
-                labelTop={true}
-                name="cau_to"
-                id="cau_to"
-                value={values.cau_to}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-6">
-              {values.cau_end && (
-                <InputData
-                  key="cau_string_3"
-                  name="cau_string_3"
+
+          <div>
+            <div className="row">
+              <div className="col-6">
+                {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
+                  <InputSelect
+                    label={props.intl.formatMessage({
+                      id: 'app.features.cause.form.sex',
+                      defaultMessage: 'Sex',
+                    })}
+                    labelTop={true}
+                    name="cau_sex"
+                    id="cau_sex"
+                    value={values.cau_sex}
+                    onChange={handleChange}
+                    options={[
+                      { label: 'Male', value: 'M' },
+                      { label: 'Femelle', value: 'F' },
+                    ]}
+                  />
+                )}
+              </div>
+              <div className="col-md-6">
+                {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
+                  <InputSpin
+                    label={props.intl.formatMessage({
+                      id: 'app.features.cause.form.cauYear',
+                      defaultMessage: 'Born in',
+                    })}
+                    name="cau_year"
+                    id="cau_year"
+                    maxValue={nYear}
+                    minValue={1990}
+                    labelTop={true}
+                    value={values.cau_year}
+                    onChange={handleChange}
+                  />
+                )}
+              </div>
+              <div className="col-md-2"></div>
+              <div className="col-7">
+                <InputCheckbox
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.public',
+                    defaultMessage: 'Show on site',
+                  })}
+                  name="cau_public"
                   labelTop={true}
-                  value={values.cau_string_3}
-                  datas={props.tab_datas}
-                  config={props.tab_configs}
+                  checked={values.cau_public === true}
                   onChange={handleChange}
                 />
-              )}
+              </div>
+              <div className="col-7">
+                <InputCheckbox
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.available',
+                    defaultMessage: 'Sponsorship',
+                  })}
+                  name="cau_available"
+                  labelTop={true}
+                  checked={values.cau_available === true}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-md-1"></div>
+              <div className="col-md-7">
+                <InputMonetary
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.mnt',
+                    defaultMessage: 'Raised',
+                  })}
+                  labelTop={true}
+                  name="cau_mnt"
+                  id="cau_mnt"
+                  inputMoney="EUR"
+                  dbMoney="EUR"
+                  value={values.cau_mnt}
+                  disabled={true}
+                />
+              </div>
             </div>
-            <div className="col-md-5"></div>
-            <div className="col-md-7">
-              <InputMonetary
-                label={props.intl.formatMessage({
-                  id: 'app.features.cause.form.left',
-                  defaultMessage: 'Left',
-                })}
-                labelTop={true}
-                name="cau_mnt_left"
-                id="cau_mnt_left"
-                inputMoney="EUR"
-                dbMoney="EUR"
-                value={values.cau_mnt_left}
-                disabled={true}
-              />
+            <div className="row">
+              <div className="col-md-9">
+                <InputDate
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.from',
+                    defaultMessage: 'From',
+                  })}
+                  labelTop={true}
+                  name="cau_from"
+                  id="cau_from"
+                  value={values.cau_from}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-md-9">
+                <InputDate
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.to',
+                    defaultMessage: 'End',
+                  })}
+                  labelTop={true}
+                  name="cau_to"
+                  id="cau_to"
+                  value={values.cau_to}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-md-6">
+                {values.cau_end && (
+                  <InputData
+                    key="cau_string_3"
+                    name="cau_string_3"
+                    labelTop={true}
+                    value={values.cau_string_3}
+                    datas={props.tab_datas}
+                    config={props.tab_configs}
+                    onChange={handleChange}
+                  />
+                )}
+              </div>
+              <div className="col-md-5"></div>
+              <div className="col-md-7">
+                <InputMonetary
+                  label={props.intl.formatMessage({
+                    id: 'app.features.cause.form.left',
+                    defaultMessage: 'Left',
+                  })}
+                  labelTop={true}
+                  name="cau_mnt_left"
+                  id="cau_mnt_left"
+                  inputMoney="EUR"
+                  dbMoney="EUR"
+                  value={values.cau_mnt_left}
+                  disabled={true}
+                />
+              </div>
             </div>
           </div>
           {values.cause_type && values.cause_type.caut_family === 'ANIMAL' && (
