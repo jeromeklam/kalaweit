@@ -9,6 +9,7 @@ import {
   FilterClear as FilterClearIcon,
   Note as NoteIcon,
   Sponsorship as SponsorshipIcon,
+  View as ViewOneIcon,
 } from '../icons';
 
 export const statusValues = [
@@ -97,6 +98,7 @@ export const getInlineActions = ({ props, onGetOne, onDelOne, onPayOn, onPayOff 
       theme: 'warning',
       icon: <DelOneIcon color="white" />,
       role: 'DELETE',
+      fDisplay: (item) => {return (item && item.session && item.session.sess_status !== 'CLOSED');}
     },
   ];
 };

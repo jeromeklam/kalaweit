@@ -184,7 +184,7 @@ export class InlineDonations extends Component {
                             class={classnames(
                               'card-header',
                               year.don_real_ts_year === this.state.currentYear
-                                ? 'bg-secondary text-light'
+                                ? 'bg-primary-light text-secondary'
                                 : 'bg-secondary-light',
                             )}
                           >
@@ -193,7 +193,7 @@ export class InlineDonations extends Component {
                               class={classnames(
                                 'collapsed card-link',
                                 year.don_real_ts_year === this.state.currentYear
-                                  ? 'bg-secondary text-light'
+                                  ? 'bg-primary-light text-secondary'
                                   : 'bg-secondary-light',
                               )}
                               onClick={() => {

@@ -278,20 +278,20 @@ svg.text-warning.inline-action:hover {
     line-height: 30px;
   }
   .row-line.row-even:not(.row-title) {
-    background: lighten(theme-color('secondary-light'), 6%);
+    background: lighten(theme-color('secondary-light'), 14%);
   }
   .row-line.row-even:not(.row-title):hover {
-    background: lighten(theme-color('secondary-light'), 8%);
+    background: lighten(theme-color('secondary-light'), 16%);
   }
   .row-line.row-odd:not(.row-title) {
-    background: lighten(theme-color('secondary-light'), 10%);
+    background: lighten(theme-color('secondary-light'), 18%);
   }
   .row-line.row-odd:not(.row-title):hover {
-    background: lighten(theme-color('secondary-light'), 12%);
+    background: lighten(theme-color('secondary-light'), 20%);
   }
   .row-title {
-    background-color: theme-color('secondary');
-    color: theme-color('light');
+    background-color: theme-color('secondary-light');
+    color: theme-color('secondary');
   }
   .row-title span {
     /*font-weight: bold;*/

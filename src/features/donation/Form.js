@@ -140,10 +140,10 @@ function Form(props) {
     },
   ];
   let allTabs = tabs;
-  console.log(values);
   if (values.cause.cause_type && values.cause.cause_type.caut_certificat) {
     allTabs = allTabs.concat(tabs2);
   }
+  const readonlyForm = (values.session && values.session.sess_status === 'CLOSED');
   return (
     <ResponsiveModalOrForm
       title={intl.formatMessage({
@@ -174,6 +174,7 @@ function Form(props) {
               key="client"
               name="client"
               item={values.client || null}
+              disabled={readonlyForm}
               onChange={handleChange}
             />
           </div>
@@ -187,6 +188,7 @@ function Form(props) {
               key="cause"
               name="cause"
               item={values.cause || null}
+              disabled={readonlyForm}
               onChange={handleChange}
             />
           </div>
@@ -201,6 +203,7 @@ function Form(props) {
               value={values.session ? values.session.id : null}
               addempty={false}
               onChange={handleChange}
+              disabled={readonlyForm}
               options={sessionAsOptions(props.sessions)}
             />
           </div>
@@ -221,6 +224,7 @@ function Form(props) {
                 id="don_real_ts"
                 inputSize={36}
                 value={values.don_real_ts}
+                disabled={readonlyForm}
                 onChange={handleChange}
               />
             </div>
@@ -237,6 +241,7 @@ function Form(props) {
                 value={values.don_end_ts}
                 onChange={handleChange}
                 locked={isLocked('don_end_ts')}
+                disabled={readonlyForm}
                 onLockOn={toggleLockOn}
                 onLockOff={toggleLockOff}
               />
@@ -279,6 +284,7 @@ function Form(props) {
                   name="don_mnt"
                   id="don_mnt"
                   inputMoney={values.currentMoney}
+                  disabled={readonlyForm}
                   dbMoney="EUR"
                   value={values.don_mnt}
                   onChange={handleChange}
@@ -294,6 +300,7 @@ function Form(props) {
                   name="don_mnt_input"
                   id="don_mnt_input"
                   inputMoney={values.currentMoney}
+                  disabled={readonlyForm}
                   dbMoney="EUR"
                   value={values.don_mnt_input}
                   onChange={handleChange}
@@ -313,6 +320,7 @@ function Form(props) {
                 labelSize={36}
                 inputSize={36}
                 value={values.payment_type.id}
+                disabled={readonlyForm}
                 onChange={handleChange}
                 options={paymentTypeAsOptions(props.paymentTypes)}
                 error={getErrorMessage('ptyp_id')}

@@ -13,6 +13,10 @@ export class InputPicker extends Component {
     name: PropTypes.string.isRequired,
     item: PropTypes.object,
     onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
+  };
+  static defaultProps = {
+    disabled: false,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -126,6 +130,7 @@ export class InputPicker extends Component {
           labelSize={this.props.labelSize || 6}
           inputSize={this.props.inputSize || 30}
           list={this.state.list}
+          disabled={this.props.disabled}
           display={this.state.display}
           onChange={this.onChange}
           onClear={this.onClear}
