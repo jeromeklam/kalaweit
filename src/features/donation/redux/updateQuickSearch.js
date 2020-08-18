@@ -14,7 +14,7 @@ export function reducer(state, action) {
       let filters = state.filters;
       filters.init(FILTER_MODE_OR, FILTER_OPER_LIKE);
       filters.setSearch(FILTER_SEARCH_QUICK);
-      filters.addFilter('email_subject', action.value);
+      filters.addFilter('don_mnt', action.value);
       return {
         ...state,
         filters: filters,

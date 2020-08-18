@@ -88,7 +88,7 @@ function Form(props) {
   ];
   return (
     <ResponsiveModalOrForm
-      title={values.cau_name}
+      title={values.cau_name ? values.cau_name : ''}
       className="m-5"
       tab={values._currentTab}
       tabs={!props.modify ? tabs : tabs.concat(modifTabs)}

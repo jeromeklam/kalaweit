@@ -48,6 +48,20 @@
     background-color: theme-color('secondary');
     padding-bottom: 0px;
     margin-bottom: 0px;
+
+    .card-category {
+      font-weight: bold;
+      padding-bottom: px;
+    }
+
+    .inline-list {
+      overflow: hidden;
+
+      .row-title {
+        background-color: theme-color('secondary');
+        color: theme-color('light');
+      }
+    }
   }
   .card-footer .nav-link {
     padding: 0px;

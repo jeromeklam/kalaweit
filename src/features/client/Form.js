@@ -71,7 +71,10 @@ function Form(props) {
       icon: 'misc',
     },
   ];
-  const title = `${values.cli_firstname} ${values.cli_lastname}`; 
+  const title =
+    (values.cli_firstname ? values.cli_firstname : '') +
+    '  ' +
+    (values.cli_lastname ? values.cli_lastname : '');
   return (
     <ResponsiveModalOrForm
       title={title}
@@ -160,9 +163,12 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-24">
+              <div className="col-sm-25">
                 <InputText
-                  label=""
+                  label={props.intl.formatMessage({
+                    id: 'app.features.client.form.address',
+                    defaultMessage: 'Address',
+                  })}
                   name="cli_address1"
                   labelTop={true}
                   value={values.cli_address1}
@@ -170,39 +176,9 @@ function Form(props) {
                   error={getErrorMessage('cli_address1')}
                 />
               </div>
-              <div className="col-sm-6">
-                <InputCheckbox
-                  label={props.intl.formatMessage({
-                    id: 'app.features.client.form.certificate',
-                    defaultMessage: 'Certificate',
-                  })}
-                  name="cli_certificat"
-                  labelTop={false}
-                  labelSize={20}
-                  inputSize={16}
-                  checked={values.cli_certificat === true}
-                  onChange={handleChange}
-                  error={getErrorMessage('cli_certificat')}
-                />
-              </div>
-              <div className="col-sm-6">
-                <InputCheckbox
-                  label={props.intl.formatMessage({
-                    id: 'app.features.client.form.receipt',
-                    defaultMessage: 'Receipt',
-                  })}
-                  name="cli_receipt"
-                  labelSize={20}
-                  inputSize={16}
-                  labelTop={false}
-                  checked={values.cli_receipt === true}
-                  onChange={handleChange}
-                  error={getErrorMessage('cli_receipt')}
-                />
-              </div>
             </div>
             <div className="row">
-              <div className="col-sm-24">
+              <div className="col-sm-25">
                 <InputText
                   label=""
                   name="cli_address2"
@@ -212,24 +188,9 @@ function Form(props) {
                   error={getErrorMessage('cli_address2')}
                 />
               </div>
-              <div className="col-sm-11">
-                <InputCheckbox
-                  label={props.intl.formatMessage({
-                    id: 'app.features.client.form.displaySite',
-                    defaultMessage: 'Show on site',
-                  })}
-                  name="cli_display_site"
-                  labelTop={false}
-                  labelSize={22}
-                  inputSize={14}
-                  checked={values.cli_display_site === true}
-                  onChange={handleChange}
-                  error={getErrorMessage('cli_display_site')}
-                />
-              </div>
             </div>
             <div className="row">
-              <div className="col-sm-24">
+              <div className="col-sm-25">
                 <InputText
                   label=""
                   name="cli_address3"
@@ -237,21 +198,6 @@ function Form(props) {
                   value={values.cli_address3}
                   onChange={handleChange}
                   error={getErrorMessage('cli_address3')}
-                />
-              </div>
-              <div className="col-sm-11">
-                <InputCheckbox
-                  label={props.intl.formatMessage({
-                    id: 'app.features.client.form.sendNews',
-                    defaultMessage: 'Send news',
-                  })}
-                  name="cli_send_news"
-                  labelTop={false}
-                  labelSize={22}
-                  inputSize={14}
-                  checked={values.cli_send_news === true}
-                  onChange={handleChange}
-                  error={getErrorMessage('cli_send_news')}
                 />
               </div>
             </div>
@@ -269,7 +215,7 @@ function Form(props) {
                   error={getErrorMessage('cli_cp')}
                 />
               </div>
-              <div className="col-sm-17">
+              <div className="col-sm-18">
                 <InputText
                   label={props.intl.formatMessage({
                     id: 'app.features.client.form.town',
@@ -297,6 +243,60 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
+              <div className="col-sm-7">
+                <InputCheckbox
+                  label={props.intl.formatMessage({
+                    id: 'app.features.client.form.receipt',
+                    defaultMessage: 'Receipt',
+                  })}
+                  name="cli_receipt"
+                  labelTop={true}
+                  checked={values.cli_receipt === true}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_receipt')}
+                />
+              </div>
+              <div className="col-sm-9">
+                <InputCheckbox
+                  label={props.intl.formatMessage({
+                    id: 'app.features.client.form.certificate',
+                    defaultMessage: 'Certificate',
+                  })}
+                  name="cli_certificat"
+                  labelTop={true}
+                  checked={values.cli_certificat === true}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_certificat')}
+                />
+              </div>
+              <div className="col-sm-9">
+                <InputCheckbox
+                  label={props.intl.formatMessage({
+                    id: 'app.features.client.form.sendNews',
+                    defaultMessage: 'Send news',
+                  })}
+                  name="cli_send_news"
+                  labelTop={true}
+                  checked={values.cli_send_news === true}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_send_news')}
+                />
+              </div>
+              <div className="col-sm-11">
+                <InputCheckbox
+                  label={props.intl.formatMessage({
+                    id: 'app.features.client.form.displaySite',
+                    defaultMessage: 'Show on site',
+                  })}
+                  name="cli_display_site"
+                  labelTop={true}
+                  checked={values.cli_display_site === true}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_display_site')}
+                />
+              </div>
+            </div>
+            <div className="row">
               <div className="col-sm-16">
                 <InputText
                   label={props.intl.formatMessage({
@@ -311,7 +311,7 @@ function Form(props) {
                   error={getErrorMessage('cli_email')}
                 />
               </div>
-              <div className="col-sm-8">
+              <div className="col-sm-9">
                 <InputText
                   label={props.intl.formatMessage({
                     id: 'app.features.client.form.phoneHomr',
@@ -353,7 +353,7 @@ function Form(props) {
                   error={getErrorMessage('cli_email2')}
                 />
               </div>
-              <div className="col-sm-8">
+              <div className="col-sm-9">
                 <InputText
                   label={props.intl.formatMessage({
                     id: 'app.features.client.form.phoneGsm',
