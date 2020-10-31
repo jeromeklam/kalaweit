@@ -24,9 +24,8 @@ export function saveToLS(key, value, item = 'rgl-8') {
   }
 }
 
-export const showErrors = (intl, error, defCode = "") => {  
+export function showErrors(intl, error, defCode = "") {
   if (error) {
-    
     if (!error.errors) {
       if (error.response) {
         error = jsonApiNormalizer(error.response);
@@ -34,14 +33,13 @@ export const showErrors = (intl, error, defCode = "") => {
     }
     if (error.errors) {
       let nbErrorField = 0;
-      let displayDefaultError = true;      
+      let displayDefaultError = true;  
       error.errors.forEach(oneError => {
-        //source: {pointer: "/data/attributes/fct_code", parameter: "fct_code"}
         if (oneError.source && oneError.source.parameter && oneError.source.parameter !== "") {
           nbErrorField += 1;
         } else {
           displayDefaultError = false;
-          if (oneError.code) {            
+          if (oneError.code) {
             const code = `app.errors.code.${oneError.code}`;
             const message = intl.formatMessage({
               id: code,
@@ -58,7 +56,7 @@ export const showErrors = (intl, error, defCode = "") => {
               cogoToast.error(message);
             }
           }
-        }          
+        }
       });
       if (displayDefaultError) {
         const message = intl.formatMessage({
@@ -81,6 +79,22 @@ export const showErrors = (intl, error, defCode = "") => {
     });
     cogoToast.error(message);
   }
+}
+
+export const getFieldErrorMessage = (intl, errors, field) => {
+  console.log(errors);
+  let message = false;
+  if (errors && errors.errors) {
+    errors.errors.forEach(error => {
+      if (error.source && error.source.parameter === field) {
+        if (error.source && error.source.parameter === field) {
+          message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
+          return true;
+        }
+      }
+    })
+  }
+  return message;
 };
 
 export const messageError = (message = 'Unknown error') => {

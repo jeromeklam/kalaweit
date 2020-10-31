@@ -25,7 +25,7 @@ myAxios.interceptors.response.use(
     return response;
   },
   function(error) {
-    if (401 === error.response.status) {
+    if (error && error.response && 401 === error.response.status) {
       initAxios('');
       const auth = (store && store.getState().auth.authenticated) || false;
       console.log(auth, store.getState().auth);

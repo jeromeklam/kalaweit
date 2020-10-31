@@ -2,7 +2,7 @@
   {
     "id": "app.features.sponsor.list.name",
     "defaultMessage": "Fullname",
-    "file": "src\\features\\cause\\InlineSponsors.js",
+    "file": "src/features/cause/InlineSponsors.js",
     "start": {
       "line": 45,
       "column": 18
@@ -15,7 +15,7 @@
   {
     "id": "app.features.sponsor.list.email",
     "defaultMessage": "Email",
-    "file": "src\\features\\cause\\InlineSponsors.js",
+    "file": "src/features/cause/InlineSponsors.js",
     "start": {
       "line": 50,
       "column": 18
@@ -28,7 +28,7 @@
   {
     "id": "app.features.sponsor.list.client",
     "defaultMessage": "Member",
-    "file": "src\\features\\cause\\InlineSponsors.js",
+    "file": "src/features/cause/InlineSponsors.js",
     "start": {
       "line": 55,
       "column": 18
@@ -41,7 +41,7 @@
   {
     "id": "app.features.sponsor.list.displaySite",
     "defaultMessage": "Show on site",
-    "file": "src\\features\\cause\\InlineSponsors.js",
+    "file": "src/features/cause/InlineSponsors.js",
     "start": {
       "line": 60,
       "column": 18
@@ -54,7 +54,7 @@
   {
     "id": "app.features.sponsor.list.news",
     "defaultMessage": "Send news",
-    "file": "src\\features\\cause\\InlineSponsors.js",
+    "file": "src/features/cause/InlineSponsors.js",
     "start": {
       "line": 68,
       "column": 18

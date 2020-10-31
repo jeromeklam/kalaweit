@@ -38,10 +38,12 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
     _loadSite: false,
     _errors: errors,
     _locked: locked,
+    _loading: false,
   });
 
   const handleSubmit = event => {
     if (event) event.preventDefault();
+    setValues({ _loading: true });
     onSubmit(values);
   };
 
@@ -231,6 +233,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
 
   const handleCancel = event => {
     if (event) event.preventDefault();
+    setValues({ _loading: true });
     onCancel();
   };
 

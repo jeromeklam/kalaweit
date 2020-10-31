@@ -6,6 +6,6 @@ export default {
   childRoutes: [
     { path: 'signin', name: 'Connexion', component: Signin, isIndex: true },
     { path: 'signout', name: 'Deconnexion', component: Signout, isIndex: true },
-    { path: 'ask-password', name: 'Ask password', component: AskPassword },
+    { path: 'ask-password/:token', name: 'Ask password', component: AskPassword },
   ],
 };

@@ -49,6 +49,7 @@ export function reducer(state, action) {
         ...state,
         askPasswordPending: true,
         askPasswordError: null,
+        signInError: null,
       };
 
     case AUTH_ASK_PASSWORD_SUCCESS:

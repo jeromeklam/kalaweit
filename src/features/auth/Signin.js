@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -6,9 +7,9 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import logo from '../../images/logo-timbre.png';
 import { InputEmail, InputPassword, InputCheckbox, Highlight } from 'freeassofront';
-import { getJsonApi, getFieldErrorMessage } from 'freejsonapi';
+import { getJsonApi, getNewJsonApi } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
-import { Copyright, messageError } from '../ui';
+import { Copyright, messageError, getFieldErrorMessage, showErrors, messageSuccess } from '../ui';
 
 export class Signin extends Component {
   static propTypes = {
@@ -25,6 +26,7 @@ export class Signin extends Component {
       password: '',
       password_error: null,
       passwordAsk: false,
+      loading: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -43,14 +45,14 @@ export class Signin extends Component {
     if (evt) {
       evt.preventDefault();
     }
-    this.setState({ passwordAsk: true });
+    this.setState({ passwordAsk: true, signInError: null, askPasswordError: null });
   }
 
   onForgotPasswordClose(evt) {
     if (evt) {
       evt.preventDefault();
     }
-    this.setState({ passwordAsk: false });
+    this.setState({ passwordAsk: false, signInError: null, askPasswordError: null });
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -89,21 +91,24 @@ export class Signin extends Component {
     if (event) {
       event.preventDefault();
     }
-    let username_error = '';
-    let password_error = '';
-    let error = false;
-    this.setState({ username_error: username_error, password_error: password_error });
-    if (!error) {
-      const datas = {
-        type: 'FreeSSO_Signin',
+    if (!this.state.loading) {
+      const { intl } = this.props;
+      this.setState({ loading: true, username_error: '', password_error: '' });
+      const obj = getNewJsonApi('FreeSSO_Signin', null, {
         login: this.state.username,
         password: this.state.password,
         remember: this.state.remember,
-      };
-      let obj = getJsonApi(datas);
-      this.props.actions.signIn(obj).then(result => {
-        this.props.history.push('/');
       });
+      this.props.actions
+        .signIn(obj)
+        .then(result => {
+          this.setState({ loading: false });
+          this.props.history.push('/');
+        })
+        .catch(errors => {
+          this.setState({ loading: false });
+          showErrors(intl, errors);
+        });
     }
   }
 
@@ -111,23 +116,41 @@ export class Signin extends Component {
     if (event) {
       event.preventDefault();
     }
-    let username_error = '';
-    let error = false;
-    this.setState({ username_error: username_error });
-    if (!error) {
-      const datas = {
-        type: 'FreeSSO_AskPassword',
-        login: this.state.username,
-      };
-      let obj = getJsonApi(datas);
-      this.props.actions.askPassword(obj).then(result => {
-        this.setState({ username_error: username_error, passwordAsk: false });
-      })
-      .catch(errors => {
-        // @todo display errors to fields
-        const { intl } = this.props;
-        messageError(intl.formatMessage({ id: 'app.features.auth.login.error.askPassword', defaultMessage: 'Error in request !'}));
-      });
+    if (!this.state.loading) {
+      let username_error = '';
+      let error = false;
+      const { intl } = this.props;
+      this.setState({ loading: true, username_error: username_error });
+      if (!error) {
+        const datas = {
+          type: 'FreeSSO_AskPassword',
+          login: this.state.username,
+        };
+        let obj = getJsonApi(datas);
+        this.props.actions
+          .askPassword(obj)
+          .then(result => {
+            this.setState({ loading: false, username_error: username_error, passwordAsk: false });
+            messageSuccess(
+              intl.formatMessage({
+                id: 'app.features.auth.login.askPassword.ok',
+                defaultMessage: 'An email has been send.',
+              }),
+            );
+            this.setState({ passwordAsk: false, username_error: '', password_error: '' });
+          })
+          .catch(errors => {
+            // @todo display errors to fields
+            this.setState({ loading: false });
+            messageError(
+              intl.formatMessage({
+                id: 'app.features.auth.login.error.askPassword',
+                defaultMessage: 'Error in request !',
+              }),
+            );
+          })
+        ;
+      }
     }
   }
 
@@ -139,26 +162,49 @@ export class Signin extends Component {
           <form className="form-signin text-center" onSubmit={this.onSubmitPassword}>
             <img className="mb-4" src={logo} alt="" width="72" height="72" />
             <h1 className="h3 mb-3 font-weight-normal">
-              <FormattedMessage id="app.features.auth.login.lostPassword" defaultMessage="Lost password" />
+              <FormattedMessage
+                id="app.features.auth.login.lostPassword"
+                defaultMessage="Lost password"
+              />
             </h1>
             <div className="card">
               <div className="card-body text-left">
                 <InputEmail
                   id="username"
                   name="username"
-                  label={<FormattedMessage id="app.features.auth.login.username" defaultMessage="Email address" />}
-                  placeholder={intl.formatMessage({ id: 'app.features.auth.login.username', defaultMessage: 'Email address' })}
+                  label={
+                    <FormattedMessage
+                      id="app.features.auth.login.username"
+                      defaultMessage="Email address"
+                    />
+                  }
+                  placeholder={intl.formatMessage({
+                    id: 'app.features.auth.login.username',
+                    defaultMessage: 'Email address',
+                  })}
                   required=""
                   autoFocus=""
                   labelInline
                   value={this.state.username}
-                  error={this.state.username_error}
+                  error={getFieldErrorMessage(intl, this.props.auth.askPasswordError, 'login')}
                   onChange={this.onChange}
                 />
-                <button className="btn btn-lg btn-primary btn-block mt-3" type="submit">
-                  <FormattedMessage id="app.features.auth.login.askPassword" defaultMessage="Send password reset email" />
+                <button
+                  className={classnames('btn btn-lg btn-primary btn-block mt-3', this.state.loading && 'pulsate')}
+                  type="submit"
+                  disabled={this.state.loading}
+                >
+                  <FormattedMessage
+                    id="app.features.auth.login.askPassword"
+                    defaultMessage="Send password reset email"
+                  />
                 </button>
-                <button className="btn btn-lg btn-secondary btn-block mb-2" type="button" onClick={this.onForgotPasswordClose}>
+                <button
+                  className="btn btn-lg btn-secondary btn-block mb-2"
+                  type="button"
+                  onClick={this.onForgotPasswordClose}
+                  disabled={this.state.loading}
+                >
                   <FormattedMessage id="app.features.auth.login.back" defaultMessage="Back" />
                 </button>
               </div>
@@ -176,45 +222,84 @@ export class Signin extends Component {
                 <InputEmail
                   id="username"
                   name="username"
-                  label={<FormattedMessage id="app.features.auth.login.username" defaultMessage="Email address" />}
-                  placeholder={intl.formatMessage({ id: 'app.features.auth.login.username', defaultMessage: 'Email address' })}
+                  label={
+                    <FormattedMessage
+                      id="app.features.auth.login.username"
+                      defaultMessage="Email address"
+                    />
+                  }
+                  placeholder={intl.formatMessage({
+                    id: 'app.features.auth.login.username',
+                    defaultMessage: 'Email address',
+                  })}
                   required=""
                   autoFocus=""
                   labelInline
                   value={this.state.username}
-                  error={this.state.username_error}
+                  error={getFieldErrorMessage(intl, this.props.auth.signInError, 'login')}
                   onChange={this.onChange}
                 />
                 <InputPassword
                   id="password"
                   name="password"
-                  label={<FormattedMessage id="app.features.auth.login.password" defaultMessage="Password" />}
-                  placeholder={intl.formatMessage({ id: 'app.features.auth.login.password', defaultMessage: 'Password' })}
+                  label={
+                    <FormattedMessage
+                      id="app.features.auth.login.password"
+                      defaultMessage="Password"
+                    />
+                  }
+                  placeholder={intl.formatMessage({
+                    id: 'app.features.auth.login.password',
+                    defaultMessage: 'Password',
+                  })}
                   required=""
                   labelInline
                   value={this.state.password}
-                  error={this.state.password_error}
+                  error={getFieldErrorMessage(intl, this.props.auth.signInError, 'password')}
                   onChange={this.onChange}
                 />
                 <div className="checkbox mb-3 mt-2">
                   <InputCheckbox
                     name="remember"
                     checked={this.state.remember}
-                    detail={<FormattedMessage id="app.features.auth.login.rememberMe" defaultMessage="Remember me" />}
+                    detail={
+                      <FormattedMessage
+                        id="app.features.auth.login.rememberMe"
+                        defaultMessage="Remember me"
+                      />
+                    }
                     onChange={this.onChange}
                   />
                 </div>
-                <Highlight title={intl.formatMessage({ id: 'app.features.auth.login.help.connexion', defaultMessage: 'Forgot password' })} position="bottom">
+                <Highlight
+                  title={intl.formatMessage({
+                    id: 'app.features.auth.login.help.connexion',
+                    defaultMessage: 'Forgot password',
+                  })}
+                  position="bottom"
+                >
                   <button className="btn btn-lg btn-primary btn-block" type="submit">
-                    <FormattedMessage id="app.features.auth.login.connexion" defaultMessage="Connexion" />
+                    <FormattedMessage
+                      id="app.features.auth.login.connexion"
+                      defaultMessage="Connexion"
+                    />
                   </button>
                 </Highlight>
                 <hr />
                 <div className="text-center">
-                  <Highlight title={intl.formatMessage({ id: 'app.features.auth.login.help.forgotPassword', defaultMessage: 'Forgot password' })} position="bottom">
+                  <Highlight
+                    title={intl.formatMessage({
+                      id: 'app.features.auth.login.help.forgotPassword',
+                      defaultMessage: 'Forgot password',
+                    })}
+                    position="bottom"
+                  >
                     <a href={null} onClick={this.onForgotPasswordAsk}>
                       <span>
-                        <FormattedMessage id="app.features.auth.login.forgotPassword" defaultMessage="Forgot password ?" />
+                        <FormattedMessage
+                          id="app.features.auth.login.forgotPassword"
+                          defaultMessage="Forgot password ?"
+                        />
                       </span>
                     </a>
                   </Highlight>
