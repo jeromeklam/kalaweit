@@ -54,7 +54,7 @@
     "html-webpack-plugin": "2.29.0",
     "jest": "^25.1.0",
     "jimp": "^0.9.3",
-    "jsoneditor": "^8.6.3",
+    "jsoneditor": "^9.5.6",
     "jsoneditor-react": "^3.0.0",
     "lodash": "^4.17.5",
     "nock": "^9.2.3",
